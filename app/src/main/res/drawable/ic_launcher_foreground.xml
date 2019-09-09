@@ -1,0 +1,31 @@
+<!--
+  ~ Copyright 2019 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="93.333336"
+    android:viewportHeight="93.333336">
+  <group android:translateX="15.666667"
+      android:translateY="11.666667">
+    <path
+        android:pathData="M43,15L19,15A4,4 0,0 0,15 19L15,51a4,4 0,0 0,4 4L43,55a4,4 0,0 0,4 -4L47,19A4,4 0,0 0,43 15ZM19,19L29,19L29,35l-5,-3 -5,3Z"
+        android:fillColor="#045d56"/>
+    <path
+        android:pathData="M37.51,39.2C34.85,38.51 34,37.79 34,36.68c0,-1.27 1.18,-2.16 3.16,-2.16s2.85,1 2.92,2.46h2.58a4.67,4.67 0,0 0,-3.75 -4.46L38.91,30L35.4,30v2.53c-2.26,0.49 -4.09,2 -4.09,4.22 0,2.7 2.24,4 5.5,4.82 2.92,0.7 3.5,1.73 3.5,2.82 0,0.81 -0.57,2.09 -3.15,2.09 -2.41,0 -3.36,-1.07 -3.49,-2.45L31.1,44.03c0.14,2.56 2.06,4 4.3,4.47L35.4,51h3.51L38.91,48.49c2.28,-0.44 4.09,-1.76 4.09,-4.15C43,41 40.16,39.89 37.51,39.2Z"
+        android:fillColor="#1eb980"/>
+  </group>
+</vector>

@@ -1,0 +1,44 @@
+<!--
+  ~ Copyright 2019 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">MoneyBook</string>
+    <string name="Overview">Overview</string>
+    <string name="Earnings">Earnings</string>
+    <string name="Expenses">Expenses</string>
+    <string name="Claims">Claims</string>
+    <string name="Debts">Debts</string>
+    <string name="Accounts">Accounts</string>
+    <string name="SeeAll">See all</string>
+    <string name="Home">Home</string>
+    <string name="Settings">Settings</string>
+    <string name="Search">Search</string>
+    <string name="Dues">Dues</string>
+    <string name="Budgets">Budgets</string>
+    <string name="Add">Add</string>
+    <string name="AddTransaction">Add Transaction</string>
+    <string name="Manage">Manage</string>
+    <string name="ZeroMoney">$ 0.00</string>
+    <string name="Checking">Checking</string>
+    <string name="AccountNumberDots">ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ</string>
+    <string name="NewTransaction">New Transaction</string>
+    <string name="Title">Title</string>
+    <string name="Earning">Earning</string>
+    <string name="Debt">Debt</string>
+    <string name="Claim">Claim</string>
+    <string name="Expense">Expense</string>
+    <string name="Save">Save</string>
+</resources>

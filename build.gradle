@@ -1,0 +1,32 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    apply from: "dependencies.gradle"
+
+    repositories {
+        google()
+        jcenter()
+
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$deps.gradle"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$deps.kotlin.common"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$deps.arch.navigation"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+static def getBuildDate() {
+    return new Date().format("yyyyMMddHHmmss")
+}

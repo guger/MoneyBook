@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2019 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.showAccount(account)}"
+        android:paddingStart="4dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="6dp">
+
+        <TextView
+            android:id="@+id/mOverviewAccountsAccountName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:text="@{account.name}"
+            android:textAppearance="?textAppearanceSubtitle1"
+            app:layout_constraintEnd_toStartOf="@+id/txvOverviewAccountsAccountBalance"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/itemDecoration"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Account title" />
+
+        <TextView
+            android:id="@+id/txvOverviewAccountsAccountDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:alpha="0.8"
+            android:text="@string/AccountNumberDots"
+            android:textAppearance="?textAppearanceSubtitle2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/mOverviewAccountsAccountName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/mOverviewAccountsAccountName"
+            app:layout_constraintTop_toBottomOf="@+id/mOverviewAccountsAccountName" />
+
+        <TextView
+            android:id="@+id/txvOverviewAccountsAccountBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="@string/ZeroMoney"
+            android:textAppearance="?textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
+            app:layout_constraintEnd_toStartOf="@+id/btnOverviewAccountsAccountShowAccount"
+            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName" />
+        <!--TODO balance-->
+        <View
+            android:id="@+id/itemDecoration"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:background="?colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName" />
+
+        <at.guger.moneybook.core.ui.widget.SquareImageButton
+            android:id="@+id/btnOverviewAccountsAccountShowAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.showAccount(account)}"
+            android:src="@drawable/ic_open"
+            android:tint="@color/colorIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="at.guger.moneybook.ui.home.HomeViewModel" />
+
+        <variable
+            name="account"
+            type="at.guger.moneybook.data.model.Account" />
+    </data>
+</layout>

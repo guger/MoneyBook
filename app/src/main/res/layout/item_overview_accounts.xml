@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2019 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mOverviewAccountsItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txvOverviewAccountsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_content_margin"
+                android:layout_marginTop="@dimen/item_content_margin"
+                android:text="@string/Accounts"
+                android:textAppearance="?textAppearanceCaption"
+                android:textColor="?colorOnSurface"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvOverviewAccountsSum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/item_content_margin"
+                android:text="@string/ZeroMoney"
+                android:textAppearance="?textAppearanceHeadline3"
+                android:textColor="?colorOnSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/txvOverviewAccountsTitle"
+                app:layout_constraintTop_toBottomOf="@+id/txvOverviewAccountsTitle"
+                app:transactions="@{viewModel.transactions}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mOverviewAccountsRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_content_margin"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/item_content_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mOverviewAccountsDivider"
+                app:viewModel="@{viewModel}"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_account" />
+
+            <at.guger.moneybook.core.ui.widget.VisualizeDividerView
+                android:id="@+id/mOverviewAccountsDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1.25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txvOverviewAccountsSum" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOverviewAccountsSeeAll"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_content_margin"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/item_content_margin"
+                android:layout_marginBottom="8dp"
+                android:onClick="@{() -> viewModel.navigateTo(Destination.ACCOUNTS)}"
+                android:text="@string/SeeAll"
+                android:textAppearance="?textAppearanceButton"
+                android:textColor="?colorOnSurface"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mOverviewAccountsRecyclerView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <data>
+
+        <import type="at.guger.moneybook.ui.home.HomeFragment.Destination" />
+
+        <variable
+            name="viewModel"
+            type="at.guger.moneybook.ui.home.HomeViewModel" />
+    </data>
+</layout>
