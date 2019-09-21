@@ -17,35 +17,37 @@
 package at.guger.moneybook.data.repository
 
 import androidx.lifecycle.LiveData
-import at.guger.moneybook.data.model.Category
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.provider.local.AppDatabase
-import at.guger.moneybook.data.provider.local.dao.CategoriesDao
+import at.guger.moneybook.data.provider.local.dao.BudgetsDao
 
 /**
- * Repository class for handling [categories][Category].
+ * Repository class for handling [budgets][Budget].
  */
-class CategoriesRepository(database: AppDatabase) {
+class BudgetsRepository(database: AppDatabase) {
 
     //region Variables
 
-    private val categoriesDao: CategoriesDao = database.categoriesDao()
+    private val budgetsDao: BudgetsDao = database.budgetsDao()
 
     //endregion
 
     //region Methods
 
-    fun getObservableCategories(): LiveData<List<Category>> = categoriesDao.getObservableCategories()
+    suspend fun getBudgets(): List<Budget> = budgetsDao.getBudgets()
 
-    suspend fun insert(category: Category) {
-        categoriesDao.insert(category)
+    fun getObservableBudgets(): LiveData<List<Budget>> = budgetsDao.getObservableBudgets()
+
+    suspend fun insert(vararg budget: Budget) {
+        budgetsDao.insert(*budget)
     }
 
-    suspend fun update(category: Category) {
-        categoriesDao.update(category)
+    suspend fun update(budget: Budget) {
+        budgetsDao.update(budget)
     }
 
-    suspend fun delete(category: Category) {
-        categoriesDao.delete(category)
+    suspend fun delete(budget: Budget) {
+        budgetsDao.delete(budget)
     }
 
     //endregion

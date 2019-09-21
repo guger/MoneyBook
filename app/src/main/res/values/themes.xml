@@ -53,6 +53,8 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.AppTheme.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.AppTheme.MediumComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.AppTheme.LargeComponent</item>
+
+        <item name="calcDialogStyle">@style/AppTheme.CalcDialogStyle</item>
     </style>
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.NoActionBar">

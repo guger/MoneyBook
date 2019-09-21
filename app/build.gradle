@@ -81,12 +81,9 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$deps.test.espresso"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$deps.kotlin.common"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$deps.kotlin.coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.kotlin.coroutines"
     implementation "org.jetbrains.anko:anko-commons:$deps.kotlin.anko"
     implementation "org.jetbrains.anko:anko-design:$deps.kotlin.anko"
-
-    implementation "io.reactivex.rxjava3:rxjava:$deps.rx.java"
 
     implementation "org.koin:koin-android:$deps.koin"
     implementation "org.koin:koin-androidx-scope:$deps.koin"
@@ -106,7 +103,8 @@ dependencies {
     implementation "com.google.android.material:material:$deps.google.material"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$deps.arch.lifecycle"
-    kapt "androidx.lifecycle:lifecycle-compiler:$deps.arch.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.arch.lifecycle"
+    kapt "androidx.lifecycle:lifecycle-common-java8:$deps.arch.lifecycle"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$deps.arch.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$deps.arch.navigation"

@@ -14,30 +14,19 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.data.provider.local.dao
+package at.guger.moneybook.core.preferences
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
-import at.guger.moneybook.data.model.Category
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
+import java.util.*
 
 /**
- * [Dao] method for querying [categories][Category].
+ * Preference Utility class for managing [SharedPreferences].
  */
-@Dao
-internal interface CategoriesDao {
+class Preferences(context: Context) {
 
-    @Query("SELECT * FROM categories")
-    fun getObservableCategories(): LiveData<List<Category>>
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    @Insert
-    suspend fun insert(category: Category): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg category: Category)
-
-    @Update
-    suspend fun update(category: Category)
-
-    @Delete
-    suspend fun delete(category: Category)
+    val currency: Currency = Currency.getInstance(Locale.getDefault())
 }

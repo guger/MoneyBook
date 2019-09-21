@@ -18,7 +18,6 @@ package at.guger.moneybook.core.ui.fragment
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
  * Main fragment class.

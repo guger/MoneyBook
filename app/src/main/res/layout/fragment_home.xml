@@ -16,7 +16,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -30,23 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mHomeTabs" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="?colorPrimary"
-        android:clickable="true"
-        android:focusable="true"
-        android:transitionName="transition_new_transaction_dialog"
-        app:layout_anchor="@+id/mHomeViewPager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add"
-        app:tint="?colorOnPrimary" />
-
-    <com.google.android.material.tabs.TabLayout
+    <at.guger.moneybook.core.ui.widget.LabelVisibilityTabLayout
         android:id="@+id/mHomeTabs"
         style="@style/Widget.MaterialComponents.TabLayout"
         android:layout_width="0dp"
@@ -59,5 +42,20 @@
         app:tabIndicator="@null"
         app:tabInlineLabel="true"
         app:tabTextColor="@color/tab_highlight_selector" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="?colorPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add"
+        app:layout_anchor="@+id/mHomeViewPager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="?colorOnPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

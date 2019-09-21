@@ -17,28 +17,13 @@
 package at.guger.moneybook.core.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
  * Base activity class.
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-    protected val disposables by lazy { CompositeDisposable() }
-
     //region Activity
-
-    override fun onPause() {
-        super.onPause()
-
-        disposables.clear()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        disposables.dispose()
-    }
 
     //endregion
 }

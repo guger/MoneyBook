@@ -25,13 +25,12 @@ import at.guger.moneybook.data.model.base.Model
 import kotlinx.android.parcel.Parcelize
 
 /**
- * AppDatabase entity for categories being part of a [Transaction].
+ * AppDatabase entity for budgets being part of a [Transaction].
  */
 @Parcelize
-@Entity(tableName = Database.Categories.TABLE_NAME)
-data class Category(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Categories.COL_ID) val id: Long,
-    @ColumnInfo(name = Database.Categories.COL_NAME) val name: String,
-    @ColumnInfo(name = Database.Categories.COL_ICON) val icon: Int,
-    @ColumnInfo(name = Database.Categories.COL_COLOR) @ColorInt val color: Int
+@Entity(tableName = Database.Budgets.TABLE_NAME)
+data class Budget(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Budgets.COL_ID) val id: Long,
+    @ColumnInfo(name = Database.Budgets.COL_NAME) val name: String,
+    @ColumnInfo(name = Database.Budgets.COL_COLOR) @ColorInt val color: Int
 ) : Model

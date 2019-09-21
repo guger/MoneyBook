@@ -18,8 +18,7 @@ package at.guger.moneybook.data.repository
 
 import android.graphics.Color
 import at.guger.moneybook.data.base.DatabaseTest
-import at.guger.moneybook.data.model.Category
-import at.guger.moneybook.data.model.Contact
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.util.observeOnce
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
@@ -27,65 +26,65 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * Test class for [CategoriesRepository].
+ * Test class for [BudgetsRepository].
  */
-class CategoriesRepositoryTest : DatabaseTest() {
+class BudgetsRepositoryTest : DatabaseTest() {
 
-    private lateinit var repository: CategoriesRepository
+    private lateinit var repository: BudgetsRepository
 
     @Before
     fun setUp() {
-        repository = CategoriesRepository(database)
+        repository = BudgetsRepository(database)
     }
 
     @Test
     fun testInsertContact() = runBlocking {
-        repository.insert(CATEGORY)
+        repository.insert(BUDGET)
 
-        repository.getObservableCategories().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(CATEGORY)
+            assertThat(it).contains(BUDGET)
         }
     }
 
     @Test
     fun testUpdateAccount() = runBlocking {
-        repository.insert(CATEGORY)
+        repository.insert(BUDGET)
 
-        repository.getObservableCategories().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(CATEGORY)
+            assertThat(it).contains(BUDGET)
         }
 
-        repository.update(CATEGORY.copy(color = Color.RED))
+        repository.update(BUDGET.copy(color = Color.RED))
 
-        repository.getObservableCategories().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(CATEGORY.copy(color = Color.RED))
+            assertThat(it).contains(BUDGET.copy(color = Color.RED))
         }
     }
 
     @Test
     fun testDeleteAccount() = runBlocking {
-        repository.insert(CATEGORY)
+        repository.insert(BUDGET)
 
-        repository.getObservableCategories().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(CATEGORY)
+            assertThat(it).contains(BUDGET)
         }
-        repository.delete(CATEGORY)
+        repository.delete(BUDGET)
 
-        repository.getObservableCategories().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).isEmpty()
         }
     }
 
     companion object {
-        private const val CATEGORY_ID: Long = 22
-        private const val CATEGORY_NAME: String = "Test Category"
-        private const val CATEGORY_ICON: Int = 112
-        private const val CATEGORY_COLOR: Int = Color.BLUE
+        private const val BUDGET_ID: Long = 22
+        private const val BUDGET_NAME: String = "Test Budget"
+        private const val BUDGET_ICON: Int = 112
+        private const val BUDGET_COLOR: Int = Color.BLUE
 
-        val CATEGORY = Category(CATEGORY_ID, CATEGORY_NAME, CATEGORY_ICON, CATEGORY_COLOR)
+        val BUDGET = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_ICON, BUDGET_COLOR)
     }
 }

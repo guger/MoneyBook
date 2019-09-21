@@ -54,7 +54,6 @@ dependencies {
     androidTestImplementation "androidx.arch.core:core-testing:$deps.test.arch_core"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$deps.kotlin.common"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$deps.kotlin.coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.kotlin.coroutines"
 
     implementation "androidx.core:core-ktx:$deps.androidx.core"
@@ -64,7 +63,8 @@ dependencies {
     implementation "androidx.preference:preference:$deps.androidx.preference"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$deps.arch.lifecycle"
-    kapt "androidx.lifecycle:lifecycle-compiler:$deps.arch.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.arch.lifecycle"
+    kapt "androidx.lifecycle:lifecycle-common-java8:$deps.arch.lifecycle"
 
     implementation "androidx.paging:paging-runtime:$deps.arch.paging"
 

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "58067499474b675b87dd105ad695f4ff",
+    "identityHash": "9ed473d44ae47777905394e7c09e3279",
     "entities": [
       {
         "tableName": "transactions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `date` INTEGER NOT NULL, `value` REAL NOT NULL, `notes` TEXT NOT NULL, `type` INTEGER NOT NULL, `account_id` INTEGER NOT NULL, `category_id` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `date` INTEGER NOT NULL, `value` REAL NOT NULL, `notes` TEXT NOT NULL, `type` INTEGER NOT NULL, `account_id` INTEGER NOT NULL, `budget_id` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -51,8 +51,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "categoryId",
-            "columnName": "category_id",
+            "fieldPath": "budgetId",
+            "columnName": "budget_id",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -93,8 +93,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "categories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `icon` INTEGER NOT NULL, `color` INTEGER NOT NULL)",
+        "tableName": "budgets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -106,12 +106,6 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "icon",
-            "columnName": "icon",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -199,7 +193,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '58067499474b675b87dd105ad695f4ff')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9ed473d44ae47777905394e7c09e3279')"
     ]
   }
 }

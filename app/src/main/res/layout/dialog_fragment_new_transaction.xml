@@ -14,85 +14,307 @@
   ~    limitations under the License.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/mBottomAppBarCoordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/mNewTransactionNestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/mTitleToolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:popupTheme="?android:toolbarStyle"
+                        app:theme="?android:toolbarStyle">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/NewTransaction"
+                            android:textAppearance="?textAppearanceHeadline1"
+                            tools:layout_editor_absoluteX="206dp"
+                            tools:layout_editor_absoluteY="14dp" />
+                    </androidx.appcompat.widget.Toolbar>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/mNewTransactionLayoutCenter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_begin="200dp"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnNewTransactionOpenCalculator"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Square.Icon"
+                        android:layout_marginEnd="8dp"
+                        android:onClick="@{() -> viewModel.showCalculator()"
+                        app:icon="@drawable/ic_calculator"
+                        app:layout_constraintBottom_toBottomOf="@+id/tilNewTransactionValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tilNewTransactionValue" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnNewTransactionChooseDate"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Square.Icon"
+                        android:layout_marginEnd="8dp"
+                        android:onClick="@{() -> viewModel.showDatePicker()}"
+                        app:icon="@drawable/ic_calendar"
+                        app:layout_constraintBottom_toBottomOf="@+id/tilNewTransactionDate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tilNewTransactionDate" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/mNewTransactionTypeToggleButtonGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionTitle"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNewTransactionTypeEarning"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Earning" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNewTransactionTypeExpense"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Expense" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNewTransactionTypeClaim"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Claim" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNewTransactionTypeDebt"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Debt" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNewTransactionAccount"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/mNewTransactionLayoutCenter"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/mNewTransactionTypeToggleButtonGroup">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/edtNewTransactionAccount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Account"
+                            android:singleLine="true"
+                            android:text="@={viewModel.transactionAccount}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNewTransactionBudget"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/mNewTransactionLayoutCenter"
+                        app:layout_constraintTop_toBottomOf="@+id/mNewTransactionTypeToggleButtonGroup">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/edtNewTransactionBudget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Budget"
+                            android:singleLine="true"
+                            android:text="@={viewModel.transactionBudget}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNewTransactionDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toStartOf="@id/btnNewTransactionChooseDate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionAccount">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtNewTransactionDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Date"
+                            android:inputType="date"
+                            android:singleLine="true"
+                            android:text="@={viewModel.transactionDate}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNewTransactionValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toStartOf="@+id/btnNewTransactionOpenCalculator"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionDate">
+
+                        <at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
+                            android:id="@+id/edtNewTransactionValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Value"
+                            android:singleLine="true"
+                            android:text="@={viewModel.transactionValue}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNewTransactionContacts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionValue">
+
+                        <!-- TODO -->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtNewTransactionContacts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Contacts"
+                            android:inputType="text|textCapWords"
+                            android:singleLine="true"
+                            android:text="@={viewModel.transactionContacts}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNewTransactionNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionContacts">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtNewTransactionNotes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Notes"
+                            android:inputType="text|textMultiLine|textCapSentences"
+                            android:singleLine="false"
+                            android:text="@={viewModel.transactionNotes}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNewTransactionTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/mTitleToolbar">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtNewTransactionTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Title"
+                            android:inputType="text|textCapSentences"
+                            android:singleLine="true"
+                            android:text="@={viewModel.transactionTitle}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mBottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/menu_new_transaction"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="end"
+            app:fabAnimationMode="scale"
             app:navigationIcon="@drawable/ic_close" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabNewTransactionSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.saveTransaction()}"
+            android:src="@drawable/ic_save"
+            app:layout_anchor="@id/mBottomAppBar"
+            app:layout_anchorGravity="bottom|right"
+            app:tint="?colorOnPrimary" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/mNewTransactionTypeToggleButtonGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionTitle"
-        app:singleSelection="true">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNewTransactionTypeEarning"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Earning" />
+    <data>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNewTransactionTypeExpense"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Expense" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNewTransactionTypeClaim"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Claim" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNewTransactionTypeDebt"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Debt" />
-
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilNewTransactionTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtNewTransactionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Title" />
-    </com.google.android.material.textfield.TextInputLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="viewModel"
+            type="at.guger.moneybook.ui.home.transaction.NewTransactionDialogFragmentViewModel" />
+    </data>
+</layout>

@@ -33,7 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 /**
  * Fragment for [home view pager's][ViewPager2] overview content.
  */
-class OverviewFragment private constructor() : BaseFragment() {
+class OverviewFragment : BaseFragment() {
 
     //region Variables
 

@@ -36,11 +36,11 @@ object Database {
         const val COL_NOTES = "notes"
         const val COL_TYPE = "type"
         const val COL_ACCOUNT_ID = "account_id"
-        const val COL_CATEGORY_ID = "category_id"
+        const val COL_BUDGET_ID = "budget_id"
     }
 
-    object Categories {
-        const val TABLE_NAME = "categories"
+    object Budgets {
+        const val TABLE_NAME = "budgets"
 
         const val COL_ID = ID
         const val COL_NAME = "name"

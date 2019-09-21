@@ -14,19 +14,15 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.core.util
+package at.guger.moneybook.util
 
-import android.os.Build
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 
 /**
- * Utils for the core module.
+ * Common methods and fields.
  */
 object Utils {
 
-    fun isNougat() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-
-    /**
-     * Returns a regex pattern in the format of DD.MM.YYYY.
-     */
-    fun getShortDatePattern() = """\d{2}\.\d{2}\.\d{4}"""
+    val SHORT_DATE_FORMAT = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
 }

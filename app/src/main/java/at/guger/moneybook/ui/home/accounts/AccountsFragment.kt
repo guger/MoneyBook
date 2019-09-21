@@ -34,7 +34,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 /**
  * Fragment for [home view pager's][ViewPager2] accounts content.
  */
-class AccountsFragment private constructor() : BaseFragment() {
+class AccountsFragment : BaseFragment() {
 
     //region Variables
 

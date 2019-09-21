@@ -16,10 +16,10 @@
 
 package at.guger.moneybook.di
 
+import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.ui.home.HomeViewModel
+import at.guger.moneybook.ui.home.transaction.NewTransactionDialogFragmentViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
-import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 /**
@@ -28,5 +28,8 @@ import org.koin.dsl.module
 
 val appModule = module {
 
+    single { Preferences(get()) }
+
     viewModel { HomeViewModel(get(), get()) }
+    viewModel { NewTransactionDialogFragmentViewModel(get(), get(), get()) }
 }

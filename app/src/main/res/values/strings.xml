@@ -41,4 +41,18 @@
     <string name="Claim">Claim</string>
     <string name="Expense">Expense</string>
     <string name="Save">Save</string>
+    <string name="Value">Value</string>
+    <string name="Contacts">Contacts</string>
+    <string name="Notes">Notes</string>
+    <string name="Date">Date</string>
+    <string name="ChooseDate">Choose Date</string>
+    <string name="OpenCalculator">Open Calculator</string>
+    <string name="EmptyTransactionTitle">Please enter a title.</string>
+    <string name="InvalidTransactionDate">Please enter a valid date (DD.MM.YYYY).</string>
+    <string name="InvalidTransactionValue">Please enter a value greater than zero.</string>
+    <string name="Account">Account</string>
+    <string name="Budget">Budget</string>
+    <string name="Housekeeping">Housekeeping</string>
+    <string name="Leisure">Leisure</string>
+    <string name="Shopping">Shopping</string>
 </resources>

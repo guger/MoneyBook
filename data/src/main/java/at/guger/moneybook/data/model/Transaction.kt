@@ -30,7 +30,7 @@ import org.threeten.bp.LocalDate
 class Transaction(
     @Embedded val entity: TransactionEntity,
     @Relation(entity = Account::class, parentColumn = Database.Transactions.COL_ACCOUNT_ID, entityColumn = Database.Accounts.COL_ID) val account: Account? = null,
-    @Relation(entity = Category::class, parentColumn = Database.Transactions.COL_CATEGORY_ID, entityColumn = Database.Categories.COL_ID) val category: Category? = null,
+    @Relation(entity = Budget::class, parentColumn = Database.Transactions.COL_BUDGET_ID, entityColumn = Database.Budgets.COL_ID) val budget: Budget? = null,
     @Relation(entity = Contact::class, parentColumn = Database.Transactions.COL_ID, entityColumn = Database.Contacts.COL_TRANSACTION_ID) val contacts: List<Contact>? = null
 ) : Model {
 
@@ -63,9 +63,10 @@ class Transaction(
         @ColumnInfo(name = Database.Transactions.COL_NOTES) val notes: String = "",
         @ColumnInfo(name = Database.Transactions.COL_TYPE) @TransactionType val type: Int = TransactionType.EARNING,
         @ColumnInfo(name = Database.Transactions.COL_ACCOUNT_ID) val accountId: Long = Account.DEFAULT_ACCOUNT_ID,
-        @ColumnInfo(name = Database.Transactions.COL_CATEGORY_ID) val categoryId: Long? = null
+        @ColumnInfo(name = Database.Transactions.COL_BUDGET_ID) val budgetId: Long? = null
     ) : Model
 
+    @Target(AnnotationTarget.TYPE, AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.CLASS)
     @IntDef(value = [TransactionType.EARNING, TransactionType.EXPENSE, TransactionType.CLAIM, TransactionType.DEBT])
     @Retention(AnnotationRetention.SOURCE)
     annotation class TransactionType {

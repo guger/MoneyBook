@@ -27,20 +27,20 @@ import androidx.work.WorkRequest
 import at.guger.moneybook.data.Database.DATABASE_NAME
 import at.guger.moneybook.data.Database.DATABASE_VERSION
 import at.guger.moneybook.data.model.Account
-import at.guger.moneybook.data.model.Category
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.provider.local.converter.DateConverter
 import at.guger.moneybook.data.provider.local.dao.AccountsDao
-import at.guger.moneybook.data.provider.local.dao.CategoriesDao
+import at.guger.moneybook.data.provider.local.dao.BudgetsDao
 import at.guger.moneybook.data.provider.local.dao.ContactsDao
 import at.guger.moneybook.data.provider.local.dao.TransactionsDao
 
 /**
- * Local database for transactions, categories, contacts and reminders.
+ * Local database for transactions, budgets, contacts and reminders.
  */
 @Database(
-    entities = [Transaction.TransactionEntity::class, Account::class, Category::class, Contact::class],
+    entities = [Transaction.TransactionEntity::class, Account::class, Budget::class, Contact::class],
     version = DATABASE_VERSION,
     exportSchema = true
 )
@@ -49,7 +49,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     internal abstract fun transactionsDao(): TransactionsDao
     internal abstract fun accountsDao(): AccountsDao
-    internal abstract fun categoriesDao(): CategoriesDao
+    internal abstract fun budgetsDao(): BudgetsDao
     internal abstract fun contactsDao(): ContactsDao
 
     companion object {

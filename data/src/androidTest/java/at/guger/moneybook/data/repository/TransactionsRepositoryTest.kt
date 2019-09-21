@@ -20,7 +20,7 @@ import android.graphics.Color
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Account
-import at.guger.moneybook.data.model.Category
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.util.observeOnce
@@ -41,17 +41,17 @@ class TransactionsRepositoryTest : DatabaseTest() {
 
     private lateinit var transactionsRepository: TransactionsRepository
     private lateinit var accountsRepository: AccountsRepository
-    private lateinit var categoriesRepository: CategoriesRepository
+    private lateinit var budgetsRepository: BudgetsRepository
 
     @Before
     fun setUp() {
         transactionsRepository = TransactionsRepository(database)
         accountsRepository = AccountsRepository(database)
-        categoriesRepository = CategoriesRepository(database)
+        budgetsRepository = BudgetsRepository(database)
 
         runBlocking {
             accountsRepository.insert(Account(ACCOUNT_ID, ACCOUNT_NAME))
-            categoriesRepository.insert(Category(CATEGORY_ID, CATEGORY_NAME, CATEGORY_ICON, CATEGORY_COLOR))
+            budgetsRepository.insert(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_ICON, BUDGET_COLOR))
         }
     }
 
@@ -78,10 +78,10 @@ class TransactionsRepositoryTest : DatabaseTest() {
             assertThat(account?.id).isEqualTo(ACCOUNT_ID)
             assertThat(account?.name).isEqualTo(ACCOUNT_NAME)
 //            assertThat(account?.balance).isEqualTo(VALUE) TODO
-            assertThat(category?.id).isEqualTo(CATEGORY_ID)
-            assertThat(category?.name).isEqualTo(CATEGORY_NAME)
-            assertThat(category?.icon).isEqualTo(CATEGORY_ICON)
-            assertThat(category?.color).isEqualTo(CATEGORY_COLOR)
+            assertThat(budget?.id).isEqualTo(BUDGET_ID)
+            assertThat(budget?.name).isEqualTo(BUDGET_NAME)
+            assertThat(budget?.icon).isEqualTo(BUDGET_ICON)
+            assertThat(budget?.color).isEqualTo(BUDGET_COLOR)
             assertThat(contacts?.get(0)?.id).isEqualTo(CONTACT_ID)
             assertThat(contacts?.get(0)?.contactId).isEqualTo(CONTACT_CONTACT_ID)
             assertThat(contacts?.get(0)?.contactName).isEqualTo(CONTACT_NAME)
@@ -99,10 +99,10 @@ class TransactionsRepositoryTest : DatabaseTest() {
         private const val TYPE: Int = Transaction.TransactionType.EXPENSE
         private const val ACCOUNT_ID: Long = 18
         private const val ACCOUNT_NAME: String = "Test Account"
-        private const val CATEGORY_ID: Long = 22
-        private const val CATEGORY_NAME: String = "Test Category"
-        private const val CATEGORY_ICON: Int = 112
-        private const val CATEGORY_COLOR: Int = Color.BLUE
+        private const val BUDGET_ID: Long = 22
+        private const val BUDGET_NAME: String = "Test Budget"
+        private const val BUDGET_ICON: Int = 112
+        private const val BUDGET_COLOR: Int = Color.BLUE
         private const val CONTACT_ID: Long = 1
         private const val CONTACT_CONTACT_ID: Long = 1515
         private const val CONTACT_NAME: String = "Test Contact"
@@ -118,10 +118,10 @@ class TransactionsRepositoryTest : DatabaseTest() {
                 notes = NOTES,
                 type = TYPE,
                 accountId = ACCOUNT_ID,
-                categoryId = CATEGORY_ID
+                budgetId = BUDGET_ID
             ),
             account = Account(ACCOUNT_ID, ACCOUNT_NAME),
-            category = Category(CATEGORY_ID, CATEGORY_NAME, CATEGORY_ICON, CATEGORY_COLOR),
+            budget = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_ICON, BUDGET_COLOR),
             contacts = listOf(Contact(CONTACT_ID, CONTACT_CONTACT_ID, CONTACT_NAME, CONTACT_TRANSACTION_ID, CONTACT_PAID_STATE))
         )
     }

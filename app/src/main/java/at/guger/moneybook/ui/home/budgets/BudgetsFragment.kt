@@ -28,14 +28,12 @@ import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
 import at.guger.moneybook.core.util.ext.dimen
 import at.guger.moneybook.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
-import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Fragment for [home view pager's][ViewPager2] statistics content.
  */
-class BudgetsFragment private constructor() : BaseFragment() {
+class BudgetsFragment : BaseFragment() {
 
     //region Variables
 

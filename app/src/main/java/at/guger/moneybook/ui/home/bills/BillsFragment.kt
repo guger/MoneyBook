@@ -33,7 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 /**
  * Fragment for [home view pager's][ViewPager2] bills content.
  */
-class BillsFragment private constructor() : BaseFragment() {
+class BillsFragment : BaseFragment() {
 
     //region Variables
 

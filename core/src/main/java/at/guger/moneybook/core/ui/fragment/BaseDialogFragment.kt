@@ -17,28 +17,13 @@
 package at.guger.moneybook.core.ui.fragment
 
 import androidx.fragment.app.DialogFragment
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
  * Main dialog fragment class.
  */
 abstract class BaseDialogFragment : DialogFragment() {
 
-    protected val disposables by lazy { CompositeDisposable() }
-
     //region Fragment
-
-    override fun onPause() {
-        super.onPause()
-
-        disposables.clear()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        disposables.dispose()
-    }
 
     //endregion
 }

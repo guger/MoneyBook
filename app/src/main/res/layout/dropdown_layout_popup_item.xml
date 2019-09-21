@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2019 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
   ~    limitations under the License.
   -->
 
-<resources>
-
-    <style name="AppTheme.CalcDialogStyle" parent="CalcDialogStyle">
-        <item name="calcOperationBtnColor">?colorSurface</item>
-        <item name="calcDialogButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
-    </style>
-</resources>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:padding="16dp"
+    android:textAppearance="?textAppearanceSubtitle1" />
