@@ -35,9 +35,11 @@ import at.guger.moneybook.core.util.toEpochMilli
 import at.guger.moneybook.core.util.toLocalDate
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.DialogFragmentNewTransactionBinding
+import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.util.Utils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.maltaisn.calcdialog.CalcDialog
 import kotlinx.android.synthetic.main.dialog_fragment_new_transaction.*
@@ -102,6 +104,14 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
         btnNewTransactionChooseDate.setOnClickListener { showDatePicker() }
         btnNewTransactionOpenCalculator.setOnClickListener { showCalculator() }
 
+        val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable
+        bottomAppBarBackground.shapeAppearanceModel = bottomAppBarBackground.shapeAppearanceModel.toBuilder().setTopEdge(
+            BottomAppBarCutCornersTopEdge(
+                mBottomAppBar.fabCradleMargin,
+                mBottomAppBar.fabCradleRoundedCornerRadius,
+                mBottomAppBar.cradleVerticalOffset
+            )
+        ).build()
         mBottomAppBar.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
