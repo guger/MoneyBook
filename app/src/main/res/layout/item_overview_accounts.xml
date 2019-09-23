@@ -44,14 +44,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/item_content_margin"
-                android:text="@string/ZeroMoney"
                 android:textAppearance="?textAppearanceHeadline3"
                 android:textColor="?colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/txvOverviewAccountsTitle"
                 app:layout_constraintTop_toBottomOf="@+id/txvOverviewAccountsTitle"
-                app:transactions="@{viewModel.transactions}" />
+                app:transactions="@{viewModel.transactions}"
+                tools:text="€ 0,00" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mOverviewAccountsRecyclerView"
@@ -63,7 +63,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mOverviewAccountsDivider"
-                app:viewModel="@{viewModel}"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_account" />
 

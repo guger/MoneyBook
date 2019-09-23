@@ -98,7 +98,7 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
 
             if (!isChecked && !hasChecked) group.find<MaterialButton>(checkedId).isChecked = true
 
-            viewModel.onTransactionTypeChanged(checkedId)
+            if (isChecked) viewModel.onTransactionTypeChanged(checkedId)
         }
         mNewTransactionTypeToggleButtonGroup.check(R.id.btnNewTransactionTypeEarning)
 

@@ -19,6 +19,7 @@ package at.guger.moneybook.data.provider.local.dao
 import androidx.room.*
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.AccountWithBalance
+import at.guger.moneybook.data.model.Transaction
 
 /**
  * [Dao] method for querying [accounts][Account].
@@ -32,7 +33,10 @@ internal interface AccountsDao {
 
     @Query(
         """
-            SELECT accounts.*, (SELECT SUM(transactions.value) FROM transactions) AS balance FROM accounts
+            SELECT accounts.*, 
+            (SELECT SUM(CASE WHEN transactions.type = ${Transaction.TransactionType.EARNING} OR transactions.type = ${Transaction.TransactionType.CLAIM} THEN transactions.value 
+            ELSE -transactions.value END) FROM transactions) AS balance
+            FROM accounts
             LEFT JOIN transactions ON transactions.account_id = accounts.id
             GROUP BY accounts.id
         """

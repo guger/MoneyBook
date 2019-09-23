@@ -54,9 +54,11 @@ class OverviewFragment : BaseFragment() {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = OverviewAdapter(viewModel)
+            adapter = OverviewAdapter(viewModel, viewLifecycleOwner)
             addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
         }
+
+
     }
 
     //endregion

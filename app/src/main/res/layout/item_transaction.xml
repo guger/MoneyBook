@@ -56,8 +56,8 @@
             android:id="@+id/txvTransactionDetailValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{CurrencyFormat.INSTANCE.format(transaction.value)}"
             android:textAppearance="?textAppearanceBody1"
+            app:currency="@{transaction.value}"
             app:layout_constraintBottom_toBottomOf="@+id/txvTransactionDetailDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txvTransactionDetailTitle"
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha=".75"
-            android:text='@{(transaction.type == TransactionType.EARNING || transaction.type == TransactionType.EXPENSE) ? "+$" : "-$"}'
+            android:text='@{(transaction.type == TransactionType.EARNING || transaction.type == TransactionType.CLAIM) ? "+$" : "-$"}'
             android:textAppearance="?textAppearanceBody1"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

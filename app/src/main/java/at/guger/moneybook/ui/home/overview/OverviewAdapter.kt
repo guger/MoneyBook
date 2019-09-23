@@ -19,27 +19,27 @@ package at.guger.moneybook.ui.home.overview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
+import at.guger.moneybook.databinding.ItemOverviewAccountsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.home.overview.accounts.OverviewAccountsViewHolder
 
 /**
  * [RecyclerView.Adapter] showing an overview of all account balances.
  */
-class OverviewAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapter<BindingViewHolder<*, HomeViewModel>>() {
+class OverviewAdapter(private val viewModel: HomeViewModel, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<BindingViewHolder<*, HomeViewModel>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<*, HomeViewModel> {
         return when (viewType) {
-            OVERVIEW_ACCOUNTS -> OverviewAccountsViewHolder(
-                DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.item_overview_accounts,
-                    parent,
-                    false
-                )
-            )
+            OVERVIEW_ACCOUNTS -> {
+                val binding: ItemOverviewAccountsBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_accounts, parent, false)
+                binding.lifecycleOwner = lifecycleOwner
+
+                OverviewAccountsViewHolder(binding)
+            }
             OVERVIEW_DUES -> TODO()
             OVERVIEW_PLANNING -> TODO()
             else -> throw IllegalArgumentException("This type of view holder does not exist.")

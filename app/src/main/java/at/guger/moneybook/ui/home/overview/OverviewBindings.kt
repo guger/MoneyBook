@@ -18,27 +18,23 @@ package at.guger.moneybook.ui.home.overview
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LiveData
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.formatter.CurrencyFormat
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.ui.home.HomeViewModel
-import at.guger.moneybook.ui.home.overview.accounts.OverviewAccountsListAdapter
 
 /**
  * Binding adapters for the overview screen.
  */
 
 @BindingAdapter("transactions", requireAll = true)
-fun TextView.setTransactions(transactions: LiveData<List<Transaction>>) {
-    transactions.observeForever { setCurrency(it.sumByDouble { transaction -> transaction.value }) }
-}
-
-@BindingAdapter("viewModel", requireAll = true)
-fun RecyclerView.setAccounts(viewModel: HomeViewModel) {
-    layoutManager = LinearLayoutManager(context)
-    adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.accountsWithBalance.observeForever(::submitList) }
+fun TextView.setTransactions(transactions: List<Transaction>?) {
+    transactions?.let {
+        setCurrency(it.sumByDouble { transaction ->
+            when (transaction.type) {
+                Transaction.TransactionType.EARNING -> transaction.value
+                else -> transaction.value.unaryMinus()
+            }
+        })
+    }
 }
 
 @BindingAdapter("currency", requireAll = true)
