@@ -18,6 +18,7 @@ package at.guger.moneybook.data.provider.local.dao
 
 import androidx.room.*
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.AccountWithBalance
 
 /**
  * [Dao] method for querying [accounts][Account].
@@ -27,6 +28,16 @@ internal interface AccountsDao {
 
     @Query("SELECT * FROM accounts")
     suspend fun getAccounts(): List<Account>
+
+
+    @Query(
+        """
+            SELECT accounts.*, (SELECT SUM(transactions.value) FROM transactions) AS balance FROM accounts
+            LEFT JOIN transactions ON transactions.account_id = accounts.id
+            GROUP BY accounts.id
+        """
+    )
+    suspend fun getAccountsWithBalance(): List<AccountWithBalance>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(account: Account)

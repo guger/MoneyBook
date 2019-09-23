@@ -67,6 +67,7 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/item_account" />
 
+            <!--TODO -->
             <at.guger.moneybook.core.ui.widget.VisualizeDividerView
                 android:id="@+id/mOverviewAccountsDivider"
                 android:layout_width="match_parent"

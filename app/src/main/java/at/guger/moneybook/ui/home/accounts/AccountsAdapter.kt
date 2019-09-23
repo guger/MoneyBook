@@ -23,14 +23,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
-import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
- * [RecyclerView.Adapter] showing all accounts and details.
+ * [RecyclerView.Adapter] showing all accountsWithBalance and details.
  */
-class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<Account, AccountViewHolder>(AccountsDiffCallback()) {
+class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<AccountWithBalance, AccountViewHolder>(AccountsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
         return AccountViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_account, parent, false), viewModel)
@@ -40,12 +39,12 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<Accoun
         holder.bind(getItem(position))
     }
 
-    class AccountsDiffCallback : DiffUtil.ItemCallback<Account>() {
-        override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
+    class AccountsDiffCallback : DiffUtil.ItemCallback<AccountWithBalance>() {
+        override fun areItemsTheSame(oldItem: AccountWithBalance, newItem: AccountWithBalance): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Account, newItem: Account): Boolean {
+        override fun areContentsTheSame(oldItem: AccountWithBalance, newItem: AccountWithBalance): Boolean {
             return oldItem == newItem
         }
     }

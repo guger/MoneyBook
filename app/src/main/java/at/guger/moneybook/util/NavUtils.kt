@@ -16,13 +16,22 @@
 
 package at.guger.moneybook.util
 
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.FormatStyle
+import androidx.navigation.NavDestination
 
 /**
- * Common methods and fields.
+ * Navigation utils.
  */
-object Utils {
+object NavUtils {
 
-    val MEDIUM_DATE_FORMAT = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+    fun matchDestinations(destination: NavDestination, destinationIds: Set<Int>): Boolean {
+        var currentDestination: NavDestination? = destination
+        do {
+            if (destinationIds.contains(currentDestination!!.id)) {
+                return true
+            }
+            currentDestination = currentDestination.parent
+        } while (currentDestination != null)
+
+        return false
+    }
 }

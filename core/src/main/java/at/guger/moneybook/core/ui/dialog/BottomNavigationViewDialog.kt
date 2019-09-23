@@ -33,12 +33,6 @@ import kotlinx.android.synthetic.main.dialog_bottom_navigation_view.*
  */
 class BottomNavigationViewDialog(@MenuRes private val menuRes: Int, private val navController: NavController) : BottomSheetDialogFragment() {
 
-    //region Variables
-
-    private var onNavigationItemSelectedListener: NavigationView.OnNavigationItemSelectedListener? = null
-
-    //endregion
-
     //region BottomSheetDialogFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

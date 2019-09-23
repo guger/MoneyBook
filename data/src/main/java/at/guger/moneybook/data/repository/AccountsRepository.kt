@@ -16,8 +16,8 @@
 
 package at.guger.moneybook.data.repository
 
-import androidx.lifecycle.LiveData
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.AccountsDao
 
@@ -36,6 +36,10 @@ class AccountsRepository(database: AppDatabase) {
 
     suspend fun getAccounts(): List<Account> {
         return accountsDao.getAccounts()
+    }
+
+    suspend fun getAccountsWithBalance(): List<AccountWithBalance> {
+        return accountsDao.getAccountsWithBalance()
     }
 
     suspend fun insert(account: Account) {

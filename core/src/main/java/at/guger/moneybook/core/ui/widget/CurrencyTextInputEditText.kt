@@ -51,13 +51,14 @@ class CurrencyTextInputEditText @JvmOverloads constructor(context: Context? = nu
 
     fun getDecimalNumber() = parseNumber(text?.toString())
 
+    private fun parseNumber(text: String?) = text?.replace(",", ".")?.toDoubleOrNull() ?: 0.0
+
+
     companion object {
         val CURRENCY_FORMAT: NumberFormat = DecimalFormat.getInstance().apply {
             isGroupingUsed = false
             minimumFractionDigits = 2
             maximumFractionDigits = 2
         }
-
-        fun parseNumber(text: String?) = text?.replace(",", ".")?.toDoubleOrNull() ?: 0.0
     }
 }

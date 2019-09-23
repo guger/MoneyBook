@@ -53,6 +53,20 @@ class Transaction(
     val type: Int
         get() = entity.type
 
+    override fun equals(other: Any?): Boolean {
+        return other is Transaction && other.id == id && other.title == title && other.date == date &&
+                other.value == value && other.notes == notes && other.type == type && other.account == account &&
+                other.budget == budget && other.contacts == contacts
+    }
+
+    override fun hashCode(): Int {
+        var result = entity.hashCode()
+        result = 31 * result + (account?.hashCode() ?: 0)
+        result = 31 * result + (budget?.hashCode() ?: 0)
+        result = 31 * result + (contacts?.hashCode() ?: 0)
+        return result
+    }
+
     @Parcelize
     @Entity(tableName = Database.Transactions.TABLE_NAME)
     data class TransactionEntity(

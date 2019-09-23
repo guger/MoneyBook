@@ -18,16 +18,16 @@ package at.guger.moneybook.ui.home.accounts
 
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
-import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.databinding.ItemAccountBinding
 import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.ViewHolder] for an account item.
  */
-class AccountViewHolder(binding: ItemAccountBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemAccountBinding, Account>(binding) {
+class AccountViewHolder(binding: ItemAccountBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemAccountBinding, AccountWithBalance>(binding) {
 
-    override fun bind(model: Account) {
+    override fun bind(model: AccountWithBalance) {
         binding.viewModel = viewModel
         binding.account = model
         binding.executePendingBindings()

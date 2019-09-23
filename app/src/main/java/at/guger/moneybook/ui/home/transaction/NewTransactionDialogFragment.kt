@@ -50,7 +50,7 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 
 /**
- * Dialog fragment for creating a new [transaction][Transaction].
+ * Dialog fragment for creating a new [transactions][Transaction].
  */
 class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.CalcDialogCallback {
 
@@ -116,24 +116,24 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
     }
 
     private fun setupEvents() {
-        viewModel.accounts.observe(this, Observer { accounts ->
+        viewModel.accounts.observe(viewLifecycleOwner, Observer { accounts ->
             edtNewTransactionAccount.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
             edtNewTransactionAccount.setText(accounts.first().name)
         })
-        viewModel.budgets.observe(this, Observer { budgets ->
+        viewModel.budgets.observe(viewLifecycleOwner, Observer { budgets ->
             edtNewTransactionBudget.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, budgets.map { it.name }))
         })
 
-        viewModel.showDatePicker.observe(this, EventObserver { showDatePicker() })
-        viewModel.showCalculator.observe(this, EventObserver { showCalculator() })
+        viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { showDatePicker() })
+        viewModel.showCalculator.observe(viewLifecycleOwner, EventObserver { showCalculator() })
 
-        viewModel.snackbarMessage.observe(this, EventObserver {
+        viewModel.snackbarMessage.observe(viewLifecycleOwner, EventObserver {
             Snackbar.make(mBottomAppBar, it, Snackbar.LENGTH_LONG)
                 .setAnchorView(fabNewTransactionSave)
                 .show()
         })
 
-        viewModel.transactionSaved.observe(this, Observer { dismiss() })
+        viewModel.transactionSaved.observe(viewLifecycleOwner, Observer { dismiss() })
     }
 
     private fun showDatePicker() {
@@ -142,7 +142,7 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
             .setSelection(LocalDate.now().toEpochMilli())
             .build()
 
-        datePickerDialog.addOnPositiveButtonClickListener { viewModel.transactionDate.value = it.toLocalDate().format(Utils.SHORT_DATE_FORMAT) }
+        datePickerDialog.addOnPositiveButtonClickListener { viewModel.transactionDate.value = it.toLocalDate().format(Utils.MEDIUM_DATE_FORMAT) }
 
         datePickerDialog.show(childFragmentManager, null)
     }

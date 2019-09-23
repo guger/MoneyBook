@@ -24,7 +24,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.Event
-import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
@@ -33,7 +32,7 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
-import at.guger.moneybook.util.Utils.SHORT_DATE_FORMAT
+import at.guger.moneybook.util.Utils.MEDIUM_DATE_FORMAT
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 
@@ -113,8 +112,8 @@ class NewTransactionDialogFragmentViewModel(
         if (validateForm(title, date, value)) {
             val transactionEntity = Transaction.TransactionEntity(
                 title = title!!,
-                date = LocalDate.parse(date, SHORT_DATE_FORMAT),
-                value = CurrencyTextInputEditText.parseNumber(value!!),
+                date = LocalDate.parse(date, MEDIUM_DATE_FORMAT),
+                value = parseNumber(value!!),
                 notes = notes,
                 type = type,
                 accountId = account.id,
@@ -149,7 +148,7 @@ class NewTransactionDialogFragmentViewModel(
             return false
         }
 
-        if (value?.toDoubleOrNull() ?: 0.0 <= 0) {
+        if (parseNumber(value) <= 0) {
             _snackbarMessage.value = Event(R.string.InvalidTransactionValue)
 
             return false
@@ -157,4 +156,6 @@ class NewTransactionDialogFragmentViewModel(
 
         return true
     }
+
+    private fun parseNumber(text: String?) = text?.replace(",", ".")?.toDoubleOrNull() ?: 0.0
 }

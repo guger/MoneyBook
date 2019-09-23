@@ -26,6 +26,7 @@ import androidx.navigation.findNavController
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.activity.BaseActivity
 import at.guger.moneybook.core.ui.dialog.BottomNavigationViewDialog
+import at.guger.moneybook.util.NavUtils
 import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -38,6 +39,8 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
+    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.manageFragment, R.id.settingsFragment)
+
     //endregion
 
     //region Activity
@@ -48,12 +51,17 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
         setSupportActionBar(mBottomAppBar)
 
-        mBottomAppBar.setNavigationOnClickListener { BottomNavigationViewDialog(R.menu.menu_nav, navController).show(supportFragmentManager, null) }
         mBottomAppBar.setOnMenuItemClickListener(this)
+        mBottomAppBar.setNavigationOnClickListener {
+            if (NavUtils.matchDestinations(navController.currentDestination!!, topLevelDestinations)) {
+                BottomNavigationViewDialog(R.menu.menu_nav, navController).show(supportFragmentManager, null)
+            } else {
+                navController.navigateUp()
+            }
+        }
 
         navController.addOnDestinationChangedListener(this)
     }
-
 
     //endregion
 
@@ -68,6 +76,17 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     //endregion
 
     //region Methods
+
+    /**
+     * Workaround for using a [BottomNavigationViewDialog], since navigation component suppresses the hamburger icon when there's no drawer layout.
+     */
+    private fun prepareAppBar(destination: NavDestination) {
+        if (NavUtils.matchDestinations(destination, topLevelDestinations)) {
+            mBottomAppBar.setNavigationIcon(R.drawable.ic_menu)
+        } else {
+            mBottomAppBar.setNavigationIcon(R.drawable.ic_back)
+        }
+    }
 
     private fun prepareMenu(bottomAppBar: BottomAppBar) {
         val menuId = when (navController.currentDestination?.id) {
@@ -90,6 +109,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     }
 
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        prepareAppBar(destination)
         prepareMenu(mBottomAppBar)
     }
 

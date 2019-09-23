@@ -20,6 +20,17 @@
     android:id="@+id/nav_main"
     app:startDestination="@id/homeFragment">
 
+    <dialog
+        android:id="@+id/newTransactionDialogFragment"
+        android:name="at.guger.moneybook.ui.home.transaction.NewTransactionDialogFragment"
+        android:label="@string/NewTransaction"
+        tools:layout="@layout/dialog_fragment_new_transaction" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="at.guger.moneybook.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="at.guger.moneybook.ui.home.HomeFragment"
@@ -27,16 +38,22 @@
         <action
             android:id="@+id/action_homeFragment_to_newTransactionDialogFragment"
             app:destination="@id/newTransactionDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_accountDetailFragment"
+            app:destination="@id/accountDetailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="at.guger.moneybook.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:id="@+id/accountDetailFragment"
+        android:name="at.guger.moneybook.ui.home.accounts.detail.AccountDetailFragment"
+        android:label="AccountDetailFragment"
+        tools:layout="@layout/fragment_account_detail">
 
-    <dialog
-        android:id="@+id/newTransactionDialogFragment"
-        android:name="at.guger.moneybook.ui.home.transaction.NewTransactionDialogFragment"
-        android:label="@string/NewTransaction"
-        tools:layout="@layout/dialog_fragment_new_transaction" />
+        <action
+            android:id="@+id/action_accountDetailFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="accountId"
+            app:argType="long" />
+    </fragment>
 </navigation>

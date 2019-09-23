@@ -63,12 +63,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            android:text="@string/ZeroMoney"
+            android:text="@{CurrencyFormat.INSTANCE.format(account.balance)}"
             android:textAppearance="?textAppearanceBody1"
             app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
             app:layout_constraintEnd_toStartOf="@+id/btnOverviewAccountsAccountShowAccount"
-            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName" />
-        <!--TODO balance-->
+            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName"
+            tools:text="€ 0.00" />
+
         <View
             android:id="@+id/itemDecoration"
             android:layout_width="4dp"
@@ -98,12 +99,14 @@
 
     <data>
 
+        <import type="at.guger.moneybook.core.formatter.CurrencyFormat" />
+
         <variable
             name="viewModel"
             type="at.guger.moneybook.ui.home.HomeViewModel" />
 
         <variable
             name="account"
-            type="at.guger.moneybook.data.model.Account" />
+            type="at.guger.moneybook.data.model.AccountWithBalance" />
     </data>
 </layout>

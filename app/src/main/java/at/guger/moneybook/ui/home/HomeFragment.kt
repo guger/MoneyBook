@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.TooltipCompat
@@ -98,7 +97,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupEventListeners() {
-        viewModel.navigateToPage.observe(this, EventObserver { destination ->
+        viewModel.navigateToPage.observe(viewLifecycleOwner, EventObserver { destination ->
             val destinationIndex = when (destination) {
                 Destination.OVERVIEW -> 0
                 Destination.ACCOUNTS -> 1
@@ -109,8 +108,8 @@ class HomeFragment : BaseFragment() {
             mHomeViewPager.setCurrentItem(destinationIndex, true)
         })
 
-        viewModel.showAccount.observe(this, EventObserver { account ->
-            Toast.makeText(requireContext(), "${account.name} should be opened.", Toast.LENGTH_SHORT).show()
+        viewModel.showAccount.observe(viewLifecycleOwner, EventObserver { accountId ->
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAccountDetailFragment(accountId))
         })
     }
 

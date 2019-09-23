@@ -38,7 +38,7 @@ fun TextView.setTransactions(transactions: LiveData<List<Transaction>>) {
 @BindingAdapter("viewModel", requireAll = true)
 fun RecyclerView.setAccounts(viewModel: HomeViewModel) {
     layoutManager = LinearLayoutManager(context)
-    adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.accounts.observeForever(::submitList) }
+    adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.accountsWithBalance.observeForever(::submitList) }
 }
 
 @BindingAdapter("currency", requireAll = true)

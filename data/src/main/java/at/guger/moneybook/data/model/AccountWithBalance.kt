@@ -17,8 +17,8 @@
 package at.guger.moneybook.data.model
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import at.guger.moneybook.data.Database
 import at.guger.moneybook.data.model.base.Model
 import kotlinx.android.parcel.Parcelize
@@ -28,12 +28,14 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 @Entity(tableName = Database.Accounts.TABLE_NAME)
-data class Account(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Accounts.COL_ID) val id: Long = 0,
-    @ColumnInfo(name = Database.Accounts.COL_NAME) val name: String = ""
+data class AccountWithBalance(
+    @Embedded val account: Account = Account(),
+    @ColumnInfo(name = Database.Accounts.COL_BALANCE) val balance: Double = 0.0
 ) : Model {
 
-    companion object {
-        const val DEFAULT_ACCOUNT_ID = -1L
-    }
+    val id: Long
+        get() = account.id
+
+    val name: String
+        get() = account.name
 }

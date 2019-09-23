@@ -37,12 +37,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewPieChart" />
+        app:layout_constraintTop_toBottomOf="@+id/mRecyclerViewPieChart"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_account" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/mRecyclerViewPieChart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/default_chart_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

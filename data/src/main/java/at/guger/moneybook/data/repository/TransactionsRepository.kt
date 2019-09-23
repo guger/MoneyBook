@@ -36,6 +36,10 @@ class TransactionsRepository(database: AppDatabase) {
 
     //region Methods
 
+    suspend fun get(id: Long): Transaction = transactionsDao.get(id)
+
+    suspend fun getByAccount(accountId: Long) = transactionsDao.getByAccount(accountId)
+
     suspend fun getTransactions(): List<Transaction> = transactionsDao.getTransactions()
 
     fun getObservableTransactions(): LiveData<List<Transaction>> = transactionsDao.getObservableTransactions()

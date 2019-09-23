@@ -18,7 +18,6 @@ package at.guger.moneybook.data.provider.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 
 /**
@@ -26,6 +25,14 @@ import at.guger.moneybook.data.model.Transaction
  */
 @Dao
 internal interface TransactionsDao {
+
+    @androidx.room.Transaction
+    @Query("SELECT transactions.* FROM transactions WHERE id = :id")
+    suspend fun get(id: Long): Transaction
+
+    @androidx.room.Transaction
+    @Query("SELECT transactions.* FROM transactions WHERE account_id = :accountId")
+    suspend fun getByAccount(accountId: Long): List<Transaction>
 
     @androidx.room.Transaction
     @Query("SELECT transactions.* FROM transactions")

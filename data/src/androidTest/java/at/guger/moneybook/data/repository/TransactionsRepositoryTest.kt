@@ -51,7 +51,7 @@ class TransactionsRepositoryTest : DatabaseTest() {
 
         runBlocking {
             accountsRepository.insert(Account(ACCOUNT_ID, ACCOUNT_NAME))
-            budgetsRepository.insert(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_ICON, BUDGET_COLOR))
+            budgetsRepository.insert(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_COLOR))
         }
     }
 
@@ -77,10 +77,8 @@ class TransactionsRepositoryTest : DatabaseTest() {
             assertThat(type).isEqualTo(TYPE)
             assertThat(account?.id).isEqualTo(ACCOUNT_ID)
             assertThat(account?.name).isEqualTo(ACCOUNT_NAME)
-//            assertThat(account?.balance).isEqualTo(VALUE) TODO
             assertThat(budget?.id).isEqualTo(BUDGET_ID)
             assertThat(budget?.name).isEqualTo(BUDGET_NAME)
-            assertThat(budget?.icon).isEqualTo(BUDGET_ICON)
             assertThat(budget?.color).isEqualTo(BUDGET_COLOR)
             assertThat(contacts?.get(0)?.id).isEqualTo(CONTACT_ID)
             assertThat(contacts?.get(0)?.contactId).isEqualTo(CONTACT_CONTACT_ID)
@@ -101,7 +99,6 @@ class TransactionsRepositoryTest : DatabaseTest() {
         private const val ACCOUNT_NAME: String = "Test Account"
         private const val BUDGET_ID: Long = 22
         private const val BUDGET_NAME: String = "Test Budget"
-        private const val BUDGET_ICON: Int = 112
         private const val BUDGET_COLOR: Int = Color.BLUE
         private const val CONTACT_ID: Long = 1
         private const val CONTACT_CONTACT_ID: Long = 1515
@@ -121,7 +118,7 @@ class TransactionsRepositoryTest : DatabaseTest() {
                 budgetId = BUDGET_ID
             ),
             account = Account(ACCOUNT_ID, ACCOUNT_NAME),
-            budget = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_ICON, BUDGET_COLOR),
+            budget = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_COLOR),
             contacts = listOf(Contact(CONTACT_ID, CONTACT_CONTACT_ID, CONTACT_NAME, CONTACT_TRANSACTION_ID, CONTACT_PAID_STATE))
         )
     }

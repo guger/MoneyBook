@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2019 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,4 +17,7 @@
 <resources>
     <dimen name="item_content_margin">16dp</dimen>
     <dimen name="recyclerview_item_spacing">4dp</dimen>
+
+    <dimen name="default_chart_height">225dp</dimen>
+    <dimen name="item_padding">12dp</dimen>
 </resources>

@@ -18,18 +18,25 @@ package at.guger.moneybook.core.ui.recyclerview.decoration
 
 import android.graphics.Rect
 import android.view.View
+import androidx.annotation.Dimension
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 /**
- * [ItemDecoration] for [RecyclerView] creating blank space surrounding the item.
+ * [ItemDecoration] for [RecyclerView] creating blank left surrounding the item.
  */
-class SpacesItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
+class SpacesItemDecoration(
+    @Dimension private val all: Int = 0,
+    @Dimension private val left: Int = all,
+    @Dimension private val top: Int = all,
+    @Dimension private val right: Int = all,
+    @Dimension private val bottom: Int = all
+) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        outRect.bottom = if (parent.getChildAdapterPosition(view) == 0) space / 2 else space
-        outRect.top = if (parent.getChildAdapterPosition(view) == 0) space / 2 else space
-        outRect.right = space
-        outRect.left = space
+        outRect.bottom = if (parent.getChildAdapterPosition(view) == 0) bottom / 2 else bottom
+        outRect.top = if (parent.getChildAdapterPosition(view) == 0) top / 2 else top
+        outRect.right = right
+        outRect.left = left
     }
 }

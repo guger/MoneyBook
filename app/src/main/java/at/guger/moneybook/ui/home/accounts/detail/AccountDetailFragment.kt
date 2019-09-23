@@ -14,55 +14,52 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.accounts
+package at.guger.moneybook.ui.home.accounts.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
-import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
-import at.guger.moneybook.core.util.ext.dimen
-import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.Transaction
+import kotlinx.android.synthetic.main.fragment_account_detail.*
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 /**
- * Fragment for [home view pager's][ViewPager2] accountsWithBalance content.
+ * Fragment displaying the [transactions][Transaction] of an [account][Account].
  */
-class AccountsFragment : BaseFragment() {
+class AccountDetailFragment : BaseFragment() {
 
     //region Variables
 
-    private val viewModel: HomeViewModel by sharedViewModel()
+    private val args: AccountDetailFragmentArgs by navArgs()
+
+    private val viewModel: AccountDetailViewModel by inject { parametersOf(args.accountId) }
 
     //endregion
 
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_piechart_recyclerview, container, false)
+        return inflater.inflate(R.layout.fragment_account_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(mRecyclerView) {
+        with(mAccountDetailRecyclerView) {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = AccountsAdapter(viewModel).apply { viewModel.accountsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
-            addItemDecoration(SpacesItemDecoration(all = context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
+            adapter = AccountsDetailTransactionsListAdapter(viewModel).apply { viewModel.transactions.observe(viewLifecycleOwner, Observer(::submitList)) }
         }
     }
 
     //endregion
-
-    companion object {
-        fun instantiate(): AccountsFragment = AccountsFragment()
-    }
 }
