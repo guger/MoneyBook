@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
+import androidx.core.view.postDelayed
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -137,12 +138,17 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
     }
 
     private fun showDatePicker() {
+        val today = LocalDate.now().toEpochMilli()
+
         val datePickerDialog = MaterialDatePicker.Builder.datePicker()
             .setTitleTextResId(R.string.ChooseDate)
-            .setSelection(LocalDate.now().toEpochMilli())
+            .setSelection(today)
             .build()
 
-        datePickerDialog.addOnPositiveButtonClickListener { viewModel.transactionDate.value = it.toLocalDate().format(Utils.MEDIUM_DATE_FORMAT) }
+        datePickerDialog.addOnPositiveButtonClickListener {
+            viewModel.transactionDate.value = it.toLocalDate().format(Utils.MEDIUM_DATE_FORMAT)
+            edtNewTransactionDate.postDelayed(25) { edtNewTransactionDate.apply { setSelection(text?.length ?: 0) } }
+        }
 
         datePickerDialog.show(childFragmentManager, null)
     }
@@ -167,6 +173,7 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
 
     override fun onValueEntered(requestCode: Int, value: BigDecimal?) {
         viewModel.transactionValue.value = value?.toDouble()?.let { CurrencyTextInputEditText.CURRENCY_FORMAT.format(it) }
+        edtNewTransactionValue.postDelayed(25) { edtNewTransactionValue.apply { setSelection(text?.length ?: 0) } }
     }
 
     //endregion
