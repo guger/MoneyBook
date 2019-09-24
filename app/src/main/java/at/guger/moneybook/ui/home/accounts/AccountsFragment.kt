@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
- * Fragment for [home view pager's][ViewPager2] accountsWithBalance content.
+ * Fragment for [home view pager's][ViewPager2] coloredAccounts content.
  */
 class AccountsFragment : BaseFragment() {
 
@@ -55,7 +55,7 @@ class AccountsFragment : BaseFragment() {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = AccountsAdapter(viewModel).apply { viewModel.accountsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
+            adapter = AccountsAdapter(viewModel).apply { viewModel.coloredAccounts.observe(viewLifecycleOwner, Observer(::submitList)) }
             addItemDecoration(SpacesItemDecoration(all = context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
         }
     }

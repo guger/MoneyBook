@@ -20,7 +20,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import kotlinx.coroutines.launch
 
@@ -29,10 +31,14 @@ import kotlinx.coroutines.launch
  */
 class AccountDetailViewModel(
     private val transactionsRepository: TransactionsRepository,
+    private val accountsRepository: AccountsRepository,
     private val accountId: Long
 ) : ViewModel() {
 
     //region Variables
+
+    private val _account = MutableLiveData<Account>()
+    val account: LiveData<Account> = _account
 
     private val _transactions = MutableLiveData<List<Transaction>>()
     val transactions: LiveData<List<Transaction>> = _transactions
@@ -41,6 +47,8 @@ class AccountDetailViewModel(
 
     init {
         viewModelScope.launch {
+            _account.value = accountsRepository.get(accountId)
+
             _transactions.value = transactionsRepository.getByAccount(accountId)
         }
     }

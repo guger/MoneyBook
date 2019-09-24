@@ -32,6 +32,6 @@ val appModule = module {
     single { Preferences(get()) }
 
     viewModel { HomeViewModel(get(), get()) }
-    viewModel { (accountId: Long) -> AccountDetailViewModel(get(), accountId) }
+    viewModel { (accountId: Long) -> AccountDetailViewModel(get(), get(), accountId) }
     viewModel { NewTransactionDialogFragmentViewModel(get(), get(), get()) }
 }

@@ -40,7 +40,7 @@
             android:textAppearance="?textAppearanceSubtitle1"
             app:layout_constraintEnd_toStartOf="@+id/txvOverviewAccountsAccountBalance"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/itemDecoration"
+            app:layout_constraintStart_toEndOf="@+id/mAccountColor"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Account title" />
 
@@ -71,13 +71,14 @@
             tools:text="€ 0.00" />
 
         <View
-            android:id="@+id/itemDecoration"
+            android:id="@+id/mAccountColor"
             android:layout_width="4dp"
             android:layout_height="0dp"
-            android:background="?colorPrimary"
+            android:background="@{accountColor}"
             app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName" />
+            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName"
+            tools:background="?colorPrimary" />
 
         <at.guger.moneybook.core.ui.widget.SquareImageButton
             android:id="@+id/btnOverviewAccountsAccountShowAccount"
@@ -108,5 +109,9 @@
         <variable
             name="account"
             type="at.guger.moneybook.data.model.AccountWithBalance" />
+
+        <variable
+            name="accountColor"
+            type="Integer" />
     </data>
 </layout>

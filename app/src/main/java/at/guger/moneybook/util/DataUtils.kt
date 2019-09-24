@@ -35,4 +35,13 @@ object DataUtils {
         Budget(id = -99, name = context.getString(R.string.Leisure), color = Color.parseColor("#1e88e5")),
         Budget(id = -98, name = context.getString(R.string.Shopping), color = Color.parseColor("#00bcd4"))
     )
+
+    fun getAccountColors(): Array<Int> {
+        return arrayOf(
+            Color.parseColor("#37efba"),
+            Color.parseColor("#1eb980"),
+            Color.parseColor("#007d51"),
+            Color.parseColor("#005d57")
+        )
+    }
 }

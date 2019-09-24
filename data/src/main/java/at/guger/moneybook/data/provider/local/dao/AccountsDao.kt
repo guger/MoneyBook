@@ -27,9 +27,11 @@ import at.guger.moneybook.data.model.Transaction
 @Dao
 internal interface AccountsDao {
 
+    @Query("SELECT * FROM accounts WHERE id = :id")
+    suspend fun get(id: Long): Account
+
     @Query("SELECT * FROM accounts")
     suspend fun getAccounts(): List<Account>
-
 
     @Query(
         """

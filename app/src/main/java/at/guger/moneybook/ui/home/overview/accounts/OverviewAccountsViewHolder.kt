@@ -25,7 +25,7 @@ import at.guger.moneybook.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.item_overview_accounts.*
 
 /**
- * [RecyclerView.ViewHolder] for an accountsWithBalance overview item.
+ * [RecyclerView.ViewHolder] for an coloredAccounts overview item.
  */
 class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : BindingViewHolder<ItemOverviewAccountsBinding, HomeViewModel>(binding) {
 
@@ -33,9 +33,14 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
+        viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, Observer { coloredAccounts ->
+            val balanceSum = coloredAccounts.sumByDouble { it.account.balance }
+            mOverviewAccountsDivider.setColorDistribution(coloredAccounts.map { it.color }, coloredAccounts.map { (100 / balanceSum * it.account.balance).toFloat() })
+        })
+
         with(mOverviewAccountsRecyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.accountsWithBalance.observe(binding.lifecycleOwner!!, Observer(::submitList)) }
+            adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, Observer(::submitList)) }
         }
     }
 

@@ -25,6 +25,7 @@ import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
+import at.guger.moneybook.util.DataUtils
 import kotlinx.coroutines.launch
 
 /**
@@ -37,8 +38,8 @@ class HomeViewModel(private val transactionsRepository: TransactionsRepository, 
     private val _transactions = MutableLiveData<List<Transaction>>()
     val transactions: LiveData<List<Transaction>> = _transactions
 
-    private val _accountsWithBalance = MutableLiveData<List<AccountWithBalance>>()
-    val accountsWithBalance: LiveData<List<AccountWithBalance>> = _accountsWithBalance
+    private val _coloredAccounts = MutableLiveData<List<ColoredAccount>>()
+    val coloredAccounts: LiveData<List<ColoredAccount>> = _coloredAccounts
 
     private val _navigateToPage = MutableLiveData<Event<HomeFragment.Destination>>()
     val navigateToPage: LiveData<Event<HomeFragment.Destination>> = _navigateToPage
@@ -49,9 +50,11 @@ class HomeViewModel(private val transactionsRepository: TransactionsRepository, 
     //endregion
 
     init {
+        val colors = DataUtils.getAccountColors()
+
         viewModelScope.launch {
             _transactions.value = transactionsRepository.getTransactions()
-            _accountsWithBalance.value = accountsRepository.getAccountsWithBalance()
+            _coloredAccounts.value = accountsRepository.getAccountsWithBalance().mapIndexed { index, accountWithBalance -> ColoredAccount(accountWithBalance, colors[index]) }
         }
     }
 

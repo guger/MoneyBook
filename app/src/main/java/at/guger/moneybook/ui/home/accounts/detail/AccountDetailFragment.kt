@@ -53,6 +53,8 @@ class AccountDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.account.observe(viewLifecycleOwner, Observer { requireAppCompatActivity().supportActionBar!!.title = it.name })
+
         with(mAccountDetailRecyclerView) {
             setHasFixedSize(true)
 

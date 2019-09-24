@@ -57,8 +57,6 @@ class OverviewFragment : BaseFragment() {
             adapter = OverviewAdapter(viewModel, viewLifecycleOwner)
             addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
         }
-
-
     }
 
     //endregion

@@ -26,7 +26,7 @@ import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Transaction
 
 /**
- * [RecyclerView.Adapter] for overview accountsWithBalance card.
+ * [RecyclerView.Adapter] for overview coloredAccounts card.
  */
 class AccountsDetailTransactionsListAdapter(private val viewModel: AccountDetailViewModel) : ListAdapter<Transaction, AccountsDetailTransactionsViewHolder>(AccountsDetailsTransactionsDiffCallback()) {
 

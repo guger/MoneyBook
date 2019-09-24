@@ -34,6 +34,10 @@ class AccountsRepository(database: AppDatabase) {
 
     //region Methods
 
+    suspend fun get(id: Long): Account {
+        return accountsDao.get(id)
+    }
+
     suspend fun getAccounts(): List<Account> {
         return accountsDao.getAccounts()
     }
