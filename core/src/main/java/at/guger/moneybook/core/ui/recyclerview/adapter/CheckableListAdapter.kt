@@ -14,24 +14,21 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.core.ui.fragment
+package at.guger.moneybook.core.ui.recyclerview.adapter
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 
 /**
- * Main fragment class.
+ * Interface for a [RecyclerView.Adapter] supporting checked items.
  */
-abstract class BaseFragment : Fragment() {
+interface CheckableListAdapter {
 
-    //region Fragment
+    val checkedItems: MutableList<Int>
 
-    //endregion
+    val checkedCount: Int
+        get() = checkedItems.count()
 
-    //region Methods
-
-    @Suppress("UNCHECKED_CAST")
-    fun <T : AppCompatActivity> requireAppCompatActivity() = requireActivity() as T
-
-    //endregion
+    fun clearChecked() {
+        checkedItems.clear()
+    }
 }

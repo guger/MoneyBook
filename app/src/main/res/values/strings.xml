@@ -55,4 +55,8 @@
     <string name="Housekeeping">Housekeeping</string>
     <string name="Leisure">Leisure</string>
     <string name="Shopping">Shopping</string>
+    <string name="Delete">Delete</string>
+    <string name="Edit">Edit</string>
+    <string name="x_selected">%d selected</string>
+    <string name="EditTransaction">Edit Transaction</string>
 </resources>

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.transaction
+package at.guger.moneybook.ui.home.addedittransaction
 
 import android.os.Bundle
 import android.text.InputType
@@ -28,6 +28,7 @@ import androidx.core.view.postDelayed
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.FullScreenDialogFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
@@ -35,7 +36,7 @@ import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.toEpochMilli
 import at.guger.moneybook.core.util.toLocalDate
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.databinding.DialogFragmentNewTransactionBinding
+import at.guger.moneybook.databinding.DialogFragmentAddEditTransactionBinding
 import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.util.Utils
 import com.google.android.material.button.MaterialButton
@@ -43,7 +44,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.maltaisn.calcdialog.CalcDialog
-import kotlinx.android.synthetic.main.dialog_fragment_new_transaction.*
+import kotlinx.android.synthetic.main.dialog_fragment_add_edit_transaction.*
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
@@ -53,18 +54,20 @@ import java.text.DecimalFormat
 /**
  * Dialog fragment for creating a new [transactions][Transaction].
  */
-class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.CalcDialogCallback {
+class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.CalcDialogCallback {
 
     //region Variables
 
-    private val viewModel: NewTransactionDialogFragmentViewModel by viewModel()
+    private val args: AddEditTransactionDialogFragmentArgs by navArgs()
+
+    private val viewModel: AddEditTransactionDialogFragmentViewModel by viewModel()
 
     //endregion
 
     //region DialogFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<DialogFragmentNewTransactionBinding>(inflater, R.layout.dialog_fragment_new_transaction, container, false)
+        val binding = DataBindingUtil.inflate<DialogFragmentAddEditTransactionBinding>(inflater, R.layout.dialog_fragment_add_edit_transaction, container, false)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -75,6 +78,8 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        args.transaction?.let { viewModel.setupTransaction(it) }
+
         setupLayout()
         setupEvents()
     }
@@ -84,14 +89,14 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
     //region Methods
 
     private fun setupLayout() {
-        TooltipCompat.setTooltipText(fabNewTransactionSave, getString(R.string.Save))
-        TooltipCompat.setTooltipText(btnNewTransactionChooseDate, getString(R.string.ChooseDate))
-        TooltipCompat.setTooltipText(btnNewTransactionOpenCalculator, getString(R.string.OpenCalculator))
+        TooltipCompat.setTooltipText(fabAddEditTransactionSave, getString(R.string.Save))
+        TooltipCompat.setTooltipText(btnAddEditTransactionChooseDate, getString(R.string.ChooseDate))
+        TooltipCompat.setTooltipText(btnAddEditTransactionOpenCalculator, getString(R.string.OpenCalculator))
 
-        edtNewTransactionAccount.inputType = InputType.TYPE_NULL
-        edtNewTransactionBudget.inputType = InputType.TYPE_NULL
+        edtAddEditTransactionAccount.inputType = InputType.TYPE_NULL
+        edtAddEditTransactionBudget.inputType = InputType.TYPE_NULL
 
-        mNewTransactionTypeToggleButtonGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        mAddEditTransactionTypeToggleButtonGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             var hasChecked = false
 
             group.forEach { if ((it as MaterialButton).isChecked) hasChecked = true }
@@ -100,10 +105,9 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
 
             if (isChecked) viewModel.onTransactionTypeChanged(checkedId)
         }
-        mNewTransactionTypeToggleButtonGroup.check(R.id.btnNewTransactionTypeEarning)
 
-        btnNewTransactionChooseDate.setOnClickListener { showDatePicker() }
-        btnNewTransactionOpenCalculator.setOnClickListener { showCalculator() }
+        btnAddEditTransactionChooseDate.setOnClickListener { showDatePicker() }
+        btnAddEditTransactionOpenCalculator.setOnClickListener { showCalculator() }
 
         val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable
         bottomAppBarBackground.shapeAppearanceModel = bottomAppBarBackground.shapeAppearanceModel.toBuilder().setTopEdge(
@@ -118,11 +122,11 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
 
     private fun setupEvents() {
         viewModel.accounts.observe(viewLifecycleOwner, Observer { accounts ->
-            edtNewTransactionAccount.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
-            edtNewTransactionAccount.setText(accounts.first().name)
+            edtAddEditTransactionAccount.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
+            edtAddEditTransactionAccount.setText(accounts.first().name)
         })
         viewModel.budgets.observe(viewLifecycleOwner, Observer { budgets ->
-            edtNewTransactionBudget.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, budgets.map { it.name }))
+            edtAddEditTransactionBudget.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, budgets.map { it.name }))
         })
 
         viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { showDatePicker() })
@@ -130,7 +134,7 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
 
         viewModel.snackbarMessage.observe(viewLifecycleOwner, EventObserver {
             Snackbar.make(mBottomAppBar, it, Snackbar.LENGTH_LONG)
-                .setAnchorView(fabNewTransactionSave)
+                .setAnchorView(fabAddEditTransactionSave)
                 .show()
         })
 
@@ -147,7 +151,7 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
 
         datePickerDialog.addOnPositiveButtonClickListener {
             viewModel.transactionDate.value = it.toLocalDate().format(Utils.MEDIUM_DATE_FORMAT)
-            edtNewTransactionDate.postDelayed(25) { edtNewTransactionDate.apply { setSelection(text?.length ?: 0) } }
+            edtAddEditTransactionDate.postDelayed(25) { edtAddEditTransactionDate.apply { setSelection(text?.length ?: 0) } }
         }
 
         datePickerDialog.show(childFragmentManager, null)
@@ -160,7 +164,7 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
                     minimumFractionDigits = 2
                     maximumFractionDigits = 2
                 }
-                initialValue = this@NewTransactionDialogFragment.edtNewTransactionValue.getDecimalNumber().toBigDecimal()
+                initialValue = this@AddEditTransactionDialogFragment.edtAddEditTransactionValue.getDecimalNumber().toBigDecimal()
                 minValue = 0.toBigDecimal()
                 isSignBtnShown = false
             }
@@ -173,7 +177,7 @@ class NewTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.Calc
 
     override fun onValueEntered(requestCode: Int, value: BigDecimal?) {
         viewModel.transactionValue.value = value?.toDouble()?.let { CurrencyTextInputEditText.CURRENCY_FORMAT.format(it) }
-        edtNewTransactionValue.postDelayed(25) { edtNewTransactionValue.apply { setSelection(text?.length ?: 0) } }
+        edtAddEditTransactionValue.postDelayed(25) { edtAddEditTransactionValue.apply { setSelection(text?.length ?: 0) } }
     }
 
     //endregion

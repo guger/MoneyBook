@@ -14,23 +14,19 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.accounts.detail
+package at.guger.moneybook.core.util.ext
 
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
-import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
- * [RecyclerView.ViewHolder] for a transactions item.
+ * Extension functions for [RecyclerView].
  */
-class AccountsDetailTransactionsViewHolder(binding: ItemTransactionBinding, private val viewModel: AccountDetailViewModel) : ModelViewHolder<ItemTransactionBinding, Transaction>(binding) {
 
-    override fun bind(model: Transaction) {
-        binding.viewModel = viewModel
-        binding.transaction = model
-        binding.executePendingBindings()
-    }
+fun RecyclerView.setup(layoutManager: RecyclerView.LayoutManager, adapter: RecyclerView.Adapter<*>, hasFixedSize: Boolean = true, block: RecyclerView.() -> Unit) {
+    setHasFixedSize(hasFixedSize)
 
-    override fun clear() {}
+    this.layoutManager = layoutManager
+    this.adapter = adapter
+
+    block()
 }

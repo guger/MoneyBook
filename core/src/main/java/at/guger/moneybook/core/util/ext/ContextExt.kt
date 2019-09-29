@@ -17,9 +17,11 @@
 package at.guger.moneybook.core.util.ext
 
 import android.content.Context
+import android.graphics.Color
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_DIP
 import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
 
 /**
@@ -61,4 +63,19 @@ fun Context.dimen(
     } finally {
         a.recycle()
     }
+}
+
+/**
+ * Resolves the color of a given attribute.
+ *
+ * @param attr The attribute of the color.
+ *
+ * @return The color as Integer.
+ */
+@ColorInt
+fun Context.resolveColor(colorAttr: Int): Int {
+    val typedValue = TypedValue()
+    val ta = obtainStyledAttributes(typedValue.data, intArrayOf(colorAttr))
+
+    return ta.getColor(0, Color.BLACK).also { ta.recycle() }
 }

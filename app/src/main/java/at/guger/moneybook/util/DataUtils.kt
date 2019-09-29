@@ -38,9 +38,9 @@ object DataUtils {
 
     fun getAccountColors(): Array<Int> {
         return arrayOf(
+            Color.parseColor("#007d51"),
             Color.parseColor("#37efba"),
             Color.parseColor("#1eb980"),
-            Color.parseColor("#007d51"),
             Color.parseColor("#005d57")
         )
     }

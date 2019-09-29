@@ -21,3 +21,5 @@ package at.guger.moneybook.core.util.ext
  */
 
 inline fun <T, R> T.doIf(assertion: Boolean, block: T.() -> R): R? = if (assertion) block() else null
+
+inline fun <T> T?.ifNull(block: T.() -> Unit): Unit? = if (this == null) block() else null

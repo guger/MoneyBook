@@ -18,15 +18,25 @@ package at.guger.moneybook.ui.home.accounts.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
+import at.guger.moneybook.core.ui.viewmodel.EventObserver
+import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.ui.main.MainActivity
+import at.guger.moneybook.util.TransactionMenuUtils
+import com.afollestad.materialcab.attached.destroy
+import com.afollestad.materialcab.attached.isActive
 import kotlinx.android.synthetic.main.fragment_account_detail.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -34,11 +44,13 @@ import org.koin.core.parameter.parametersOf
 /**
  * Fragment displaying the [transactions][Transaction] of an [account][Account].
  */
-class AccountDetailFragment : BaseFragment() {
+class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
     private val args: AccountDetailFragmentArgs by navArgs()
+
+    private lateinit var adapter: AccountDetailTransactionsListAdapter
 
     private val viewModel: AccountDetailViewModel by inject { parametersOf(args.accountId) }
 
@@ -53,13 +65,64 @@ class AccountDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.account.observe(viewLifecycleOwner, Observer { requireAppCompatActivity().supportActionBar!!.title = it.name })
+        adapter = AccountDetailTransactionsListAdapter(viewModel).apply { viewModel.transactions.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        with(mAccountDetailRecyclerView) {
-            setHasFixedSize(true)
+        mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
+            addOnItemTouchListener(OnItemTouchListener(context, this, this@AccountDetailFragment))
+        }
 
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = AccountsDetailTransactionsListAdapter(viewModel).apply { viewModel.transactions.observe(viewLifecycleOwner, Observer(::submitList)) }
+        viewModel.editTransaction.observe(viewLifecycleOwner, EventObserver { findNavController().navigate(MainNavDirections.actionGlobalNewTransactionDialogFragment(it)) })
+    }
+
+    //endregion
+
+    //region Callback
+
+    override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
+        if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+            adapter.toggleChecked(pos)
+
+            if (adapter.checkedCount > 0) {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    TransactionMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().destroyCab()
+            }
+        }
+    }
+
+    override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
+        adapter.toggleChecked(pos)
+
+        if (adapter.checkedCount > 0) {
+            if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+                requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_transaction) {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter) }
+
+                    onDestroy {
+                        adapter.clearChecked()
+                        true
+                    }
+
+                    onSelection { menuItem ->
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, viewModel::edit, viewModel::delete)
+                        destroy()
+                    }
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    TransactionMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            }
+        } else {
+            requireAppCompatActivity<MainActivity>().destroyCab()
         }
     }
 

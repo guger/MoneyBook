@@ -23,20 +23,50 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
+import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.data.model.Transaction
 
 /**
  * [RecyclerView.Adapter] for overview coloredAccounts card.
  */
-class AccountsDetailTransactionsListAdapter(private val viewModel: AccountDetailViewModel) : ListAdapter<Transaction, AccountsDetailTransactionsViewHolder>(AccountsDetailsTransactionsDiffCallback()) {
+class AccountDetailTransactionsListAdapter(private val viewModel: AccountDetailViewModel) : ListAdapter<Transaction, AccountDetailTransactionsViewHolder>(AccountsDetailsTransactionsDiffCallback()),
+    CheckableListAdapter {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsDetailTransactionsViewHolder {
-        return AccountsDetailTransactionsViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false), viewModel)
+    //region Variables
+
+    override val checkedItems: MutableList<Int> = mutableListOf()
+
+    //endregion
+
+    //region Adapter
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountDetailTransactionsViewHolder {
+        return AccountDetailTransactionsViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false), viewModel)
     }
 
-    override fun onBindViewHolder(holder: AccountsDetailTransactionsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AccountDetailTransactionsViewHolder, position: Int) {
         holder.bind(getItem(position))
+
+        holder.itemView.isActivated = checkedItems.contains(position)
     }
+
+    //endregion
+
+    //region Methods
+
+    fun toggleChecked(pos: Int) {
+        if (!checkedItems.contains(pos)) checkedItems.add(pos) else checkedItems.remove(pos)
+
+        notifyItemChanged(pos)
+    }
+
+    override fun clearChecked() {
+        super.clearChecked()
+
+        notifyDataSetChanged()
+    }
+
+    //endregion
 
     class AccountsDetailsTransactionsDiffCallback : DiffUtil.ItemCallback<Transaction>() {
         override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {

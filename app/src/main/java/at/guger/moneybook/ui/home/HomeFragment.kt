@@ -26,6 +26,7 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
@@ -93,7 +94,7 @@ class HomeFragment : BaseFragment() {
             }
         }.attach()
 
-        fabAdd.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewTransactionDialogFragment()) }
+        fabAdd.setOnClickListener { findNavController().navigate(MainNavDirections.actionGlobalNewTransactionDialogFragment()) }
     }
 
     private fun setupEventListeners() {

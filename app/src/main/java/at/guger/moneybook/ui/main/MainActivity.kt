@@ -19,6 +19,7 @@ package at.guger.moneybook.ui.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.MenuRes
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -27,8 +28,14 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.activity.BaseActivity
 import at.guger.moneybook.core.ui.dialog.BottomNavigationViewDialog
 import at.guger.moneybook.util.NavUtils
+import com.afollestad.materialcab.CabApply
+import com.afollestad.materialcab.attached.AttachedCab
+import com.afollestad.materialcab.attached.destroy
+import com.afollestad.materialcab.attached.isActive
+import com.afollestad.materialcab.createCab
 import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.colorAttr
 
 /**
  * Main activity class for all content fragments.
@@ -40,6 +47,8 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
     private val topLevelDestinations = setOf(R.id.homeFragment, R.id.manageFragment, R.id.settingsFragment)
+
+    var mCab: AttachedCab? = null
 
     //endregion
 
@@ -77,6 +86,22 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     //region Methods
 
+    fun attachCab(@MenuRes menuRes: Int, exec: CabApply) {
+        mCab = createCab(R.id.mCabStub) {
+            menu(menuRes)
+            popupTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
+            backgroundColor(literal = colorAttr(R.attr.colorSurface))
+            closeDrawable(R.drawable.ic_close)
+            fadeIn()
+
+            exec()
+        }
+    }
+
+    fun destroyCab() {
+        mCab.destroy()
+    }
+
     /**
      * Workaround for using a [BottomNavigationViewDialog], since navigation component suppresses the hamburger icon when there's no drawer layout.
      */
@@ -100,6 +125,13 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     //endregion
 
     //region Callback
+
+    override fun onBackPressed() {
+        when {
+            mCab.isActive() -> mCab.destroy()
+            else -> super.onBackPressed()
+        }
+    }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {

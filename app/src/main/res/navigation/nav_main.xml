@@ -17,27 +17,30 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_main"
+    android:id="@+id/main_nav"
     app:startDestination="@id/homeFragment">
+
+    <action
+        android:id="@+id/action_global_newTransactionDialogFragment"
+        app:destination="@id/newTransactionDialogFragment" />
 
     <dialog
         android:id="@+id/newTransactionDialogFragment"
-        android:name="at.guger.moneybook.ui.home.transaction.NewTransactionDialogFragment"
+        android:name="at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionDialogFragment"
         android:label="@string/NewTransaction"
-        tools:layout="@layout/dialog_fragment_new_transaction" />
+        tools:layout="@layout/dialog_fragment_add_edit_transaction">
 
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="at.guger.moneybook.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        <argument
+            android:name="transaction"
+            android:defaultValue="@null"
+            app:argType="at.guger.moneybook.data.model.Transaction"
+            app:nullable="true" />
+    </dialog>
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="at.guger.moneybook.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_newTransactionDialogFragment"
-            app:destination="@id/newTransactionDialogFragment" />
         <action
             android:id="@+id/action_homeFragment_to_accountDetailFragment"
             app:destination="@id/accountDetailFragment" />
@@ -56,4 +59,9 @@
             android:name="accountId"
             app:argType="long" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="at.guger.moneybook.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

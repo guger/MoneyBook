@@ -21,22 +21,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/mBottomAppBarCoordinatorLayout"
+    <FrameLayout
+        android:id="@+id/mBottomAppBarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/mBottomAppBar"
-            style="@style/Widget.MaterialComponents.BottomAppBar"
+        <ViewStub
+            android:id="@+id/mCabStub"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_menu" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/mBottomAppBar"
+                style="@style/Widget.MaterialComponents.BottomAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_menu" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </FrameLayout>
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -44,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/mBottomAppBarCoordinatorLayout"
+        app:layout_constraintBottom_toTopOf="@+id/mBottomAppBarContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

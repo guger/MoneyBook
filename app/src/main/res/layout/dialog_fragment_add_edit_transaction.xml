@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/mNewTransactionNestedScrollView"
+            android:id="@+id/mAddEditTransactionNestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,14 +54,15 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="@string/NewTransaction"
+                        android:text="@{viewModel.titleRes}"
                         android:textAppearance="?textAppearanceHeadline1"
                         tools:layout_editor_absoluteX="206dp"
-                        tools:layout_editor_absoluteY="14dp" />
+                        tools:layout_editor_absoluteY="14dp"
+                        tools:text="Add / Edit Transaction" />
                 </androidx.appcompat.widget.Toolbar>
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/mNewTransactionLayoutCenter"
+                    android:id="@+id/mAddEditTransactionLayoutCenter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -70,27 +71,27 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnNewTransactionOpenCalculator"
+                    android:id="@+id/btnAddEditTransactionOpenCalculator"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Square.Icon"
                     android:layout_marginEnd="8dp"
                     android:onClick="@{() -> viewModel.showCalculator()"
                     app:icon="@drawable/ic_calculator"
-                    app:layout_constraintBottom_toBottomOf="@+id/tilNewTransactionValue"
+                    app:layout_constraintBottom_toBottomOf="@+id/tilAddEditTransactionValue"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tilNewTransactionValue" />
+                    app:layout_constraintTop_toTopOf="@+id/tilAddEditTransactionValue" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnNewTransactionChooseDate"
+                    android:id="@+id/btnAddEditTransactionChooseDate"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Square.Icon"
                     android:layout_marginEnd="8dp"
                     android:onClick="@{() -> viewModel.showDatePicker()}"
                     app:icon="@drawable/ic_calendar"
-                    app:layout_constraintBottom_toBottomOf="@+id/tilNewTransactionDate"
+                    app:layout_constraintBottom_toBottomOf="@+id/tilAddEditTransactionDate"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tilNewTransactionDate" />
+                    app:layout_constraintTop_toTopOf="@+id/tilAddEditTransactionDate" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/mNewTransactionTypeToggleButtonGroup"
+                    android:id="@+id/mAddEditTransactionTypeToggleButtonGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -98,32 +99,33 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionTitle"
-                    app:singleSelection="true">
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionTitle"
+                    app:singleSelection="true"
+                    app:type="@{viewModel.transactionType}">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnNewTransactionTypeEarning"
+                        android:id="@+id/btnAddEditTransactionTypeEarning"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Earning" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnNewTransactionTypeExpense"
+                        android:id="@+id/btnAddEditTransactionTypeExpense"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Expense" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnNewTransactionTypeClaim"
+                        android:id="@+id/btnAddEditTransactionTypeClaim"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Claim" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnNewTransactionTypeDebt"
+                        android:id="@+id/btnAddEditTransactionTypeDebt"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -132,19 +134,19 @@
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilNewTransactionAccount"
+                    android:id="@+id/tilAddEditTransactionAccount"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/mNewTransactionLayoutCenter"
+                    app:layout_constraintEnd_toStartOf="@+id/mAddEditTransactionLayoutCenter"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mNewTransactionTypeToggleButtonGroup">
+                    app:layout_constraintTop_toBottomOf="@+id/mAddEditTransactionTypeToggleButtonGroup">
 
                     <AutoCompleteTextView
-                        android:id="@+id/edtNewTransactionAccount"
+                        android:id="@+id/edtAddEditTransactionAccount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Account"
@@ -153,7 +155,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilNewTransactionBudget"
+                    android:id="@+id/tilAddEditTransactionBudget"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -161,11 +163,11 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/mNewTransactionLayoutCenter"
-                    app:layout_constraintTop_toBottomOf="@+id/mNewTransactionTypeToggleButtonGroup">
+                    app:layout_constraintStart_toStartOf="@+id/mAddEditTransactionLayoutCenter"
+                    app:layout_constraintTop_toBottomOf="@+id/mAddEditTransactionTypeToggleButtonGroup">
 
                     <AutoCompleteTextView
-                        android:id="@+id/edtNewTransactionBudget"
+                        android:id="@+id/edtAddEditTransactionBudget"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Budget"
@@ -174,18 +176,18 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilNewTransactionDate"
+                    android:id="@+id/tilAddEditTransactionDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@id/btnNewTransactionChooseDate"
+                    app:layout_constraintEnd_toStartOf="@id/btnAddEditTransactionChooseDate"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionAccount">
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionAccount">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtNewTransactionDate"
+                        android:id="@+id/edtAddEditTransactionDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Date"
@@ -195,18 +197,18 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilNewTransactionValue"
+                    android:id="@+id/tilAddEditTransactionValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/btnNewTransactionOpenCalculator"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddEditTransactionOpenCalculator"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionDate">
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionDate">
 
                     <at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
-                        android:id="@+id/edtNewTransactionValue"
+                        android:id="@+id/edtAddEditTransactionValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Value"
@@ -215,7 +217,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilNewTransactionContacts"
+                    android:id="@+id/tilAddEditTransactionContacts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -223,11 +225,11 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionValue">
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionValue">
 
                     <!-- TODO -->
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtNewTransactionContacts"
+                        android:id="@+id/edtAddEditTransactionContacts"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Contacts"
@@ -237,7 +239,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilNewTransactionNotes"
+                    android:id="@+id/tilAddEditTransactionNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -247,10 +249,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilNewTransactionContacts">
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionContacts">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtNewTransactionNotes"
+                        android:id="@+id/edtAddEditTransactionNotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Notes"
@@ -260,7 +262,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilNewTransactionTitle"
+                    android:id="@+id/tilAddEditTransactionTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -271,7 +273,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/mTitleToolbar">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtNewTransactionTitle"
+                        android:id="@+id/edtAddEditTransactionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Title"
@@ -292,7 +294,7 @@
             app:navigationIcon="@drawable/ic_close" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabNewTransactionSave"
+            android:id="@+id/fabAddEditTransactionSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="?colorPrimary"
@@ -310,6 +312,6 @@
 
         <variable
             name="viewModel"
-            type="at.guger.moneybook.ui.home.transaction.NewTransactionDialogFragmentViewModel" />
+            type="at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionDialogFragmentViewModel" />
     </data>
 </layout>

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.transaction
+package at.guger.moneybook.ui.home.addedittransaction
 
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -24,7 +24,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.Event
+import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.Utils
+import at.guger.moneybook.core.util.ext.ifNull
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
@@ -37,9 +39,9 @@ import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 
 /**
- * [ViewModel] for the [NewTransactionDialogFragment].
+ * [ViewModel] for the [AddEditTransactionDialogFragment].
  */
-class NewTransactionDialogFragmentViewModel(
+class AddEditTransactionDialogFragmentViewModel(
     private val transactionsRepository: TransactionsRepository,
     private val accountsRepository: AccountsRepository,
     private val budgetsRepository: BudgetsRepository
@@ -47,10 +49,15 @@ class NewTransactionDialogFragmentViewModel(
 
     //region Variables
 
+    private var transaction: Transaction? = null
+
+    private val _titleRes = MutableLiveData<Int>(R.string.NewTransaction)
+    val titleRes: LiveData<Int> = _titleRes
+
     val transactionTitle = MutableLiveData<String>()
     val transactionAccount = MutableLiveData<String>()
     val transactionBudget = MutableLiveData<String>()
-    val transactionType = MutableLiveData<@Transaction.TransactionType Int>()
+    val transactionType = MutableLiveData<@Transaction.TransactionType Int>(Transaction.TransactionType.EARNING)
     val transactionDate = MutableLiveData<String>()
     val transactionValue = MutableLiveData<String>()
     val transactionContacts = MutableLiveData<String>()
@@ -83,11 +90,27 @@ class NewTransactionDialogFragmentViewModel(
         }
     }
 
+    fun setupTransaction(transaction: Transaction) {
+        this.transaction = transaction
+
+        _titleRes.value = R.string.EditTransaction
+
+        with(transaction) {
+            transactionTitle.value = title
+            transactionType.value = type
+            transactionAccount.value = account!!.name
+            transactionBudget.value = budget?.name
+            transactionDate.value = transaction.date.format(MEDIUM_DATE_FORMAT)
+            transactionValue.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(value)
+            transactionNotes.value = notes
+        }
+    }
+
     fun onTransactionTypeChanged(@IdRes viewId: Int) {
         transactionType.value = when (viewId) {
-            R.id.btnNewTransactionTypeEarning -> Transaction.TransactionType.EARNING
-            R.id.btnNewTransactionTypeExpense -> Transaction.TransactionType.EXPENSE
-            R.id.btnNewTransactionTypeClaim -> Transaction.TransactionType.CLAIM
+            R.id.btnAddEditTransactionTypeEarning -> Transaction.TransactionType.EARNING
+            R.id.btnAddEditTransactionTypeExpense -> Transaction.TransactionType.EXPENSE
+            R.id.btnAddEditTransactionTypeClaim -> Transaction.TransactionType.CLAIM
             else -> Transaction.TransactionType.DEBT
         }
     }
@@ -123,9 +146,16 @@ class NewTransactionDialogFragmentViewModel(
             val contacts: List<Contact> = emptyList()
 
             viewModelScope.launch {
-                transactionsRepository.insert(
+                transaction.ifNull {
+                    transactionsRepository.insert(
+                        Transaction(
+                            entity = transactionEntity,
+                            contacts = contacts
+                        )
+                    )
+                } ?: transactionsRepository.update(
                     Transaction(
-                        entity = transactionEntity,
+                        entity = transactionEntity.copy(id = transaction!!.id),
                         contacts = contacts
                     )
                 )

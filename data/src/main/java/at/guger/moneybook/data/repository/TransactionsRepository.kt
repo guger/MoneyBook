@@ -62,8 +62,8 @@ class TransactionsRepository(database: AppDatabase) {
         contactsDao.delete(currentContacts - newContacts)
     }
 
-    suspend fun delete(transaction: Transaction) {
-        transactionsDao.delete(transaction.entity)
+    suspend fun delete(vararg transaction: Transaction) {
+        transactionsDao.delete(*transaction.map { transaction -> transaction.entity }.toTypedArray())
     }
 
     //endregion
