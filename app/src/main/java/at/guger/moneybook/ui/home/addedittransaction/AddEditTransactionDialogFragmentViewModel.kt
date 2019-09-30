@@ -58,7 +58,7 @@ class AddEditTransactionDialogFragmentViewModel(
     val transactionAccount = MutableLiveData<String>()
     val transactionBudget = MutableLiveData<String>()
     val transactionType = MutableLiveData<@Transaction.TransactionType Int>(Transaction.TransactionType.EARNING)
-    val transactionDate = MutableLiveData<String>()
+    val transactionDate = MutableLiveData<String>(LocalDate.now().format(MEDIUM_DATE_FORMAT))
     val transactionValue = MutableLiveData<String>()
     val transactionContacts = MutableLiveData<String>()
     val transactionNotes = MutableLiveData<String>()
