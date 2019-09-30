@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.data.provider.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.AccountWithBalance
@@ -43,7 +44,7 @@ internal interface AccountsDao {
             GROUP BY accounts.id
         """
     )
-    suspend fun getAccountsWithBalance(): List<AccountWithBalance>
+    fun getAccountsWithBalance(): LiveData<List<AccountWithBalance>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(account: Account)

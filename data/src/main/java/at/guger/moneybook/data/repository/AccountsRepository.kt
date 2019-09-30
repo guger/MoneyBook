@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.data.repository
 
+import androidx.lifecycle.LiveData
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.data.provider.local.AppDatabase
@@ -42,7 +43,7 @@ class AccountsRepository(database: AppDatabase) {
         return accountsDao.getAccounts()
     }
 
-    suspend fun getAccountsWithBalance(): List<AccountWithBalance> {
+    fun getObservableAccountsWithBalance(): LiveData<List<AccountWithBalance>> {
         return accountsDao.getAccountsWithBalance()
     }
 

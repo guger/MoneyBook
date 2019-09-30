@@ -32,7 +32,7 @@ internal interface TransactionsDao {
 
     @androidx.room.Transaction
     @Query("SELECT transactions.* FROM transactions WHERE account_id = :accountId")
-    suspend fun getByAccount(accountId: Long): List<Transaction>
+    fun getByAccount(accountId: Long): LiveData<List<Transaction>>
 
     @androidx.room.Transaction
     @Query("SELECT transactions.* FROM transactions")

@@ -41,8 +41,7 @@ class AccountDetailViewModel(
     private val _account = MutableLiveData<Account>()
     val account: LiveData<Account> = _account
 
-    private val _transactions = MutableLiveData<List<Transaction>>()
-    val transactions: LiveData<List<Transaction>> = _transactions
+    val transactions: LiveData<List<Transaction>>
 
     private val _editTransaction = MutableLiveData<Event<Transaction>>()
     val editTransaction: LiveData<Event<Transaction>> = _editTransaction
@@ -52,9 +51,9 @@ class AccountDetailViewModel(
     init {
         viewModelScope.launch {
             _account.value = accountsRepository.get(accountId)
-
-            _transactions.value = transactionsRepository.getByAccount(accountId)
         }
+
+        transactions = transactionsRepository.getByAccount(accountId)
     }
 
     //region Methods
