@@ -126,7 +126,8 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
             edtAddEditTransactionAccount.setText(accounts.first().name)
         })
         viewModel.budgets.observe(viewLifecycleOwner, Observer { budgets ->
-            edtAddEditTransactionBudget.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, budgets.map { it.name }))
+            val budgetEntries = budgets.map { it.name }.toMutableList().apply { add(0, "") }
+            edtAddEditTransactionBudget.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, budgetEntries))
         })
 
         viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { showDatePicker() })

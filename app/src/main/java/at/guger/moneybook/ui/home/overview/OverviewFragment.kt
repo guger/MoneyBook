@@ -50,7 +50,7 @@ class OverviewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(mRecyclerView) {
+        with(mAccountsRecyclerView) {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(requireContext())

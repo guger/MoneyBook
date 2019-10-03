@@ -52,9 +52,6 @@
         android:label="AccountDetailFragment"
         tools:layout="@layout/fragment_account_detail">
 
-        <action
-            android:id="@+id/action_accountDetailFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
         <argument
             android:name="accountId"
             app:argType="long" />

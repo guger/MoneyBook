@@ -31,16 +31,22 @@ internal interface TransactionsDao {
     suspend fun get(id: Long): Transaction
 
     @androidx.room.Transaction
-    @Query("SELECT transactions.* FROM transactions WHERE account_id = :accountId")
+    @Query(
+        """
+        SELECT transactions.* FROM transactions WHERE account_id = :accountId
+        ORDER BY date DESC, title ASC
+        """
+    )
     fun getByAccount(accountId: Long): LiveData<List<Transaction>>
 
     @androidx.room.Transaction
-    @Query("SELECT transactions.* FROM transactions")
-    suspend fun getTransactions(): List<Transaction>
-
-    @androidx.room.Transaction
-    @Query("SELECT transactions.* FROM transactions")
-    fun getObservableTransactions(): LiveData<List<Transaction>>
+    @Query(
+        """
+        SELECT transactions.* FROM transactions
+        ORDER BY date DESC, title ASC
+        """
+    )
+    fun getTransactions(): LiveData<List<Transaction>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(transactionEntity: Transaction.TransactionEntity): Long

@@ -30,7 +30,7 @@ import at.guger.moneybook.util.DataUtils
 /**
  * [ViewModel] for the home fragment and it's sub fragments.
  */
-class HomeViewModel(private val transactionsRepository: TransactionsRepository, private val accountsRepository: AccountsRepository) : ViewModel() {
+class HomeViewModel(transactionsRepository: TransactionsRepository, accountsRepository: AccountsRepository) : ViewModel() {
 
     //region Variables
 
@@ -49,7 +49,7 @@ class HomeViewModel(private val transactionsRepository: TransactionsRepository, 
     init {
         val colors = DataUtils.getAccountColors()
 
-        transactions = transactionsRepository.getObservableTransactions()
+        transactions = transactionsRepository.getTransactions()
         coloredAccounts = Transformations.map(accountsRepository.getObservableAccountsWithBalance()) { accounts ->
             accounts.mapIndexed { index, accountWithBalance -> ColoredAccount(accountWithBalance, colors[index]) }
         }

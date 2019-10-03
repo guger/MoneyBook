@@ -17,7 +17,7 @@ ext.versions.dev = 1
 
 ext.deps = [:]
 
-deps.gradle = "3.5.0"
+deps.gradle = "3.5.1"
 
 def test = [:]
 test.junit = "4.12"
@@ -84,6 +84,7 @@ libs.assent = "2.3.1"
 libs.moshi = "1.8.0"
 libs.nachos = "1.2.0"
 libs.charts = "v3.1.0"
+libs.slimchart = "0.1.2"
 libs.material_cab = "2.0.1"
 libs.material_dialogs = "3.1.1"
 libs.calcdialog = "2.1.0"

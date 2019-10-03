@@ -124,4 +124,6 @@ dependencies {
     implementation "com.maltaisn:calcdialog:$deps.libs.calcdialog"
     implementation "com.maltaisn:icondialog:$deps.libs.icondialog"
     implementation "com.maltaisn:recurpicker:$deps.libs.recurpickerdialog"
+
+    implementation(name: 'strokepiechart', ext: 'aar')
 }

@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -27,6 +28,7 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
 import at.guger.moneybook.core.util.ext.dimen
+import at.guger.moneybook.databinding.FragmentAccountsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -45,13 +47,18 @@ class AccountsFragment : BaseFragment() {
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_piechart_recyclerview, container, false)
+        val binding = DataBindingUtil.inflate<FragmentAccountsBinding>(inflater, R.layout.fragment_accounts, container, false)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(mRecyclerView) {
+        with(mAccountsRecyclerView) {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(requireContext())

@@ -40,9 +40,7 @@ class TransactionsRepository(database: AppDatabase) {
 
     fun getByAccount(accountId: Long) = transactionsDao.getByAccount(accountId)
 
-    suspend fun getTransactions(): List<Transaction> = transactionsDao.getTransactions()
-
-    fun getObservableTransactions(): LiveData<List<Transaction>> = transactionsDao.getObservableTransactions()
+    fun getTransactions(): LiveData<List<Transaction>> = transactionsDao.getTransactions()
 
     suspend fun insert(transaction: Transaction): Long {
         val id = transactionsDao.insert(transaction.entity)
@@ -63,7 +61,7 @@ class TransactionsRepository(database: AppDatabase) {
     }
 
     suspend fun delete(vararg transaction: Transaction) {
-        transactionsDao.delete(*transaction.map { transaction -> transaction.entity }.toTypedArray())
+        transactionsDao.delete(*transaction.map { it.entity }.toTypedArray())
     }
 
     //endregion
