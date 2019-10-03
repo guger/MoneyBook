@@ -41,7 +41,7 @@ class OverviewAccountsListAdapter(private val viewModel: HomeViewModel) : ListAd
 
     class OverviewAccountsDiffCallback : DiffUtil.ItemCallback<ColoredAccount>() {
         override fun areItemsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {
-            return oldItem.account.id == newItem.account.id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {

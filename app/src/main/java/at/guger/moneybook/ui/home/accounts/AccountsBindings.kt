@@ -31,12 +31,12 @@ fun StrokePieChart.setAccounts(accounts: List<ColoredAccount>) {
     val entries = ArrayList<Entry>()
 
     for (account in accounts) {
-        entries.add(Entry(account.account.balance.toFloat(), account.color))
+        entries.add(Entry(account.balance.toFloat(), account.color))
     }
 
     setEntries(entries)
 
-    text = CurrencyFormat.format(accounts.sumByDouble { it.account.balance })
+    text = CurrencyFormat.format(accounts.sumByDouble { it.balance })
 
     startAnimation()
 }

@@ -25,4 +25,14 @@ import kotlinx.android.parcel.Parcelize
  * [AccountWithBalance] combined with a color.
  */
 @Parcelize
-data class ColoredAccount(val account: AccountWithBalance, @ColorInt val color: Int) : Model
+data class ColoredAccount(val account: AccountWithBalance, @ColorInt val color: Int) : Model {
+
+    val id: Long
+        get() = account.id
+
+    val name: String
+        get() = account.name
+
+    val balance: Double
+        get() = account.balance
+}

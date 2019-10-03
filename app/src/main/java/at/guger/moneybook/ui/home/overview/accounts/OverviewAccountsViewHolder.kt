@@ -34,8 +34,8 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
         binding.executePendingBindings()
 
         viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, Observer { coloredAccounts ->
-            val balanceSum = coloredAccounts.sumByDouble { it.account.balance }
-            mOverviewAccountsDivider.setColorDistribution(coloredAccounts.map { it.color }, coloredAccounts.map { (100 / balanceSum * it.account.balance).toFloat() })
+            val balanceSum = coloredAccounts.sumByDouble { it.balance }
+            mOverviewAccountsDivider.setColorDistribution(coloredAccounts.map { it.color }, coloredAccounts.map { (100 / balanceSum * it.balance).toFloat() })
         })
 
         with(mOverviewAccountsRecyclerView) {
