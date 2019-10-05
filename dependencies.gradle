@@ -65,7 +65,7 @@ androidx.constraintlayout = "1.1.3"
 deps.androidx = androidx
 
 def google = [:]
-google.material = "1.1.0-alpha10"
+google.material = "1.1.0-beta01"
 google.flexbox = "1.1.0"
 deps.google = google
 
