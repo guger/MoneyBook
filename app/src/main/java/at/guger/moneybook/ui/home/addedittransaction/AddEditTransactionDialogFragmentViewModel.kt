@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.ui.home.addedittransaction
 
+import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
@@ -62,6 +63,12 @@ class AddEditTransactionDialogFragmentViewModel(
     val transactionValue = MutableLiveData<String>()
     val transactionContacts = MutableLiveData<String>()
     val transactionNotes = MutableLiveData<String>()
+
+    private val _budgetsInputVisibility = MutableLiveData<Int>(View.GONE)
+    val budgetsInputVisibility: LiveData<Int> = _budgetsInputVisibility
+
+    private val _contactsInputVisibility = MutableLiveData<Int>(View.GONE)
+    val contactsInputVisibility: LiveData<Int> = _contactsInputVisibility
 
     private val _showDatePicker = MutableLiveData<Event<Unit>>()
     val showDatePicker: LiveData<Event<Unit>> = _showDatePicker
@@ -112,6 +119,16 @@ class AddEditTransactionDialogFragmentViewModel(
             R.id.btnAddEditTransactionTypeExpense -> Transaction.TransactionType.EXPENSE
             R.id.btnAddEditTransactionTypeClaim -> Transaction.TransactionType.CLAIM
             else -> Transaction.TransactionType.DEBT
+        }
+
+        _budgetsInputVisibility.value = when (transactionType.value) {
+            Transaction.TransactionType.EXPENSE -> View.VISIBLE
+            else -> View.GONE
+        }
+
+        _contactsInputVisibility.value = when (transactionType.value) {
+            Transaction.TransactionType.CLAIM, Transaction.TransactionType.DEBT -> View.VISIBLE
+            else -> View.GONE
         }
     }
 

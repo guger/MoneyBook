@@ -146,7 +146,7 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
         val today = LocalDate.now().toEpochMilli()
 
         val datePickerDialog = MaterialDatePicker.Builder.datePicker()
-            .setTitleTextResId(R.string.ChooseDate)
+            .setTitleText(R.string.ChooseDate)
             .setSelection(today)
             .build()
 
