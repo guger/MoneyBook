@@ -48,6 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/default_chart_height"
             app:accounts="@{viewModel.coloredAccounts}"
+            app:bold="true"
+            app:fontResId="@font/eczar_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mAccountsProgressbar"
