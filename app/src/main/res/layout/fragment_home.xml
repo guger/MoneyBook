@@ -41,6 +41,7 @@
         app:tabIconTint="@color/tab_highlight_selector"
         app:tabIndicator="@null"
         app:tabInlineLabel="true"
+        app:tabMode="scrollable"
         app:tabTextColor="@color/tab_highlight_selector" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

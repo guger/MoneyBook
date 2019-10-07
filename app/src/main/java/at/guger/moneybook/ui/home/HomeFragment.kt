@@ -31,7 +31,7 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.ui.home.accounts.AccountsFragment
-import at.guger.moneybook.ui.home.bills.BillsFragment
+import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.budgets.BudgetsFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -78,7 +78,7 @@ class HomeFragment : BaseFragment() {
                 return when (position) {
                     0 -> OverviewFragment.instantiate()
                     1 -> AccountsFragment.instantiate()
-                    2 -> BillsFragment.instantiate()
+                    2 -> DuesFragment.instantiate()
                     else -> BudgetsFragment.instantiate()
                 }
             }

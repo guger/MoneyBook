@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.bills
+package at.guger.moneybook.ui.home.dues
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,7 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 /**
  * Fragment for [home view pager's][ViewPager2] bills content.
  */
-class BillsFragment : BaseFragment() {
+class DuesFragment : BaseFragment() {
 
     //region Variables
 
@@ -62,6 +62,6 @@ class BillsFragment : BaseFragment() {
     //endregion
 
     companion object {
-        fun instantiate(): BillsFragment = BillsFragment()
+        fun instantiate(): DuesFragment = DuesFragment()
     }
 }
