@@ -28,7 +28,7 @@ class LabelVisibilityTabLayout @JvmOverloads constructor(context: Context, attrs
     override fun selectTab(tab: Tab?, updateIndicator: Boolean) {
         super.selectTab(tab, updateIndicator)
 
-        updateLabelVisibility()
+        post(::updateLabelVisibility)
     }
 
     private fun updateLabelVisibility() {
