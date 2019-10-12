@@ -19,6 +19,7 @@ package at.guger.moneybook.data.repository
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.util.observeOnce
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -40,35 +41,37 @@ class AccountsRepositoryTest : DatabaseTest() {
 
     @Test
     fun testInsertAccount() = runBlocking {
-        assertThat(repository.getAccounts()).isEmpty()
-
         repository.insert(ACCOUNT)
 
-        assertThat(repository.getAccounts()).hasSize(1)
-        assertThat(repository.getAccounts()).contains(ACCOUNT)
+        repository.getAccounts().observeOnce {
+            assertThat(it).hasSize(1)
+            assertThat(it).contains(ACCOUNT)
+        }
     }
 
     @Test
     fun testUpdateAccount() = runBlocking {
         repository.insert(ACCOUNT)
 
-        assertThat(repository.getAccounts()).contains(ACCOUNT)
+        repository.getAccounts().observeOnce { assertThat(it).contains(ACCOUNT) }
 
-        repository.update(ACCOUNT.copy(name = UPDATED_ACCOUNT_NAME))
+        repository.update(Account(id = ACCOUNT.id, name = UPDATED_ACCOUNT_NAME))
 
-        assertThat(repository.getAccounts()).hasSize(1)
-        assertThat(repository.getAccounts()).contains(ACCOUNT.copy(name = UPDATED_ACCOUNT_NAME))
+        repository.getAccounts().observeOnce {
+            assertThat(it).hasSize(1)
+            assertThat(it).contains(Account(id = ACCOUNT.id, name = UPDATED_ACCOUNT_NAME))
+        }
     }
 
     @Test
     fun testDeleteAccount() = runBlocking {
         repository.insert(ACCOUNT)
 
-        assertThat(repository.getAccounts()).isNotEmpty()
+        repository.getAccounts().observeOnce { assertThat(it).isNotEmpty() }
 
-        repository.delete(ACCOUNT.copy(name = UPDATED_ACCOUNT_NAME))
+        repository.delete(ACCOUNT)
 
-        assertThat(repository.getAccounts()).isEmpty()
+        repository.getAccounts().observeOnce { assertThat(it).isEmpty() }
     }
 
     companion object {

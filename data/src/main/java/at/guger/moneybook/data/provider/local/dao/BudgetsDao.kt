@@ -27,10 +27,7 @@ import at.guger.moneybook.data.model.Budget
 internal interface BudgetsDao {
 
     @Query("SELECT * FROM budgets ORDER BY name ASC")
-    suspend fun getBudgets(): List<Budget>
-
-    @Query("SELECT * FROM budgets ORDER BY name ASC")
-    fun getObservableBudgets(): LiveData<List<Budget>>
+    fun getBudgets(): LiveData<List<Budget>>
 
     @Insert
     suspend fun insert(budget: Budget): Long

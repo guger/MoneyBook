@@ -14,12 +14,12 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.util
+package at.guger.moneybook.util.menu
 
 import android.view.Menu
 import android.view.MenuItem
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
+import at.guger.moneybook.core.ui.recyclerview.adapter.SelectableList
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.ui.home.accounts.detail.AccountDetailTransactionsListAdapter
 
@@ -28,20 +28,20 @@ import at.guger.moneybook.ui.home.accounts.detail.AccountDetailTransactionsListA
  */
 object TransactionMenuUtils {
 
-    fun prepareMenu(menu: Menu, adapter: CheckableListAdapter) {
+    fun prepareMenu(menu: Menu, adapter: SelectableList) {
         with(adapter) {
-            menu.findItem(R.id.actionTransactionEdit).isVisible = checkedCount == 1
+            menu.findItem(R.id.actionTransactionEdit).isVisible = selectedCount == 1
         }
     }
 
     fun onItemSelected(item: MenuItem, adapter: AccountDetailTransactionsListAdapter, editAction: (Transaction) -> Unit, deleteAction: (Array<Transaction>) -> Unit): Boolean {
         return when (item.itemId) {
             R.id.actionTransactionEdit -> {
-                editAction(adapter.currentList[adapter.checkedItems.first()])
+                editAction(adapter.currentList[adapter.selectedItems.first()])
                 true
             }
             R.id.actionTransactionDelete -> {
-                deleteAction(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.toTypedArray())
+                deleteAction(adapter.currentList.filterIndexed { index, _ -> adapter.selectedItems.contains(index) }.toTypedArray())
                 true
             }
             else -> false

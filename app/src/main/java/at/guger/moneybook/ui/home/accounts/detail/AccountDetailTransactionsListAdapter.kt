@@ -23,18 +23,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
+import at.guger.moneybook.core.ui.recyclerview.adapter.SelectableList
 import at.guger.moneybook.data.model.Transaction
 
 /**
  * [RecyclerView.Adapter] for overview coloredAccounts card.
  */
 class AccountDetailTransactionsListAdapter(private val viewModel: AccountDetailViewModel) : ListAdapter<Transaction, AccountDetailTransactionsViewHolder>(AccountsDetailsTransactionsDiffCallback()),
-    CheckableListAdapter {
+    SelectableList {
 
     //region Variables
 
-    override val checkedItems: MutableList<Int> = mutableListOf()
+    override val selectedItems: MutableList<Int> = mutableListOf()
 
     //endregion
 
@@ -47,7 +47,7 @@ class AccountDetailTransactionsListAdapter(private val viewModel: AccountDetailV
     override fun onBindViewHolder(holder: AccountDetailTransactionsViewHolder, position: Int) {
         holder.bind(getItem(position))
 
-        holder.itemView.isActivated = checkedItems.contains(position)
+        holder.itemView.isActivated = selectedItems.contains(position)
     }
 
     //endregion
@@ -55,7 +55,7 @@ class AccountDetailTransactionsListAdapter(private val viewModel: AccountDetailV
     //region Methods
 
     fun toggleChecked(pos: Int) {
-        if (!checkedItems.contains(pos)) checkedItems.add(pos) else checkedItems.remove(pos)
+        if (!selectedItems.contains(pos)) selectedItems.add(pos) else selectedItems.remove(pos)
 
         notifyItemChanged(pos)
     }

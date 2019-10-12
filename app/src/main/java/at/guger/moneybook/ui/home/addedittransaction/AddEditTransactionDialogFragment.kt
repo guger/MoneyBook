@@ -70,7 +70,7 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
         val binding = DataBindingUtil.inflate<DialogFragmentAddEditTransactionBinding>(inflater, R.layout.dialog_fragment_add_edit_transaction, container, false)
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
@@ -123,7 +123,7 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
     private fun setupEvents() {
         viewModel.accounts.observe(viewLifecycleOwner, Observer { accounts ->
             edtAddEditTransactionAccount.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
-            edtAddEditTransactionAccount.setText(accounts.first().name)
+            edtAddEditTransactionAccount.setText(accounts.first().name, false)
         })
         viewModel.budgets.observe(viewLifecycleOwner, Observer { budgets ->
             val budgetEntries = budgets.map { it.name }.toMutableList().apply { add(0, "") }

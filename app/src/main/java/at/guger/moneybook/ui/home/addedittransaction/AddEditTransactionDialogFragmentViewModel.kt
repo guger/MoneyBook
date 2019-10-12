@@ -82,20 +82,12 @@ class AddEditTransactionDialogFragmentViewModel(
     private val _transactionSaved = MutableLiveData<Event<Unit>>()
     val transactionSaved: LiveData<Event<Unit>> = _transactionSaved
 
-    private val _accounts = MutableLiveData<List<Account>>()
-    val accounts: LiveData<List<Account>> = _accounts
-
-    private val _budgets = MutableLiveData<List<Budget>>()
-    val budgets: LiveData<List<Budget>> = _budgets
+    val accounts: LiveData<List<Account>> = accountsRepository.getAccounts()
+    val budgets: LiveData<List<Budget>> = budgetsRepository.getBudgets()
 
     //endregion
 
-    init {
-        viewModelScope.launch {
-            _accounts.value = accountsRepository.getAccounts()
-            _budgets.value = budgetsRepository.getBudgets()
-        }
-    }
+    //region Methods
 
     fun setupTransaction(transaction: Transaction) {
         this.transaction = transaction
@@ -205,4 +197,6 @@ class AddEditTransactionDialogFragmentViewModel(
     }
 
     private fun parseNumber(text: String?) = text?.replace(",", ".")?.toDoubleOrNull() ?: 0.0
+
+    //endregion
 }

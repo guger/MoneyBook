@@ -31,13 +31,17 @@ import at.guger.moneybook.ui.home.HomeViewModel
  */
 class OverviewAccountsListAdapter(private val viewModel: HomeViewModel) : ListAdapter<ColoredAccount, OverviewAccountsAccountViewHolder>(OverviewAccountsDiffCallback()) {
 
+    //region Adapter
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewAccountsAccountViewHolder {
-        return OverviewAccountsAccountViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_account, parent, false), viewModel)
+        return OverviewAccountsAccountViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_account, parent, false), viewModel)
     }
 
     override fun onBindViewHolder(holder: OverviewAccountsAccountViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    //endregion
 
     class OverviewAccountsDiffCallback : DiffUtil.ItemCallback<ColoredAccount>() {
         override fun areItemsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {

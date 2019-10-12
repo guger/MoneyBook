@@ -59,4 +59,14 @@
     <string name="Edit">Edit</string>
     <string name="x_selected">%d selected</string>
     <string name="EditTransaction">Edit Transaction</string>
+    <string name="AddAccount">Add Account</string>
+    <string name="Name">Name</string>
+    <string name="NewAccount">New Account</string>
+    <string name="EditAccount">Edit Account</string>
+    <string name="EmptyAccountName">Please enter an account name.</string>
+    <string name="DeleteAccount">Delete Account</string>
+    <string name="DeleteAccounts">Delete Accounts</string>
+    <string name="aldm_DeleteAccount">Do you really want to delete the account \"%s\" and all it\'s transactions?</string>
+    <string name="aldm_DeleteAccounts">Do you really want to delete the accounts \"%s\" and all their transactions?</string>
+    <string name="Cancel">Cancel</string>
 </resources>

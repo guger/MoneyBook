@@ -19,18 +19,18 @@ package at.guger.moneybook.ui.home.overview.accounts
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.databinding.ItemAccountBinding
+import at.guger.moneybook.databinding.ItemOverviewAccountBinding
 import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.ViewHolder] for an coloredAccounts overview item.
  */
-class OverviewAccountsAccountViewHolder(binding: ItemAccountBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemAccountBinding, ColoredAccount>(binding) {
+class OverviewAccountsAccountViewHolder(binding: ItemOverviewAccountBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemOverviewAccountBinding, ColoredAccount>(binding) {
 
     override fun bind(model: ColoredAccount) {
         binding.viewModel = viewModel
-        binding.account = model.account
-        binding.accountColor = model.color
+        binding.account = model
         binding.executePendingBindings()
     }
 

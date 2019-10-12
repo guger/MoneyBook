@@ -61,7 +61,7 @@ class TransactionsRepositoryTest : DatabaseTest() {
 
         assertThat(id).isEqualTo(ID)
 
-        transactionsRepository.getObservableTransactions().observeOnce {
+        transactionsRepository.getTransactions().observeOnce {
             assertThat(it).hasSize(1)
             assertTransaction(it.first())
         }

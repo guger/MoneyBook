@@ -16,21 +16,19 @@
 
 package at.guger.moneybook.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import at.guger.moneybook.core.ui.viewmodel.Event
-import at.guger.moneybook.data.model.AccountWithBalance
+import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.util.DataUtils
+import kotlinx.coroutines.launch
 
 /**
  * [ViewModel] for the home fragment and it's sub fragments.
  */
-class HomeViewModel(transactionsRepository: TransactionsRepository, accountsRepository: AccountsRepository) : ViewModel() {
+class HomeViewModel(transactionsRepository: TransactionsRepository, private val accountsRepository: AccountsRepository) : ViewModel() {
 
     //region Variables
 
@@ -51,7 +49,7 @@ class HomeViewModel(transactionsRepository: TransactionsRepository, accountsRepo
 
         transactions = transactionsRepository.getTransactions()
         coloredAccounts = Transformations.map(accountsRepository.getObservableAccountsWithBalance()) { accounts ->
-            accounts.mapIndexed { index, accountWithBalance -> ColoredAccount(accountWithBalance, colors[index]) }
+            accounts.mapIndexed { index, accountWithBalance -> ColoredAccount(accountWithBalance, color = colors[index]) }
         }
     }
 
@@ -61,8 +59,12 @@ class HomeViewModel(transactionsRepository: TransactionsRepository, accountsRepo
         _navigateToPage.value = Event(destination)
     }
 
-    fun showAccount(account: AccountWithBalance) {
+    fun showAccount(account: ColoredAccount) {
         _showAccount.value = Event(account.id)
+    }
+
+    fun deleteAccount(vararg account: Account) {
+        viewModelScope.launch { accountsRepository.delete(*account) }
     }
 
     //endregion

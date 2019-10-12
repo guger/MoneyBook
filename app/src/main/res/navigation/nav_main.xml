@@ -21,11 +21,15 @@
     app:startDestination="@id/homeFragment">
 
     <action
-        android:id="@+id/action_global_newTransactionDialogFragment"
-        app:destination="@id/newTransactionDialogFragment" />
+        android:id="@+id/action_global_addEditTransactionDialogFragment"
+        app:destination="@id/addEditTransactionDialogFragment" />
+
+    <action
+        android:id="@+id/action_global_addEditAccountBottomSheetDialogFragment"
+        app:destination="@id/addEditAccountBottomSheetDialogFragment" />
 
     <dialog
-        android:id="@+id/newTransactionDialogFragment"
+        android:id="@+id/addEditTransactionDialogFragment"
         android:name="at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionDialogFragment"
         android:label="@string/NewTransaction"
         tools:layout="@layout/dialog_fragment_add_edit_transaction">
@@ -61,4 +65,17 @@
         android:id="@+id/settingsFragment"
         android:name="at.guger.moneybook.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
+
+    <dialog
+        android:id="@+id/addEditAccountBottomSheetDialogFragment"
+        android:name="at.guger.moneybook.ui.home.accounts.addeditaccount.AddEditAccountBottomSheetDialogFragment"
+        android:label="AddEditAccountBottomSheetDialogFragment"
+        tools:layout="@layout/dialog_fragment_add_edit_account">
+
+        <argument
+            android:name="account"
+            android:defaultValue="@null"
+            app:argType="at.guger.moneybook.data.model.Account"
+            app:nullable="true" />
+    </dialog>
 </navigation>

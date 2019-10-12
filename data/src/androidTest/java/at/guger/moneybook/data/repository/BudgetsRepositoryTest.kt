@@ -41,7 +41,7 @@ class BudgetsRepositoryTest : DatabaseTest() {
     fun testInsertContact() = runBlocking {
         repository.insert(BUDGET)
 
-        repository.getObservableBudgets().observeOnce {
+        repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it).contains(BUDGET)
         }
@@ -51,14 +51,14 @@ class BudgetsRepositoryTest : DatabaseTest() {
     fun testUpdateAccount() = runBlocking {
         repository.insert(BUDGET)
 
-        repository.getObservableBudgets().observeOnce {
+        repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it).contains(BUDGET)
         }
 
         repository.update(BUDGET.copy(color = Color.RED))
 
-        repository.getObservableBudgets().observeOnce {
+        repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it).contains(BUDGET.copy(color = Color.RED))
         }
@@ -68,13 +68,13 @@ class BudgetsRepositoryTest : DatabaseTest() {
     fun testDeleteAccount() = runBlocking {
         repository.insert(BUDGET)
 
-        repository.getObservableBudgets().observeOnce {
+        repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it).contains(BUDGET)
         }
         repository.delete(BUDGET)
 
-        repository.getObservableBudgets().observeOnce {
+        repository.getBudgets().observeOnce {
             assertThat(it).isEmpty()
         }
     }
@@ -82,9 +82,8 @@ class BudgetsRepositoryTest : DatabaseTest() {
     companion object {
         private const val BUDGET_ID: Long = 22
         private const val BUDGET_NAME: String = "Test Budget"
-        private const val BUDGET_ICON: Int = 112
         private const val BUDGET_COLOR: Int = Color.BLUE
 
-        val BUDGET = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_ICON, BUDGET_COLOR)
+        val BUDGET = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_COLOR)
     }
 }

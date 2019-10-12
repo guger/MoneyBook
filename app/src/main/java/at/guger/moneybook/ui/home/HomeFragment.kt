@@ -18,6 +18,7 @@ package at.guger.moneybook.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -26,14 +27,16 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.ui.home.accounts.AccountsFragment
-import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.budgets.BudgetsFragment
+import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
+import at.guger.moneybook.ui.main.MainActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -53,6 +56,11 @@ class HomeFragment : BaseFragment() {
 
     //region Fragment
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -63,6 +71,16 @@ class HomeFragment : BaseFragment() {
         setupLayout()
 
         setupEventListeners()
+    }
+
+    //endregion
+
+    //region Menu
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        menu.findItem(R.id.actionAddAccount)?.isVisible = mHomeViewPager.currentItem == 1
     }
 
     //endregion
@@ -86,6 +104,14 @@ class HomeFragment : BaseFragment() {
             override fun getItemCount(): Int = destinations.size
         }
 
+        mHomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                requireAppCompatActivity<MainActivity>().invalidateOptionsMenu()
+            }
+        })
+
         TabLayoutMediator(mHomeTabs, mHomeViewPager) { tab, position ->
             val destination = destinations[position]
             tab.apply {
@@ -94,7 +120,7 @@ class HomeFragment : BaseFragment() {
             }
         }.attach()
 
-        fabAdd.setOnClickListener { findNavController().navigate(MainNavDirections.actionGlobalNewTransactionDialogFragment()) }
+        fabAdd.setOnClickListener { findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment()) }
     }
 
     private fun setupEventListeners() {

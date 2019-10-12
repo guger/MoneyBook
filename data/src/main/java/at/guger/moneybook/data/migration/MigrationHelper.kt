@@ -26,6 +26,7 @@ import android.content.Context
 class MigrationHelper(context: Context) {
 
 
+    @Suppress("UNREACHABLE_CODE")
     fun start(finished: () -> Unit) {
         TODO()
 

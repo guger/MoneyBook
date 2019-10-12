@@ -18,28 +18,40 @@ package at.guger.moneybook.ui.home.accounts
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
+import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.dimen
+import at.guger.moneybook.core.util.ext.setup
+import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.databinding.FragmentAccountsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
+import at.guger.moneybook.ui.main.MainActivity
+import at.guger.moneybook.util.menu.AccountMenuUtils
+import com.afollestad.materialcab.attached.destroy
+import com.afollestad.materialcab.attached.isActive
+import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
- * Fragment for [home view pager's][ViewPager2] coloredAccounts content.
+ * Fragment for [home view pager's][ViewPager2] accounts content.
  */
-class AccountsFragment : BaseFragment() {
+class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
+    private lateinit var adapter: AccountsAdapter
     private val viewModel: HomeViewModel by sharedViewModel()
 
     //endregion
@@ -58,12 +70,83 @@ class AccountsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(mAccountsRecyclerView) {
-            setHasFixedSize(true)
+        adapter = AccountsAdapter(viewModel).apply { viewModel.coloredAccounts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = AccountsAdapter(viewModel).apply { viewModel.coloredAccounts.observe(viewLifecycleOwner, Observer(::submitList)) }
+        mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
+            addOnItemTouchListener(OnItemTouchListener(requireContext(), this, this@AccountsFragment))
             addItemDecoration(SpacesItemDecoration(all = context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
+        }
+    }
+
+    //endregion
+
+    //region Methods
+
+    private fun editAccount(account: Account) {
+        findNavController().navigate(MainNavDirections.actionGlobalAddEditAccountBottomSheetDialogFragment(account))
+    }
+
+    private fun deleteAccount(vararg account: Account) {
+        MaterialDialog(requireContext()).show {
+            title(res = if (account.size == 1) R.string.DeleteAccount else R.string.DeleteAccounts)
+            message(text = getString(if (account.size == 1) R.string.aldm_DeleteAccount else R.string.aldm_DeleteAccounts, account.joinToString { it.name }))
+
+            positiveButton(res = R.string.Delete) { viewModel.deleteAccount(*account) }
+            negativeButton(res = R.string.Cancel)
+        }
+    }
+
+    //endregion
+
+    //region Callback
+
+    override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
+        if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+            adapter.toggleChecked(pos)
+
+            if (adapter.selectedCount > 0) {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+
+                    AccountMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().destroyCab()
+            }
+        } else {
+            viewModel.showAccount(adapter.currentList[pos])
+        }
+    }
+
+    override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
+        adapter.toggleChecked(pos)
+
+        if (adapter.selectedCount > 0) {
+            if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+                requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_account) {
+                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+
+                    onCreate { _, menu -> AccountMenuUtils.prepareMenu(menu, adapter) }
+
+                    onDestroy {
+                        adapter.clearChecked()
+                        true
+                    }
+
+                    onSelection { menuItem ->
+                        AccountMenuUtils.onItemSelected(menuItem, adapter, ::editAccount, ::deleteAccount)
+                        destroy()
+                    }
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+
+                    AccountMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            }
+        } else {
+            requireAppCompatActivity<MainActivity>().destroyCab()
         }
     }
 

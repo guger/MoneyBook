@@ -29,12 +29,11 @@ import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
-import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.ui.main.MainActivity
-import at.guger.moneybook.util.TransactionMenuUtils
+import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
 import kotlinx.android.synthetic.main.fragment_account_detail.*
@@ -70,8 +69,14 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(OnItemTouchListener(context, this, this@AccountDetailFragment))
         }
+    }
 
-        viewModel.editTransaction.observe(viewLifecycleOwner, EventObserver { findNavController().navigate(MainNavDirections.actionGlobalNewTransactionDialogFragment(it)) })
+    //endregion
+
+    //region Methods
+
+    private fun editTransaction(transaction: Transaction) {
+        findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment(transaction))
     }
 
     //endregion
@@ -82,9 +87,9 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
             adapter.toggleChecked(pos)
 
-            if (adapter.checkedCount > 0) {
+            if (adapter.selectedCount > 0) {
                 requireAppCompatActivity<MainActivity>().mCab!!.apply {
-                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
 
                     TransactionMenuUtils.prepareMenu(getMenu(), adapter)
                 }
@@ -97,10 +102,10 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
     override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
         adapter.toggleChecked(pos)
 
-        if (adapter.checkedCount > 0) {
+        if (adapter.selectedCount > 0) {
             if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
                 requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_transaction) {
-                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
 
                     onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter) }
 
@@ -110,13 +115,13 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
                     }
 
                     onSelection { menuItem ->
-                        TransactionMenuUtils.onItemSelected(menuItem, adapter, viewModel::edit, viewModel::delete)
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, viewModel::delete)
                         destroy()
                     }
                 }
             } else {
                 requireAppCompatActivity<MainActivity>().mCab!!.apply {
-                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
 
                     TransactionMenuUtils.prepareMenu(getMenu(), adapter)
                 }

@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.activity.BaseActivity
 import at.guger.moneybook.core.ui.dialog.BottomNavigationViewDialog
@@ -46,7 +47,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
-    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.manageFragment, R.id.settingsFragment)
+    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.manageFragment, R.id.settingsFragment, R.id.addEditTransactionDialogFragment, R.id.addEditAccountBottomSheetDialogFragment)
 
     var mCab: AttachedCab? = null
 
@@ -135,6 +136,10 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
+            R.id.actionAddAccount -> {
+                navController.navigate(MainNavDirections.actionGlobalAddEditAccountBottomSheetDialogFragment())
+                true
+            }
             R.id.actionSearch -> true
             else -> false
         }
@@ -143,6 +148,8 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         prepareAppBar(destination)
         prepareMenu(mBottomAppBar)
+
+        invalidateOptionsMenu()
     }
 
     //endregion

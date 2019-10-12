@@ -68,7 +68,10 @@ class Transaction(
     }
 
     @Parcelize
-    @Entity(tableName = Database.Transactions.TABLE_NAME)
+    @Entity(
+        tableName = Database.Transactions.TABLE_NAME,
+        foreignKeys = [ForeignKey(entity = Account::class, parentColumns = [Database.Accounts.COL_ID], childColumns = [Database.Transactions.COL_ACCOUNT_ID], onDelete = ForeignKey.CASCADE)]
+    )
     data class TransactionEntity(
         @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Transactions.COL_ID) val id: Long = 0L,
         @ColumnInfo(name = Database.Transactions.COL_TITLE) val title: String = "",

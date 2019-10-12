@@ -21,14 +21,14 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * Interface for a [RecyclerView.Adapter] supporting checked items.
  */
-interface CheckableListAdapter {
+interface SelectableList {
 
-    val checkedItems: MutableList<Int>
+    val selectedItems: MutableList<Int>
 
-    val checkedCount: Int
-        get() = checkedItems.count()
+    val selectedCount: Int
+        get() = selectedItems.count()
 
     fun clearChecked() {
-        checkedItems.clear()
+        selectedItems.clear()
     }
 }

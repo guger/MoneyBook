@@ -28,9 +28,9 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 @Entity(tableName = Database.Accounts.TABLE_NAME)
-data class Account(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Accounts.COL_ID) val id: Long = 0,
-    @ColumnInfo(name = Database.Accounts.COL_NAME) val name: String = ""
+open class Account(
+    @JvmField @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Accounts.COL_ID) var id: Long = 0,
+    @JvmField @ColumnInfo(name = Database.Accounts.COL_NAME) var name: String = ""
 ) : Model {
 
     companion object {

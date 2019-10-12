@@ -23,13 +23,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
+import at.guger.moneybook.core.ui.recyclerview.adapter.SelectableList
 import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.Adapter] showing all coloredAccounts and details.
  */
-class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<ColoredAccount, AccountViewHolder>(AccountsDiffCallback()) {
+class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<ColoredAccount, AccountViewHolder>(AccountsDiffCallback()), SelectableList {
+
+    //region Variables
+
+    override val selectedItems: MutableList<Int> = mutableListOf()
+
+    //endregion
+
+    //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
         return AccountViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_account, parent, false), viewModel)
@@ -37,7 +46,27 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<Colore
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         holder.bind(getItem(position))
+
+        holder.itemView.isActivated = selectedItems.contains(position)
     }
+
+    //endregion
+
+    //region Methods
+
+    fun toggleChecked(pos: Int) {
+        if (!selectedItems.contains(pos)) selectedItems.add(pos) else selectedItems.remove(pos)
+
+        notifyItemChanged(pos)
+    }
+
+    override fun clearChecked() {
+        super.clearChecked()
+
+        notifyDataSetChanged()
+    }
+
+    //endregion
 
     class AccountsDiffCallback : DiffUtil.ItemCallback<ColoredAccount>() {
         override fun areItemsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {

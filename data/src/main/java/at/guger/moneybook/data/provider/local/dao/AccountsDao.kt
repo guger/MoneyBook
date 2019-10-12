@@ -32,13 +32,13 @@ internal interface AccountsDao {
     suspend fun get(id: Long): Account
 
     @Query("SELECT * FROM accounts")
-    suspend fun getAccounts(): List<Account>
+    fun getAccounts(): LiveData<List<Account>>
 
     @Query(
         """
             SELECT accounts.*, 
             (SELECT SUM(CASE WHEN transactions.type = ${Transaction.TransactionType.EARNING} OR transactions.type = ${Transaction.TransactionType.CLAIM} THEN transactions.value 
-            ELSE -transactions.value END) FROM transactions) AS balance
+            ELSE -transactions.value END) FROM transactions WHERE transactions.account_id = accounts.id) AS balance
             FROM accounts
             LEFT JOIN transactions ON transactions.account_id = accounts.id
             GROUP BY accounts.id
@@ -53,5 +53,5 @@ internal interface AccountsDao {
     suspend fun update(account: Account)
 
     @Delete
-    suspend fun delete(account: Account)
+    suspend fun delete(vararg account: Account)
 }

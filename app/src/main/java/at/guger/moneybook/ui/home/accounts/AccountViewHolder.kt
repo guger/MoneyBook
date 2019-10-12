@@ -29,8 +29,7 @@ class AccountViewHolder(binding: ItemAccountBinding, private val viewModel: Home
 
     override fun bind(model: ColoredAccount) {
         binding.viewModel = viewModel
-        binding.account = model.account
-        binding.accountColor = model.color
+        binding.account = model
         binding.executePendingBindings()
     }
 

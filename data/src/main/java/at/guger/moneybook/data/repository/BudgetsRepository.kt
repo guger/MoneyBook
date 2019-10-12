@@ -34,9 +34,7 @@ class BudgetsRepository(database: AppDatabase) {
 
     //region Methods
 
-    suspend fun getBudgets(): List<Budget> = budgetsDao.getBudgets()
-
-    fun getObservableBudgets(): LiveData<List<Budget>> = budgetsDao.getObservableBudgets()
+    fun getBudgets(): LiveData<List<Budget>> = budgetsDao.getBudgets()
 
     suspend fun insert(vararg budget: Budget) {
         budgetsDao.insert(*budget)

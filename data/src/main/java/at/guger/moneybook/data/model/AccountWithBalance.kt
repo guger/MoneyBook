@@ -28,14 +28,6 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 @Entity(tableName = Database.Accounts.TABLE_NAME)
-data class AccountWithBalance(
-    @Embedded val account: Account = Account(),
-    @ColumnInfo(name = Database.Accounts.COL_BALANCE) val balance: Double = 0.0
-) : Model {
-
-    val id: Long
-        get() = account.id
-
-    val name: String
-        get() = account.name
-}
+open class AccountWithBalance(
+    @ColumnInfo(name = Database.Accounts.COL_BALANCE) var balance: Double = 0.0
+) : Account()

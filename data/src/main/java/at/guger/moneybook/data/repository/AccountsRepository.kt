@@ -39,7 +39,7 @@ class AccountsRepository(database: AppDatabase) {
         return accountsDao.get(id)
     }
 
-    suspend fun getAccounts(): List<Account> {
+    fun getAccounts(): LiveData<List<Account>> {
         return accountsDao.getAccounts()
     }
 
@@ -55,8 +55,8 @@ class AccountsRepository(database: AppDatabase) {
         accountsDao.update(account)
     }
 
-    suspend fun delete(account: Account) {
-        accountsDao.delete(account)
+    suspend fun delete(vararg account: Account) {
+        accountsDao.delete(*account)
     }
 
     //endregion

@@ -20,7 +20,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
@@ -43,9 +42,6 @@ class AccountDetailViewModel(
 
     val transactions: LiveData<List<Transaction>>
 
-    private val _editTransaction = MutableLiveData<Event<Transaction>>()
-    val editTransaction: LiveData<Event<Transaction>> = _editTransaction
-
     //endregion
 
     init {
@@ -57,10 +53,6 @@ class AccountDetailViewModel(
     }
 
     //region Methods
-
-    fun edit(transaction: Transaction) {
-        _editTransaction.value = Event(transaction)
-    }
 
     fun delete(vararg transaction: Transaction) {
         viewModelScope.launch {
