@@ -36,6 +36,8 @@ object DataUtils {
         Budget(id = -98, name = context.getString(R.string.Shopping), color = Color.parseColor("#00bcd4"))
     )
 
+    const val MAX_ACCOUNTS = 4
+
     fun getAccountColors(): Array<Int> {
         return arrayOf(
             Color.parseColor("#007d51"),
