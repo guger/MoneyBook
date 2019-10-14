@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ab0db94edcea881497180fb92912ab9e",
+    "identityHash": "c12e3b939555027bde6723bbb2a85494",
     "entities": [
       {
         "tableName": "transactions",
@@ -63,7 +63,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_transactions_account_id",
+            "unique": false,
+            "columnNames": [
+              "account_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_transactions_account_id` ON `${TABLE_NAME}` (`account_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "accounts",
@@ -205,7 +214,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab0db94edcea881497180fb92912ab9e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c12e3b939555027bde6723bbb2a85494')"
     ]
   }
 }

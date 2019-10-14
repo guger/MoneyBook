@@ -104,9 +104,9 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
         if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
             adapter.toggleChecked(pos)
 
-            if (adapter.selectedCount > 0) {
+            if (adapter.checkedCount > 0) {
                 requireAppCompatActivity<MainActivity>().mCab!!.apply {
-                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     AccountMenuUtils.prepareMenu(getMenu(), adapter)
                 }
@@ -121,10 +121,10 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
         adapter.toggleChecked(pos)
 
-        if (adapter.selectedCount > 0) {
+        if (adapter.checkedCount > 0) {
             if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
                 requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_account) {
-                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     onCreate { _, menu -> AccountMenuUtils.prepareMenu(menu, adapter) }
 
@@ -140,7 +140,7 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                 }
             } else {
                 requireAppCompatActivity<MainActivity>().mCab!!.apply {
-                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     AccountMenuUtils.prepareMenu(getMenu(), adapter)
                 }

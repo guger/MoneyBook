@@ -97,9 +97,5 @@
         <variable
             name="transaction"
             type="at.guger.moneybook.data.model.Transaction" />
-
-        <variable
-            name="viewModel"
-            type="at.guger.moneybook.ui.home.accounts.detail.AccountDetailViewModel" />
     </data>
 </layout>

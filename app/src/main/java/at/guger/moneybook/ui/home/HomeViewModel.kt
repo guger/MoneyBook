@@ -32,7 +32,7 @@ class HomeViewModel(transactionsRepository: TransactionsRepository, private val 
 
     //region Variables
 
-    val transactions: LiveData<List<Transaction>>
+    val earningsAndExpenses: LiveData<List<Transaction>>
 
     val coloredAccounts: LiveData<List<ColoredAccount>>
 
@@ -47,7 +47,7 @@ class HomeViewModel(transactionsRepository: TransactionsRepository, private val 
     init {
         val colors = DataUtils.getAccountColors()
 
-        transactions = transactionsRepository.getTransactions()
+        earningsAndExpenses = transactionsRepository.getEarningsAndExpenses()
         coloredAccounts = Transformations.map(accountsRepository.getObservableAccountsWithBalance()) { accounts ->
             accounts.mapIndexed { index, accountWithBalance -> ColoredAccount(accountWithBalance, color = colors[index]) }
         }

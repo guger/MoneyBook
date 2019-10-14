@@ -64,6 +64,9 @@ class AddEditTransactionDialogFragmentViewModel(
     val transactionContacts = MutableLiveData<String>()
     val transactionNotes = MutableLiveData<String>()
 
+    private val _accountsInputVisibility = MutableLiveData<Int>(View.VISIBLE)
+    val accountsInputVisibility: LiveData<Int> = _accountsInputVisibility
+
     private val _budgetsInputVisibility = MutableLiveData<Int>(View.GONE)
     val budgetsInputVisibility: LiveData<Int> = _budgetsInputVisibility
 
@@ -111,6 +114,11 @@ class AddEditTransactionDialogFragmentViewModel(
             R.id.btnAddEditTransactionTypeExpense -> Transaction.TransactionType.EXPENSE
             R.id.btnAddEditTransactionTypeClaim -> Transaction.TransactionType.CLAIM
             else -> Transaction.TransactionType.DEBT
+        }
+
+        _accountsInputVisibility.value = when (transactionType.value) {
+            Transaction.TransactionType.EARNING, Transaction.TransactionType.EXPENSE -> View.VISIBLE
+            else -> View.GONE
         }
 
         _budgetsInputVisibility.value = when (transactionType.value) {

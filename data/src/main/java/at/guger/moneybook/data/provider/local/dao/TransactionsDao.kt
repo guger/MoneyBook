@@ -33,7 +33,8 @@ internal interface TransactionsDao {
     @androidx.room.Transaction
     @Query(
         """
-        SELECT transactions.* FROM transactions WHERE account_id = :accountId
+        SELECT transactions.* FROM transactions 
+        WHERE account_id = :accountId AND type IN (${Transaction.TransactionType.EARNING}, ${Transaction.TransactionType.EXPENSE})
         ORDER BY date DESC, title ASC
         """
     )
@@ -43,10 +44,21 @@ internal interface TransactionsDao {
     @Query(
         """
         SELECT transactions.* FROM transactions
+        WHERE type IN (${Transaction.TransactionType.EARNING}, ${Transaction.TransactionType.EXPENSE})
         ORDER BY date DESC, title ASC
         """
     )
-    fun getTransactions(): LiveData<List<Transaction>>
+    fun getEarningsAndExpenses(): LiveData<List<Transaction>>
+
+    @androidx.room.Transaction
+    @Query(
+        """
+        SELECT transactions.* FROM transactions
+        WHERE type IN (${Transaction.TransactionType.CLAIM}, ${Transaction.TransactionType.DEBT})
+        ORDER BY date DESC, title ASC
+        """
+    )
+    fun getClaimsAndDebts(): LiveData<List<Transaction>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(transactionEntity: Transaction.TransactionEntity): Long

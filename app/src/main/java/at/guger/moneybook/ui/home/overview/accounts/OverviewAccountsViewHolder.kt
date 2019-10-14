@@ -35,9 +35,13 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
 
         viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, Observer { coloredAccounts ->
             val balanceSum = coloredAccounts.sumByDouble { it.balance }
-            mOverviewAccountsDivider.setColorDistribution(
-                coloredAccounts.map { it.color },
-                coloredAccounts.map { (100 / balanceSum * it.balance).toFloat() }.takeIf { balanceSum > 0.0f } ?: List(coloredAccounts.size) { 100.0f / coloredAccounts.size })
+
+            if (coloredAccounts.isNotEmpty()) { // TODO Show loading screen until default account is inserted and remove this
+                mOverviewAccountsDivider.setColorDistribution(
+                    coloredAccounts.map { it.color },
+                    coloredAccounts.map { (100 / balanceSum * it.balance).toFloat() }.takeIf { balanceSum > 0.0f } ?: List(coloredAccounts.size) { 100.0f / coloredAccounts.size }
+                )
+            }
         })
 
         with(mOverviewAccountsRecyclerView) {

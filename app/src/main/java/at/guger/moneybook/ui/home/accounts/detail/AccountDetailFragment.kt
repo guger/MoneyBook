@@ -41,7 +41,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 /**
- * Fragment displaying the [transactions][Transaction] of an [account][Account].
+ * Fragment displaying the [earningsAndExpenses][Transaction] of an [account][Account].
  */
 class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
@@ -64,7 +64,7 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = AccountDetailTransactionsListAdapter(viewModel).apply { viewModel.transactions.observe(viewLifecycleOwner, Observer(::submitList)) }
+        adapter = AccountDetailTransactionsListAdapter().apply { viewModel.transactions.observe(viewLifecycleOwner, Observer(::submitList)) }
 
         mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(OnItemTouchListener(context, this, this@AccountDetailFragment))
@@ -87,9 +87,9 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
             adapter.toggleChecked(pos)
 
-            if (adapter.selectedCount > 0) {
+            if (adapter.checkedCount > 0) {
                 requireAppCompatActivity<MainActivity>().mCab!!.apply {
-                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     TransactionMenuUtils.prepareMenu(getMenu(), adapter)
                 }
@@ -102,10 +102,10 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
     override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
         adapter.toggleChecked(pos)
 
-        if (adapter.selectedCount > 0) {
+        if (adapter.checkedCount > 0) {
             if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
                 requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_transaction) {
-                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter) }
 
@@ -121,7 +121,7 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
                 }
             } else {
                 requireAppCompatActivity<MainActivity>().mCab!!.apply {
-                    title(literal = getString(R.string.x_selected, adapter.selectedCount))
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     TransactionMenuUtils.prepareMenu(getMenu(), adapter)
                 }

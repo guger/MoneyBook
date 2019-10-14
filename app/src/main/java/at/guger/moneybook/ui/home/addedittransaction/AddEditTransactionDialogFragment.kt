@@ -52,7 +52,7 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 
 /**
- * Dialog fragment for creating a new [transactions][Transaction].
+ * Dialog fragment for creating a new [earningsAndExpenses][Transaction].
  */
 class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.CalcDialogCallback {
 

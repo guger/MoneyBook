@@ -23,39 +23,39 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.recyclerview.adapter.SelectableList
+import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
 import at.guger.moneybook.data.model.Transaction
 
 /**
  * [RecyclerView.Adapter] for overview coloredAccounts card.
  */
-class AccountDetailTransactionsListAdapter(private val viewModel: AccountDetailViewModel) : ListAdapter<Transaction, AccountDetailTransactionsViewHolder>(AccountsDetailsTransactionsDiffCallback()),
-    SelectableList {
+class AccountDetailTransactionsListAdapter : ListAdapter<Transaction, AccountDetailTransactionViewHolder>(AccountsDetailsTransactionsDiffCallback()),
+    CheckableList {
 
     //region Variables
 
-    override val selectedItems: MutableList<Int> = mutableListOf()
+    override val checkedItems: MutableList<Int> = mutableListOf()
 
     //endregion
 
     //region Adapter
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountDetailTransactionsViewHolder {
-        return AccountDetailTransactionsViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false), viewModel)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountDetailTransactionViewHolder {
+        return AccountDetailTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false))
     }
 
-    override fun onBindViewHolder(holder: AccountDetailTransactionsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AccountDetailTransactionViewHolder, position: Int) {
         holder.bind(getItem(position))
 
-        holder.itemView.isActivated = selectedItems.contains(position)
+        holder.itemView.isActivated = checkedItems.contains(position)
     }
 
     //endregion
 
     //region Methods
 
-    fun toggleChecked(pos: Int) {
-        if (!selectedItems.contains(pos)) selectedItems.add(pos) else selectedItems.remove(pos)
+    override fun toggleChecked(pos: Int) {
+        super.toggleChecked(pos)
 
         notifyItemChanged(pos)
     }

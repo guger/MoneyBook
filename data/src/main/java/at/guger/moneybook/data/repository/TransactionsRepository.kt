@@ -40,7 +40,9 @@ class TransactionsRepository(database: AppDatabase) {
 
     fun getByAccount(accountId: Long) = transactionsDao.getByAccount(accountId)
 
-    fun getTransactions(): LiveData<List<Transaction>> = transactionsDao.getTransactions()
+    fun getEarningsAndExpenses(): LiveData<List<Transaction>> = transactionsDao.getEarningsAndExpenses()
+
+    fun getClaimsAndDebts(): LiveData<List<Transaction>> = transactionsDao.getClaimsAndDebts()
 
     suspend fun insert(transaction: Transaction): Long {
         val id = transactionsDao.insert(transaction.entity)

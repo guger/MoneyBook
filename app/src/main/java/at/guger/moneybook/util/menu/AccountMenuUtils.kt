@@ -24,25 +24,25 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.ui.home.accounts.AccountsAdapter
 
 /**
- * Util class for [transactions][Transaction] menu.
+ * Util class for [earningsAndExpenses][Transaction] menu.
  */
 object AccountMenuUtils {
 
     fun prepareMenu(menu: Menu, adapter: AccountsAdapter) {
         with(adapter) {
-            menu.findItem(R.id.actionAccountEdit).isVisible = selectedCount == 1
-            menu.findItem(R.id.actionAccountDelete).isVisible = adapter.currentList.filterIndexed { index, _ -> selectedItems.contains(index) }.none { it.id == Account.DEFAULT_ACCOUNT_ID }
+            menu.findItem(R.id.actionAccountEdit).isVisible = checkedCount == 1
+            menu.findItem(R.id.actionAccountDelete).isVisible = adapter.currentList.filterIndexed { index, _ -> checkedItems.contains(index) }.none { it.id == Account.DEFAULT_ACCOUNT_ID }
         }
     }
 
     fun onItemSelected(item: MenuItem, adapter: AccountsAdapter, editAction: (Account) -> Unit, deleteAction: (Array<Account>) -> Unit): Boolean {
         return when (item.itemId) {
             R.id.actionAccountEdit -> {
-                editAction(adapter.currentList[adapter.selectedItems.first()].account)
+                editAction(adapter.currentList[adapter.checkedItems.first()].account)
                 true
             }
             R.id.actionAccountDelete -> {
-                deleteAction(adapter.currentList.filterIndexed { index, _ -> adapter.selectedItems.contains(index) }.map { it.account }.toTypedArray())
+                deleteAction(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.map { it.account }.toTypedArray())
                 true
             }
             else -> false

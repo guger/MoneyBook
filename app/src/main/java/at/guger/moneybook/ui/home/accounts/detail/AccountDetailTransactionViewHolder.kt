@@ -22,12 +22,11 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
- * [RecyclerView.ViewHolder] for a transactions item.
+ * [RecyclerView.ViewHolder] for a earningsAndExpenses item.
  */
-class AccountDetailTransactionsViewHolder(binding: ItemTransactionBinding, private val viewModel: AccountDetailViewModel) : ModelViewHolder<ItemTransactionBinding, Transaction>(binding) {
+class AccountDetailTransactionViewHolder(binding: ItemTransactionBinding) : ModelViewHolder<ItemTransactionBinding, Transaction>(binding) {
 
     override fun bind(model: Transaction) {
-        binding.viewModel = viewModel
         binding.transaction = model
         binding.executePendingBindings()
     }

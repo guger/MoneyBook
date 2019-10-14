@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.accounts
+package at.guger.moneybook.ui.home.dues
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,13 +24,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
-import at.guger.moneybook.ui.home.ColoredAccount
-import at.guger.moneybook.ui.home.HomeViewModel
+import at.guger.moneybook.data.model.Transaction
 
 /**
  * [RecyclerView.Adapter] showing all accounts and details.
  */
-class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<ColoredAccount, AccountViewHolder>(AccountsDiffCallback()), CheckableList {
+class DuesAdapter : ListAdapter<Transaction, DuesTransactionViewHolder>(TransactionsDiffCallback()), CheckableList {
 
     //region Variables
 
@@ -40,14 +39,12 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<Colore
 
     //region Adapter
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
-        return AccountViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_account, parent, false), viewModel)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DuesTransactionViewHolder {
+        return DuesTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false))
     }
 
-    override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DuesTransactionViewHolder, position: Int) {
         holder.bind(getItem(position))
-
-        holder.itemView.isActivated = checkedItems.contains(position)
     }
 
     //endregion
@@ -68,12 +65,12 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<Colore
 
     //endregion
 
-    class AccountsDiffCallback : DiffUtil.ItemCallback<ColoredAccount>() {
-        override fun areItemsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {
+    class TransactionsDiffCallback : DiffUtil.ItemCallback<Transaction>() {
+        override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {
+        override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
             return oldItem == newItem
         }
     }

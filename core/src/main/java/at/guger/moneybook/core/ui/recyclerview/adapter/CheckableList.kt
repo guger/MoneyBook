@@ -16,19 +16,26 @@
 
 package at.guger.moneybook.core.ui.recyclerview.adapter
 
+import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Interface for a [RecyclerView.Adapter] supporting checked items.
  */
-interface SelectableList {
+interface CheckableList {
 
-    val selectedItems: MutableList<Int>
+    val checkedItems: MutableList<Int>
 
-    val selectedCount: Int
-        get() = selectedItems.count()
+    val checkedCount: Int
+        get() = checkedItems.count()
 
+    @CallSuper
+    fun toggleChecked(pos: Int) {
+        if (!checkedItems.contains(pos)) checkedItems.add(pos) else checkedItems.remove(pos)
+    }
+
+    @CallSuper
     fun clearChecked() {
-        selectedItems.clear()
+        checkedItems.clear()
     }
 }

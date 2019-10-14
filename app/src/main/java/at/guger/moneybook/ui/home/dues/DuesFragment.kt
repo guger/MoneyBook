@@ -26,6 +26,7 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
 import at.guger.moneybook.core.util.ext.dimen
+import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -36,6 +37,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class DuesFragment : BaseFragment() {
 
     //region Variables
+
+    lateinit var adapter: DuesAdapter
 
     private val viewModel: HomeViewModel by sharedViewModel()
 
@@ -50,11 +53,9 @@ class DuesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(mAccountsRecyclerView) {
-            setHasFixedSize(true)
+        adapter = DuesAdapter()
 
-            layoutManager = LinearLayoutManager(requireContext())
-//          TODO  adapter = OverviewAdapter(viewModel)
+        mAccountsRecyclerView.setup(LinearLayoutManager(context), adapter) {
             addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
         }
     }
