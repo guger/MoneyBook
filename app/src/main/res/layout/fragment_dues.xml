@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2019 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +21,7 @@
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/mAccountsProgressbar"
+        android:id="@+id/mDuesProgressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -32,11 +31,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mAccountsRecyclerView"
+        android:id="@+id/mDuesRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mAccountsProgressbar" />
+        app:layout_constraintTop_toBottomOf="@+id/mDuesProgressbar"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_transaction" />
 </androidx.constraintlayout.widget.ConstraintLayout>

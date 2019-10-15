@@ -41,7 +41,7 @@ import at.guger.moneybook.util.menu.AccountMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
 import com.afollestad.materialdialogs.MaterialDialog
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import kotlinx.android.synthetic.main.fragment_accounts.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**

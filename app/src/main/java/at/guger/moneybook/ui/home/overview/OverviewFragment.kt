@@ -27,7 +27,7 @@ import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
 import at.guger.moneybook.core.util.ext.dimen
 import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import kotlinx.android.synthetic.main.fragment_dues.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -44,7 +44,7 @@ class OverviewFragment : BaseFragment() {
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+        return inflater.inflate(R.layout.fragment_dues, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

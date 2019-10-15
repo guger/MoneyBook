@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
@@ -28,7 +29,7 @@ import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
 import at.guger.moneybook.core.util.ext.dimen
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import kotlinx.android.synthetic.main.fragment_dues.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -47,15 +48,15 @@ class DuesFragment : BaseFragment() {
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+        return inflater.inflate(R.layout.fragment_dues, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DuesAdapter()
+        adapter = DuesAdapter().apply { viewModel.claimsAndDebts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        mAccountsRecyclerView.setup(LinearLayoutManager(context), adapter) {
+        mDuesRecyclerView.setup(LinearLayoutManager(context), adapter) {
             addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
         }
     }
