@@ -18,13 +18,13 @@ package at.guger.moneybook.util.menu
 
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.ListAdapter
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.ui.home.accounts.detail.AccountDetailTransactionsListAdapter
 
 /**
- * Util class for [earningsAndExpenses][Transaction] menu.
+ * Util class for [transactions][Transaction] menu.
  */
 object TransactionMenuUtils {
 
@@ -34,7 +34,9 @@ object TransactionMenuUtils {
         }
     }
 
-    fun onItemSelected(item: MenuItem, adapter: AccountDetailTransactionsListAdapter, editAction: (Transaction) -> Unit, deleteAction: (Array<Transaction>) -> Unit): Boolean {
+    fun onItemSelected(item: MenuItem, adapter: ListAdapter<Transaction, *>, editAction: (Transaction) -> Unit, deleteAction: (Array<Transaction>) -> Unit): Boolean {
+        require(adapter is CheckableList) { "Parameter adapter must extend CheckableList." }
+
         return when (item.itemId) {
             R.id.actionTransactionEdit -> {
                 editAction(adapter.currentList[adapter.checkedItems.first()])

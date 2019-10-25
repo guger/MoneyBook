@@ -38,20 +38,23 @@ android {
     androidExtensions {
         experimental = true
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     testImplementation "junit:junit:$deps.test.junit"
-    testImplementation "org.koin:koin-test:$deps.koin"
+    testImplementation "org.robolectric:robolectric:$deps.test.robolectric"
     testImplementation "com.google.truth:truth:$deps.test.truth"
-    androidTestImplementation "androidx.test.ext:junit:$deps.test.ext"
-    androidTestImplementation "org.koin:koin-test:$deps.koin"
-    androidTestImplementation "com.google.truth:truth:$deps.test.truth"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$deps.test.espresso"
-    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$deps.test.espresso"
-    androidTestImplementation "androidx.arch.core:core-testing:$deps.test.arch_core"
+    testImplementation "androidx.arch.core:core-testing:$deps.test.arch_core"
+    testImplementation "androidx.test.ext:junit:$deps.test.ext"
+    testImplementation "androidx.test.espresso:espresso-core:$deps.test.espresso"
+    testImplementation "androidx.test.espresso:espresso-idling-resource:$deps.test.espresso"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$deps.kotlin.common"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.kotlin.coroutines"
@@ -71,7 +74,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$deps.arch.room"
     implementation "androidx.room:room-ktx:$deps.arch.room"
     kapt "androidx.room:room-compiler:$deps.arch.room"
-    androidTestImplementation "androidx.room:room-testing:$deps.arch.room"
+    testImplementation "androidx.room:room-testing:$deps.arch.room"
 
     implementation "androidx.work:work-runtime-ktx:$deps.arch.work"
 

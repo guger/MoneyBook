@@ -34,6 +34,6 @@ open class Account(
 ) : Model {
 
     companion object {
-        const val DEFAULT_ACCOUNT_ID = -1L
+        const val DEFAULT_ACCOUNT_ID = -100L
     }
 }

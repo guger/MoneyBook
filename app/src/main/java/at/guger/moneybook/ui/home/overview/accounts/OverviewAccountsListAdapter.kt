@@ -27,7 +27,7 @@ import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
- * [RecyclerView.Adapter] for overview coloredAccounts card.
+ * [RecyclerView.Adapter] for the overview accounts card.
  */
 class OverviewAccountsListAdapter(private val viewModel: HomeViewModel) : ListAdapter<ColoredAccount, OverviewAccountsAccountViewHolder>(OverviewAccountsDiffCallback()) {
 

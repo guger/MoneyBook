@@ -14,23 +14,20 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.overview.accounts
+package at.guger.moneybook.ui.home.overview.dues
 
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
-import at.guger.moneybook.databinding.ItemAccountBinding
-import at.guger.moneybook.databinding.ItemOverviewAccountBinding
-import at.guger.moneybook.ui.home.ColoredAccount
-import at.guger.moneybook.ui.home.HomeViewModel
+import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
- * [RecyclerView.ViewHolder] for an account overview item.
+ * [RecyclerView.ViewHolder] for an due overview item.
  */
-class OverviewAccountsAccountViewHolder(binding: ItemOverviewAccountBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemOverviewAccountBinding, ColoredAccount>(binding) {
+class OverviewDuesTransactionViewHolder(binding: ItemTransactionBinding) : ModelViewHolder<ItemTransactionBinding, Transaction>(binding) {
 
-    override fun bind(model: ColoredAccount) {
-        binding.viewModel = viewModel
-        binding.account = model
+    override fun bind(model: Transaction) {
+        binding.transaction = model
         binding.executePendingBindings()
     }
 

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.dues
+package at.guger.moneybook.ui.home.overview.dues
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,51 +23,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
 import at.guger.moneybook.data.model.Transaction
 
 /**
- * [RecyclerView.Adapter] showing all accounts and details.
+ * [RecyclerView.Adapter] for the overview dues card.
  */
-class DuesAdapter : ListAdapter<Transaction, DuesTransactionViewHolder>(TransactionsDiffCallback()), CheckableList {
-
-    //region Variables
-
-    override val checkedItems: MutableList<Int> = mutableListOf()
-
-    //endregion
+class OverviewDuesListAdapter : ListAdapter<Transaction, OverviewDuesTransactionViewHolder>(OverviewDuesDiffCallback()) {
 
     //region Adapter
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DuesTransactionViewHolder {
-        return DuesTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewDuesTransactionViewHolder {
+        return OverviewDuesTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false))
     }
 
-    override fun onBindViewHolder(holder: DuesTransactionViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OverviewDuesTransactionViewHolder, position: Int) {
         holder.bind(getItem(position))
-
-        holder.itemView.isActivated = checkedItems.contains(position)
     }
 
     //endregion
 
-    //region Methods
-
-    override fun toggleChecked(pos: Int) {
-        super.toggleChecked(pos)
-
-        notifyItemChanged(pos)
-    }
-
-    override fun clearChecked() {
-        super.clearChecked()
-
-        notifyDataSetChanged()
-    }
-
-    //endregion
-
-    class TransactionsDiffCallback : DiffUtil.ItemCallback<Transaction>() {
+    class OverviewDuesDiffCallback : DiffUtil.ItemCallback<Transaction>() {
         override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
             return oldItem.id == newItem.id
         }

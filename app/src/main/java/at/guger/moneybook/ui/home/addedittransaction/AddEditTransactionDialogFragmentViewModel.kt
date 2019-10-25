@@ -145,8 +145,8 @@ class AddEditTransactionDialogFragmentViewModel(
         val date = transactionDate.value
         val value = transactionValue.value
         val type = transactionType.value!!
-        val account = accounts.value!!.find { it.name == transactionAccount.value }!!
-        val budget = budgets.value?.find { it.name == transactionBudget.value }
+        val account = accounts.value?.find { it.name == transactionAccount.value }?.takeIf { type == Transaction.TransactionType.EARNING || type == Transaction.TransactionType.EXPENSE }
+        val budget = budgets.value?.find { it.name == transactionBudget.value }?.takeIf { type == Transaction.TransactionType.EXPENSE }
         val notes = transactionNotes.value ?: ""
 
         if (validateForm(title, date, value)) {
@@ -156,7 +156,7 @@ class AddEditTransactionDialogFragmentViewModel(
                 value = parseNumber(value!!),
                 notes = notes,
                 type = type,
-                accountId = account.id,
+                accountId = account?.id,
                 budgetId = budget?.id
             )
 

@@ -80,7 +80,7 @@ class Transaction(
         @ColumnInfo(name = Database.Transactions.COL_VALUE) val value: Double = 0.0,
         @ColumnInfo(name = Database.Transactions.COL_NOTES) val notes: String = "",
         @ColumnInfo(name = Database.Transactions.COL_TYPE) @TransactionType val type: Int = TransactionType.EARNING,
-        @ColumnInfo(name = Database.Transactions.COL_ACCOUNT_ID) val accountId: Long = Account.DEFAULT_ACCOUNT_ID,
+        @ColumnInfo(name = Database.Transactions.COL_ACCOUNT_ID) val accountId: Long? = null,
         @ColumnInfo(name = Database.Transactions.COL_BUDGET_ID) val budgetId: Long? = null
     ) : Model
 

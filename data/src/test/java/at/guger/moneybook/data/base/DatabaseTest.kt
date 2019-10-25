@@ -21,6 +21,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import at.guger.moneybook.data.provider.local.AppDatabase
 import org.junit.After
 import org.junit.Before
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
 /**
  * Test class implementing the app's database.

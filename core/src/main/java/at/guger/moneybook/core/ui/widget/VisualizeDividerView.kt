@@ -18,11 +18,14 @@ package at.guger.moneybook.core.ui.widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import androidx.core.content.ContextCompat
 import at.guger.moneybook.core.R
+import kotlin.math.max
 
 
 /**
@@ -85,10 +88,36 @@ class VisualizeDividerView @JvmOverloads constructor(context: Context, attrs: At
     /**
      * Set the distributions together with their colors.
      *
-     * @param colors An array with colors for the corresponding distribution.
-     * @param distributions An array of distributions in %, when summed 100%.
+     * @param distributions An array of distributions.
+     * @param colors An array of colors for the corresponding distribution.
      */
-    fun setColorDistribution(colors: List<Int>, distributions: List<Float>) {
+    fun setDistributions(distributions: List<Float>, colors: List<Int>? = null, colorsRes: List<Int>? = null) {
+        require(colors != null || colorsRes != null)
+
+        val colorList: MutableList<Int> = (colors ?: List(max(colorsRes!!.size, 1)) { i -> ContextCompat.getColor(context, colorsRes[i]) }).toMutableList()
+
+        if (colorList.isEmpty()) colorList.add(Color.TRANSPARENT)
+
+        val distributionsSum = distributions.sum()
+
+        val percents = List(max(distributions.size, 1)) { i ->
+            if (distributionsSum > 0) {
+                100.0f / distributionsSum * distributions[i]
+            } else {
+                100.0f / max(distributions.size, 1)
+            }
+        }
+
+        setDistributionPercents(percents, colorList)
+    }
+
+    /**
+     * Set the distributions together with their colors.
+     *
+     * @param distributions An array of distributions in %, when summed 100%.
+     * @param colors An array of colors for the corresponding distribution.
+     */
+    fun setDistributionPercents(distributions: List<Float>, colors: List<Int>) {
         require(colors.size == distributions.size)
         require(distributions.sum() == 100.0f)
 

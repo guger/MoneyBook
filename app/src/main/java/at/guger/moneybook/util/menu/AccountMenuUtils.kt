@@ -30,8 +30,8 @@ object AccountMenuUtils {
 
     fun prepareMenu(menu: Menu, adapter: AccountsAdapter) {
         with(adapter) {
-            menu.findItem(R.id.actionAccountEdit).isVisible = checkedCount == 1
-            menu.findItem(R.id.actionAccountDelete).isVisible = adapter.currentList.filterIndexed { index, _ -> checkedItems.contains(index) }.none { it.id == Account.DEFAULT_ACCOUNT_ID }
+            menu.findItem(R.id.actionAccountEdit).isVisible = checkedCount == 1 && isDefaultAccount(adapter)
+            menu.findItem(R.id.actionAccountDelete).isVisible = isDefaultAccount(adapter)
         }
     }
 
@@ -48,4 +48,6 @@ object AccountMenuUtils {
             else -> false
         }
     }
+
+    private fun isDefaultAccount(adapter: AccountsAdapter) = adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.none { it.id == Account.DEFAULT_ACCOUNT_ID }
 }

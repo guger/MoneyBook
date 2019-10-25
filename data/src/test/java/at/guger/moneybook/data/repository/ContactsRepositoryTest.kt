@@ -16,17 +16,24 @@
 
 package at.guger.moneybook.data.repository
 
+import android.os.Build
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Contact
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 
 /**
  * Test class for [ContactsRepository].
  */
+@RunWith(AndroidJUnit4::class)
+@Config(sdk = [Build.VERSION_CODES.Q], manifest = "data/manifests/AndroidManifest.xml")
 class ContactsRepositoryTest : DatabaseTest() {
 
     private lateinit var repository: ContactsRepository

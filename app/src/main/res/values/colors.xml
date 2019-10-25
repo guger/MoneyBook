@@ -30,6 +30,9 @@
     <color name="color3">#007d51</color>
     <color name="color4">#005d57</color>
 
+    <color name="color_claim">#FFCF44</color>
+    <color name="color_debt">#FF6859</color>
+
     <!--colorBackground appears behind scrollable content and is used for the default window-->
     <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
     <!--and menus. colorError is used to indicate an error state for components such as-->

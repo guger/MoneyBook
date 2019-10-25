@@ -30,7 +30,7 @@ fun TextView.setTransactions(transactions: List<Transaction>?) {
     transactions?.let {
         setCurrency(it.sumByDouble { transaction ->
             when (transaction.type) {
-                Transaction.TransactionType.EARNING -> transaction.value
+                Transaction.TransactionType.EARNING, Transaction.TransactionType.CLAIM -> transaction.value
                 else -> transaction.value.unaryMinus()
             }
         })

@@ -18,24 +18,33 @@ package at.guger.moneybook.ui.home.dues
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
-import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
-import at.guger.moneybook.core.util.ext.dimen
+import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
+import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.databinding.FragmentDuesBinding
 import at.guger.moneybook.ui.home.HomeViewModel
+import at.guger.moneybook.ui.main.MainActivity
+import at.guger.moneybook.util.menu.TransactionMenuUtils
+import com.afollestad.materialcab.attached.destroy
+import com.afollestad.materialcab.attached.isActive
 import kotlinx.android.synthetic.main.fragment_dues.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * Fragment for [home view pager's][ViewPager2] bills content.
  */
-class DuesFragment : BaseFragment() {
+class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
@@ -48,7 +57,12 @@ class DuesFragment : BaseFragment() {
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_dues, container, false)
+        val binding = DataBindingUtil.inflate<FragmentDuesBinding>(inflater, R.layout.fragment_dues, container, false)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,8 +70,68 @@ class DuesFragment : BaseFragment() {
 
         adapter = DuesAdapter().apply { viewModel.claimsAndDebts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        mDuesRecyclerView.setup(LinearLayoutManager(context), adapter) {
-            addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
+        mDuesRecyclerView.setup(LinearLayoutManager(context), adapter, hasFixedSize = false) {
+            addOnItemTouchListener(OnItemTouchListener(context, this, this@DuesFragment))
+        }
+    }
+
+    //endregion
+
+    //region Methods
+
+    private fun editTransaction(transaction: Transaction) {
+        findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment(transaction))
+    }
+
+    //endregion
+
+    //region Callback
+
+    override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
+        if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+            adapter.toggleChecked(pos)
+
+            if (adapter.checkedCount > 0) {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    TransactionMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().destroyCab()
+            }
+        }
+    }
+
+    override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
+        adapter.toggleChecked(pos)
+
+        if (adapter.checkedCount > 0) {
+            if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+                requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_transaction) {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter) }
+
+                    onDestroy {
+                        adapter.clearChecked()
+                        true
+                    }
+
+                    onSelection { menuItem ->
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, viewModel::deleteTransaction)
+                        destroy()
+                    }
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    TransactionMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            }
+        } else {
+            requireAppCompatActivity<MainActivity>().destroyCab()
         }
     }
 

@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 /**
  * [ViewModel] for the home fragment and it's sub fragments.
  */
-class HomeViewModel(transactionsRepository: TransactionsRepository, private val accountsRepository: AccountsRepository) : ViewModel() {
+class HomeViewModel(private val transactionsRepository: TransactionsRepository, private val accountsRepository: AccountsRepository) : ViewModel() {
 
     //region Variables
 
@@ -64,6 +64,10 @@ class HomeViewModel(transactionsRepository: TransactionsRepository, private val 
 
     fun showAccount(account: ColoredAccount) {
         _showAccount.value = Event(account.id)
+    }
+
+    fun deleteTransaction(vararg transaction: Transaction) {
+        viewModelScope.launch { transactionsRepository.delete(*transaction) }
     }
 
     fun deleteAccount(vararg account: Account) {

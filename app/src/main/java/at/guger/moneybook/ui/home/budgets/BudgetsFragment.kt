@@ -44,19 +44,19 @@ class BudgetsFragment : BaseFragment() {
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_dues, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(mAccountsRecyclerView) {
+        /*with(mBudgetsRecyclerView) {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(requireContext())
-//          TODO  adapter = OverviewAdapter(viewModel)
+          TODO  adapter = OverviewAdapter(viewModel)
             addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
-        }
+        }*/
     }
 
     //endregion

@@ -63,7 +63,11 @@ android {
         jvmTarget = "1.8"
     }
     testOptions {
-        unitTests.returnDefaultValues = true
+        testOptions {
+            unitTests {
+                includeAndroidResources = true
+            }
+        }
     }
     androidExtensions {
         experimental = true
@@ -77,6 +81,7 @@ dependencies {
     implementation project(":data")
 
     testImplementation "junit:junit:$deps.test.junit"
+    testImplementation "org.robolectric:robolectric:$deps.test.robolectric"
     androidTestImplementation "androidx.test.ext:junit:$deps.test.ext"
     androidTestImplementation "androidx.test.espresso:espresso-core:$deps.test.espresso"
 

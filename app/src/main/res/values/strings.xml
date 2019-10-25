@@ -69,4 +69,6 @@
     <string name="aldm_DeleteAccount">Do you really want to delete the account \"%s\" and all it\'s transactions?</string>
     <string name="aldm_DeleteAccounts">Do you really want to delete the accounts \"%s\" and all their transactions?</string>
     <string name="Cancel">Cancel</string>
+    <string name="NoDues">Looks like you\'ve no dues.</string>
+    <string name="NoTransactions">Looks like you\'ve no transactions in here.</string>
 </resources>

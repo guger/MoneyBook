@@ -17,7 +17,10 @@
 package at.guger.moneybook.data.repository
 
 import android.graphics.Color
+import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import at.guger.moneybook.data.BuildConfig
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
@@ -29,11 +32,16 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import org.threeten.bp.LocalDate
 
 /**
  * Test class for [TransactionsRepository].
  */
+@RunWith(AndroidJUnit4::class)
+@Config(sdk = [Build.VERSION_CODES.Q], manifest = "data/manifests/AndroidManifest.xml")
 class TransactionsRepositoryTest : DatabaseTest() {
 
     @get:Rule
