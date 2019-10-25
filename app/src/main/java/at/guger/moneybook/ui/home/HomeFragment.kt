@@ -39,6 +39,8 @@ import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.DataUtils
+import com.afollestad.materialcab.attached.destroy
+import com.afollestad.materialcab.attached.isActive
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -110,7 +112,18 @@ class HomeFragment : BaseFragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-                requireAppCompatActivity<MainActivity>().invalidateOptionsMenu()
+                requireAppCompatActivity<MainActivity>().run {
+                    invalidateOptionsMenu()
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+
+                when (state) {
+                    ViewPager2.SCROLL_STATE_DRAGGING -> requireAppCompatActivity<MainActivity>().cabEnabled = false
+                    ViewPager2.SCROLL_STATE_SETTLING, ViewPager2.SCROLL_STATE_IDLE -> requireAppCompatActivity<MainActivity>().cabEnabled = true
+                }
             }
         })
 

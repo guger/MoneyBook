@@ -65,7 +65,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mOverviewDuesDivider"
                 tools:itemCount="3"
-                tools:listitem="@layout/item_transaction"
+                tools:listitem="@layout/item_due"
                 tools:visibility="visible" />
 
             <at.guger.moneybook.core.ui.widget.VisualizeDividerView

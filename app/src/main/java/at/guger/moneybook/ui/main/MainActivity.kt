@@ -49,6 +49,13 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     private val topLevelDestinations = setOf(R.id.homeFragment, R.id.manageFragment, R.id.settingsFragment, R.id.addEditTransactionDialogFragment, R.id.addEditAccountBottomSheetDialogFragment)
 
+    var cabEnabled: Boolean = true
+        set(value) {
+            field = value
+
+            if (mCab.isActive()) mCab.destroy()
+        }
+
     var mCab: AttachedCab? = null
 
     //endregion
@@ -88,6 +95,8 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     //region Methods
 
     fun attachCab(@MenuRes menuRes: Int, exec: CabApply) {
+        if (!cabEnabled) return;
+
         mCab = createCab(R.id.mCabStub) {
             menu(menuRes)
             popupTheme(R.style.ThemeOverlay_MaterialComponents_Dark)

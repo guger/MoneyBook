@@ -38,7 +38,7 @@ class TransactionsRepository(database: AppDatabase) {
 
     suspend fun get(id: Long): Transaction = transactionsDao.get(id)
 
-    fun getByAccount(accountId: Long) = transactionsDao.getByAccount(accountId)
+    fun getByAccount(accountId: Long): LiveData<List<Transaction>> = transactionsDao.getByAccount(accountId)
 
     fun getEarningsAndExpenses(): LiveData<List<Transaction>> = transactionsDao.getEarningsAndExpenses()
 
