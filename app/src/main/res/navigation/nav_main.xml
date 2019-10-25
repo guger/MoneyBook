@@ -39,6 +39,9 @@
             android:defaultValue="@null"
             app:argType="at.guger.moneybook.data.model.Transaction"
             app:nullable="true" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="moneybook://add_transaction" />
     </dialog>
 
     <fragment
