@@ -100,7 +100,7 @@ class AddEditTransactionDialogFragmentViewModel(
         with(transaction) {
             transactionTitle.value = title
             transactionType.value = type
-            transactionAccount.value = account!!.name
+            transactionAccount.value = account?.name
             transactionBudget.value = budget?.name
             transactionDate.value = transaction.date.format(MEDIUM_DATE_FORMAT)
             transactionValue.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(value)
