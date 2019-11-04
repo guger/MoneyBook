@@ -34,7 +34,7 @@ import org.robolectric.annotation.Config
  * Test class for [BudgetsRepository].
  */
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.Q])
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class BudgetsRepositoryTest : DatabaseTest() {
 
     private lateinit var repository: BudgetsRepository
