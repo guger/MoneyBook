@@ -16,17 +16,14 @@
 
 package at.guger.moneybook.data.repository
 
-import androidx.lifecycle.LiveData
 import at.guger.moneybook.data.model.Contact
-import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.ContactsDao
-import at.guger.moneybook.data.provider.local.dao.TransactionsDao
 
 /**
  * Repository class for handling [contacts][Contact].
  */
-class ContactsRepository(database: AppDatabase) {
+class ContactsRepository(database: AppDatabase, private val addressBookRepository: AddressBookRepository) {
 
     //region Variables
 
@@ -37,7 +34,15 @@ class ContactsRepository(database: AppDatabase) {
     //region Methods
 
     suspend fun findByTransactionId(transactionId: Long): List<Contact> {
-        return contactsDao.findByTransactionId(transactionId)
+        val unnamedContacts = contactsDao.findByTransactionId(transactionId)
+
+        val contacts = mutableListOf<Contact>()
+
+        val addressBookContacts = addressBookRepository.loadContacts(unnamedContacts.filter { it.contactId >= 0 }.map { it.contactId }.toLongArray())
+
+        addressBookContacts.forEach { unnamedContacts.find { contact -> contact.contactId == it.key }?.copy(contactName = it.value)?.let(contacts::add) }
+
+        return contacts
     }
 
     suspend fun insert(contacts: List<Contact>) {

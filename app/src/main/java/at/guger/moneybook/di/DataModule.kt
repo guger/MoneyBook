@@ -18,10 +18,7 @@ package at.guger.moneybook.di
 
 import androidx.work.OneTimeWorkRequestBuilder
 import at.guger.moneybook.data.provider.local.AppDatabase
-import at.guger.moneybook.data.repository.AccountsRepository
-import at.guger.moneybook.data.repository.BudgetsRepository
-import at.guger.moneybook.data.repository.ContactsRepository
-import at.guger.moneybook.data.repository.TransactionsRepository
+import at.guger.moneybook.data.repository.*
 import at.guger.moneybook.work.DefaultAccountWorker
 import at.guger.moneybook.work.DefaultBudgetsWorker
 import org.koin.dsl.module
@@ -44,5 +41,6 @@ val dataModule = module {
     single { TransactionsRepository(get()) }
     single { AccountsRepository(get()) }
     single { BudgetsRepository(get()) }
-    single { ContactsRepository(get()) }
+    single { AddressBookRepository(get()) }
+    single { ContactsRepository(get(), get()) }
 }

@@ -36,7 +36,7 @@ abstract class DatabaseTest {
         database = Room.inMemoryDatabaseBuilder(
             InstrumentationRegistry.getInstrumentation().context,
             AppDatabase::class.java
-        ).build()
+        ).allowMainThreadQueries().build()
     }
 
     @After

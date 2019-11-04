@@ -33,6 +33,7 @@ import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
+import at.guger.moneybook.data.repository.AddressBookRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.util.Utils.MEDIUM_DATE_FORMAT
@@ -44,8 +45,9 @@ import org.threeten.bp.LocalDate
  */
 class AddEditTransactionDialogFragmentViewModel(
     private val transactionsRepository: TransactionsRepository,
-    private val accountsRepository: AccountsRepository,
-    private val budgetsRepository: BudgetsRepository
+    accountsRepository: AccountsRepository,
+    budgetsRepository: BudgetsRepository,
+    private val addressBookRepository: AddressBookRepository
 ) : ViewModel() {
 
     //region Variables
@@ -61,7 +63,10 @@ class AddEditTransactionDialogFragmentViewModel(
     val transactionType = MutableLiveData<@Transaction.TransactionType Int>(Transaction.TransactionType.EARNING)
     val transactionDate = MutableLiveData<String>(LocalDate.now().format(MEDIUM_DATE_FORMAT))
     val transactionValue = MutableLiveData<String>()
-    val transactionContacts = MutableLiveData<String>()
+
+    private val _transactionContacts = MutableLiveData<List<String>>()
+    val transactionContacts: LiveData<List<String>> = _transactionContacts
+
     val transactionNotes = MutableLiveData<String>()
 
     private val _accountsInputVisibility = MutableLiveData<Int>(View.VISIBLE)
@@ -73,8 +78,8 @@ class AddEditTransactionDialogFragmentViewModel(
     private val _contactsInputVisibility = MutableLiveData<Int>(View.GONE)
     val contactsInputVisibility: LiveData<Int> = _contactsInputVisibility
 
-    private val _showDatePicker = MutableLiveData<Event<Unit>>()
-    val showDatePicker: LiveData<Event<Unit>> = _showDatePicker
+    private val _showDatePicker = MutableLiveData<Event<LocalDate>>()
+    val showDatePicker: LiveData<Event<LocalDate>> = _showDatePicker
 
     private val _showCalculator = MutableLiveData<Event<Unit>>()
     val showCalculator: LiveData<Event<Unit>> = _showCalculator
@@ -88,9 +93,18 @@ class AddEditTransactionDialogFragmentViewModel(
     val accounts: LiveData<List<Account>> = accountsRepository.getAccounts()
     val budgets: LiveData<List<Budget>> = budgetsRepository.getBudgets()
 
+    private val _addressBook = MutableLiveData<Map<Long, String>>()
+    val addressBook: LiveData<Map<Long, String>> = _addressBook
+
     //endregion
 
     //region Methods
+
+    fun loadContacts() {
+        viewModelScope.launch {
+            _addressBook.value = addressBookRepository.loadContacts()
+        }
+    }
 
     fun setupTransaction(transaction: Transaction) {
         this.transaction = transaction
@@ -104,6 +118,7 @@ class AddEditTransactionDialogFragmentViewModel(
             transactionBudget.value = budget?.name
             transactionDate.value = transaction.date.format(MEDIUM_DATE_FORMAT)
             transactionValue.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(value)
+            _transactionContacts.value = contacts?.map { it.contactName }
             transactionNotes.value = notes
         }
     }
@@ -133,14 +148,16 @@ class AddEditTransactionDialogFragmentViewModel(
     }
 
     fun showDatePicker() {
-        _showDatePicker.value = Event(Unit)
+        val selectedDate = if (transactionDate.value?.matches(Utils.getShortDatePattern().toRegex()) == true) LocalDate.parse(transactionDate.value, MEDIUM_DATE_FORMAT) else LocalDate.now()
+
+        _showDatePicker.value = Event(selectedDate)
     }
 
     fun showCalculator() {
         _showCalculator.value = Event(Unit)
     }
 
-    fun saveTransaction() {
+    fun saveTransaction(chippedContacts: List<String>) {
         val title = transactionTitle.value
         val date = transactionDate.value
         val value = transactionValue.value
@@ -160,7 +177,27 @@ class AddEditTransactionDialogFragmentViewModel(
                 budgetId = budget?.id
             )
 
-            val contacts: List<Contact> = emptyList()
+            val contacts: List<Contact>? = if (type == Transaction.TransactionType.CLAIM || type == Transaction.TransactionType.DEBT) {
+                mutableListOf<Contact>().apply {
+                    val addressBookContacts = addressBook.value?.filterValues { chippedContacts.any { contact -> contact == it } }
+                    val unsavedContacts = chippedContacts.filterNot { addressBookContacts?.containsValue(it) == true }
+
+                    addressBookContacts?.entries?.forEach {
+                        add(
+                            Contact(
+                                contactId = it.key,
+                                contactName = it.value
+                            )
+                        )
+                    }
+
+                    unsavedContacts.forEach {
+                        add(Contact(contactName = it))
+                    }
+                }
+            } else {
+                null
+            }
 
             viewModelScope.launch {
                 transaction.ifNull {

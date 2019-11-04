@@ -51,6 +51,7 @@ dependencies {
     testImplementation "junit:junit:$deps.test.junit"
     testImplementation "org.robolectric:robolectric:$deps.test.robolectric"
     testImplementation "com.google.truth:truth:$deps.test.truth"
+    testImplementation "org.threeten:threetenbp:$deps.test.threetenbp"
     testImplementation "androidx.arch.core:core-testing:$deps.test.arch_core"
     testImplementation "androidx.test.ext:junit:$deps.test.ext"
     testImplementation "androidx.test.espresso:espresso-core:$deps.test.espresso"

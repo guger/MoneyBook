@@ -14,18 +14,16 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.data
+package at.guger.moneybook.di
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.Test
+import android.app.Application
+import org.koin.dsl.module
 
 /**
- *
+ * Dependency injection module for application concerning elements.
  */
-class JavaVersionTest {
 
-    @Test
-    fun testJavaVersion() {
-        assertThat(System.getProperty("java.version")).contains("x")
-    }
+val mainModule = module {
+
+    factory { get<Application>().contentResolver }
 }

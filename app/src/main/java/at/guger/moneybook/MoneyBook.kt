@@ -19,6 +19,7 @@ package at.guger.moneybook
 import android.app.Application
 import at.guger.moneybook.di.appModule
 import at.guger.moneybook.di.dataModule
+import at.guger.moneybook.di.mainModule
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -35,7 +36,7 @@ class MoneyBook : Application() {
 
         startKoin {
             androidContext(this@MoneyBook.applicationContext)
-            modules(listOf(dataModule, appModule))
+            modules(listOf(mainModule, dataModule, appModule))
         }
     }
 }

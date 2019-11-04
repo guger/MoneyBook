@@ -17,9 +17,12 @@
 package at.guger.moneybook.ui.home.addedittransaction
 
 import androidx.databinding.BindingAdapter
+import androidx.databinding.BindingMethod
+import androidx.databinding.BindingMethods
 import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Transaction
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.hootsuite.nachos.NachoTextView
 
 /**
  * Binding adapters for the add/edit transaction dialog.
@@ -35,4 +38,9 @@ fun MaterialButtonToggleGroup.setType(@Transaction.TransactionType type: Int) {
     }
 
     check(buttonId)
+}
+
+@BindingAdapter("contacts", requireAll = true)
+fun NachoTextView.setContacts(contacts: List<String>?) {
+    setText(contacts)
 }

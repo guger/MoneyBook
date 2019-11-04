@@ -18,6 +18,7 @@ package at.guger.moneybook.data.repository
 
 import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Contact
 import com.google.common.truth.Truth.assertThat
@@ -25,6 +26,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -37,10 +39,13 @@ import org.robolectric.annotation.Config
 class ContactsRepositoryTest : DatabaseTest() {
 
     private lateinit var repository: ContactsRepository
+    private lateinit var addressBookRepository: AddressBookRepository
 
     @Before
     fun setUp() {
-        repository = ContactsRepository(database)
+        addressBookRepository = AddressBookRepository(InstrumentationRegistry.getInstrumentation().context.contentResolver)
+
+        repository = ContactsRepository(database, addressBookRepository)
     }
 
     @Test

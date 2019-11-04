@@ -16,6 +16,11 @@
 
 package at.guger.moneybook.util
 
+import android.app.Activity
+import at.guger.moneybook.R
+import at.guger.moneybook.ui.main.MainActivity
+import com.afollestad.assent.Permission
+import com.afollestad.assent.rationale.createDialogRationale
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
@@ -25,4 +30,8 @@ import org.threeten.bp.format.FormatStyle
 object Utils {
 
     val MEDIUM_DATE_FORMAT = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+
+    fun createContactsPermissionRationale(activity: Activity) = activity.createDialogRationale(R.string.ContactsPermission) {
+        onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
+    }
 }

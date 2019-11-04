@@ -47,7 +47,11 @@ class TransactionsRepository(database: AppDatabase) {
     suspend fun insert(transaction: Transaction): Long {
         val id = transactionsDao.insert(transaction.entity)
 
-        transaction.contacts?.let { contactsDao.insert(it) }
+        transaction.contacts?.let {
+            it.forEach { contact -> contact.transactionId = id }
+
+            contactsDao.insert(it)
+        }
 
         return id
     }
@@ -58,8 +62,13 @@ class TransactionsRepository(database: AppDatabase) {
         val currentContacts = contactsDao.findByTransactionId(transaction.id)
         val newContacts = transaction.contacts ?: listOf()
 
-        contactsDao.insert(newContacts - currentContacts)
-        contactsDao.delete(currentContacts - newContacts)
+        newContacts.forEach { contact -> contact.transactionId = transaction.id }
+
+        val contactsToDelete = currentContacts.filterNot { newContacts.contains(it) }
+        val contactsToInsert = newContacts.filterNot { currentContacts.contains(it) }
+
+        contactsDao.delete(contactsToDelete)
+        contactsDao.insert(contactsToInsert)
     }
 
     suspend fun delete(vararg transaction: Transaction) {

@@ -71,4 +71,6 @@
     <string name="Cancel">Cancel</string>
     <string name="NoDues">Looks like you\'ve no dues.</string>
     <string name="NoTransactions">Looks like you\'ve no transactions in here.</string>
+    <string name="ContactsPermission">Contacts Permission</string>
+    <string name="ContactsPermissionNeeded">Contacts permission needed</string>
 </resources>

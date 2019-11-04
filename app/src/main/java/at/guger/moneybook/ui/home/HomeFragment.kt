@@ -39,8 +39,6 @@ import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.DataUtils
-import com.afollestad.materialcab.attached.destroy
-import com.afollestad.materialcab.attached.isActive
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel

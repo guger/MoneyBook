@@ -120,7 +120,6 @@ dependencies {
 
     implementation "com.jakewharton.threetenabp:threetenabp:$deps.libs.threetenabp"
     implementation "com.afollestad:assent:$deps.libs.assent"
-    implementation "com.hootsuite.android:nachos:$deps.libs.nachos"
     implementation "com.github.PhilJay:MPAndroidChart:$deps.libs.charts"
     implementation "com.afollestad:material-cab:$deps.libs.material_cab"
     implementation "com.afollestad.material-dialogs:core:$deps.libs.material_dialogs"
@@ -130,5 +129,6 @@ dependencies {
     implementation "com.maltaisn:icondialog:$deps.libs.icondialog"
     implementation "com.maltaisn:recurpicker:$deps.libs.recurpickerdialog"
 
+    implementation(name: 'nachos', ext: 'aar')
     implementation(name: 'strokepiechart', ext: 'aar')
 }

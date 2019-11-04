@@ -39,20 +39,26 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.DialogFragmentAddEditTransactionBinding
 import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.util.Utils
+import com.afollestad.assent.Permission
+import com.afollestad.assent.runWithPermissions
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
+import com.hootsuite.nachos.terminator.ChipTerminatorHandler
 import com.maltaisn.calcdialog.CalcDialog
 import kotlinx.android.synthetic.main.dialog_fragment_add_edit_transaction.*
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZoneOffset
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
 /**
- * Dialog fragment for creating a new [earningsAndExpenses][Transaction].
+ * Dialog fragment for creating a new [transaction][Transaction].
  */
 class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.CalcDialogCallback {
 
@@ -80,6 +86,8 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
 
         args.transaction?.let { viewModel.setupTransaction(it) }
 
+        runWithPermissions(Permission.READ_CONTACTS, rationaleHandler = Utils.createContactsPermissionRationale(requireActivity())) { viewModel.loadContacts() }
+
         setupLayout()
         setupEvents()
     }
@@ -106,8 +114,12 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
             if (isChecked) viewModel.onTransactionTypeChanged(checkedId)
         }
 
-        btnAddEditTransactionChooseDate.setOnClickListener { showDatePicker() }
-        btnAddEditTransactionOpenCalculator.setOnClickListener { showCalculator() }
+        edtAddEditTransactionContacts.apply {
+            addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN)
+        }
+        viewModel.addressBook.observe(viewLifecycleOwner, Observer { contacts ->
+            edtAddEditTransactionContacts.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, contacts.values.toList()))
+        })
 
         val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable
         bottomAppBarBackground.shapeAppearanceModel = bottomAppBarBackground.shapeAppearanceModel.toBuilder().setTopEdge(
@@ -130,7 +142,7 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
             edtAddEditTransactionBudget.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, budgetEntries))
         })
 
-        viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { showDatePicker() })
+        viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDatePicker(selectedDate) })
         viewModel.showCalculator.observe(viewLifecycleOwner, EventObserver { showCalculator() })
 
         viewModel.snackbarMessage.observe(viewLifecycleOwner, EventObserver {
@@ -142,12 +154,10 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
         viewModel.transactionSaved.observe(viewLifecycleOwner, Observer { dismiss() })
     }
 
-    private fun showDatePicker() {
-        val today = LocalDate.now().toEpochMilli()
-
+    private fun showDatePicker(selectedDate: LocalDate) {
         val datePickerDialog = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.ChooseDate)
-            .setSelection(today)
+            .setSelection(selectedDate.atTime(LocalTime.NOON).toEpochMilli())
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {

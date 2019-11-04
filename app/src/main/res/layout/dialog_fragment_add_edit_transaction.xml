@@ -74,7 +74,7 @@
                     android:id="@+id/btnAddEditTransactionOpenCalculator"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Square.Icon"
                     android:layout_marginEnd="8dp"
-                    android:onClick="@{() -> viewModel.showCalculator()"
+                    android:onClick="@{() -> viewModel.showCalculator()}"
                     app:icon="@drawable/ic_calculator"
                     app:layout_constraintBottom_toBottomOf="@+id/tilAddEditTransactionValue"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -223,6 +223,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAddEditTransactionContacts"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -234,15 +235,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionValue"
                     tools:visibility="visible">
 
-                    <!-- TODO -->
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.hootsuite.nachos.NachoTextView
                         android:id="@+id/edtAddEditTransactionContacts"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Contacts"
                         android:inputType="text|textCapWords"
                         android:singleLine="true"
-                        android:text="@={viewModel.transactionContacts}" />
+                        app:contacts="@{viewModel.transactionContacts}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -307,7 +307,7 @@
             android:backgroundTint="?colorPrimary"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> viewModel.saveTransaction()}"
+            android:onClick="@{() -> viewModel.saveTransaction(edtAddEditTransactionContacts.getChipValues())}"
             android:src="@drawable/ic_save"
             app:layout_anchor="@id/mBottomAppBar"
             app:layout_anchorGravity="bottom|right"
