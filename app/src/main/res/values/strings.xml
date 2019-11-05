@@ -73,4 +73,5 @@
     <string name="NoTransactions">Looks like you\'ve no transactions in here.</string>
     <string name="ContactsPermission">Contacts Permission</string>
     <string name="ContactsPermissionNeeded">Contacts permission needed</string>
+    <string name="Due_x">Due %s</string>
 </resources>

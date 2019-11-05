@@ -24,7 +24,7 @@
         android:background="@drawable/rect_selector"
         android:clickable="true"
         android:focusable="true"
-        android:padding="6dp">
+        android:padding="@dimen/item_padding">
 
         <TextView
             android:id="@+id/txvTransactionDetailTitle"
@@ -45,23 +45,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{Utils.INSTANCE.MEDIUM_DATE_FORMAT.format(transaction.date)}"
+            android:singleLine="true"
+            android:text="@{transaction.due != null ? DateFormatUtils.formatDueDate(context, transaction.due) : DateFormatUtils.formatTransactionDate(transaction.date)}"
             android:textAppearance="?textAppearanceBody2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txvTransactionDetailTitle"
             app:layout_constraintTop_toBottomOf="@+id/txvTransactionDetailTitle"
-            tools:text="12.04.2019" />
+            tools:text="Due 12.04.2019" />
 
         <TextView
             android:id="@+id/txvTransactionDetailValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAlignment="viewEnd"
             android:textAppearance="?textAppearanceBody1"
             app:currency="@{transaction.value}"
             app:layout_constraintBottom_toBottomOf="@+id/txvTransactionDetailDate"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txvTransactionDetailType"
             app:layout_constraintTop_toTopOf="@+id/txvTransactionDetailTitle"
-            tools:text="1.234,78" />
+            tools:text="€ 1.234,78" />
 
         <TextView
             android:id="@+id/txvTransactionDetailType"
@@ -88,7 +94,7 @@
 
     <data>
 
-        <import type="at.guger.moneybook.util.Utils" />
+        <import type="at.guger.moneybook.util.DateFormatUtils" />
 
         <import type="at.guger.moneybook.core.formatter.CurrencyFormat" />
 

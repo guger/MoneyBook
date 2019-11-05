@@ -22,11 +22,6 @@
         android:title="@string/Home" />
 
     <item
-        android:id="@+id/manageFragment"
-        android:icon="@drawable/ic_manage"
-        android:title="@string/Manage" />
-
-    <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="@string/Settings" />

@@ -19,12 +19,13 @@ package at.guger.moneybook.ui.home.dues
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.databinding.ItemDueBinding
 import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
  * [RecyclerView.ViewHolder] for a earningsAndExpenses item.
  */
-class DuesTransactionViewHolder(binding: ItemTransactionBinding) : ModelViewHolder<ItemTransactionBinding, Transaction>(binding) {
+class DuesTransactionViewHolder(binding: ItemDueBinding) : ModelViewHolder<ItemDueBinding, Transaction>(binding) {
 
     override fun bind(model: Transaction) {
         binding.transaction = model

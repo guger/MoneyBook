@@ -36,7 +36,7 @@ import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.AddressBookRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
-import at.guger.moneybook.util.Utils.MEDIUM_DATE_FORMAT
+import at.guger.moneybook.util.DateFormatUtils.MEDIUM_DATE_FORMAT
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 

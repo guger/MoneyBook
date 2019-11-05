@@ -24,7 +24,7 @@
         android:background="@drawable/rect_selector"
         android:clickable="true"
         android:focusable="true"
-        android:padding="@dimen/item_padding">
+        android:padding="6dp">
 
         <TextView
             android:id="@+id/txvTransactionDetailTitle"
@@ -45,12 +45,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{DateFormatUtils.formatTransactionDate(transaction.date)}"
+            android:singleLine="true"
+            android:text="@{transaction.due != null ? DateFormatUtils.formatDueDate(context, transaction.due) : DateFormatUtils.formatTransactionDate(transaction.date)}"
             android:textAppearance="?textAppearanceBody2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txvTransactionDetailTitle"
             app:layout_constraintTop_toBottomOf="@+id/txvTransactionDetailTitle"
-            tools:text="12.04.2019" />
+            tools:text="Due 12.04.2019" />
 
         <TextView
             android:id="@+id/txvTransactionDetailValue"

@@ -38,6 +38,7 @@ import at.guger.moneybook.core.util.toLocalDate
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.DialogFragmentAddEditTransactionBinding
 import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
+import at.guger.moneybook.util.DateFormatUtils
 import at.guger.moneybook.util.Utils
 import com.afollestad.assent.Permission
 import com.afollestad.assent.runWithPermissions
@@ -52,8 +53,6 @@ import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZoneOffset
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
@@ -161,7 +160,7 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {
-            viewModel.transactionDate.value = it.toLocalDate().format(Utils.MEDIUM_DATE_FORMAT)
+            viewModel.transactionDate.value = it.toLocalDate().format(DateFormatUtils.MEDIUM_DATE_FORMAT)
             edtAddEditTransactionDate.postDelayed(25) { edtAddEditTransactionDate.apply { setSelection(text?.length ?: 0) } }
         }
 

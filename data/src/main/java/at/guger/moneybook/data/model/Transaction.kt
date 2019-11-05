@@ -43,6 +43,9 @@ class Transaction(
     val date: LocalDate
         get() = entity.date
 
+    val due: LocalDate?
+        get() = entity.due
+
     val value: Double
         get() = entity.value
 
@@ -77,6 +80,7 @@ class Transaction(
         @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Transactions.COL_ID) val id: Long = 0L,
         @ColumnInfo(name = Database.Transactions.COL_TITLE) val title: String = "",
         @ColumnInfo(name = Database.Transactions.COL_DATE) val date: LocalDate = LocalDate.MIN,
+        @ColumnInfo(name = Database.Transactions.COL_DUE) val due: LocalDate? = null,
         @ColumnInfo(name = Database.Transactions.COL_VALUE) val value: Double = 0.0,
         @ColumnInfo(name = Database.Transactions.COL_NOTES) val notes: String = "",
         @ColumnInfo(name = Database.Transactions.COL_TYPE) @TransactionType val type: Int = TransactionType.EARNING,

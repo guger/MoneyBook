@@ -16,20 +16,22 @@
 
 package at.guger.moneybook.util
 
-import android.app.Activity
+import android.content.Context
 import at.guger.moneybook.R
-import at.guger.moneybook.ui.main.MainActivity
-import com.afollestad.assent.Permission
-import com.afollestad.assent.rationale.createDialogRationale
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
 /**
- * Common methods and fields.
+ * Utils for Transaction/Due items date format.
  */
-object Utils {
+object DateFormatUtils {
 
-    fun createContactsPermissionRationale(activity: Activity) = activity.createDialogRationale(R.string.ContactsPermission) {
-        onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
-    }
+    val MEDIUM_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+
+    @JvmStatic
+    fun formatTransactionDate(date: LocalDate): String = MEDIUM_DATE_FORMAT.format(date)
+
+    @JvmStatic
+    fun formatDueDate(context: Context, date: LocalDate) = context.getString(R.string.Due_x, MEDIUM_DATE_FORMAT.format(date))
 }

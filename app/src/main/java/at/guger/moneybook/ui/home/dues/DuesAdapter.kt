@@ -40,7 +40,7 @@ class DuesAdapter : ListAdapter<Transaction, DuesTransactionViewHolder>(Transact
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DuesTransactionViewHolder {
-        return DuesTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false))
+        return DuesTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_due, parent, false))
     }
 
     override fun onBindViewHolder(holder: DuesTransactionViewHolder, position: Int) {

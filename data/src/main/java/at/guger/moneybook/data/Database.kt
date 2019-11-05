@@ -32,6 +32,7 @@ object Database {
         const val COL_ID = ID
         const val COL_TITLE = "title"
         const val COL_DATE = "date"
+        const val COL_DUE = "due"
         const val COL_VALUE = "value"
         const val COL_NOTES = "notes"
         const val COL_TYPE = "type"

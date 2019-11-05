@@ -20,12 +20,13 @@ import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemDueBinding
+import at.guger.moneybook.databinding.ItemOverviewDueBinding
 import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
  * [RecyclerView.ViewHolder] for an due overview item.
  */
-class OverviewDuesTransactionViewHolder(binding: ItemDueBinding) : ModelViewHolder<ItemDueBinding, Transaction>(binding) {
+class OverviewDuesTransactionViewHolder(binding: ItemOverviewDueBinding) : ModelViewHolder<ItemOverviewDueBinding, Transaction>(binding) {
 
     override fun bind(model: Transaction) {
         binding.transaction = model

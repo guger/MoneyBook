@@ -47,7 +47,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
-    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.manageFragment, R.id.settingsFragment, R.id.addEditTransactionDialogFragment, R.id.addEditAccountBottomSheetDialogFragment)
+    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.settingsFragment, R.id.addEditTransactionDialogFragment, R.id.addEditAccountBottomSheetDialogFragment)
 
     var cabEnabled: Boolean = true
         set(value) {

@@ -17,6 +17,7 @@
 package at.guger.moneybook.data.provider.local.converter
 
 import androidx.room.TypeConverter
+import org.jetbrains.annotations.Nullable
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -28,13 +29,13 @@ import org.threeten.bp.ZoneId
 class DateConverter {
 
     @TypeConverter
-    fun toLocalDate(epochMillis: Long): LocalDate {
-        return Instant.ofEpochMilli(epochMillis).atZone(ZoneId.systemDefault()).toLocalDate()
+    fun toLocalDate(epochMillis: Long?): LocalDate? {
+        return epochMillis?.let { Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate() }
     }
 
     @TypeConverter
-    fun fromLocalDate(localDate: LocalDate): Long {
-        return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    fun fromLocalDate(localDate: LocalDate?): Long? {
+        return localDate?.atStartOfDay(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
     }
 
     @TypeConverter

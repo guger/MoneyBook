@@ -45,17 +45,5 @@ class ContactsRepository(database: AppDatabase, private val addressBookRepositor
         return contacts
     }
 
-    suspend fun insert(contacts: List<Contact>) {
-        contactsDao.insert(contacts)
-    }
-
-    suspend fun update(contacts: List<Contact>) {
-        contactsDao.update(contacts)
-    }
-
-    suspend fun delete(contacts: List<Contact>) {
-        contactsDao.delete(contacts)
-    }
-
     //endregion
 }
