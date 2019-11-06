@@ -232,8 +232,16 @@ class AddEditTransactionDialogFragmentViewModel(
             return false
         }
 
-        if (parseNumber(value) <= 0) {
-            _snackbarMessage.value = Event(R.string.InvalidTransactionValue)
+        val valueNumber = parseNumber(value)
+
+        if (valueNumber <= 0) {
+            _snackbarMessage.value = Event(R.string.InvalidTransactionValue_NotPositive)
+
+            return false
+        }
+
+        if (valueNumber > 1E6) {
+            _snackbarMessage.value = Event(R.string.InvalidTransactionValue_TooHigh)
 
             return false
         }

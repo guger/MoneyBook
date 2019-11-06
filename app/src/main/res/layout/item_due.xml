@@ -30,7 +30,7 @@
             android:id="@+id/txvTransactionDetailTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/default_text_spacing"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="@{transaction.title}"
@@ -57,7 +57,7 @@
             android:id="@+id/txvTransactionDetailValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/default_text_spacing"
             android:ellipsize="end"
             android:singleLine="true"
             android:textAlignment="viewEnd"
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".7" />
+            app:layout_constraintGuide_percent=".65" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

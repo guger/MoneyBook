@@ -25,6 +25,8 @@ import android.util.TypedValue
 import android.view.View
 import androidx.core.content.ContextCompat
 import at.guger.moneybook.core.R
+import at.guger.moneybook.core.util.Constants
+import kotlin.math.abs
 import kotlin.math.max
 
 
@@ -119,7 +121,7 @@ class VisualizeDividerView @JvmOverloads constructor(context: Context, attrs: At
      */
     fun setDistributionPercents(distributions: List<Float>, colors: List<Int>) {
         require(colors.size == distributions.size)
-        require(distributions.sum() == 100.0f)
+        require(abs(distributions.sum() - 100) < Constants.EPSILON)
 
         this.colors = colors
         this.distributions = distributions

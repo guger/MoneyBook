@@ -41,9 +41,11 @@
 
             <TextView
                 android:id="@+id/txvOverviewAccountsSum"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/item_content_margin"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textAppearance="?textAppearanceHeadline3"
                 android:textColor="?colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
