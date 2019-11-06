@@ -16,11 +16,14 @@
 
 package at.guger.moneybook.ui.home.addedittransaction
 
+import android.Manifest
+import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
@@ -33,15 +36,13 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.FullScreenDialogFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
+import at.guger.moneybook.core.util.ext.hasPermission
 import at.guger.moneybook.core.util.toEpochMilli
 import at.guger.moneybook.core.util.toLocalDate
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.DialogFragmentAddEditTransactionBinding
 import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.util.DateFormatUtils
-import at.guger.moneybook.util.Utils
-import com.afollestad.assent.Permission
-import com.afollestad.assent.runWithPermissions
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -85,10 +86,19 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
 
         args.transaction?.let { viewModel.setupTransaction(it) }
 
-        runWithPermissions(Permission.READ_CONTACTS, rationaleHandler = Utils.createContactsPermissionRationale(requireActivity())) { viewModel.loadContacts() }
+        if (requireContext().hasPermission(Manifest.permission.READ_CONTACTS)) viewModel.loadContacts()
 
         setupLayout()
         setupEvents()
+
+        showKeyboard()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
     //endregion
@@ -151,6 +161,19 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
         })
 
         viewModel.transactionSaved.observe(viewLifecycleOwner, Observer { dismiss() })
+    }
+
+    private fun showKeyboard() {
+        // TODO SoftInput is not showing up
+
+        if (args.transaction == null) {
+            edtAddEditTransactionTitle.requestFocus()
+
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(edtAddEditTransactionTitle, InputMethodManager.SHOW_IMPLICIT)
+        } else {
+            edtAddEditTransactionTitle.clearFocus()
+        }
     }
 
     private fun showDatePicker(selectedDate: LocalDate) {

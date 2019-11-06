@@ -61,6 +61,27 @@
                         tools:text="Add / Edit Transaction" />
                 </androidx.appcompat.widget.Toolbar>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAddEditTransactionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mTitleToolbar">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtAddEditTransactionTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/Title"
+                        android:inputType="text|textCapSentences"
+                        android:singleLine="true"
+                        android:text="@={viewModel.transactionTitle}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/mAddEditTransactionLayoutCenter"
                     android:layout_width="wrap_content"
@@ -266,27 +287,6 @@
                         android:inputType="text|textMultiLine|textCapSentences"
                         android:singleLine="false"
                         android:text="@={viewModel.transactionNotes}" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilAddEditTransactionTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mTitleToolbar">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtAddEditTransactionTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Title"
-                        android:inputType="text|textCapSentences"
-                        android:singleLine="true"
-                        android:text="@={viewModel.transactionTitle}" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

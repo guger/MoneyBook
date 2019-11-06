@@ -18,11 +18,8 @@ package at.guger.moneybook.util
 
 import android.app.Activity
 import at.guger.moneybook.R
-import at.guger.moneybook.ui.main.MainActivity
 import com.afollestad.assent.Permission
 import com.afollestad.assent.rationale.createDialogRationale
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.FormatStyle
 
 /**
  * Common methods and fields.

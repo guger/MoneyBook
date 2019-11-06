@@ -17,12 +17,14 @@
 package at.guger.moneybook.core.util.ext
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_DIP
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
+import androidx.core.content.ContextCompat
 
 /**
  * Extension functions for [Context].
@@ -79,3 +81,8 @@ fun Context.resolveColor(colorAttr: Int): Int {
 
     return ta.getColor(0, Color.BLACK).also { ta.recycle() }
 }
+
+/**
+ * Returns whether the requested permission is granted or not.
+ */
+fun Context.hasPermission(permission: String): Boolean = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
