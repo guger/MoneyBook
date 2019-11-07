@@ -21,5 +21,4 @@ import androidx.preference.PreferenceFragmentCompat
 /**
  * Base class for preference fragments.
  */
-abstract class BasePreferenceFragment : PreferenceFragmentCompat() {
-}
+abstract class BasePreferenceFragment : PreferenceFragmentCompat()

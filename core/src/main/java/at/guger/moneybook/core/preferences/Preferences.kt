@@ -29,4 +29,9 @@ class Preferences(context: Context) {
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     val currency: Currency = Currency.getInstance(Locale.getDefault())
+
+    companion object {
+        const val PERMISSIONS = "pref_permissions"
+        const val INFORMATION = "pref_information"
+    }
 }

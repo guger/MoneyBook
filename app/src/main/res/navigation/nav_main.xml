@@ -67,7 +67,8 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="at.guger.moneybook.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
 
     <dialog
         android:id="@+id/addEditAccountBottomSheetDialogFragment"

@@ -17,15 +17,18 @@
 package at.guger.moneybook.ui.settings
 
 import android.os.Bundle
-import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import at.guger.moneybook.R
+import at.guger.moneybook.core.ui.fragment.BaseFragment
 
 /**
- * Main settings fragment.
+ * Container fragment for settings.
  */
-class SettingsFragment : BasePreferenceFragment() {
+class SettingsFragment : BaseFragment() {
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_settings, container, false)
     }
-
 }
