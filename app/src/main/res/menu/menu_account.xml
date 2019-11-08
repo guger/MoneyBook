@@ -21,11 +21,11 @@
         android:id="@+id/actionAccountEdit"
         android:icon="@drawable/ic_edit"
         android:title="@string/Edit"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/actionAccountDelete"
         android:icon="@drawable/ic_delete"
         android:title="@string/Delete"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

@@ -37,8 +37,8 @@ import at.guger.moneybook.core.ui.fragment.FullScreenDialogFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.ext.hasPermission
-import at.guger.moneybook.core.util.toEpochMilli
-import at.guger.moneybook.core.util.toLocalDate
+import at.guger.moneybook.core.util.ext.toEpochMilli
+import at.guger.moneybook.core.util.ext.toLocalDate
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.DialogFragmentAddEditTransactionBinding
 import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge

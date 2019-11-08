@@ -17,7 +17,6 @@
 package at.guger.moneybook.data.provider.local.converter
 
 import androidx.room.TypeConverter
-import org.jetbrains.annotations.Nullable
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime

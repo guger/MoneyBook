@@ -34,9 +34,9 @@ class AddressBookRepository(private val contentResolver: ContentResolver) {
 
     //region Methods
 
-    suspend fun loadContacts(ids: LongArray? = null): Map<Long, String> = withContext(Dispatchers.IO) {
+    suspend fun loadContacts(ids: Set<Long>? = null): Map<Long, String> = withContext(Dispatchers.IO) {
         val selection: String? = ids?.run { CONTACT_ID }
-        val args: Array<String>? = ids?.let { contactIds ->
+        val args: Array<String>? = ids?.toList()?.let { contactIds ->
             Array(contactIds.size) { i -> contactIds[i].toString() }
         }
 
@@ -61,9 +61,9 @@ class AddressBookRepository(private val contentResolver: ContentResolver) {
         return@withContext contacts
     }
 
-    suspend fun loadPhoneNumbers(ids: LongArray): Map<Long, String> = withContext(Dispatchers.IO) {
+    suspend fun loadPhoneNumbers(ids: Set<Long>): Map<Long, String> = withContext(Dispatchers.IO) {
         val phoneNumbers = mutableMapOf<Long, String>()
-        val args: Array<String> = Array(ids.size) { i -> ids[i].toString() }
+        val args: Array<String> = Array(ids.size) { i -> ids.toList()[i].toString() }
 
         makePhoneNumberCursor(args)?.run {
             val idCol = getColumnIndex(CONTACT_ID)

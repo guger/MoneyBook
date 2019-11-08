@@ -45,7 +45,6 @@ object Database {
 
         const val COL_ID = ID
         const val COL_NAME = "name"
-        const val COL_ICON = "icon"
         const val COL_COLOR = "color"
     }
 

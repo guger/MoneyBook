@@ -20,14 +20,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
-import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
-import at.guger.moneybook.core.util.ext.dimen
 import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_dues.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**

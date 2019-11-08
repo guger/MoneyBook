@@ -19,6 +19,7 @@ package at.guger.moneybook.di
 import androidx.work.OneTimeWorkRequestBuilder
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.repository.*
+import at.guger.moneybook.work.ContactsSyncWorker
 import at.guger.moneybook.work.DefaultAccountWorker
 import at.guger.moneybook.work.DefaultBudgetsWorker
 import org.koin.dsl.module
@@ -30,10 +31,13 @@ import org.koin.dsl.module
 val dataModule = module {
     single {
         AppDatabase.get(
-            get(),
-            listOf(
+            context = get(),
+            onCreateWorkers = listOf(
                 OneTimeWorkRequestBuilder<DefaultAccountWorker>().build(),
                 OneTimeWorkRequestBuilder<DefaultBudgetsWorker>().build()
+            ),
+            onOpenWorkers = listOf(
+                OneTimeWorkRequestBuilder<ContactsSyncWorker>().build()
             )
         )
     }
@@ -42,5 +46,5 @@ val dataModule = module {
     single { AccountsRepository(get()) }
     single { BudgetsRepository(get()) }
     single { AddressBookRepository(get()) }
-    single { ContactsRepository(get(), get()) }
+    single { ContactsRepository(get()) }
 }

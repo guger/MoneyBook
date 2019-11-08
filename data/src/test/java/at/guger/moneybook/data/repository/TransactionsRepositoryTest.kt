@@ -20,7 +20,6 @@ import android.graphics.Color
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import at.guger.moneybook.data.BuildConfig
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
@@ -33,7 +32,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.threeten.bp.LocalDate
 

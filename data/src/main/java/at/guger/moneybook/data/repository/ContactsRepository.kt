@@ -23,7 +23,7 @@ import at.guger.moneybook.data.provider.local.dao.ContactsDao
 /**
  * Repository class for handling [contacts][Contact].
  */
-class ContactsRepository(database: AppDatabase, private val addressBookRepository: AddressBookRepository) {
+class ContactsRepository(database: AppDatabase) {
 
     //region Variables
 
@@ -33,17 +33,11 @@ class ContactsRepository(database: AppDatabase, private val addressBookRepositor
 
     //region Methods
 
-    suspend fun findByTransactionId(transactionId: Long): List<Contact> {
-        val unnamedContacts = contactsDao.findByTransactionId(transactionId)
+    suspend fun findByTransactionId(transactionId: Long): List<Contact> = contactsDao.findByTransactionId(transactionId)
 
-        val contacts = mutableListOf<Contact>()
+    suspend fun getContacts(): List<Contact> = contactsDao.getContacts()
 
-        val addressBookContacts = addressBookRepository.loadContacts(unnamedContacts.filter { it.contactId >= 0 }.map { it.contactId }.toLongArray())
-
-        addressBookContacts.forEach { unnamedContacts.find { contact -> contact.contactId == it.key }?.copy(contactName = it.value)?.let(contacts::add) }
-
-        return contacts
-    }
+    suspend fun update(contacts: List<Contact>) = contactsDao.update(contacts)
 
     //endregion
 }

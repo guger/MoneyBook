@@ -17,6 +17,7 @@
 package at.guger.moneybook.ui.home
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -33,12 +34,16 @@ import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
+import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.ui.home.accounts.AccountsFragment
 import at.guger.moneybook.ui.home.budgets.BudgetsFragment
 import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.DataUtils
+import com.afollestad.assent.Permission
+import com.afollestad.assent.askForPermissions
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -73,6 +78,10 @@ class HomeFragment : BaseFragment() {
         setupLayout()
 
         setupEventListeners()
+
+        Handler().postDelayed({
+            requestPermissions()
+        }, 200)
     }
 
     //endregion
@@ -90,7 +99,7 @@ class HomeFragment : BaseFragment() {
     //region Methods
 
     private fun setupLayout() {
-        TooltipCompat.setTooltipText(fabAdd, getString(R.string.NewTransaction))
+        TooltipCompat.setTooltipText(fabHomeAddTransaction, getString(R.string.NewTransaction))
 
         mHomeViewPager.adapter = object : FragmentStateAdapter(requireActivity()) {
 
@@ -133,7 +142,7 @@ class HomeFragment : BaseFragment() {
             }
         }.attach()
 
-        fabAdd.setOnClickListener { findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment()) }
+        fabHomeAddTransaction.setOnClickListener { findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment()) }
     }
 
     private fun setupEventListeners() {
@@ -151,6 +160,21 @@ class HomeFragment : BaseFragment() {
         viewModel.showAccount.observe(viewLifecycleOwner, EventObserver { accountId ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAccountDetailFragment(accountId))
         })
+    }
+
+    private fun requestPermissions() {
+        askForPermissions(
+            Permission.READ_CONTACTS,
+            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
+                onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
+            }
+        ) {
+            if (!it.isAllGranted(it.permissions)) {
+                Snackbar.make(fabHomeAddTransaction, R.string.ContactsPermissionDenied, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.Retry) { requestPermissions() }
+                    .show()
+            }
+        }
     }
 
     //endregion

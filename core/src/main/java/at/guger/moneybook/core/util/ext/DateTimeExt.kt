@@ -14,14 +14,12 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.core.util
+package at.guger.moneybook.core.util.ext
 
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.FormatStyle
 
 /**
  * Useful methods for converting long dates to [LocalDate] and [LocalDateTime].
@@ -33,7 +31,3 @@ fun Long.toLocalDateTime(): LocalDateTime = Instant.ofEpochMilli(this).atZone(Zo
 
 fun LocalDate.toEpochMilli(): Long = atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 fun LocalDateTime.toEpochMilli(): Long = atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-object DateTimeUtils {
-    fun getShortDateFormat() = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
-}

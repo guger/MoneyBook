@@ -61,4 +61,5 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$deps.arch.navigation"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$deps.libs.threetenabp"
+    implementation "com.afollestad:assent:$deps.libs.assent"
 }

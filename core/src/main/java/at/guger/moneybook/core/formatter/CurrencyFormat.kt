@@ -25,5 +25,5 @@ object CurrencyFormat {
 
     private val currencyFormat = NumberFormat.getCurrencyInstance()
 
-    fun format(value: Double) = currencyFormat.format(value)
+    fun format(value: Double): String = currencyFormat.format(value)
 }

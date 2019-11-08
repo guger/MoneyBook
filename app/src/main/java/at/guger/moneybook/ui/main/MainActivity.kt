@@ -95,7 +95,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     //region Methods
 
     fun attachCab(@MenuRes menuRes: Int, exec: CabApply) {
-        if (!cabEnabled) return;
+        if (!cabEnabled) return
 
         mCab = createCab(R.id.mCabStub) {
             menu(menuRes)

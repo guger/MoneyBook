@@ -18,7 +18,6 @@ package at.guger.moneybook.ui.home.overview.accounts
 
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
-import at.guger.moneybook.databinding.ItemAccountBinding
 import at.guger.moneybook.databinding.ItemOverviewAccountBinding
 import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel

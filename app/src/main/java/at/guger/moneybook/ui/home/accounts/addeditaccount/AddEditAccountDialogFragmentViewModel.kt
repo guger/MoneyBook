@@ -16,7 +16,6 @@
 
 package at.guger.moneybook.ui.home.accounts.addeditaccount
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,9 +40,6 @@ class AddEditAccountDialogFragmentViewModel(private val accountsRepository: Acco
     val titleRes: LiveData<Int> = _titleRes
 
     val accountName = MutableLiveData<String>()
-
-    private val _snackbarMessage = MutableLiveData<Event<@StringRes Int>>()
-    val snackbarMessage: LiveData<Event<Int>> = _snackbarMessage
 
     private val _accountSaved = MutableLiveData<Event<Unit>>()
     val accountSaved: LiveData<Event<Unit>> = _accountSaved

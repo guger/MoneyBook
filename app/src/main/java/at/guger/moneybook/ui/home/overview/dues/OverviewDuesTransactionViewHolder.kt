@@ -19,9 +19,7 @@ package at.guger.moneybook.ui.home.overview.dues
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.databinding.ItemDueBinding
 import at.guger.moneybook.databinding.ItemOverviewDueBinding
-import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
  * [RecyclerView.ViewHolder] for an due overview item.

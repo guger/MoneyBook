@@ -17,8 +17,6 @@
 package at.guger.moneybook.ui.home.addedittransaction
 
 import androidx.databinding.BindingAdapter
-import androidx.databinding.BindingMethod
-import androidx.databinding.BindingMethods
 import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Transaction
 import com.google.android.material.button.MaterialButtonToggleGroup

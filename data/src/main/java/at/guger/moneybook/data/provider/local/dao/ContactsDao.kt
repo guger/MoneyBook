@@ -25,6 +25,9 @@ import at.guger.moneybook.data.model.Contact
 @Dao
 internal interface ContactsDao {
 
+    @Query("SELECT * FROM contacts")
+    suspend fun getContacts(): List<Contact>
+
     @Query("SELECT * FROM contacts WHERE transaction_id = :id")
     suspend fun findByTransactionId(id: Long): List<Contact>
 
