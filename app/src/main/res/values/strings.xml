@@ -75,12 +75,12 @@
     <string name="ContactsPermission">Contacts Permission</string>
     <string name="ContactsPermissionNeeded">Contacts permission is required to support sending messages as reminders for claims.</string>
     <string name="Due_x">Due %s</string>
-    <string name="prefs_Information">MoneyBook is an app developed by Daniel Guger.\n\nVersion: %1$s\nBuild: %2$d</string>
+    <string name="prefs_Information">MoneyBook is an Open-Source app developed by Daniel Guger.\n\nVersion: %1$s\nBuild: %2$d</string>
     <string name="Information">Information</string>
     <string name="Permissions">Permissions</string>
     <string name="prefs_Permissions">Details about required permissions.</string>
     <string name="OK">OK</string>
-    <string name="PermissionDetails">MoneyBook values your privacy and does only request permissions it absolutely needs:\n\n<b>Reading Contacts:</b>\nA key feature of MoneyBook is the book entry reminder. Access to the address book is needed link to claims or debts with contacts, and to contact the if claims are outstanding.\n\n<b>Internet:</b>\nMoneyBook should provide you an excellent user experience. However, app crashes may occur. In this case, MoneyBook sends detailed error statistics to its developer, to help fixing the problem immediately. Thereby, just application relevant details (logs) are transmitted, no book entries and no personal data.\n\nFor more information, please contact the developer.</string>
+    <string name="PermissionDetails">MoneyBook values your privacy and does only request permissions it absolutely needs:\n\n<b>Reading Contacts:</b>\nA key feature of MoneyBook is the book entry reminder. Access to the address book is needed link to claims or debts with contacts, and to contact the if claims are outstanding.\n\n<b>Internet:</b>\nMoneyBook should provide you an excellent user experience. However, app crashes may occur. In this case, MoneyBook sends detailed error statistics to its developer, to help fixing the problem immediately. Thereby, just application relevant details (logs) are transmitted, no transactions or personal data.\n\nFor more information, please contact the developer.</string>
     <string name="ContactsPermissionDenied">Contacts feature will be limited due to denied permission.</string>
     <string name="Retry">Retry</string>
 </resources>
