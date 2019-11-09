@@ -229,6 +229,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:hint="@{(viewModel.transactionType == TransactionType.EARNING || viewModel.transactionType == TransactionType.EXPENSE) ? @string/Value : @string/Value_per_Contact}"
                     app:layout_constraintEnd_toStartOf="@+id/btnAddEditTransactionOpenCalculator"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionDate">
@@ -237,9 +238,9 @@
                         android:id="@+id/edtAddEditTransactionValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Value"
                         android:singleLine="true"
-                        android:text="@={viewModel.transactionValue}" />
+                        android:text="@={viewModel.transactionValue}"
+                        tools:hint="Value [per Contact]" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -316,6 +317,8 @@
 
 
     <data>
+
+        <import type="at.guger.moneybook.data.model.Transaction.TransactionType" />
 
         <variable
             name="viewModel"

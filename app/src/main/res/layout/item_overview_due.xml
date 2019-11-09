@@ -62,6 +62,7 @@
             android:singleLine="true"
             android:textAlignment="viewEnd"
             android:textAppearance="?textAppearanceBody1"
+            app:contactsCount="@{transaction.contacts.size()}"
             app:currency="@{transaction.value}"
             app:layout_constraintBottom_toBottomOf="@+id/txvTransactionDetailDate"
             app:layout_constraintEnd_toEndOf="parent"

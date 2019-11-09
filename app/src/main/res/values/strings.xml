@@ -42,6 +42,7 @@
     <string name="Expense">Expense</string>
     <string name="Save">Save</string>
     <string name="Value">Value</string>
+    <string name="Value_per_Contact">Value per Contact</string>
     <string name="Contacts">Contacts</string>
     <string name="Notes">Notes</string>
     <string name="Date">Date</string>
@@ -75,7 +76,7 @@
     <string name="ContactsPermission">Contacts Permission</string>
     <string name="ContactsPermissionNeeded">Contacts permission is required to support sending messages as reminders for claims.</string>
     <string name="Due_x">Due %s</string>
-    <string name="prefs_Information">MoneyBook is an Open-Source app developed by Daniel Guger.\n\nVersion: %1$s\nBuild: %2$d</string>
+    <string name="prefs_Information">MoneyBook is an open-source app developed by Daniel Guger.\n\nVersion: %1$s\nBuild: %2$d\n\nhttps://github.com/guger/MoneyBook</string>
     <string name="Information">Information</string>
     <string name="Permissions">Permissions</string>
     <string name="prefs_Permissions">Details about required permissions.</string>

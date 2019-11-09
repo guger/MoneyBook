@@ -19,7 +19,9 @@ package at.guger.moneybook.ui.home.overview
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.core.formatter.CurrencyFormat
+import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.Transaction
+import kotlin.math.max
 
 /**
  * Binding adapters for the overview screen.
@@ -37,7 +39,21 @@ fun TextView.setTransactions(transactions: List<Transaction>?) {
     }
 }
 
-@BindingAdapter("currency", requireAll = true)
-fun TextView.setCurrency(value: Double) {
-    text = CurrencyFormat.format(value)
+@BindingAdapter("dues", requireAll = true)
+fun TextView.setDues(transactions: List<Transaction>?) {
+    transactions?.let {
+        setCurrency(it.sumByDouble { transaction ->
+            when (transaction.type) {
+                Transaction.TransactionType.EARNING -> transaction.value
+                Transaction.TransactionType.EXPENSE -> -transaction.value
+                Transaction.TransactionType.CLAIM -> transaction.value * max(transaction.contacts.size(), 1)
+                else -> -transaction.value * max(transaction.contacts.size(), 1)
+            }
+        })
+    }
+}
+
+@BindingAdapter("currency", "contactsCount", requireAll = false)
+fun TextView.setCurrency(value: Double, contactsCount: Int = 1) {
+    text = CurrencyFormat.format(value * max(contactsCount, 1))
 }

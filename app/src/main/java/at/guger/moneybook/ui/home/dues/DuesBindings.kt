@@ -20,9 +20,11 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.R
 import at.guger.moneybook.core.formatter.CurrencyFormat
+import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.Transaction
 import at.guger.strokepiechart.Entry
 import at.guger.strokepiechart.StrokePieChart
+import kotlin.math.max
 
 /**
  * Binding adapters for the dues screen.
@@ -30,8 +32,8 @@ import at.guger.strokepiechart.StrokePieChart
 
 @BindingAdapter("dues", requireAll = true)
 fun StrokePieChart.setDues(dues: List<Transaction>?) {
-    val claimsSum = dues?.filter { it.type == Transaction.TransactionType.CLAIM }?.sumByDouble { it.value } ?: 0.0
-    val debtsSum = dues?.filter { it.type == Transaction.TransactionType.DEBT }?.sumByDouble { it.value } ?: 0.0
+    val claimsSum = dues?.filter { it.type == Transaction.TransactionType.CLAIM }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
+    val debtsSum = dues?.filter { it.type == Transaction.TransactionType.DEBT }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
 
     setEntries(
         arrayListOf(
