@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
@@ -67,6 +68,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
                     .setPositiveButton(R.string.OK, null)
                     .show()
             }
+            Preferences.INFORMATION -> startActivity(Intent.parseUri("https://github.com/guger/MoneyBook", 0))
         }
 
         return super.onPreferenceTreeClick(preference)
