@@ -31,6 +31,7 @@ import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.provider.local.converter.DateConverter
+import at.guger.moneybook.data.provider.local.converter.RecurrenceConverter
 import at.guger.moneybook.data.provider.local.dao.AccountsDao
 import at.guger.moneybook.data.provider.local.dao.BudgetsDao
 import at.guger.moneybook.data.provider.local.dao.ContactsDao
@@ -44,7 +45,7 @@ import at.guger.moneybook.data.provider.local.dao.TransactionsDao
     version = DATABASE_VERSION,
     exportSchema = true
 )
-@TypeConverters(DateConverter::class)
+@TypeConverters(DateConverter::class, RecurrenceConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     internal abstract fun transactionsDao(): TransactionsDao

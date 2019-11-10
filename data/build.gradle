@@ -80,4 +80,5 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$deps.arch.work"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$deps.libs.threetenabp"
+    implementation "com.maltaisn:recurpicker:$deps.libs.recurpickerdialog"
 }

@@ -22,6 +22,7 @@ import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Account.Companion.DEFAULT_ACCOUNT_ID
 import at.guger.moneybook.data.model.Budget
+import com.maltaisn.recurpicker.Recurrence
 
 /**
  * Provider for default value items.
@@ -31,10 +32,12 @@ object DataUtils {
     fun getDefaultAccount(context: Context) = Account(DEFAULT_ACCOUNT_ID, context.getString(R.string.Checking))
 
     fun getDefaultBudgets(context: Context): Array<Budget> = arrayOf(
-        Budget(-100, context.getString(R.string.Housekeeping), color = Color.parseColor("#795548")),
-        Budget(id = -99, name = context.getString(R.string.Leisure), color = Color.parseColor("#1e88e5")),
-        Budget(id = -98, name = context.getString(R.string.Shopping), color = Color.parseColor("#00bcd4"))
+        Budget(-100, context.getString(R.string.Housekeeping), color = Color.parseColor("#795548"), recurrence = getMonthlyRecurrence()),
+        Budget(id = -99, name = context.getString(R.string.Leisure), color = Color.parseColor("#1e88e5"), recurrence = getMonthlyRecurrence()),
+        Budget(id = -98, name = context.getString(R.string.Shopping), color = Color.parseColor("#00bcd4"), recurrence = getMonthlyRecurrence())
     )
+
+    private fun getMonthlyRecurrence() = Recurrence.Builder(Recurrence.Period.MONTHLY).apply { setDayOfWeekInMonth(1, 1) }.build()
 
     const val MAX_ACCOUNTS = 4
 

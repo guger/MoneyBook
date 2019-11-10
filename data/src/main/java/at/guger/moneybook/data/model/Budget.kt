@@ -22,6 +22,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import at.guger.moneybook.data.Database
 import at.guger.moneybook.data.model.base.Model
+import com.maltaisn.recurpicker.Recurrence
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -32,5 +33,6 @@ import kotlinx.android.parcel.Parcelize
 data class Budget(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Budgets.COL_ID) val id: Long,
     @ColumnInfo(name = Database.Budgets.COL_NAME) val name: String,
-    @ColumnInfo(name = Database.Budgets.COL_COLOR) @ColorInt val color: Int
+    @ColumnInfo(name = Database.Budgets.COL_COLOR) @ColorInt val color: Int,
+    @ColumnInfo(name = Database.Budgets.COL_RECURRENCE) val recurrence: Recurrence
 ) : Model

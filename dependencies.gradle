@@ -58,7 +58,7 @@ androidx.biometric = "1.0.0"
 androidx.viewpager2 = "1.0.0-rc01"
 androidx.recyclerview = "1.1.0-rc01"
 androidx.cardview = "1.0.0"
-androidx.constraintlayout = "1.1.3"
+androidx.constraintlayout = "2.0.0-beta3"
 deps.androidx = androidx
 
 def google = [:]
@@ -85,7 +85,7 @@ libs.material_cab = "2.0.1"
 libs.material_dialogs = "3.1.1"
 libs.calcdialog = "2.1.0"
 libs.icondialog = "2.3.2"
-libs.recurpickerdialog = "1.6.0"
+libs.recurpickerdialog = "2.0.0"
 deps.libs = libs
 
 ext.deps = deps
