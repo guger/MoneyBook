@@ -18,8 +18,11 @@ package at.guger.moneybook.data.repository
 
 import androidx.lifecycle.LiveData
 import at.guger.moneybook.data.model.Budget
+import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.BudgetsDao
+import org.threeten.bp.LocalDate
+import org.threeten.bp.ZoneId
 
 /**
  * Repository class for handling [budgets][Budget].
@@ -36,6 +39,8 @@ class BudgetsRepository(database: AppDatabase) {
 
     fun getBudgets(): LiveData<List<Budget>> = budgetsDao.getBudgets()
 
+    fun getBudgetsWithBalance(): LiveData<List<BudgetWithBalance>> = budgetsDao.getBudgetsWithBalance(getCurrentMonth())
+
     suspend fun insert(vararg budget: Budget) {
         budgetsDao.insert(*budget)
     }
@@ -47,6 +52,8 @@ class BudgetsRepository(database: AppDatabase) {
     suspend fun delete(budget: Budget) {
         budgetsDao.delete(budget)
     }
+
+    private fun getCurrentMonth() = LocalDate.now().withDayOfMonth(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
     //endregion
 }

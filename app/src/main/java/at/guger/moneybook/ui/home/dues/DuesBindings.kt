@@ -30,7 +30,7 @@ import kotlin.math.max
  * Binding adapters for the dues screen.
  */
 
-@BindingAdapter("dues", requireAll = true)
+@BindingAdapter("dues")
 fun StrokePieChart.setDues(dues: List<Transaction>?) {
     val claimsSum = dues?.filter { it.type == Transaction.TransactionType.CLAIM }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
     val debtsSum = dues?.filter { it.type == Transaction.TransactionType.DEBT }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0

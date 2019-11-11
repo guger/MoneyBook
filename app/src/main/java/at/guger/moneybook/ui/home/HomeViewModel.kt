@@ -19,8 +19,10 @@ package at.guger.moneybook.ui.home
 import androidx.lifecycle.*
 import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
+import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.util.DataUtils
 import kotlinx.coroutines.launch
@@ -28,7 +30,11 @@ import kotlinx.coroutines.launch
 /**
  * [ViewModel] for the home fragment and it's sub fragments.
  */
-class HomeViewModel(private val transactionsRepository: TransactionsRepository, private val accountsRepository: AccountsRepository) : ViewModel() {
+class HomeViewModel(
+    private val transactionsRepository: TransactionsRepository,
+    private val accountsRepository: AccountsRepository,
+    budgetsRepository: BudgetsRepository
+) : ViewModel() {
 
     //region Variables
 
@@ -36,6 +42,8 @@ class HomeViewModel(private val transactionsRepository: TransactionsRepository, 
     val claimsAndDebts: LiveData<List<Transaction>>
 
     val coloredAccounts: LiveData<List<ColoredAccount>>
+
+    val budgetsWithBalance: LiveData<List<BudgetWithBalance>>
 
     private val _navigateToPage = MutableLiveData<Event<HomeFragment.Destination>>()
     val navigateToPage: LiveData<Event<HomeFragment.Destination>> = _navigateToPage
@@ -54,6 +62,8 @@ class HomeViewModel(private val transactionsRepository: TransactionsRepository, 
         coloredAccounts = Transformations.map(accountsRepository.getObservableAccountsWithBalance()) { accounts ->
             accounts.mapIndexed { index, accountWithBalance -> ColoredAccount(accountWithBalance, color = colors[index]) }
         }
+
+        budgetsWithBalance = budgetsRepository.getBudgetsWithBalance()
     }
 
     //region Methods

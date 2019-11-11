@@ -32,7 +32,7 @@ val appModule = module {
 
     single { Preferences(get()) }
 
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { (accountId: Long) -> AccountDetailViewModel(get(), get(), accountId) }
     viewModel { AddEditTransactionDialogFragmentViewModel(get(), get(), get(), get()) }
     viewModel { AddEditAccountDialogFragmentViewModel(get()) }

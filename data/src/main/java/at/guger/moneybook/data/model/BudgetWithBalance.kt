@@ -16,23 +16,14 @@
 
 package at.guger.moneybook.data.model
 
-import androidx.annotation.ColorInt
 import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import at.guger.moneybook.data.Database
-import at.guger.moneybook.data.model.base.Model
-import com.maltaisn.recurpicker.Recurrence
 import kotlinx.android.parcel.Parcelize
 
 /**
  * AppDatabase entity for budgets being part of a [Transaction].
  */
 @Parcelize
-@Entity(tableName = Database.Budgets.TABLE_NAME)
-open class Budget(
-    @JvmField @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Budgets.COL_ID) var id: Long = 0,
-    @JvmField @ColumnInfo(name = Database.Budgets.COL_NAME) var name: String = "",
-    @JvmField @ColumnInfo(name = Database.Budgets.COL_BUDGET) var budget: Double = 0.0,
-    @JvmField @ColumnInfo(name = Database.Budgets.COL_COLOR) @ColorInt var color: Int = 0
-) : Model
+data class BudgetWithBalance(
+    @ColumnInfo(name = Database.Budgets.COL_BALANCE) val balance: Double
+) : Budget()

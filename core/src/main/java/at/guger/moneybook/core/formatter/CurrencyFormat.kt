@@ -25,5 +25,6 @@ object CurrencyFormat {
 
     private val currencyFormat = NumberFormat.getCurrencyInstance()
 
+    @JvmStatic
     fun format(value: Double): String = currencyFormat.format(value)
 }

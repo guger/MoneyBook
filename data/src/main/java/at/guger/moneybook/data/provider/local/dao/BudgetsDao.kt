@@ -19,6 +19,7 @@ package at.guger.moneybook.data.provider.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import at.guger.moneybook.data.model.Budget
+import at.guger.moneybook.data.model.BudgetWithBalance
 
 /**
  * [Dao] method for querying [budgets][Budget].
@@ -28,6 +29,17 @@ internal interface BudgetsDao {
 
     @Query("SELECT * FROM budgets ORDER BY name ASC")
     fun getBudgets(): LiveData<List<Budget>>
+
+    @Query(
+        """
+            SELECT budgets.*, 
+            (SELECT SUM(transactions.value) FROM transactions WHERE transactions.budget_id = budgets.id AND transactions.date >= :startDate) AS balance
+            FROM budgets
+            LEFT JOIN transactions ON transactions.budget_id = budgets.id
+            GROUP BY budgets.id
+        """
+    )
+    fun getBudgetsWithBalance(startDate: Long): LiveData<List<BudgetWithBalance>>
 
     @Insert
     suspend fun insert(budget: Budget): Long

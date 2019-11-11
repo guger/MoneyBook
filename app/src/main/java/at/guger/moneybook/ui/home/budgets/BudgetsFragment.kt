@@ -20,9 +20,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.util.ext.setup
+import at.guger.moneybook.databinding.FragmentBudgetsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_budgets.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -32,6 +39,8 @@ class BudgetsFragment : BaseFragment() {
 
     //region Variables
 
+    private lateinit var adapter: BudgetsAdapter
+
     private val viewModel: HomeViewModel by sharedViewModel()
 
     //endregion
@@ -39,19 +48,20 @@ class BudgetsFragment : BaseFragment() {
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val binding = DataBindingUtil.inflate<FragmentBudgetsBinding>(inflater, R.layout.fragment_budgets, container, false)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*with(mBudgetsRecyclerView) {
-            setHasFixedSize(true)
+        adapter = BudgetsAdapter().apply { viewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-            layoutManager = LinearLayoutManager(requireContext())
-          TODO  adapter = OverviewAdapter(viewModel)
-            addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
-        }*/
+        mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false)
     }
 
     //endregion

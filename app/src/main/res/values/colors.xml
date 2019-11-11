@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2019 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +31,16 @@
 
     <color name="color_claim">#FFCF44</color>
     <color name="color_debt">#FF6859</color>
+
+    <color name="budget1">#BBDEFB</color>
+    <color name="budget2">#90CAF9</color>
+    <color name="budget3">#1976D2</color>
+    <color name="budget4">#EDE7F6</color>
+    <color name="budget5">#B39DDB</color>
+    <color name="budget6">#9575CD</color>
+    <color name="budget7">#FFE082</color>
+    <color name="budget8">#FFD54F</color>
+    <color name="budget9">#FFEBEE</color>
 
     <!--colorBackground appears behind scrollable content and is used for the default window-->
     <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->

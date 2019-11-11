@@ -14,19 +14,22 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.data.model
+package at.guger.moneybook.ui.home.budgets
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import at.guger.moneybook.data.Database
-import at.guger.moneybook.data.model.base.Model
-import kotlinx.android.parcel.Parcelize
+import androidx.recyclerview.widget.RecyclerView
+import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
+import at.guger.moneybook.data.model.BudgetWithBalance
+import at.guger.moneybook.databinding.ItemBudgetBinding
 
 /**
- * AppDatabase entity for accounts being part of a [Transaction].
+ * [RecyclerView.ViewHolder] for a budget item.
  */
-@Parcelize
-open class AccountWithBalance(
-    @ColumnInfo(name = Database.Accounts.COL_BALANCE) var balance: Double = 0.0
-) : Account()
+class BudgetViewHolder(binding: ItemBudgetBinding) : ModelViewHolder<ItemBudgetBinding, BudgetWithBalance>(binding) {
+
+    override fun bind(model: BudgetWithBalance) {
+        binding.budget = model
+        binding.executePendingBindings()
+    }
+
+    override fun clear() {}
+}

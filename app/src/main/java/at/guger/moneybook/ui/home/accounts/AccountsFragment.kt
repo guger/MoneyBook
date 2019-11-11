@@ -52,6 +52,7 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     //region Variables
 
     private lateinit var adapter: AccountsAdapter
+
     private val viewModel: HomeViewModel by sharedViewModel()
 
     //endregion

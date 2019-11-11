@@ -22,11 +22,11 @@ import androidx.recyclerview.widget.RecyclerView
  * Extension functions for [RecyclerView].
  */
 
-fun RecyclerView.setup(layoutManager: RecyclerView.LayoutManager, adapter: RecyclerView.Adapter<*>, hasFixedSize: Boolean = true, block: RecyclerView.() -> Unit) {
+fun RecyclerView.setup(layoutManager: RecyclerView.LayoutManager, adapter: RecyclerView.Adapter<*>, hasFixedSize: Boolean = true, block: (RecyclerView.() -> Unit)? = null) {
     setHasFixedSize(hasFixedSize)
 
     this.layoutManager = layoutManager
     this.adapter = adapter
 
-    block()
+    block?.invoke(this)
 }
