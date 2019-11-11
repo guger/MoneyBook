@@ -22,7 +22,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import at.guger.moneybook.data.Database
 import at.guger.moneybook.data.model.base.Model
-import com.maltaisn.recurpicker.Recurrence
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -31,8 +30,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = Database.Budgets.TABLE_NAME)
 open class Budget(
-    @JvmField @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Budgets.COL_ID) var id: Long = 0,
-    @JvmField @ColumnInfo(name = Database.Budgets.COL_NAME) var name: String = "",
-    @JvmField @ColumnInfo(name = Database.Budgets.COL_BUDGET) var budget: Double = 0.0,
-    @JvmField @ColumnInfo(name = Database.Budgets.COL_COLOR) @ColorInt var color: Int = 0
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Budgets.COL_ID) var id: Long = 0,
+    @ColumnInfo(name = Database.Budgets.COL_NAME) var name: String = "",
+    @ColumnInfo(name = Database.Budgets.COL_BUDGET) var budget: Double = 0.0,
+    @ColumnInfo(name = Database.Budgets.COL_COLOR) @ColorInt var color: Int = 0
 ) : Model

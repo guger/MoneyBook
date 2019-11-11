@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.data.model
 
+import androidx.annotation.ColorInt
 import androidx.room.ColumnInfo
 import at.guger.moneybook.data.Database
 import kotlinx.android.parcel.Parcelize
@@ -26,4 +27,12 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class BudgetWithBalance(
     @ColumnInfo(name = Database.Budgets.COL_BALANCE) val balance: Double
-) : Budget()
+) : Budget() {
+
+    constructor(id: Long, name: String, balance: Double, budget: Double, @ColorInt color: Int) : this(balance) {
+        this.id = id
+        this.name = name
+        this.budget = budget
+        this.color = color
+    }
+}

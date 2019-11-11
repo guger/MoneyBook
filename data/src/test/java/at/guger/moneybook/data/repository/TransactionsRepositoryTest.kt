@@ -57,7 +57,7 @@ class TransactionsRepositoryTest : DatabaseTest() {
 
         runBlocking {
             accountsRepository.insert(Account(ACCOUNT_ID, ACCOUNT_NAME))
-            budgetsRepository.insert(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_COLOR))
+            budgetsRepository.insert(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, BUDGET_COLOR))
         }
     }
 
@@ -105,6 +105,7 @@ class TransactionsRepositoryTest : DatabaseTest() {
         private const val ACCOUNT_NAME: String = "Test Account"
         private const val BUDGET_ID: Long = 22
         private const val BUDGET_NAME: String = "Test Budget"
+        private const val BUDGET_BUDGET: Double = 200.0
         private const val BUDGET_COLOR: Int = Color.BLUE
         private const val CONTACT_ID: Long = 1
         private const val CONTACT_CONTACT_ID: Long = 1515
@@ -124,7 +125,7 @@ class TransactionsRepositoryTest : DatabaseTest() {
                 budgetId = BUDGET_ID
             ),
             account = Account(ACCOUNT_ID, ACCOUNT_NAME),
-            budget = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_COLOR),
+            budget = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, BUDGET_COLOR),
             contacts = listOf(Contact(CONTACT_ID, CONTACT_CONTACT_ID, CONTACT_NAME, CONTACT_TRANSACTION_ID, CONTACT_PAID_STATE))
         )
     }

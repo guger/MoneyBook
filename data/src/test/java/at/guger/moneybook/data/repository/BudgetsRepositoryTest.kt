@@ -62,11 +62,11 @@ class BudgetsRepositoryTest : DatabaseTest() {
             assertThat(it).contains(BUDGET)
         }
 
-        repository.update(BUDGET.copy(color = Color.RED))
+        repository.update(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, Color.RED))
 
         repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(BUDGET.copy(color = Color.RED))
+            assertThat(it).contains(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, Color.RED))
         }
     }
 
@@ -88,8 +88,9 @@ class BudgetsRepositoryTest : DatabaseTest() {
     companion object {
         private const val BUDGET_ID: Long = 22
         private const val BUDGET_NAME: String = "Test Budget"
+        private const val BUDGET_BUDGET: Double = 200.0
         private const val BUDGET_COLOR: Int = Color.BLUE
 
-        val BUDGET = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_COLOR)
+        val BUDGET = Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, BUDGET_COLOR)
     }
 }
