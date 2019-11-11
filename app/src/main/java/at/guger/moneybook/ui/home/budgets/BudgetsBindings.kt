@@ -29,16 +29,18 @@ import at.guger.strokepiechart.StrokePieChart
 
 @BindingAdapter("budgets", requireAll = true)
 fun StrokePieChart.setBudgets(budgets: List<BudgetWithBalance>?) {
+    if (budgets == null) return
+
     val entries = ArrayList<Entry>()
 
-    val leftSum = budgets?.sumByDouble { it.budget - it.balance } ?: 0.0
-    val budgetSum = budgets?.sumByDouble { it.budget } ?: 0.0
+    val leftSum = budgets.sumByDouble { it.budget - it.balance } ?: 0.0
+    val budgetSum = budgets.sumByDouble { it.budget } ?: 0.0
 
-    budgets?.forEach { budget ->
+    budgets.forEach { budget ->
         if (budget.balance > 0.0) entries.add(Entry(budget.balance.toFloat(), budget.color))
     }
 
-    if (budgetSum - leftSum > 0.01) {
+    if (leftSum > 0.01) {
         entries.add(Entry(leftSum.toFloat(), Color.BLACK))
     } else if (leftSum + budgetSum == 0.0) {
         entries.add(Entry(1.0f, Color.BLACK))
