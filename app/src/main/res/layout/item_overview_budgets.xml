@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/mOverviewDuesItem"
+        android:id="@+id/mOverviewBudgetsItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,19 +28,19 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txvOverviewDuesTitle"
+                android:id="@+id/txvOverviewBudgetsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/item_content_margin"
                 android:layout_marginTop="@dimen/item_content_margin"
-                android:text="@string/Dues"
+                android:text="@string/Budgets"
                 android:textAppearance="?textAppearanceCaption"
                 android:textColor="?colorOnSurface"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txvOverviewDuesSum"
+                android:id="@+id/txvOverviewBudgetsSum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/item_content_margin"
@@ -48,38 +48,36 @@
                 android:singleLine="true"
                 android:textAppearance="?textAppearanceHeadline3"
                 android:textColor="?colorOnSurface"
-                app:dues="@{viewModel.claimsAndDebts}"
+                app:budgets="@{viewModel.budgetsWithBalance}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/txvOverviewDuesTitle"
-                app:layout_constraintTop_toBottomOf="@+id/txvOverviewDuesTitle"
+                app:layout_constraintStart_toStartOf="@+id/txvOverviewBudgetsTitle"
+                app:layout_constraintTop_toBottomOf="@+id/txvOverviewBudgetsTitle"
                 tools:text="€ 0,00" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mOverviewDuesRecyclerView"
+                android:id="@+id/mOverviewBudgetsRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/item_content_margin"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/item_content_margin"
-                android:visibility="@{viewModel.claimsAndDebts.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mOverviewDuesDivider"
+                app:layout_constraintTop_toBottomOf="@+id/mOverviewBudgetsDivider"
                 tools:itemCount="3"
-                tools:listitem="@layout/item_overview_due"
-                tools:visibility="visible" />
+                tools:listitem="@layout/item_overview_budget" />
 
             <at.guger.moneybook.core.ui.widget.VisualizeDividerView
-                android:id="@+id/mOverviewDuesDivider"
+                android:id="@+id/mOverviewBudgetsDivider"
                 android:layout_width="match_parent"
                 android:layout_height="1.25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txvOverviewDuesSum" />
+                app:layout_constraintTop_toBottomOf="@+id/txvOverviewBudgetsSum" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOverviewDuesSeeAll"
+                android:id="@+id/btnOverviewBudgetsSeeAll"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,14 +85,14 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/item_content_margin"
                 android:layout_marginBottom="8dp"
-                android:onClick="@{() -> viewModel.navigateTo(Destination.DUES)}"
+                android:onClick="@{() -> viewModel.navigateTo(Destination.BUDGETS)}"
                 android:text="@string/SeeAll"
                 android:textAppearance="?textAppearanceButton"
                 android:textColor="?colorOnSurface"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mOverviewDuesRecyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/mOverviewBudgetsRecyclerView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -24,15 +24,19 @@ import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
 import at.guger.moneybook.databinding.ItemOverviewAccountsBinding
+import at.guger.moneybook.databinding.ItemOverviewBudgetsBinding
 import at.guger.moneybook.databinding.ItemOverviewDuesBinding
 import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.home.overview.accounts.OverviewAccountsViewHolder
+import at.guger.moneybook.ui.home.overview.budgets.OverviewBudgetsViewHolder
 import at.guger.moneybook.ui.home.overview.dues.OverviewDuesViewHolder
 
 /**
  * [RecyclerView.Adapter] showing an overview of account balances, dues and budgets.
  */
 class OverviewAdapter(private val viewModel: HomeViewModel, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<BindingViewHolder<*, HomeViewModel>>() {
+
+    //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<*, HomeViewModel> {
         return when (viewType) {
@@ -48,7 +52,12 @@ class OverviewAdapter(private val viewModel: HomeViewModel, private val lifecycl
 
                 OverviewDuesViewHolder(binding)
             }
-            OVERVIEW_BUDGETS -> TODO()
+            OVERVIEW_BUDGETS -> {
+                val binding: ItemOverviewBudgetsBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_budgets, parent, false)
+                binding.lifecycleOwner = lifecycleOwner
+
+                OverviewBudgetsViewHolder(binding)
+            }
             else -> throw IllegalArgumentException("This type of view holder does not exist.")
         }
     }
@@ -61,11 +70,13 @@ class OverviewAdapter(private val viewModel: HomeViewModel, private val lifecycl
 
     override fun getItemCount(): Int = ITEM_COUNT
 
+    //endregion
+
     companion object {
         const val OVERVIEW_ACCOUNTS = 0
         const val OVERVIEW_DUES = 1
         const val OVERVIEW_BUDGETS = 2
 
-        const val ITEM_COUNT = 2//todo 3
+        const val ITEM_COUNT = 3
     }
 }

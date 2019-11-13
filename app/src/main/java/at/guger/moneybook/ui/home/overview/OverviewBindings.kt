@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.core.formatter.CurrencyFormat
 import at.guger.moneybook.core.util.ext.size
+import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
 import kotlin.math.max
 
@@ -50,6 +51,13 @@ fun TextView.setDues(transactions: List<Transaction>?) {
                 else -> -transaction.value * max(transaction.contacts.size(), 1)
             }
         })
+    }
+}
+
+@BindingAdapter("budgets")
+fun TextView.setBudgets(budgets: List<BudgetWithBalance>?) {
+    budgets?.let {
+        setCurrency(it.sumByDouble { it.budget - it.balance })
     }
 }
 
