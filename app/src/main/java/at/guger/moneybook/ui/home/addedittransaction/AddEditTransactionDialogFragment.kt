@@ -19,6 +19,7 @@ package at.guger.moneybook.ui.home.addedittransaction
 import android.Manifest
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -86,12 +87,15 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
 
         args.transaction?.let { viewModel.setupTransaction(it) }
 
+        // TODO: Request if permission isn't granted
         if (requireContext().hasPermission(Manifest.permission.READ_CONTACTS)) viewModel.loadContacts()
 
         setupLayout()
         setupEvents()
 
-        showKeyboard()
+        edtAddEditTransactionTitle.requestFocus()
+
+        if (args.transaction != null) Handler().postDelayed({ edtAddEditTransactionTitle.setSelection(edtAddEditTransactionTitle.text?.length ?: 0) }, 200)
     }
 
     override fun onPause() {
@@ -161,19 +165,6 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
         })
 
         viewModel.transactionSaved.observe(viewLifecycleOwner, Observer { dismiss() })
-    }
-
-    private fun showKeyboard() {
-        // TODO SoftInput is not showing up
-
-        if (args.transaction == null) {
-            edtAddEditTransactionTitle.requestFocus()
-
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(edtAddEditTransactionTitle, InputMethodManager.SHOW_IMPLICIT)
-        } else {
-            edtAddEditTransactionTitle.clearFocus()
-        }
     }
 
     private fun showDatePicker(selectedDate: LocalDate) {
