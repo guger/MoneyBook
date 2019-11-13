@@ -19,6 +19,7 @@ package at.guger.moneybook.ui.home.budgets
 import android.graphics.Color
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.core.formatter.CurrencyFormat
+import at.guger.moneybook.core.ui.widget.VerticalProgressBar
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.strokepiechart.Entry
 import at.guger.strokepiechart.StrokePieChart
@@ -33,8 +34,8 @@ fun StrokePieChart.setBudgets(budgets: List<BudgetWithBalance>?) {
 
     val entries = ArrayList<Entry>()
 
-    val leftSum = budgets.sumByDouble { it.budget - it.balance } ?: 0.0
-    val budgetSum = budgets.sumByDouble { it.budget } ?: 0.0
+    val leftSum = budgets.sumByDouble { it.budget - it.balance }
+    val budgetSum = budgets.sumByDouble { it.budget }
 
     budgets.forEach { budget ->
         if (budget.balance > 0.0) entries.add(Entry(budget.balance.toFloat(), budget.color))
@@ -50,5 +51,11 @@ fun StrokePieChart.setBudgets(budgets: List<BudgetWithBalance>?) {
 
     text = CurrencyFormat.format(leftSum)
 
+    startAnimation()
+}
+
+@BindingAdapter("balance", "budget", requireAll = true)
+fun VerticalProgressBar.setBalance(balance: Double, budget: Double) {
+    progress = (100.0 / budget * balance).toFloat()
     startAnimation()
 }

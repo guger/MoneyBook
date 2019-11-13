@@ -39,7 +39,7 @@ import org.threeten.bp.LocalDate
  * Test class for [TransactionsRepository].
  */
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.O_MR1])
+@Config(sdk = [Build.VERSION_CODES.P])
 class TransactionsRepositoryTest : DatabaseTest() {
 
     @get:Rule

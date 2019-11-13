@@ -16,6 +16,11 @@
 
 <resources>
 
+    <declare-styleable name="VerticalProgressBar">
+        <attr name="progress" format="float" />
+        <attr name="progressColor" format="color" />
+    </declare-styleable>
+
     <declare-styleable name="VisualizeDividerView">
         <attr name="colors" format="reference" />
         <attr name="distributions" format="reference" />

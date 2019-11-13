@@ -67,14 +67,17 @@
             app:layout_constraintTop_toTopOf="@+id/txvBudgetName"
             tools:text="€ 0.00" />
 
-        <View
+        <at.guger.moneybook.core.ui.widget.VerticalProgressBar
             android:id="@+id/mBudgetColor"
             android:layout_width="4dp"
             android:layout_height="0dp"
-            android:background="@{budget.color}"
+            android:background="@android:color/background_dark"
+            app:balance="@{budget.balance}"
+            app:budget="@{budget.budget}"
             app:layout_constraintBottom_toBottomOf="@+id/txvBudgetDetails"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txvBudgetName"
+            app:progressColor="@{budget.color}"
             tools:background="?colorPrimary" />
 
         <TextView
