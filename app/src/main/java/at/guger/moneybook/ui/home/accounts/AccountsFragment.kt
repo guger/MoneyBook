@@ -29,9 +29,7 @@ import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
-import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
-import at.guger.moneybook.core.util.ext.dimen
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.databinding.FragmentAccountsBinding
@@ -40,7 +38,7 @@ import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.AccountMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
-import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_accounts.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -75,7 +73,6 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
         mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(OnItemTouchListener(requireContext(), this, this@AccountsFragment))
-            addItemDecoration(SpacesItemDecoration(all = context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
         }
     }
 
@@ -88,13 +85,11 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     }
 
     private fun deleteAccount(vararg account: Account) {
-        MaterialDialog(requireContext()).show {
-            title(res = if (account.size == 1) R.string.DeleteAccount else R.string.DeleteAccounts)
-            message(text = getString(if (account.size == 1) R.string.aldm_DeleteAccount else R.string.aldm_DeleteAccounts, account.joinToString { it.name }))
-
-            positiveButton(res = R.string.Delete) { viewModel.deleteAccount(*account) }
-            negativeButton(res = R.string.Cancel)
-        }
+        MaterialAlertDialogBuilder(requireContext()).setTitle(if (account.size == 1) R.string.DeleteAccount else R.string.DeleteAccounts)
+            .setMessage(getString(if (account.size == 1) R.string.aldm_DeleteAccount else R.string.aldm_DeleteAccounts, account.joinToString { it.name }))
+            .setPositiveButton(R.string.Delete) { _, _ -> viewModel.deleteAccount(*account) }
+            .setNegativeButton(R.string.Cancel, null)
+            .show()
     }
 
     //endregion
