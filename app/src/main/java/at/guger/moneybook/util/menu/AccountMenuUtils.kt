@@ -20,11 +20,10 @@ import android.view.Menu
 import android.view.MenuItem
 import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Account
-import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.ui.home.accounts.AccountsAdapter
 
 /**
- * Util class for [earningsAndExpenses][Transaction] menu.
+ * Util class for [Account] menu.
  */
 object AccountMenuUtils {
 

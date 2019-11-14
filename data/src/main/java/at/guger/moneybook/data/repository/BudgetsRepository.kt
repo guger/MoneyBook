@@ -49,8 +49,8 @@ class BudgetsRepository(database: AppDatabase) {
         budgetsDao.update(budget)
     }
 
-    suspend fun delete(budget: Budget) {
-        budgetsDao.delete(budget)
+    suspend fun delete(vararg budget: Budget) {
+        budgetsDao.delete(*budget)
     }
 
     private fun getCurrentMonth() = LocalDate.now().withDayOfMonth(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()

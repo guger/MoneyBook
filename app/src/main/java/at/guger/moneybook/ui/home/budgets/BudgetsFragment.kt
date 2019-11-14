@@ -18,24 +18,33 @@ package at.guger.moneybook.ui.home.budgets
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.databinding.FragmentBudgetsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
+import at.guger.moneybook.ui.main.MainActivity
+import at.guger.moneybook.util.menu.BudgetMenuUtils
+import com.afollestad.materialcab.attached.destroy
+import com.afollestad.materialcab.attached.isActive
 import kotlinx.android.synthetic.main.fragment_budgets.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
- * Fragment for [home view pager's][ViewPager2] statistics content.
+ * Fragment for [home view pager's][ViewPager2] budgets content.
  */
-class BudgetsFragment : BaseFragment() {
+class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
@@ -61,7 +70,69 @@ class BudgetsFragment : BaseFragment() {
 
         adapter = BudgetsAdapter().apply { viewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false)
+        mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false) {
+            addOnItemTouchListener(OnItemTouchListener(context, this, this@BudgetsFragment))
+        }
+    }
+
+    //endregion
+
+    //region Methods
+
+    private fun editBudget(budget: Budget) {
+        findNavController().navigate(MainNavDirections.actionGlobalAddEditBudgetBottomSheetDialogFragment(budget))
+    }
+
+    //endregion
+
+    //region Callback
+
+    override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
+        if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+            adapter.toggleChecked(pos)
+
+            if (adapter.checkedCount > 0) {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    BudgetMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().destroyCab()
+            }
+        }
+    }
+
+    override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
+        adapter.toggleChecked(pos)
+
+        if (adapter.checkedCount > 0) {
+            if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+                requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_budget) {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    onCreate { _, menu -> BudgetMenuUtils.prepareMenu(menu, adapter) }
+
+                    onDestroy {
+                        adapter.clearChecked()
+                        true
+                    }
+
+                    onSelection { menuItem ->
+                        BudgetMenuUtils.onItemSelected(menuItem, adapter, ::editBudget, viewModel::deleteBudget)
+                        destroy()
+                    }
+                }
+            } else {
+                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                    title(literal = getString(R.string.x_selected, adapter.checkedCount))
+
+                    BudgetMenuUtils.prepareMenu(getMenu(), adapter)
+                }
+            }
+        } else {
+            requireAppCompatActivity<MainActivity>().destroyCab()
+        }
     }
 
     //endregion

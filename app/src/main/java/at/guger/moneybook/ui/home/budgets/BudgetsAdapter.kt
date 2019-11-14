@@ -68,12 +68,13 @@ class BudgetsAdapter : ListAdapter<BudgetWithBalance, BudgetViewHolder>(BudgetsD
     //endregion
 
     class BudgetsDiffCallback : DiffUtil.ItemCallback<BudgetWithBalance>() {
+
         override fun areItemsTheSame(oldItem: BudgetWithBalance, newItem: BudgetWithBalance): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: BudgetWithBalance, newItem: BudgetWithBalance): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.balance == newItem.balance && oldItem.budget == newItem.budget && oldItem.color == newItem.color
         }
     }
 }

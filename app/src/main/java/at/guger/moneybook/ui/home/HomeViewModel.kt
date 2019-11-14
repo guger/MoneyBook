@@ -19,6 +19,7 @@ package at.guger.moneybook.ui.home
 import androidx.lifecycle.*
 import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
@@ -33,7 +34,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val transactionsRepository: TransactionsRepository,
     private val accountsRepository: AccountsRepository,
-    budgetsRepository: BudgetsRepository
+    private val budgetsRepository: BudgetsRepository
 ) : ViewModel() {
 
     //region Variables
@@ -82,6 +83,10 @@ class HomeViewModel(
 
     fun deleteAccount(vararg account: Account) {
         viewModelScope.launch { accountsRepository.delete(*account) }
+    }
+
+    fun deleteBudget(vararg budget: Budget) {
+        viewModelScope.launch { budgetsRepository.delete(*budget) }
     }
 
     //endregion

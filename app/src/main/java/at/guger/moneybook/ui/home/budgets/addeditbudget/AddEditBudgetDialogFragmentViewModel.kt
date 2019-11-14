@@ -22,8 +22,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.R
-import at.guger.moneybook.core.formatter.CurrencyFormat
 import at.guger.moneybook.core.ui.viewmodel.Event
+import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.ext.ifNull
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.repository.BudgetsRepository
@@ -64,7 +64,7 @@ class AddEditBudgetDialogFragmentViewModel(private val budgetsRepository: Budget
         _titleRes.value = R.string.EditBudget
 
         budgetName.value = budget.name
-        budgetBudget.value = CurrencyFormat.format(budget.budget)
+        budgetBudget.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(budget.budget)
         budgetColor.value = budget.color
     }
 
@@ -82,7 +82,7 @@ class AddEditBudgetDialogFragmentViewModel(private val budgetsRepository: Budget
                 budgetsRepository.insert(
                     Budget(
                         name = budgetName.value!!.trim(),
-                        budget = budgetBudget.value!!.trim().toDouble(),
+                        budget = parseNumber(budgetBudget.value!!),
                         color = budgetColor.value!!
                     )
                 )
@@ -90,7 +90,7 @@ class AddEditBudgetDialogFragmentViewModel(private val budgetsRepository: Budget
                 Budget(
                     id = budget!!.id,
                     name = budgetName.value!!.trim(),
-                    budget = budgetBudget.value!!.trim().toDouble(),
+                    budget = parseNumber(budgetBudget.value!!),
                     color = budgetColor.value!!
                 )
             )

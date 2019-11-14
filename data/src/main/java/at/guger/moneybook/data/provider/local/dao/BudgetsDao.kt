@@ -51,5 +51,5 @@ internal interface BudgetsDao {
     suspend fun update(budget: Budget)
 
     @Delete
-    suspend fun delete(budget: Budget)
+    suspend fun delete(vararg budget: Budget)
 }
