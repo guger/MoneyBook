@@ -24,6 +24,14 @@
         android:icon="@drawable/ic_add_account"
         android:title="@string/AddAccount"
         app:showAsAction="always" />
+
+    <!--Todo add budget icon-->
+    <item
+        android:id="@+id/actionAddBudget"
+        android:icon="@drawable/ic_add_budget"
+        android:title="@string/AddBudget"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/actionSearch"
         android:icon="@drawable/ic_search"

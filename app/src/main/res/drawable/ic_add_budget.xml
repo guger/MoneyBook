@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright 2019 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="21.83"
+    android:viewportHeight="21.83">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M17.57,9.22a5,5 0,0 1,-5 -5,5 5,0 0,1 0.57,-2.28h-11A2.22,2.22 0,0 0,0 4.19L0,19.62a2.22,2.22 0,0 0,2.2 2.21L17.64,21.83a2.22,2.22 0,0 0,2.2 -2.21v-11A4.84,4.84 0,0 1,17.57 9.22ZM6.61,17.39L4.41,17.39L4.41,9.7h2.2ZM11.02,17.39h-2.2L8.82,6.39h2.2ZM15.43,17.39h-2.2L13.23,13.01h2.2Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M17.57,0a4.26,4.26 0,1 0,4.26 4.26A4.26,4.26 0,0 0,17.57 0ZM19.7,4.69L17.99,4.69L17.99,6.39h-0.85L17.14,4.69h-1.7L15.44,3.83h1.7L17.14,2.13h0.85v1.7h1.71Z" />
+</vector>

@@ -21,6 +21,7 @@ import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.home.accounts.addeditaccount.AddEditAccountDialogFragmentViewModel
 import at.guger.moneybook.ui.home.accounts.detail.AccountDetailViewModel
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionDialogFragmentViewModel
+import at.guger.moneybook.ui.home.budgets.addeditbudget.AddEditBudgetDialogFragmentViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -36,4 +37,5 @@ val appModule = module {
     viewModel { (accountId: Long) -> AccountDetailViewModel(get(), get(), accountId) }
     viewModel { AddEditTransactionDialogFragmentViewModel(get(), get(), get(), get()) }
     viewModel { AddEditAccountDialogFragmentViewModel(get()) }
+    viewModel { AddEditBudgetDialogFragmentViewModel(get()) }
 }

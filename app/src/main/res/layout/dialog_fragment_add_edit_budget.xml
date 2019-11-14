@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2019 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mTitleToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="?android:toolbarStyle"
+            app:theme="?android:toolbarStyle">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:text="@{viewModel.titleRes}"
+                android:textAppearance="?textAppearanceHeadline1"
+                tools:layout_editor_absoluteX="206dp"
+                tools:layout_editor_absoluteY="14dp"
+                tools:text="Add / Edit Budget" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddEditBudgetSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:enabled="false"
+                android:onClick="@{() -> viewModel.save()}"
+                android:text="@string/Save" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAddEditBudgetName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTitleToolbar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddEditBudgetName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Name"
+                android:inputType="textCapSentences"
+                android:singleLine="true"
+                android:text="@={viewModel.budgetName}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAddEditTransactionValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/chpAddEditBudgetColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilAddEditBudgetName">
+
+            <at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
+                android:id="@+id/edtAddEditBudgetBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Budget"
+                android:singleLine="true"
+                android:text="@={viewModel.budgetBudget}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chpAddEditBudgetColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{() -> viewModel.showColorChooser()}"
+            android:text="@string/ChooseColor"
+            app:chipBackgroundColor="@android:color/transparent"
+            app:chipStrokeColor="@{viewModel.budgetColor}"
+            app:chipStrokeWidth="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tilAddEditTransactionValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tilAddEditTransactionValue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="at.guger.moneybook.ui.home.budgets.addeditbudget.AddEditBudgetDialogFragmentViewModel" />
+    </data>
+</layout>

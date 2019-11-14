@@ -18,6 +18,7 @@ package at.guger.moneybook.util
 
 import android.content.Context
 import android.graphics.Color
+import androidx.core.content.ContextCompat
 import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Account.Companion.DEFAULT_ACCOUNT_ID
@@ -44,6 +45,22 @@ object DataUtils {
             Color.parseColor("#37efba"),
             Color.parseColor("#1eb980"),
             Color.parseColor("#005d57")
+        )
+    }
+
+    const val MAX_BUDGETS = 9
+
+    fun getBudgetColors(context: Context): IntArray {
+        return intArrayOf(
+            ContextCompat.getColor(context, R.color.budget1),
+            ContextCompat.getColor(context, R.color.budget2),
+            ContextCompat.getColor(context, R.color.budget3),
+            ContextCompat.getColor(context, R.color.budget4),
+            ContextCompat.getColor(context, R.color.budget5),
+            ContextCompat.getColor(context, R.color.budget6),
+            ContextCompat.getColor(context, R.color.budget7),
+            ContextCompat.getColor(context, R.color.budget8),
+            ContextCompat.getColor(context, R.color.budget9)
         )
     }
 }

@@ -92,6 +92,7 @@ class HomeFragment : BaseFragment() {
         super.onPrepareOptionsMenu(menu)
 
         viewModel.coloredAccounts.observe(viewLifecycleOwner, Observer { menu.findItem(R.id.actionAddAccount)?.isVisible = mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
+        viewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer { menu.findItem(R.id.actionAddBudget)?.isVisible = mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
     }
 
     //endregion

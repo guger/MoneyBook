@@ -28,6 +28,10 @@
         android:id="@+id/action_global_addEditAccountBottomSheetDialogFragment"
         app:destination="@id/addEditAccountBottomSheetDialogFragment" />
 
+    <action
+        android:id="@+id/action_global_addEditBudgetBottomSheetDialogFragment"
+        app:destination="@id/addEditBudgetBottomSheetDialogFragment" />
+
     <dialog
         android:id="@+id/addEditTransactionDialogFragment"
         android:name="at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionDialogFragment"
@@ -80,6 +84,19 @@
             android:name="account"
             android:defaultValue="@null"
             app:argType="at.guger.moneybook.data.model.Account"
+            app:nullable="true" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/addEditBudgetBottomSheetDialogFragment"
+        android:name="at.guger.moneybook.ui.home.budgets.addeditbudget.AddEditBudgetBottomSheetDialogFragment"
+        android:label="AddEditBudgetBottomSheetDialogFragment"
+        tools:layout="@layout/dialog_fragment_add_edit_budget">
+
+        <argument
+            android:name="budget"
+            android:defaultValue="@null"
+            app:argType="at.guger.moneybook.data.model.Budget"
             app:nullable="true" />
     </dialog>
 </navigation>

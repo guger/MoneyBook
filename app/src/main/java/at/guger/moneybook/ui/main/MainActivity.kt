@@ -149,6 +149,10 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
                 navController.navigate(MainNavDirections.actionGlobalAddEditAccountBottomSheetDialogFragment())
                 true
             }
+            R.id.actionAddBudget -> {
+                navController.navigate(MainNavDirections.actionGlobalAddEditBudgetBottomSheetDialogFragment())
+                true
+            }
             R.id.actionSearch -> true
             else -> false
         }

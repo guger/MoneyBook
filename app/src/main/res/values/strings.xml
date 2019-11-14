@@ -86,4 +86,8 @@
     <string name="Retry">Retry</string>
     <string name="Balance_of_Budget">%s / %s</string>
     <string name="Left">Left</string>
+    <string name="ChooseColor">Choose Color</string>
+    <string name="EditBudget">Edit Budget</string>
+    <string name="NewBudget">New Budget</string>
+    <string name="AddBudget">Add Budget</string>
 </resources>
