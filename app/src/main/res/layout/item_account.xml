@@ -27,21 +27,21 @@
         android:padding="@dimen/item_padding">
 
         <TextView
-            android:id="@+id/mOverviewAccountsAccountName"
+            android:id="@+id/mAccountName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:text="@{account.name}"
             android:textAppearance="?textAppearanceSubtitle1"
-            app:layout_constraintEnd_toStartOf="@+id/txvOverviewAccountsAccountBalance"
+            app:layout_constraintEnd_toStartOf="@+id/txvAccountBalance"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/mAccountColor"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Account title" />
 
         <TextView
-            android:id="@+id/txvOverviewAccountsAccountDescription"
+            android:id="@+id/txvAccountDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -49,21 +49,21 @@
             android:text="@string/AccountNumberDots"
             android:textAppearance="?textAppearanceSubtitle2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/mOverviewAccountsAccountName"
+            app:layout_constraintEnd_toEndOf="@+id/mAccountName"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/mOverviewAccountsAccountName"
-            app:layout_constraintTop_toBottomOf="@+id/mOverviewAccountsAccountName" />
+            app:layout_constraintStart_toStartOf="@+id/mAccountName"
+            app:layout_constraintTop_toBottomOf="@+id/mAccountName" />
 
         <TextView
-            android:id="@+id/txvOverviewAccountsAccountBalance"
+            android:id="@+id/txvAccountBalance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textAppearance="?textAppearanceBody1"
             app:currency="@{account.balance}"
-            app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
-            app:layout_constraintEnd_toStartOf="@+id/btnOverviewAccountsAccountShowAccount"
-            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName"
+            app:layout_constraintBottom_toBottomOf="@+id/txvAccountDescription"
+            app:layout_constraintEnd_toStartOf="@+id/btnAccountShowAccount"
+            app:layout_constraintTop_toTopOf="@+id/mAccountName"
             tools:text="€ 0.00" />
 
         <View
@@ -71,13 +71,13 @@
             android:layout_width="4dp"
             android:layout_height="0dp"
             android:background="@{account.color}"
-            app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
+            app:layout_constraintBottom_toBottomOf="@+id/txvAccountDescription"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName"
+            app:layout_constraintTop_toTopOf="@+id/mAccountName"
             tools:background="?colorPrimary" />
 
         <at.guger.moneybook.core.ui.widget.SquareImageButton
-            android:id="@+id/btnOverviewAccountsAccountShowAccount"
+            android:id="@+id/btnAccountShowAccount"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -85,12 +85,11 @@
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> viewModel.showAccount(account)}"
             android:src="@drawable/ic_open"
             android:tint="@color/colorIcon"
-            app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
+            app:layout_constraintBottom_toBottomOf="@+id/txvAccountDescription"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName" />
+            app:layout_constraintTop_toTopOf="@+id/mAccountName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
