@@ -90,4 +90,12 @@
     <string name="EditBudget">Edit Budget</string>
     <string name="NewBudget">New Budget</string>
     <string name="AddBudget">Add Budget</string>
+    <string name="Reports">Reports</string>
+    <string name="Other">Other</string>
+    <string name="PreferencesRestartRequired">The app requires a restart to apply the preference changes.</string>
+    <string name="Restart">Restart</string>
+    <string name="CrashReports">Send Crash Reports (recommended)</string>
+    <string name="prefs_CrashReports">Send anonymous crash reports containing detailed error messages to the developer.</string>
+    <string name="UsageStatistics">Send Usage Statistics</string>
+    <string name="prefs_UsageStatistics">Send anonymous usage statistics to the developer. Those statistics contain technical data like performance, usage and hardware specifications.</string>
 </resources>

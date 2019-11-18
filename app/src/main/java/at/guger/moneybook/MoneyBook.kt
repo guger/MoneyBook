@@ -17,10 +17,15 @@
 package at.guger.moneybook
 
 import android.app.Application
+import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.di.appModule
 import at.guger.moneybook.di.dataModule
 import at.guger.moneybook.di.mainModule
+import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.jakewharton.threetenabp.AndroidThreeTen
+import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -28,6 +33,8 @@ import org.koin.core.context.startKoin
  * Main application class.
  */
 class MoneyBook : Application() {
+
+    private val preferences: Preferences by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -38,5 +45,9 @@ class MoneyBook : Application() {
             androidContext(this@MoneyBook.applicationContext)
             modules(listOf(mainModule, dataModule, appModule))
         }
+
+        if (preferences.analytics) FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true)
+
+        if (preferences.crashlytics) Fabric.with(this, Crashlytics())
     }
 }

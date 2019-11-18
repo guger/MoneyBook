@@ -20,11 +20,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
+import androidx.preference.SwitchPreference
 import at.guger.moneybook.BuildConfig
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
+import com.crashlytics.android.Crashlytics
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
+import io.fabric.sdk.android.Fabric
+import kotlin.system.exitProcess
+
 
 /**
  * Main settings fragment.
@@ -33,7 +40,12 @@ class MainPreferenceFragment : BasePreferenceFragment() {
 
     //region Variables
 
+    private var requireRestart: Boolean = false
+
     private lateinit var prefInformation: Preference
+
+    private val analytics: FirebaseAnalytics by lazy { FirebaseAnalytics.getInstance(requireContext()) }
+    private var restartSnackbar: Snackbar? = null
 
     //endregion
 
@@ -55,12 +67,49 @@ class MainPreferenceFragment : BasePreferenceFragment() {
         prefInformation.summary = getString(R.string.prefs_Information, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (requireRestart) restartApplication()
+    }
+
+    //endregion
+
+    //region Methods
+
+    private fun restartApplication() {
+        val restartIntent: Intent? = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
+
+        startActivity(restartIntent)
+        exitProcess(0)
+    }
+
     //endregion
 
     //region Callback
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
+            Preferences.ANALYTICS -> {
+                analytics.setAnalyticsCollectionEnabled((preference as SwitchPreference).isChecked)
+            }
+            Preferences.CRASHLYTICS -> {
+                if (!(preference as SwitchPreference).isChecked) {
+                    requireRestart = true
+
+                    restartSnackbar = Snackbar.make(requireView(), R.string.PreferencesRestartRequired, Snackbar.LENGTH_INDEFINITE)
+                        .setAnchorView(R.id.mBottomAppBar)
+                        .setAction(R.string.Restart) {
+                            restartApplication()
+                        }
+                        .also { it.show() }
+                } else {
+                    requireRestart = false
+                    restartSnackbar?.dismiss()?.also { restartSnackbar = null }
+
+                    Fabric.with(requireContext(), Crashlytics())
+                }
+            }
             Preferences.PERMISSIONS -> {
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.Permissions)

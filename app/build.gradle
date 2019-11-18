@@ -6,6 +6,8 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+apply plugin: 'io.fabric'
+
 apply from: '../dependencies.gradle'
 
 android {
@@ -94,6 +96,9 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$deps.koin"
     implementation "org.koin:koin-androidx-viewmodel:$deps.koin"
 
+    implementation "com.google.firebase:firebase-analytics:$deps.firebase.analytics"
+    implementation "com.crashlytics.sdk.android:crashlytics:$deps.firebase.crashlytics"
+    
     implementation "androidx.core:core-ktx:$deps.androidx.core"
     implementation "androidx.appcompat:appcompat:$deps.androidx.appcompat"
     implementation "androidx.annotation:annotation:$deps.androidx.annotation"
@@ -132,3 +137,5 @@ dependencies {
     implementation(name: 'nachos', ext: 'aar')
     implementation(name: 'strokepiechart', ext: 'aar')
 }
+
+apply plugin: 'com.google.gms.google-services'

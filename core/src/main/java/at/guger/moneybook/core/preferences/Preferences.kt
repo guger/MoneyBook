@@ -18,7 +18,9 @@ package at.guger.moneybook.core.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import at.guger.moneybook.core.BuildConfig
 import java.util.*
 
 /**
@@ -28,9 +30,21 @@ class Preferences(context: Context) {
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
+    var analytics: Boolean
+        get() = preferences.getBoolean(ANALYTICS, true)
+        set(value) = preferences.edit { putBoolean(ANALYTICS, value) }
+
+    var crashlytics: Boolean
+        get() = preferences.getBoolean(CRASHLYTICS, !BuildConfig.DEBUG)
+        set(value) = preferences.edit { putBoolean(CRASHLYTICS, value) }
+
     val currency: Currency = Currency.getInstance(Locale.getDefault())
 
     companion object {
+        const val CURRENCY = "pref_currency"
+        const val ANALYTICS = "pref_analytics"
+        const val CRASHLYTICS = "pref_crashlytics"
+
         const val PERMISSIONS = "pref_permissions"
         const val INFORMATION = "pref_information"
     }

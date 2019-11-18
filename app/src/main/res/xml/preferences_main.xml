@@ -16,14 +16,34 @@
 
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.preference.Preference
-        android:icon="@drawable/ic_permissions"
-        android:key="pref_permissions"
-        android:summary="@string/prefs_Permissions"
-        android:title="@string/Permissions" />
+    <androidx.preference.PreferenceCategory android:title="@string/Reports">
 
-    <androidx.preference.Preference
-        android:icon="@drawable/ic_information"
-        android:key="pref_information"
-        android:title="@string/Information" />
+        <androidx.preference.SwitchPreference
+            android:defaultValue="true"
+            android:icon="@drawable/ic_analytics"
+            android:key="pref_analytics"
+            android:summary="@string/prefs_UsageStatistics"
+            android:title="@string/UsageStatistics" />
+
+        <androidx.preference.SwitchPreference
+            android:defaultValue="@bool/release"
+            android:icon="@drawable/ic_crash_report"
+            android:key="pref_crashlytics"
+            android:summary="@string/prefs_CrashReports"
+            android:title="@string/CrashReports" />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="@string/Other">
+
+        <androidx.preference.Preference
+            android:icon="@drawable/ic_permissions"
+            android:key="pref_permissions"
+            android:summary="@string/prefs_Permissions"
+            android:title="@string/Permissions" />
+
+        <androidx.preference.Preference
+            android:icon="@drawable/ic_information"
+            android:key="pref_information"
+            android:title="@string/Information" />
+    </androidx.preference.PreferenceCategory>
 </androidx.preference.PreferenceScreen>
