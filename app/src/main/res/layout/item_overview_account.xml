@@ -100,7 +100,7 @@
 
     <data>
 
-        <import type="at.guger.moneybook.core.formatter.CurrencyFormat" />
+        <import type="at.guger.moneybook.util.CurrencyFormat" />
 
         <variable
             name="viewModel"

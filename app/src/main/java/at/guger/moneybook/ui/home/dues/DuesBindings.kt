@@ -19,7 +19,7 @@ package at.guger.moneybook.ui.home.dues
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.R
-import at.guger.moneybook.core.formatter.CurrencyFormat
+import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.Transaction
 import at.guger.strokepiechart.Entry
@@ -42,7 +42,7 @@ fun StrokePieChart.setDues(dues: List<Transaction>?) {
         )
     )
 
-    text = CurrencyFormat.format(claimsSum - debtsSum)
+    text = CurrencyFormat.formatShortened(context, claimsSum - debtsSum)
 
     startAnimation()
 }

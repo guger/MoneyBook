@@ -98,4 +98,5 @@
     <string name="prefs_CrashReports">Send anonymous crash reports containing detailed error messages to the developer.</string>
     <string name="UsageStatistics">Send Usage Statistics</string>
     <string name="prefs_UsageStatistics">Send anonymous usage statistics to the developer. Those statistics contain technical data like performance, usage and hardware specifications.</string>
+    <string name="x_Mio">%s mn</string>
 </resources>

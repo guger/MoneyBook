@@ -17,7 +17,7 @@
 package at.guger.moneybook.ui.home.accounts
 
 import androidx.databinding.BindingAdapter
-import at.guger.moneybook.core.formatter.CurrencyFormat
+import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.strokepiechart.Entry
 import at.guger.strokepiechart.StrokePieChart
@@ -38,7 +38,7 @@ fun StrokePieChart.setAccounts(accounts: List<ColoredAccount>) {
 
     setEntries(entries)
 
-    text = CurrencyFormat.format(balanceSum)
+    text = CurrencyFormat.formatShortened(context, balanceSum)
 
     startAnimation()
 }

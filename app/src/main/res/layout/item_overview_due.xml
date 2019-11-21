@@ -97,7 +97,7 @@
 
         <import type="at.guger.moneybook.util.DateFormatUtils" />
 
-        <import type="at.guger.moneybook.core.formatter.CurrencyFormat" />
+        <import type="at.guger.moneybook.util.CurrencyFormat" />
 
         <import type="at.guger.moneybook.data.model.Transaction.TransactionType" />
 

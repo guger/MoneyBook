@@ -18,7 +18,7 @@ package at.guger.moneybook.ui.home.overview
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import at.guger.moneybook.core.formatter.CurrencyFormat
+import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction

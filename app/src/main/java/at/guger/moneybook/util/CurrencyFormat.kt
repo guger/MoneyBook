@@ -14,8 +14,10 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.core.formatter
+package at.guger.moneybook.util
 
+import android.content.Context
+import at.guger.moneybook.R
 import java.text.NumberFormat
 
 /**
@@ -23,8 +25,17 @@ import java.text.NumberFormat
  */
 object CurrencyFormat {
 
-    private val currencyFormat = NumberFormat.getCurrencyInstance()
+    private val currencyFormatShort = NumberFormat.getCurrencyInstance().apply { maximumFractionDigits = 0 }
+    private val currencyFormatLong = NumberFormat.getCurrencyInstance()
 
     @JvmStatic
-    fun format(value: Double): String = currencyFormat.format(value)
+    fun format(value: Double): String = currencyFormatLong.format(value)
+
+    fun formatShortened(context: Context, value: Double): String {
+        return when {
+            value < 10_000 -> currencyFormatLong.format(value)
+            value < 1_000_000 -> currencyFormatShort.format(value)
+            else -> context.getString(R.string.x_Mio, currencyFormatLong.format(value / 1_000_000))
+        }
+    }
 }

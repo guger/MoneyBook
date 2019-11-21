@@ -18,7 +18,7 @@ package at.guger.moneybook.ui.home.budgets
 
 import android.graphics.Color
 import androidx.databinding.BindingAdapter
-import at.guger.moneybook.core.formatter.CurrencyFormat
+import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.core.ui.widget.VerticalProgressBar
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.strokepiechart.Entry
@@ -49,7 +49,7 @@ fun StrokePieChart.setBudgets(budgets: List<BudgetWithBalance>?) {
 
     setEntries(entries)
 
-    text = CurrencyFormat.format(leftSum)
+    text = CurrencyFormat.formatShortened(context, leftSum)
 
     startAnimation()
 }
