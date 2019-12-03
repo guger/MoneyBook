@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.ui.home.overview.budgets
 
+import android.graphics.Color
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,9 +36,15 @@ class OverviewBudgetsViewHolder(binding: ItemOverviewBudgetsBinding) : BindingVi
         binding.executePendingBindings()
 
         viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, Observer { budgets ->
+            val leftValue: Float = budgets.sumByDouble { it.budget - it.balance }.toFloat()
+
+            val distributions = mutableListOf(*budgets.map { it.balance.toFloat() }.toTypedArray(), leftValue)
+
+            val colors = mutableListOf(*budgets.map { it.color }.toTypedArray(), Color.BLACK)
+
             mOverviewBudgetsDivider.setDistributions(
-                distributions = budgets.map { it.balance.toFloat() },
-                colors = budgets.map { it.color }
+                distributions = distributions,
+                colors = colors
             )
         })
 
