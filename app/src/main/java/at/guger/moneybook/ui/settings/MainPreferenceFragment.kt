@@ -19,6 +19,7 @@ package at.guger.moneybook.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import at.guger.moneybook.BuildConfig
@@ -42,6 +43,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
 
     private var requireRestart: Boolean = false
 
+    private lateinit var prefCurrency: ListPreference
     private lateinit var prefInformation: Preference
 
     private val analytics: FirebaseAnalytics by lazy { FirebaseAnalytics.getInstance(requireContext()) }
@@ -62,7 +64,15 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        prefCurrency = findPreference(Preferences.CURRENCY)!!
         prefInformation = findPreference(Preferences.INFORMATION)!!
+
+        prefCurrency.setOnPreferenceChangeListener { _, _ ->
+            requireRestart = true
+            showRestartSnackBar()
+
+            true
+        }
 
         prefInformation.summary = getString(R.string.prefs_Information, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
     }
@@ -76,6 +86,15 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     //endregion
 
     //region Methods
+
+    private fun showRestartSnackBar() {
+        restartSnackbar = Snackbar.make(requireView(), R.string.PreferencesRestartRequired, Snackbar.LENGTH_INDEFINITE)
+            .setAnchorView(R.id.mBottomAppBar)
+            .setAction(R.string.Restart) {
+                restartApplication()
+            }
+            .also { it.show() }
+    }
 
     private fun restartApplication() {
         val restartIntent: Intent? = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
@@ -96,13 +115,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
             Preferences.CRASHLYTICS -> {
                 if (!(preference as SwitchPreference).isChecked) {
                     requireRestart = true
-
-                    restartSnackbar = Snackbar.make(requireView(), R.string.PreferencesRestartRequired, Snackbar.LENGTH_INDEFINITE)
-                        .setAnchorView(R.id.mBottomAppBar)
-                        .setAction(R.string.Restart) {
-                            restartApplication()
-                        }
-                        .also { it.show() }
+                    showRestartSnackBar()
                 } else {
                     requireRestart = false
                     restartSnackbar?.dismiss()?.also { restartSnackbar = null }

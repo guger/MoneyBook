@@ -99,4 +99,12 @@
     <string name="UsageStatistics">Send Usage Statistics</string>
     <string name="prefs_UsageStatistics">Send anonymous usage statistics to the developer. Those statistics contain technical data like performance, usage and hardware specifications.</string>
     <string name="x_Mio">%s mn</string>
+    <string name="General">General</string>
+    <string name="Currency">Currency</string>
+    <string name="prefs_Currency">Choose the currency you want to use.</string>
+    <string name="Default">Default</string>
+    <string name="Dollar">Dollar</string>
+    <string name="Euro">Euro</string>
+    <string name="Pound">Pound</string>
+    <string name="Yen">Yen</string>
 </resources>

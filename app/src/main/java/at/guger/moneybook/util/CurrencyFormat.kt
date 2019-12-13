@@ -18,15 +18,23 @@ package at.guger.moneybook.util
 
 import android.content.Context
 import at.guger.moneybook.R
+import at.guger.moneybook.core.preferences.Preferences
+import org.koin.core.KoinComponent
+import org.koin.core.get
 import java.text.NumberFormat
 
 /**
  * Formatter for currency instances.
  */
-object CurrencyFormat {
+object CurrencyFormat : KoinComponent {
 
-    private val currencyFormatShort = NumberFormat.getCurrencyInstance().apply { maximumFractionDigits = 0 }
-    private val currencyFormatLong = NumberFormat.getCurrencyInstance()
+    private val currencyFormatShort = NumberFormat.getCurrencyInstance().apply {
+        maximumFractionDigits = 0
+        currency = get<Preferences>().currency
+    }
+    private val currencyFormatLong = NumberFormat.getCurrencyInstance().apply {
+        currency = get<Preferences>().currency
+    }
 
     @JvmStatic
     fun format(value: Double): String = currencyFormatLong.format(value)

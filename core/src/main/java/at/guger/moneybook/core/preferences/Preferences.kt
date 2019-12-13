@@ -24,7 +24,7 @@ import at.guger.moneybook.core.BuildConfig
 import java.util.*
 
 /**
- * Preference Utility class for managing [SharedPreferences].
+ * Preference utility class for managing [SharedPreferences].
  */
 class Preferences(context: Context) {
 
@@ -38,7 +38,9 @@ class Preferences(context: Context) {
         get() = preferences.getBoolean(CRASHLYTICS, !BuildConfig.DEBUG)
         set(value) = preferences.edit { putBoolean(CRASHLYTICS, value) }
 
-    val currency: Currency = Currency.getInstance(Locale.getDefault())
+    var currency: Currency
+        get() = preferences.getString(CURRENCY, null)?.takeIf { it != "Default" }?.let(Currency::getInstance) ?: Currency.getInstance(Locale.getDefault())
+        set(value) = preferences.edit { putString(CURRENCY, value.currencyCode) }
 
     companion object {
         const val CURRENCY = "pref_currency"
