@@ -123,6 +123,10 @@ class AddEditTransactionDialogFragmentViewModel(
         }
     }
 
+    fun setupAccount(account: Account) {
+        transactionAccount.value = account.name
+    }
+
     fun onTransactionTypeChanged(@IdRes viewId: Int) {
         transactionType.value = when (viewId) {
             R.id.btnAddEditTransactionTypeEarning -> Transaction.TransactionType.EARNING

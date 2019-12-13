@@ -85,7 +85,9 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        check(args.transaction == null || args.account == null) { "Cannot setup account and transaction!" }
         args.transaction?.let { viewModel.setupTransaction(it) }
+        args.account?.let { viewModel.setupAccount(it) }
 
         // TODO: Request if permission isn't granted
         if (requireContext().hasPermission(Manifest.permission.READ_CONTACTS)) viewModel.loadContacts()

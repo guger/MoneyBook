@@ -20,6 +20,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
@@ -42,6 +43,9 @@ class AccountDetailViewModel(
 
     val transactions: LiveData<List<Transaction>>
 
+    private val _showAddEditTransactionDialogFragment = MutableLiveData<Event<Account>>()
+    val showAddEditTransactionDialogFragment: LiveData<Event<Account>> = _showAddEditTransactionDialogFragment
+
     //endregion
 
     init {
@@ -53,6 +57,10 @@ class AccountDetailViewModel(
     }
 
     //region Methods
+
+    fun showAddEditTransactionDialogFragment() {
+        _showAddEditTransactionDialogFragment.value = Event(account.value!!)
+    }
 
     fun delete(vararg transaction: Transaction) {
         viewModelScope.launch {

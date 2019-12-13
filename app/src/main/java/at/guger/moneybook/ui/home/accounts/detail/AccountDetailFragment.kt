@@ -30,6 +30,7 @@ import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
+import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
@@ -71,6 +72,8 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupEvents()
+
         adapter = AccountDetailTransactionsListAdapter().apply { viewModel.transactions.observe(viewLifecycleOwner, Observer(::submitList)) }
 
         mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
@@ -81,6 +84,12 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
     //endregion
 
     //region Methods
+
+    private fun setupEvents() {
+        viewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->
+            findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment(account = account))
+        })
+    }
 
     private fun editTransaction(transaction: Transaction) {
         findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment(transaction))
