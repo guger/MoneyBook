@@ -16,8 +16,8 @@
 
 package at.guger.moneybook.ui.home
 
+import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -78,10 +78,12 @@ class HomeFragment : BaseFragment() {
         setupLayout()
 
         setupEventListeners()
+    }
 
-        Handler().postDelayed({
-            requestPermissions()
-        }, 200)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        requestPermissions()
     }
 
     //endregion
