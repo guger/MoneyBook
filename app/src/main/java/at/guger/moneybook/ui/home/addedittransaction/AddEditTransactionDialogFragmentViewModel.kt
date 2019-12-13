@@ -124,7 +124,7 @@ class AddEditTransactionDialogFragmentViewModel(
     }
 
     fun setupAccount(account: Account) {
-        transactionAccount.value = account.name
+        transactionAccount.postValue(account.name)
     }
 
     fun onTransactionTypeChanged(@IdRes viewId: Int) {
@@ -162,17 +162,17 @@ class AddEditTransactionDialogFragmentViewModel(
     }
 
     fun saveTransaction(chippedContacts: List<String>) {
-        val title = transactionTitle.value
+        val title = transactionTitle.value!!.trim()
         val date = transactionDate.value
         val value = transactionValue.value
         val type = transactionType.value!!
         val account = accounts.value?.find { it.name == transactionAccount.value }?.takeIf { type == Transaction.TransactionType.EARNING || type == Transaction.TransactionType.EXPENSE }
         val budget = budgets.value?.find { it.name == transactionBudget.value }?.takeIf { type == Transaction.TransactionType.EXPENSE }
-        val notes = transactionNotes.value ?: ""
+        val notes = transactionNotes.value?.trim() ?: ""
 
         if (validateForm(title, date, value)) {
             val transactionEntity = Transaction.TransactionEntity(
-                title = title!!,
+                title = title,
                 date = LocalDate.parse(date, MEDIUM_DATE_FORMAT),
                 value = parseNumber(value!!),
                 notes = notes,

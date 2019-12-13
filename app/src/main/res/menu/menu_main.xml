@@ -25,7 +25,6 @@
         android:title="@string/AddAccount"
         app:showAsAction="always" />
 
-    <!--Todo add budget icon-->
     <item
         android:id="@+id/actionAddBudget"
         android:icon="@drawable/ic_add_budget"

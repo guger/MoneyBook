@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -44,7 +45,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 /**
- * Fragment displaying the [earningsAndExpenses][Transaction] of an [account][Account].
+ * Fragment displaying the [transactions][Transaction] of an [account][Account].
  */
 class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
@@ -71,6 +72,8 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        TooltipCompat.setTooltipText(fabAccountDetailAddTransaction, getString(R.string.NewTransaction))
 
         setupEvents()
 
