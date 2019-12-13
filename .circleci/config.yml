@@ -1,8 +1,8 @@
 version: 2
 
 references:
-    cache_key: &cache_key
-        key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}-{{ checksum  "core/build.gradle" }}-{{ checksum  "data/build.gradle" }}
+  cache_key: &cache_key
+    key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}-{{ checksum  "core/build.gradle" }}-{{ checksum  "data/build.gradle" }}
 
 jobs:
   build:
@@ -15,11 +15,14 @@ jobs:
       JAVA_TOOL_OPTIONS: "-Xmx3200m"
     steps:
       - checkout
+      - run:
+          name: Export google-services.json
+          command: echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
       - restore_cache:
           <<: *cache_key
       - run:
-         name: Chmod permissions
-         command: sudo chmod +x ./gradlew
+          name: Chmod permissions
+          command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
