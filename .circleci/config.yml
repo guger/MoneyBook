@@ -15,9 +15,6 @@ jobs:
       JAVA_TOOL_OPTIONS: "-Xmx3200m"
     steps:
       - checkout
-      - run:
-          name: Export google-services.json
-          command: echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
       - restore_cache:
           <<: *cache_key
       - run:
@@ -30,6 +27,9 @@ jobs:
           <<: *cache_key
           paths:
             - ~/.gradle/caches
+      - run:
+          name: Export google-services.json
+          command: echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
       - run:
           name: Run Tests
           command: ./gradlew lint test
