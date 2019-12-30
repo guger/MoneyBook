@@ -98,7 +98,7 @@ dependencies {
 
     implementation "com.google.firebase:firebase-analytics:$deps.firebase.analytics"
     implementation "com.crashlytics.sdk.android:crashlytics:$deps.firebase.crashlytics"
-    
+
     implementation "androidx.core:core-ktx:$deps.androidx.core"
     implementation "androidx.appcompat:appcompat:$deps.androidx.appcompat"
     implementation "androidx.annotation:annotation:$deps.androidx.annotation"

@@ -26,23 +26,27 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.recyclerview.layoutmanager.SnappingLinearLayoutManager
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
+import at.guger.moneybook.core.ui.widget.TabListMediator
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAccountDetailBinding
 import at.guger.moneybook.ui.main.MainActivity
+import at.guger.moneybook.util.DateFormatUtils
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
 import kotlinx.android.synthetic.main.fragment_account_detail.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+import org.threeten.bp.format.DateTimeFormatter
+import java.util.*
 
 /**
  * Fragment displaying the [transactions][Transaction] of an [account][Account].
@@ -54,6 +58,20 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
     private val args: AccountDetailFragmentArgs by navArgs()
 
     private lateinit var adapter: AccountDetailTransactionsListAdapter
+
+    private val tabListMediator: TabListMediator by lazy {
+        TabListMediator(
+            mAccountDetailTabs,
+            mAccountDetailRecyclerView,
+            { i1, i2 ->
+                adapter.currentList[i1].date.month == adapter.currentList[i2].date.month
+            },
+            { index ->
+                monthYearDateFormatter.format(adapter.currentList[index].date)
+            }
+        )
+    }
+    private val monthYearDateFormatter = DateTimeFormatter.ofPattern(DateFormatUtils.MMM_YYYY_DATE_FORMAT, Locale.getDefault())
 
     private val viewModel: AccountDetailViewModel by inject { parametersOf(args.accountId) }
 
@@ -75,18 +93,27 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
 
         TooltipCompat.setTooltipText(fabAccountDetailAddTransaction, getString(R.string.NewTransaction))
 
+        setupLayout()
         setupEvents()
-
-        adapter = AccountDetailTransactionsListAdapter().apply { viewModel.transactions.observe(viewLifecycleOwner, Observer(::submitList)) }
-
-        mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
-            addOnItemTouchListener(OnItemTouchListener(context, this, this@AccountDetailFragment))
-        }
     }
 
     //endregion
 
     //region Methods
+
+    private fun setupLayout() {
+        adapter = AccountDetailTransactionsListAdapter().apply {
+            viewModel.transactions.observe(viewLifecycleOwner, Observer { transactions ->
+                adapter.submitList(transactions) {
+                    tabListMediator.attach()
+                }
+            })
+        }
+
+        mAccountDetailRecyclerView.setup(SnappingLinearLayoutManager(requireContext()), adapter) {
+            addOnItemTouchListener(OnItemTouchListener(context, this, this@AccountDetailFragment))
+        }
+    }
 
     private fun setupEvents() {
         viewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->

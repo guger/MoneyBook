@@ -52,25 +52,25 @@ def androidx = [:]
 androidx.core = "1.2.0-rc01"
 androidx.appcompat = "1.1.0"
 androidx.annotation = "1.1.0"
-androidx.fragment = "1.2.0-rc03"
+androidx.fragment = "1.2.0-rc04"
 androidx.preference = "1.1.0"
-androidx.biometric = "1.0.0"
+androidx.biometric = "1.0.1"
 androidx.viewpager2 = "1.0.0"
 androidx.recyclerview = "1.1.0"
 androidx.cardview = "1.0.0"
-androidx.constraintlayout = "2.0.0-beta3"
+androidx.constraintlayout = "2.0.0-beta4"
 deps.androidx = androidx
 
 def google = [:]
-google.material = "1.1.0-beta02"
+google.material = "1.1.0-rc01"
 google.flexbox = "1.1.0"
 deps.google = google
 
 def arch = [:]
 arch.lifecycle = "2.2.0-rc03"
-arch.navigation = "2.2.0-rc03"
-arch.paging = "2.1.0"
-arch.room = "2.2.2"
+arch.navigation = "2.2.0-rc04"
+arch.paging = "2.1.1"
+arch.room = "2.2.3"
 arch.work = "2.2.0"
 deps.arch = arch
 

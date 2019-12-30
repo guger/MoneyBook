@@ -28,6 +28,7 @@ import org.threeten.bp.format.FormatStyle
 object DateFormatUtils {
 
     val MEDIUM_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+    const val MMM_YYYY_DATE_FORMAT: String = "MMM YYYY"
 
     @JvmStatic
     fun formatTransactionDate(date: LocalDate): String = MEDIUM_DATE_FORMAT.format(date)
