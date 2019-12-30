@@ -56,8 +56,8 @@ fun TextView.setDues(transactions: List<Transaction>?) {
 
 @BindingAdapter("budgets")
 fun TextView.setBudgets(budgets: List<BudgetWithBalance>?) {
-    budgets?.let {
-        setCurrency(it.sumByDouble { it.budget - it.balance })
+    budgets?.let { budgetsList ->
+        setCurrency(budgetsList.sumByDouble { it.budget - it.balance })
     }
 }
 

@@ -27,10 +27,6 @@ import androidx.annotation.DimenRes
 import androidx.core.content.ContextCompat
 
 /**
- * Extension functions for [Context].
- */
-
-/**
  * Converts the given (dp) value to pixels.
  *
  * @param value The value in dp.
@@ -70,7 +66,7 @@ fun Context.dimen(
 /**
  * Resolves the color of a given attribute.
  *
- * @param attr The attribute of the color.
+ * @param colorAttr The attribute of the color.
  *
  * @return The color as Integer.
  */

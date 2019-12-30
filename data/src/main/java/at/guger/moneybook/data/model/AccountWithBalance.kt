@@ -17,10 +17,7 @@
 package at.guger.moneybook.data.model
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
 import at.guger.moneybook.data.Database
-import at.guger.moneybook.data.model.base.Model
 import kotlinx.android.parcel.Parcelize
 
 /**

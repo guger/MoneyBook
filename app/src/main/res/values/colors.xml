@@ -63,4 +63,6 @@
 
     <color name="colorIcon">#84848a</color>
 
+    <color name="colorRippleMaterialDark">#33ffffff</color>
+
 </resources>

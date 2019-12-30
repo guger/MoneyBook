@@ -84,8 +84,8 @@ class AddEditTransactionDialogFragmentViewModel(
     private val _showCalculator = MutableLiveData<Event<Unit>>()
     val showCalculator: LiveData<Event<Unit>> = _showCalculator
 
-    private val _snackbarMessage = MutableLiveData<Event<@StringRes Int>>()
-    val snackbarMessage: LiveData<Event<Int>> = _snackbarMessage
+    private val _snackBarMessage = MutableLiveData<Event<@StringRes Int>>()
+    val snackBarMessage: LiveData<Event<Int>> = _snackBarMessage
 
     private val _transactionSaved = MutableLiveData<Event<Unit>>()
     val transactionSaved: LiveData<Event<Unit>> = _transactionSaved
@@ -225,13 +225,13 @@ class AddEditTransactionDialogFragmentViewModel(
 
     private fun validateForm(title: String?, date: String?, value: String?): Boolean {
         if (title.isNullOrBlank()) {
-            _snackbarMessage.value = Event(R.string.EmptyTransactionTitle)
+            _snackBarMessage.value = Event(R.string.EmptyTransactionTitle)
 
             return false
         }
 
         if (date.isNullOrBlank() || !date.matches(Utils.getShortDatePattern().toRegex())) {
-            _snackbarMessage.value = Event(R.string.InvalidTransactionDate)
+            _snackBarMessage.value = Event(R.string.InvalidTransactionDate)
 
             return false
         }
@@ -239,13 +239,13 @@ class AddEditTransactionDialogFragmentViewModel(
         val valueNumber = parseNumber(value)
 
         if (valueNumber <= 0) {
-            _snackbarMessage.value = Event(R.string.InvalidTransactionValue_NotPositive)
+            _snackBarMessage.value = Event(R.string.InvalidTransactionValue_NotPositive)
 
             return false
         }
 
         if (valueNumber > 1E6) {
-            _snackbarMessage.value = Event(R.string.InvalidTransactionValue_TooHigh)
+            _snackBarMessage.value = Event(R.string.InvalidTransactionValue_TooHigh)
 
             return false
         }

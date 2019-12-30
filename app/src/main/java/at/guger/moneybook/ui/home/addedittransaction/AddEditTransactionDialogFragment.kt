@@ -160,7 +160,7 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
         viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDatePicker(selectedDate) })
         viewModel.showCalculator.observe(viewLifecycleOwner, EventObserver { showCalculator() })
 
-        viewModel.snackbarMessage.observe(viewLifecycleOwner, EventObserver {
+        viewModel.snackBarMessage.observe(viewLifecycleOwner, EventObserver {
             Snackbar.make(mBottomAppBar, it, Snackbar.LENGTH_LONG)
                 .setAnchorView(fabAddEditTransactionSave)
                 .show()
