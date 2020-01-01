@@ -153,7 +153,11 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         val lastDay = transactions.lastOrNull()?.date?.run { withDayOfMonth(lengthOfMonth()) }
         val days = ((lastDay?.toEpochDay() ?: 0L) - (firstDay?.toEpochDay() ?: 0)).toInt()
 
-        val collectedDataPoints: List<Pair<LocalDate, Float>> = transactions.groupBy { it.date }.mapValues { entry -> entry.value.sumByDouble { it.value }.toFloat() }.toList()
+        val collectedDataPoints: List<Pair<LocalDate, Float>> = transactions.groupBy { it.date }.mapValues { entry ->
+            entry.value.sumByDouble {
+                if (it.type == Transaction.TransactionType.EARNING) it.value else -it.value
+            }.toFloat()
+        }.toList()
 
         val chartEntries = mutableListOf<Entry>()
 
