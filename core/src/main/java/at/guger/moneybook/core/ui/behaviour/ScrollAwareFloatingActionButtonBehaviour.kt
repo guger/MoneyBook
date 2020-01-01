@@ -52,7 +52,7 @@ class ScrollAwareFloatingActionButtonBehaviour(context: Context, attrs: Attribut
 
         if (dyConsumed > 10 && child.visibility == View.VISIBLE) {
             child.hide(OnVisibilityChanged)
-        } else if (dyConsumed < -10 && child.visibility != View.VISIBLE) {
+        } else if (dyConsumed < 0 && child.visibility != View.VISIBLE) {
             child.show()
         }
     }

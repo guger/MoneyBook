@@ -33,8 +33,10 @@ import at.guger.moneybook.core.ui.recyclerview.layoutmanager.SnappingLinearLayou
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.TabListMediator
+import at.guger.moneybook.core.util.ext.hideIfShown
 import at.guger.moneybook.core.util.ext.resolveColor
 import at.guger.moneybook.core.util.ext.setup
+import at.guger.moneybook.core.util.ext.showIfHidden
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAccountDetailBinding
@@ -137,6 +139,12 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         mAccountDetailChart.post {
             mAccountDetailChart.setVisibleXRange(daysOfMonth, daysOfMonth)
             mAccountDetailChart.moveViewToAnimated(xValue.toFloat(), 0.0f, YAxis.AxisDependency.LEFT, 250)
+        }
+
+        if (values.last < transactions.size - 1) {
+            fabAccountDetailAddTransaction.showIfHidden()
+        } else {
+            fabAccountDetailAddTransaction.hideIfShown()
         }
     }
 
