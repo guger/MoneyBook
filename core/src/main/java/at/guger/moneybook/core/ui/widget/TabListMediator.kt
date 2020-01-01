@@ -112,9 +112,9 @@ class TabListMediator(
     }
 
     private fun onItemsUpdated() {
-        if (layoutManager.itemCount == 0) return
-
         tabs.clear()
+
+        if (layoutManager.itemCount == 0) return
 
         val indicesList = mutableListOf(0)
 

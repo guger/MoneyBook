@@ -129,6 +129,9 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
 
     private fun onTabSelected(index: Int, values: IntRange) {
         val transactions = adapter.currentList
+
+        if (transactions.size == 0) return
+
         val firstDateOfMonth = transactions[values.last].date.withDayOfMonth(1)
         val daysOfMonth = firstDateOfMonth.lengthOfMonth().toFloat()
 

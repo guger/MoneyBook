@@ -43,6 +43,7 @@
                 android:id="@+id/mAccountDetailChart"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/default_chart_height"
+                android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +52,7 @@
                 android:id="@+id/mAccountDetailTabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mAccountDetailChart"
