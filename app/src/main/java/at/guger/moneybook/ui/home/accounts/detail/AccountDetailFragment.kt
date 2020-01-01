@@ -33,6 +33,7 @@ import at.guger.moneybook.core.ui.recyclerview.layoutmanager.SnappingLinearLayou
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.TabListMediator
+import at.guger.moneybook.core.util.ext.resolveColor
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
@@ -42,9 +43,14 @@ import at.guger.moneybook.util.DateFormatUtils
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.android.synthetic.main.fragment_account_detail.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
@@ -59,16 +65,19 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
 
     private lateinit var adapter: AccountDetailTransactionsListAdapter
 
+    private val chartData = mutableListOf<LocalDate>()
+
     private val tabListMediator: TabListMediator by lazy {
         TabListMediator(
-            mAccountDetailTabs,
-            mAccountDetailRecyclerView,
-            { i1, i2 ->
+            tabLayout = mAccountDetailTabs,
+            recyclerView = mAccountDetailRecyclerView,
+            itemComparator = { i1, i2 ->
                 adapter.currentList[i1].date.month == adapter.currentList[i2].date.month
             },
-            { index ->
+            itemTitleProvider = { index ->
                 monthYearDateFormatter.format(adapter.currentList[index].date)
-            }
+            },
+            onTabChangedCallback = ::onTabSelected
         )
     }
     private val monthYearDateFormatter = DateTimeFormatter.ofPattern(DateFormatUtils.MMM_YYYY_DATE_FORMAT, Locale.getDefault())
@@ -106,12 +115,73 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
             viewModel.transactions.observe(viewLifecycleOwner, Observer { transactions ->
                 adapter.submitList(transactions) {
                     tabListMediator.attach()
+                    setupChart(transactions.reversed())
                 }
             })
         }
 
         mAccountDetailRecyclerView.setup(SnappingLinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(OnItemTouchListener(context, this, this@AccountDetailFragment))
+        }
+    }
+
+    private fun onTabSelected(index: Int, values: IntRange) {
+        val transactions = adapter.currentList
+        val firstDateOfMonth = transactions[values.last].date.withDayOfMonth(1)
+        val daysOfMonth = firstDateOfMonth.lengthOfMonth().toFloat()
+
+        val firstDate = transactions.last().date.withDayOfMonth(1)
+
+        val xValue = firstDateOfMonth.toEpochDay() - firstDate.toEpochDay()
+
+        mAccountDetailChart.post {
+            mAccountDetailChart.setVisibleXRange(daysOfMonth, daysOfMonth)
+            mAccountDetailChart.moveViewToAnimated(xValue.toFloat(), 0.0f, YAxis.AxisDependency.LEFT, 250)
+        }
+    }
+
+    private fun setupChart(transactions: List<Transaction>) {
+        val firstDay = transactions.firstOrNull()?.date?.withDayOfMonth(1)
+        val lastDay = transactions.lastOrNull()?.date?.run { withDayOfMonth(lengthOfMonth()) }
+        val days = ((lastDay?.toEpochDay() ?: 0L) - (firstDay?.toEpochDay() ?: 0)).toInt()
+
+        val collectedDataPoints: List<Pair<LocalDate, Float>> = transactions.groupBy { it.date }.mapValues { entry -> entry.value.sumByDouble { it.value }.toFloat() }.toList()
+
+        val chartEntries = mutableListOf<Entry>()
+
+        for (i in 0 until days) {
+            val sum: Float = if (i > 0) chartEntries[i - 1].y else 0.0f
+
+            chartEntries.add(Entry(i.toFloat(), sum + (collectedDataPoints.singleOrNull { it.first == firstDay!!.plusDays(i.toLong()) }?.second ?: 0.0f)))
+        }
+
+        val lineData = LineData(LineDataSet(chartEntries, "").apply {
+            color = requireContext().resolveColor(R.attr.colorSecondaryVariant)
+            lineWidth = 2.5f
+            setDrawCircles(false)
+            mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        }).apply {
+            setDrawValues(false)
+            isHighlightEnabled = false
+        }
+
+        with(mAccountDetailChart) {
+            isScaleXEnabled = false
+            isScaleYEnabled = false
+            isDragEnabled = false
+
+            xAxis.isEnabled = false
+
+            axisLeft.isEnabled = false
+            axisRight.isEnabled = false
+
+            description.isEnabled = false
+
+            legend.isEnabled = false
+
+            data = lineData
+
+            animateX(250)
         }
     }
 

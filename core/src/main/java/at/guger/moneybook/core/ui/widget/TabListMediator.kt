@@ -33,7 +33,8 @@ class TabListMediator(
     private val tabLayout: TabLayout,
     private val recyclerView: RecyclerView,
     private val itemComparator: (Int, Int) -> Boolean,
-    private val itemTitleProvider: (Int) -> String
+    private val itemTitleProvider: (Int) -> String,
+    private val onTabChangedCallback: ((Int, IntRange) -> Unit)? = null
 ) {
 
     //region Variables
@@ -92,12 +93,16 @@ class TabListMediator(
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                val currentItem = tabs.toList().single { it.second == tab!!.text }
+
                 if (state != STATE_RECYCLER_VIEW_SCROLLING) {
                     state = STATE_TAB_SELECTED
 
-                    currentTitleItemPosition = tabs.filterValues { it == tab?.text }.keys.first().first
+                    currentTitleItemPosition = currentItem.first.first
                     recyclerView.smoothScrollToPosition(currentTitleItemPosition)
                 }
+
+                onTabChangedCallback?.invoke(tab!!.position, currentItem.first)
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {}
