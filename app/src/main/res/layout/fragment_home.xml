@@ -50,6 +50,7 @@
             app:tabIndicator="@null"
             app:tabInlineLabel="true"
             app:tabMode="scrollable"
+            app:tabRippleColor="@color/colorRippleMaterialDark"
             app:tabTextColor="@color/tab_highlight_selector" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

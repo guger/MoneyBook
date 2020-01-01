@@ -55,7 +55,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mAccountDetailChart"
                 app:tabGravity="center"
-                app:tabMode="scrollable" />
+                app:tabIconTint="@color/tab_highlight_selector"
+                app:tabIndicator="@null"
+                app:tabMode="scrollable"
+                app:tabRippleColor="@color/colorRippleMaterialDark"
+                app:tabTextColor="@color/tab_highlight_selector" />
 
             <TextView
                 android:id="@+id/txvTransactionsEmpty"
