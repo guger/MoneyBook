@@ -127,7 +127,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.Permissions)
                     .setMessage(R.string.PermissionDetails)
-                    .setPositiveButton(R.string.OK, null)
+                    .setPositiveButton(R.string.Close, null)
                     .show()
             }
             Preferences.INFORMATION -> startActivity(Intent.parseUri("https://github.com/guger/MoneyBook", 0))

@@ -42,7 +42,7 @@
             android:textAppearance="?textAppearanceHeadline1" />
     </androidx.appcompat.widget.Toolbar>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/preferenceFragmentContainer"
         android:name="at.guger.moneybook.ui.settings.MainPreferenceFragment"
         android:layout_width="0dp"

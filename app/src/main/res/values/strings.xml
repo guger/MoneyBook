@@ -107,4 +107,5 @@
     <string name="Euro">Euro</string>
     <string name="Pound">Pound</string>
     <string name="Yen">Yen</string>
+    <string name="Close">Close</string>
 </resources>

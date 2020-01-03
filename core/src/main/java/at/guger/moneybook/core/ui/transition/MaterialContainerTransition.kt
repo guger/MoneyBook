@@ -35,7 +35,6 @@ import androidx.core.animation.doOnStart
 import androidx.core.graphics.withScale
 import androidx.core.graphics.withTranslation
 import androidx.core.view.forEach
-import at.guger.moneybook.core.R
 import at.guger.moneybook.core.ui.transition.MaterialContainerTransitionDrawable.PROGRESS
 import at.guger.moneybook.core.ui.transition.helper.*
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -104,22 +103,7 @@ class MaterialContainerTransition(
             // the `transitionShapeAppearance` theme attr.
             val shapeAppearance: ShapeAppearanceModel? = when (view) {
                 is Shapeable -> view.shapeAppearanceModel
-                else -> {
-                    val ta = view.context.obtainStyledAttributes(
-                        intArrayOf(/*R.attr.transitionShapeAppearance TODO*/)
-                    )
-                    val shapeAppId = ta.getResourceId(0, -1)
-                    ta.recycle()
-                    if (shapeAppId != -1) {
-                        ShapeAppearanceModel.builder(
-                            view.context,
-                            shapeAppId,
-                            0
-                        ).build()
-                    } else {
-                        null
-                    }
-                }
+                else -> null
             }
             transitionValues.values[PROP_SHAPE_APPEARANCE] = shapeAppearance
 
