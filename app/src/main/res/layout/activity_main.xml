@@ -47,11 +47,12 @@
                 style="@style/Widget.MaterialComponents.BottomAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hideOnScroll="true"
                 app:navigationIcon="@drawable/ic_menu" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </FrameLayout>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"

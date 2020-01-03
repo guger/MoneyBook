@@ -67,6 +67,10 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(mBottomAppBar)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
 
         mBottomAppBar.setOnMenuItemClickListener(this)
         mBottomAppBar.setNavigationOnClickListener {
