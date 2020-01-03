@@ -29,12 +29,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.ui.home.accounts.AccountsFragment
+import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.home.budgets.BudgetsFragment
 import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
@@ -144,7 +144,7 @@ class HomeFragment : BaseFragment() {
             }
         }.attach()
 
-        fabHomeAddTransaction.setOnClickListener { findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment()) }
+        fabHomeAddTransaction.setOnClickListener { findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transitionViewResId = R.id.fabHomeAddTransaction)) }
     }
 
     private fun setupEventListeners() {

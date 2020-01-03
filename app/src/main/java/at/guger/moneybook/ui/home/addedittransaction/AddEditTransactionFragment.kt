@@ -21,27 +21,30 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType
+import android.transition.Slide
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
 import androidx.core.view.postDelayed
-import androidx.databinding.DataBindingUtil
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.fragment.FullScreenDialogFragment
+import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.transition.MaterialContainerTransition
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.ext.hasPermission
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.core.util.ext.toLocalDate
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.databinding.DialogFragmentAddEditTransactionBinding
+import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
 import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.util.DateFormatUtils
 import com.google.android.material.button.MaterialButton
@@ -50,7 +53,7 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
 import com.maltaisn.calcdialog.CalcDialog
-import kotlinx.android.synthetic.main.dialog_fragment_add_edit_transaction.*
+import kotlinx.android.synthetic.main.fragment_add_edit_transaction.*
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
@@ -61,20 +64,25 @@ import java.text.DecimalFormat
 /**
  * Dialog fragment for creating a new [transaction][Transaction].
  */
-class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.CalcDialogCallback {
+class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback {
 
     //region Variables
 
-    private val args: AddEditTransactionDialogFragmentArgs by navArgs()
+    private val args: AddEditTransactionFragmentArgs by navArgs()
 
-    private val viewModel: AddEditTransactionDialogFragmentViewModel by viewModel()
+    private val viewModel: AddEditTransactionViewModel by viewModel()
 
     //endregion
 
-    //region DialogFragment
+    //region Fragment
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        postponeEnterTransition()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<DialogFragmentAddEditTransactionBinding>(inflater, R.layout.dialog_fragment_add_edit_transaction, container, false)
+        val binding = FragmentAddEditTransactionBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -95,6 +103,8 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
 
         args.transaction?.let { viewModel.setupTransaction(it) }
         args.account?.let { viewModel.setupAccount(it) }
+
+        startTransition()
 
         edtAddEditTransactionTitle.requestFocus()
         if (args.transaction != null) Handler().postDelayed({ edtAddEditTransactionTitle.setSelection(edtAddEditTransactionTitle.text?.length ?: 0) }, 200)
@@ -166,7 +176,33 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
                 .show()
         })
 
-        viewModel.transactionSaved.observe(viewLifecycleOwner, Observer { dismiss() })
+        viewModel.transactionSaved.observe(viewLifecycleOwner, Observer { findNavController().navigateUp() })
+    }
+
+    private fun startTransition() {
+        enterTransition = if (args.transitionViewResId >= 0) {
+            MaterialContainerTransition(
+                correctForZOrdering = true
+            ).apply {
+                setSharedElementViews(
+                    requireActivity().findViewById(args.transitionViewResId),
+                    mAddEditTransactionContainer
+                )
+                duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+                interpolator = FastOutSlowInInterpolator()
+            }
+        } else {
+            Slide().apply {
+                duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+                interpolator = FastOutSlowInInterpolator()
+            }
+        }
+
+        returnTransition = Slide().apply {
+            duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+            interpolator = AccelerateInterpolator()
+        }
+        startPostponedEnterTransition()
     }
 
     private fun showDatePicker(selectedDate: LocalDate) {
@@ -190,7 +226,7 @@ class AddEditTransactionDialogFragment : FullScreenDialogFragment(), CalcDialog.
                     minimumFractionDigits = 2
                     maximumFractionDigits = 2
                 }
-                initialValue = this@AddEditTransactionDialogFragment.edtAddEditTransactionValue.getDecimalNumber().toBigDecimal()
+                initialValue = this@AddEditTransactionFragment.edtAddEditTransactionValue.getDecimalNumber().toBigDecimal()
                 minValue = 0.toBigDecimal()
                 isSignBtnShown = false
             }

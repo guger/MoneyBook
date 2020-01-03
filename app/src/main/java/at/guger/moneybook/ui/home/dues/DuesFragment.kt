@@ -21,12 +21,10 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
@@ -34,6 +32,7 @@ import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentDuesBinding
 import at.guger.moneybook.ui.home.HomeViewModel
+import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
@@ -57,7 +56,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentDuesBinding>(inflater, R.layout.fragment_dues, container, false)
+        val binding = FragmentDuesBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -80,7 +79,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     //region Methods
 
     private fun editTransaction(transaction: Transaction) {
-        findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment(transaction))
+        findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
     }
 
     //endregion

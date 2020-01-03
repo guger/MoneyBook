@@ -18,13 +18,12 @@ package at.guger.moneybook.ui.home.accounts.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
  * [RecyclerView.Adapter] for overview coloredAccounts card.
@@ -41,7 +40,7 @@ class AccountDetailTransactionsListAdapter : ListAdapter<Transaction, AccountDet
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountDetailTransactionViewHolder {
-        return AccountDetailTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_transaction, parent, false))
+        return AccountDetailTransactionViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: AccountDetailTransactionViewHolder, position: Int) {

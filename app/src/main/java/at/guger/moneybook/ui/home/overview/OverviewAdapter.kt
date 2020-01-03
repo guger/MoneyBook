@@ -18,10 +18,8 @@ package at.guger.moneybook.ui.home.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
 import at.guger.moneybook.databinding.ItemOverviewAccountsBinding
 import at.guger.moneybook.databinding.ItemOverviewBudgetsBinding
@@ -41,19 +39,19 @@ class OverviewAdapter(private val viewModel: HomeViewModel, private val lifecycl
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<*, HomeViewModel> {
         return when (viewType) {
             OVERVIEW_ACCOUNTS -> {
-                val binding: ItemOverviewAccountsBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_accounts, parent, false)
+                val binding = ItemOverviewAccountsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 binding.lifecycleOwner = lifecycleOwner
 
                 OverviewAccountsViewHolder(binding)
             }
             OVERVIEW_DUES -> {
-                val binding: ItemOverviewDuesBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_dues, parent, false)
+                val binding = ItemOverviewDuesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 binding.lifecycleOwner = lifecycleOwner
 
                 OverviewDuesViewHolder(binding)
             }
             OVERVIEW_BUDGETS -> {
-                val binding: ItemOverviewBudgetsBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_budgets, parent, false)
+                val binding = ItemOverviewBudgetsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 binding.lifecycleOwner = lifecycleOwner
 
                 OverviewBudgetsViewHolder(binding)

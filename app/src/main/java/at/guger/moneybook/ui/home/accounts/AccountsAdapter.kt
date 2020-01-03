@@ -18,12 +18,11 @@ package at.guger.moneybook.ui.home.accounts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
+import at.guger.moneybook.databinding.ItemAccountBinding
 import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel
 
@@ -41,7 +40,7 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<Colore
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
-        return AccountViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_account, parent, false), viewModel)
+        return AccountViewHolder(ItemAccountBinding.inflate(LayoutInflater.from(parent.context), parent, false), viewModel)
     }
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {

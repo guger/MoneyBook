@@ -19,6 +19,7 @@ package at.guger.moneybook.ui.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.MenuRes
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
-    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.settingsFragment, R.id.addEditTransactionDialogFragment, R.id.addEditAccountBottomSheetDialogFragment)
+    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.settingsFragment, R.id.addEditTransactionFragment, R.id.addEditAccountBottomSheetDialogFragment)
 
     var cabEnabled: Boolean = true
         set(value) {
@@ -120,10 +121,21 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
      * Workaround for using a [BottomNavigationViewDialog], since navigation component suppresses the hamburger icon when there's no drawer layout.
      */
     private fun prepareAppBar(destination: NavDestination) {
-        if (NavUtils.matchDestinations(destination, topLevelDestinations)) {
-            mBottomAppBar.setNavigationIcon(R.drawable.ic_menu)
-        } else {
-            mBottomAppBar.setNavigationIcon(R.drawable.ic_back)
+        when (destination.id) {
+            R.id.addEditTransactionFragment -> {
+                mBottomAppBar.performHide()
+                mBottomAppBar.visibility = View.GONE
+            }
+            else -> {
+                mBottomAppBar.visibility = View.VISIBLE
+                mBottomAppBar.performShow()
+
+                if (NavUtils.matchDestinations(destination, topLevelDestinations)) {
+                    mBottomAppBar.setNavigationIcon(R.drawable.ic_menu)
+                } else {
+                    mBottomAppBar.setNavigationIcon(R.drawable.ic_back)
+                }
+            }
         }
     }
 

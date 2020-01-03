@@ -18,13 +18,12 @@ package at.guger.moneybook.ui.home.dues
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.databinding.ItemDueBinding
 
 /**
  * [RecyclerView.Adapter] showing all accounts and details.
@@ -40,7 +39,7 @@ class DuesAdapter : ListAdapter<Transaction, DuesTransactionViewHolder>(Transact
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DuesTransactionViewHolder {
-        return DuesTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_due, parent, false))
+        return DuesTransactionViewHolder(ItemDueBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: DuesTransactionViewHolder, position: Int) {

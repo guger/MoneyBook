@@ -21,11 +21,9 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.databinding.DialogFragmentAddEditAccountBinding
@@ -49,7 +47,7 @@ class AddEditAccountBottomSheetDialogFragment : BottomSheetDialogFragment() {
     //region DialogFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<DialogFragmentAddEditAccountBinding>(inflater, R.layout.dialog_fragment_add_edit_account, container, false)
+        val binding = DialogFragmentAddEditAccountBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

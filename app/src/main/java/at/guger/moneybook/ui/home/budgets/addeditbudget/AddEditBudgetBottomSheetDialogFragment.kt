@@ -21,7 +21,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -52,7 +51,7 @@ class AddEditBudgetBottomSheetDialogFragment : BottomSheetDialogFragment() {
     //region DialogFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<DialogFragmentAddEditBudgetBinding>(inflater, R.layout.dialog_fragment_add_edit_budget, container, false)
+        val binding = DialogFragmentAddEditBudgetBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

@@ -18,12 +18,11 @@ package at.guger.moneybook.ui.home.overview.dues
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.databinding.ItemOverviewDueBinding
 
 /**
  * [RecyclerView.Adapter] for the overview dues card.
@@ -33,7 +32,7 @@ class OverviewDuesListAdapter : ListAdapter<Transaction, OverviewDuesTransaction
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewDuesTransactionViewHolder {
-        return OverviewDuesTransactionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_due, parent, false))
+        return OverviewDuesTransactionViewHolder(ItemOverviewDueBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: OverviewDuesTransactionViewHolder, position: Int) {

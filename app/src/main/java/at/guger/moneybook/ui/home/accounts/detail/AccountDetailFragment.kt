@@ -22,11 +22,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.TooltipCompat
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.layoutmanager.SnappingLinearLayoutManager
@@ -40,6 +38,7 @@ import at.guger.moneybook.core.util.ext.showIfHidden
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAccountDetailBinding
+import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.DateFormatUtils
 import at.guger.moneybook.util.menu.TransactionMenuUtils
@@ -89,7 +88,7 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentAccountDetailBinding>(inflater, R.layout.fragment_account_detail, container, false)
+        val binding = FragmentAccountDetailBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -125,6 +124,7 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun onTabSelected(index: Int, itemRange: IntRange) {
         val transactions = adapter.currentList
 
@@ -200,12 +200,12 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
 
     private fun setupEvents() {
         viewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->
-            findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment(account = account))
+            findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(account = account, transitionViewResId = R.id.fabAccountDetailAddTransaction))
         })
     }
 
     private fun editTransaction(transaction: Transaction) {
-        findNavController().navigate(MainNavDirections.actionGlobalAddEditTransactionDialogFragment(transaction))
+        findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
     }
 
     //endregion

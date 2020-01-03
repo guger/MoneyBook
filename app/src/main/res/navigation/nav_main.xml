@@ -21,8 +21,8 @@
     app:startDestination="@id/homeFragment">
 
     <action
-        android:id="@+id/action_global_addEditTransactionDialogFragment"
-        app:destination="@id/addEditTransactionDialogFragment" />
+        android:id="@+id/action_global_addEditTransactionFragment"
+        app:destination="@id/addEditTransactionFragment" />
 
     <action
         android:id="@+id/action_global_addEditAccountBottomSheetDialogFragment"
@@ -32,11 +32,11 @@
         android:id="@+id/action_global_addEditBudgetBottomSheetDialogFragment"
         app:destination="@id/addEditBudgetBottomSheetDialogFragment" />
 
-    <dialog
-        android:id="@+id/addEditTransactionDialogFragment"
-        android:name="at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionDialogFragment"
+    <fragment
+        android:id="@+id/addEditTransactionFragment"
+        android:name="at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragment"
         android:label="@string/NewTransaction"
-        tools:layout="@layout/dialog_fragment_add_edit_transaction">
+        tools:layout="@layout/fragment_add_edit_transaction">
 
         <argument
             android:name="transaction"
@@ -50,10 +50,15 @@
             app:argType="at.guger.moneybook.data.model.Account"
             app:nullable="true" />
 
+        <argument
+            android:name="transitionViewResId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+
         <deepLink
             android:id="@+id/deepLink"
             app:uri="moneybook://add_transaction" />
-    </dialog>
+    </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
