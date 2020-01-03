@@ -67,8 +67,6 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
 
     private lateinit var adapter: AccountDetailTransactionsListAdapter
 
-    private val chartData = mutableListOf<LocalDate>()
-
     private val tabListMediator: TabListMediator by lazy {
         TabListMediator(
             tabLayout = mAccountDetailTabs,
@@ -127,12 +125,12 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         }
     }
 
-    private fun onTabSelected(index: Int, values: IntRange) {
+    private fun onTabSelected(index: Int, itemRange: IntRange) {
         val transactions = adapter.currentList
 
         if (transactions.size == 0) return
 
-        val firstDateOfMonth = transactions[values.last].date.withDayOfMonth(1)
+        val firstDateOfMonth = transactions[itemRange.last].date.withDayOfMonth(1)
         val daysOfMonth = firstDateOfMonth.lengthOfMonth().toFloat()
 
         val firstDate = transactions.last().date.withDayOfMonth(1)
@@ -144,7 +142,7 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
             mAccountDetailChart.moveViewToAnimated(xValue.toFloat(), 0.0f, YAxis.AxisDependency.LEFT, 250)
         }
 
-        if (values.last < transactions.size - 1) {
+        if (itemRange.first == 0 || itemRange.last < transactions.size - 1) {
             fabAccountDetailAddTransaction.showIfHidden()
         } else {
             fabAccountDetailAddTransaction.hideIfShown()
