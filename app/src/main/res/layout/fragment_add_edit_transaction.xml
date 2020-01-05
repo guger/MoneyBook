@@ -93,26 +93,6 @@
                     app:layout_constraintGuide_begin="200dp"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddEditTransactionOpenCalculator"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Square.Icon"
-                    android:layout_marginEnd="8dp"
-                    android:onClick="@{() -> viewModel.showCalculator()}"
-                    app:icon="@drawable/ic_calculator"
-                    app:layout_constraintBottom_toBottomOf="@+id/tilAddEditTransactionValue"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tilAddEditTransactionValue" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddEditTransactionChooseDate"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Square.Icon"
-                    android:layout_marginEnd="8dp"
-                    android:onClick="@{() -> viewModel.showDatePicker()}"
-                    app:icon="@drawable/ic_calendar"
-                    app:layout_constraintBottom_toBottomOf="@+id/tilAddEditTransactionDate"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tilAddEditTransactionDate" />
-
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/mAddEditTransactionTypeToggleButtonGroup"
                     android:layout_width="wrap_content"
@@ -210,7 +190,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@id/btnAddEditTransactionChooseDate"
+                    app:endIconDrawable="@drawable/ic_calendar"
+                    app:endIconMode="custom"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionAccount">
 
@@ -232,7 +214,9 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:hint="@{(viewModel.transactionType == TransactionType.EARNING || viewModel.transactionType == TransactionType.EXPENSE) ? @string/Value : @string/Value_per_Contact}"
-                    app:layout_constraintEnd_toStartOf="@+id/btnAddEditTransactionOpenCalculator"
+                    app:endIconDrawable="@drawable/ic_calculator"
+                    app:endIconMode="custom"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionDate">
 

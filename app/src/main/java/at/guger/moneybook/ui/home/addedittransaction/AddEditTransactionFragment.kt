@@ -123,8 +123,6 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
 
     private fun setupLayout() {
         TooltipCompat.setTooltipText(fabAddEditTransactionSave, getString(R.string.Save))
-        TooltipCompat.setTooltipText(btnAddEditTransactionChooseDate, getString(R.string.ChooseDate))
-        TooltipCompat.setTooltipText(btnAddEditTransactionOpenCalculator, getString(R.string.OpenCalculator))
 
         edtAddEditTransactionAccount.inputType = InputType.TYPE_NULL
         edtAddEditTransactionBudget.inputType = InputType.TYPE_NULL
@@ -138,6 +136,9 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
 
             if (isChecked) viewModel.onTransactionTypeChanged(checkedId)
         }
+
+        tilAddEditTransactionDate.setEndIconOnClickListener { viewModel.showDatePicker() }
+        tilAddEditTransactionValue.setEndIconOnClickListener { viewModel.showCalculator() }
 
         edtAddEditTransactionContacts.apply {
             addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN)

@@ -77,7 +77,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilAddEditTransactionValue"
+            android:id="@+id/tilAddEditBudgetBudget"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -108,9 +108,9 @@
             app:chipBackgroundColor="@android:color/transparent"
             app:chipStrokeColor="@{viewModel.budgetColor}"
             app:chipStrokeWidth="2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tilAddEditTransactionValue"
+            app:layout_constraintBottom_toBottomOf="@+id/tilAddEditBudgetBudget"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tilAddEditTransactionValue" />
+            app:layout_constraintTop_toTopOf="@+id/tilAddEditBudgetBudget" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
