@@ -50,6 +50,7 @@
     <string name="OpenCalculator">Open Calculator</string>
     <string name="EmptyTransactionTitle">Please enter a title.</string>
     <string name="InvalidTransactionDate">Please enter a valid date (DD.MM.YYYY).</string>
+    <string name="InvalidTransactionDueDate">Please enter a valid due date (DD.MM.YYYY).</string>
     <string name="InvalidTransactionValue_NotPositive">Please enter a value greater than zero.</string>
     <string name="InvalidTransactionValue_TooHigh">Please do only enter values below 1.000.000.</string>
     <string name="Account">Account</string>
@@ -108,4 +109,6 @@
     <string name="Pound">Pound</string>
     <string name="Yen">Yen</string>
     <string name="Close">Close</string>
+    <string name="DueDate">Due Date</string>
+    <string name="ChooseDueDate">Choose Due Date</string>
 </resources>

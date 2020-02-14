@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">core</string>
+    <string name="notification_channel_reminder">Reminder</string>
+    <string name="notification_channel_reminder_description">Reminds you of your claims and debts.</string>
 </resources>

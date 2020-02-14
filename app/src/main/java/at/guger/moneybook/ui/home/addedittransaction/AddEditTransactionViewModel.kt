@@ -62,6 +62,7 @@ class AddEditTransactionViewModel(
     val transactionBudget = MutableLiveData<String>()
     val transactionType = MutableLiveData<@Transaction.TransactionType Int>(Transaction.TransactionType.EARNING)
     val transactionDate = MutableLiveData<String>(LocalDate.now().format(MEDIUM_DATE_FORMAT))
+    val transactionDueDate = MutableLiveData<String>()
     val transactionValue = MutableLiveData<String>()
 
     private val _transactionContacts = MutableLiveData<List<String>>()
@@ -78,8 +79,14 @@ class AddEditTransactionViewModel(
     private val _contactsInputVisibility = MutableLiveData<Int>(View.GONE)
     val contactsInputVisibility: LiveData<Int> = _contactsInputVisibility
 
+    private val _dueDateInputVisibility = MutableLiveData<Int>(View.GONE)
+    val dueDateInputVisibility: LiveData<Int> = _dueDateInputVisibility
+
     private val _showDatePicker = MutableLiveData<Event<LocalDate>>()
     val showDatePicker: LiveData<Event<LocalDate>> = _showDatePicker
+
+    private val _showDueDatePicker = MutableLiveData<Event<LocalDate>>()
+    val showDueDatePicker: LiveData<Event<LocalDate>> = _showDueDatePicker
 
     private val _showCalculator = MutableLiveData<Event<Unit>>()
     val showCalculator: LiveData<Event<Unit>> = _showCalculator
@@ -119,6 +126,7 @@ class AddEditTransactionViewModel(
             transactionDate.value = transaction.date.format(MEDIUM_DATE_FORMAT)
             transactionValue.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(value)
             _transactionContacts.value = contacts?.map { it.contactName }
+            transactionDueDate.value = transaction.due?.format(MEDIUM_DATE_FORMAT)
             transactionNotes.value = notes
         }
     }
@@ -149,12 +157,31 @@ class AddEditTransactionViewModel(
             Transaction.TransactionType.CLAIM, Transaction.TransactionType.DEBT -> View.VISIBLE
             else -> View.GONE
         }
+
+        _dueDateInputVisibility.value = when (transactionType.value) {
+            Transaction.TransactionType.CLAIM, Transaction.TransactionType.DEBT -> View.VISIBLE
+            else -> View.GONE
+        }
     }
 
     fun showDatePicker() {
-        val selectedDate = if (transactionDate.value?.matches(Utils.getShortDatePattern().toRegex()) == true) LocalDate.parse(transactionDate.value, MEDIUM_DATE_FORMAT) else LocalDate.now()
+        val selectedDate = if (transactionDate.value?.matches(Utils.getShortDatePattern().toRegex()) == true) {
+            LocalDate.parse(transactionDate.value, MEDIUM_DATE_FORMAT)
+        } else {
+            LocalDate.now()
+        }
 
         _showDatePicker.value = Event(selectedDate)
+    }
+
+    fun showDueDatePicker() {
+        val selectedDate = if (transactionDueDate.value?.matches(Utils.getShortDatePattern().toRegex()) == true) {
+            LocalDate.parse(transactionDueDate.value, MEDIUM_DATE_FORMAT)
+        } else {
+            LocalDate.now().plusDays(5)
+        }
+
+        _showDueDatePicker.value = Event(selectedDate)
     }
 
     fun showCalculator() {
@@ -166,15 +193,17 @@ class AddEditTransactionViewModel(
         val date = transactionDate.value
         val value = transactionValue.value
         val type = transactionType.value
+        val dueDate = transactionDueDate.value?.takeIf { it.isNotBlank() }
         val account = accounts.value?.find { it.name == transactionAccount.value }?.takeIf { type == Transaction.TransactionType.EARNING || type == Transaction.TransactionType.EXPENSE }
         val budget = budgets.value?.find { it.name == transactionBudget.value }?.takeIf { type == Transaction.TransactionType.EXPENSE }
         val notes = transactionNotes.value?.trim() ?: ""
 
-        if (validateForm(title, date, value)) {
+        if (validateForm(title, date, value, dueDate)) {
             val transactionEntity = Transaction.TransactionEntity(
                 title = title!!,
                 date = LocalDate.parse(date, MEDIUM_DATE_FORMAT),
                 value = parseNumber(value!!),
+                due = dueDate?.let { LocalDate.parse(it, MEDIUM_DATE_FORMAT) },
                 notes = notes,
                 type = type!!,
                 accountId = account?.id,
@@ -223,7 +252,7 @@ class AddEditTransactionViewModel(
         }
     }
 
-    private fun validateForm(title: String?, date: String?, value: String?): Boolean {
+    private fun validateForm(title: String?, date: String?, value: String?, dueDate: String?): Boolean {
         if (title.isNullOrBlank()) {
             _snackBarMessage.value = Event(R.string.EmptyTransactionTitle)
 
@@ -232,6 +261,12 @@ class AddEditTransactionViewModel(
 
         if (date.isNullOrBlank() || !date.matches(Utils.getShortDatePattern().toRegex())) {
             _snackBarMessage.value = Event(R.string.InvalidTransactionDate)
+
+            return false
+        }
+
+        if (dueDate?.isNotBlank() == true && !dueDate.matches(Utils.getShortDatePattern().toRegex())) {
+            _snackBarMessage.value = Event(R.string.InvalidTransactionDueDate)
 
             return false
         }

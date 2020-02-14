@@ -53,8 +53,7 @@ class OverviewDuesViewHolder(binding: ItemOverviewDuesBinding) : BindingViewHold
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewDuesListAdapter().apply {
                 viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, Observer { transactions ->
-                    val sortedTransactions = transactions.sortedBy { it.date }
-                    submitList(sortedTransactions.subList(0, min(sortedTransactions.size, 3)))
+                    submitList(transactions.subList(0, min(transactions.size, 3)))
                 })
             }
         }

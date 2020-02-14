@@ -16,7 +16,24 @@
 
 package at.guger.moneybook.data.model
 
+import androidx.room.*
+import at.guger.moneybook.data.Database
+import at.guger.moneybook.data.Database.Reminders.COL_DATE
+import at.guger.moneybook.data.Database.Reminders.COL_ID
+import at.guger.moneybook.data.Database.Reminders.COL_TRANSACTION_ID
+import at.guger.moneybook.data.provider.local.AppDatabase
+import org.threeten.bp.LocalDate
+
 /**
- * AppDatabase entity for reminders for [transactionsDao][Transaction] of type [Transaction.TransactionType.CLAIM] or [Transaction.TransactionType.DEBT].
+ * [AppDatabase] entity for reminders for [transactions][Transaction] of type [Transaction.TransactionType.CLAIM] or [Transaction.TransactionType.DEBT].
  */
-class Reminder // TODO
+@Entity(
+    tableName = Database.Reminders.TABLE_NAME,
+    foreignKeys = [ForeignKey(entity = Transaction.TransactionEntity::class, parentColumns = [Database.Transactions.COL_ID], childColumns = [COL_TRANSACTION_ID], onDelete = ForeignKey.CASCADE)],
+    indices = [Index(value = [COL_TRANSACTION_ID], unique = true)]
+)
+data class Reminder(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = COL_ID) val id: Long = 0,
+    @ColumnInfo(name = COL_TRANSACTION_ID) val transactionId: Long = -1,
+    @ColumnInfo(name = COL_DATE) val date: LocalDate = LocalDate.MIN
+)

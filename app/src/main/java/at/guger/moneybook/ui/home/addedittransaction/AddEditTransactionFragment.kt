@@ -62,7 +62,7 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 
 /**
- * Dialog fragment for creating a new [transaction][Transaction].
+ * Dialog fragment for creating/editing a [transaction][Transaction].
  */
 class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback {
 
@@ -139,6 +139,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
 
         tilAddEditTransactionDate.setEndIconOnClickListener { viewModel.showDatePicker() }
         tilAddEditTransactionValue.setEndIconOnClickListener { viewModel.showCalculator() }
+        tilAddEditTransactionDueDate.setEndIconOnClickListener { viewModel.showDueDatePicker() }
 
         edtAddEditTransactionContacts.apply {
             addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN)
@@ -169,6 +170,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
         })
 
         viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDatePicker(selectedDate) })
+        viewModel.showDueDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDueDatePicker(selectedDate) })
         viewModel.showCalculator.observe(viewLifecycleOwner, EventObserver { showCalculator() })
 
         viewModel.snackBarMessage.observe(viewLifecycleOwner, EventObserver {
@@ -215,6 +217,20 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
         datePickerDialog.addOnPositiveButtonClickListener {
             viewModel.transactionDate.value = it.toLocalDate().format(DateFormatUtils.MEDIUM_DATE_FORMAT)
             edtAddEditTransactionDate.postDelayed(25) { edtAddEditTransactionDate.apply { setSelection(text?.length ?: 0) } }
+        }
+
+        datePickerDialog.show(childFragmentManager, null)
+    }
+
+    private fun showDueDatePicker(selectedDate: LocalDate) {
+        val datePickerDialog = MaterialDatePicker.Builder.datePicker()
+            .setTitleText(R.string.ChooseDueDate)
+            .setSelection(selectedDate.atTime(LocalTime.NOON).toEpochMilli())
+            .build()
+
+        datePickerDialog.addOnPositiveButtonClickListener {
+            viewModel.transactionDueDate.value = it.toLocalDate().format(DateFormatUtils.MEDIUM_DATE_FORMAT)
+            edtAddEditTransactionDate.postDelayed(25) { edtAddEditTransactionDueDate.apply { setSelection(text?.length ?: 0) } }
         }
 
         datePickerDialog.show(childFragmentManager, null)

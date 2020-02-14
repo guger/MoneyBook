@@ -68,4 +68,12 @@ object Database {
         const val COL_NAME = "name"
         const val COL_BALANCE = "balance"
     }
+
+    object Reminders {
+        const val TABLE_NAME = "reminders"
+
+        const val COL_ID = ID
+        const val COL_TRANSACTION_ID = "transaction_id"
+        const val COL_DATE = "date"
+    }
 }

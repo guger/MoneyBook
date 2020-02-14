@@ -48,6 +48,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$deps.kotlin.common"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.kotlin.coroutines"
 
+    implementation "org.koin:koin-android:$deps.koin"
+
     implementation "androidx.core:core-ktx:$deps.androidx.core"
     implementation "androidx.appcompat:appcompat:$deps.androidx.appcompat"
     implementation "androidx.annotation:annotation:$deps.androidx.annotation"
@@ -59,6 +61,8 @@ dependencies {
 
     implementation "androidx.navigation:navigation-fragment-ktx:$deps.arch.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$deps.arch.navigation"
+
+    implementation "androidx.work:work-runtime-ktx:$deps.arch.work"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$deps.libs.threetenabp"
     implementation "com.afollestad:assent:$deps.libs.assent"

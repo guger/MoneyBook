@@ -58,8 +58,8 @@ class Transaction(
 
     override fun equals(other: Any?): Boolean {
         return other is Transaction && other.id == id && other.title == title && other.date == date &&
-                other.value == value && other.notes == notes && other.type == type && other.account == account &&
-                other.budget == budget && other.contacts == contacts
+                other.value == value && other.due == due && other.notes == notes && other.type == type &&
+                other.account == account && other.budget == budget && other.contacts == contacts
     }
 
     override fun hashCode(): Int {

@@ -17,6 +17,7 @@
 package at.guger.moneybook.di
 
 import at.guger.moneybook.core.preferences.Preferences
+import at.guger.moneybook.core.scheduler.reminder.ReminderScheduler
 import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.home.accounts.addeditaccount.AddEditAccountDialogFragmentViewModel
 import at.guger.moneybook.ui.home.accounts.detail.AccountDetailViewModel
@@ -32,6 +33,7 @@ import org.koin.dsl.module
 val appModule = module {
 
     single { Preferences(get()) }
+    single { ReminderScheduler(get(), get()) }
 
     viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { (accountId: Long) -> AccountDetailViewModel(get(), get(), accountId) }

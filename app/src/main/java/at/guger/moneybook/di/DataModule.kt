@@ -47,4 +47,5 @@ val dataModule = module {
     single { BudgetsRepository(get()) }
     single { AddressBookRepository(get()) }
     single { ContactsRepository(get()) }
+    single { RemindersRepository(get()) }
 }
