@@ -39,8 +39,6 @@ class MoneyBook : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        AndroidThreeTen.init(this)
-
         startKoin {
             androidContext(this@MoneyBook.applicationContext)
             modules(listOf(mainModule, dataModule, appModule))
