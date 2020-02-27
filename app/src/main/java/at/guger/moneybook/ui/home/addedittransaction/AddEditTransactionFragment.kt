@@ -56,8 +56,8 @@ import com.maltaisn.calcdialog.CalcDialog
 import kotlinx.android.synthetic.main.fragment_add_edit_transaction.*
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import java.time.LocalDate
+import java.time.LocalTime
 import java.math.BigDecimal
 import java.text.DecimalFormat
 

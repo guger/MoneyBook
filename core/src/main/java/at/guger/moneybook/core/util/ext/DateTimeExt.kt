@@ -16,10 +16,10 @@
 
 package at.guger.moneybook.core.util.ext
 
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 /**
  * Useful methods for converting long dates to [LocalDate] and [LocalDateTime].

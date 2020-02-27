@@ -38,7 +38,7 @@ import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.util.DateFormatUtils.MEDIUM_DATE_FORMAT
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 /**
  * [ViewModel] for the [AddEditTransactionFragment].

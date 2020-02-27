@@ -33,7 +33,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 /**
  * Test class for [TransactionsRepository].

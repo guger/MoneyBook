@@ -28,8 +28,8 @@ import at.guger.moneybook.data.model.Reminder
 import at.guger.moneybook.data.repository.RemindersRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 /**

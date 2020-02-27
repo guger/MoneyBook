@@ -21,7 +21,7 @@ import androidx.room.*
 import at.guger.moneybook.data.Database
 import at.guger.moneybook.data.model.base.Model
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 /**
  * AppDatabase entity for transactions.

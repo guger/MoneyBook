@@ -17,7 +17,8 @@ ext.versions.dev = 1
 
 ext.deps = [:]
 
-deps.gradle = "4.0.0-alpha09"
+deps.gradle = "4.0.0-beta01"
+deps.jdklibs = "1.0.4"
 
 def test = [:]
 test.junit = "4.12"
@@ -35,7 +36,7 @@ deps.test = test
 
 def kotlin = [:]
 kotlin.common = "1.3.61"
-kotlin.coroutines = "1.3.2"
+kotlin.coroutines = "1.3.3"
 kotlin.anko = "0.10.8"
 deps.kotlin = kotlin
 
@@ -52,7 +53,7 @@ def androidx = [:]
 androidx.core = "1.2.0"
 androidx.appcompat = "1.1.0"
 androidx.annotation = "1.1.0"
-androidx.fragment = "1.2.1"
+androidx.fragment = "1.2.2"
 androidx.preference = "1.1.0"
 androidx.biometric = "1.0.1"
 androidx.viewpager2 = "1.0.0"
@@ -70,22 +71,22 @@ def arch = [:]
 arch.lifecycle = "2.2.0"
 arch.navigation = "2.2.1"
 arch.paging = "2.1.1"
-arch.room = "2.2.3"
-arch.work = "2.3.1"
+arch.room = "2.2.4"
+arch.work = "2.3.2"
 deps.arch = arch
 
 def libs = [:]
 libs.threetenabp = "1.2.1"
 libs.timber = "4.7.1"
-libs.assent = "2.3.1"
-libs.moshi = "1.8.0"
+libs.assent = "3.0.0-RC4"
+libs.moshi = "1.9.2"
 libs.nachos = "1.2.0"
 libs.charts = "v3.1.0"
 libs.material_cab = "2.0.1"
-libs.material_dialogs = "3.1.1"
-libs.calcdialog = "2.1.1"
-libs.icondialog = "2.3.2"
-libs.recurpickerdialog = "2.0.0"
+libs.material_dialogs = "3.3.0"
+libs.calcdialog = "2.1.2"
+libs.icondialog = "3.1.1"
+libs.recurpickerdialog = "2.0.1"
 deps.libs = libs
 
 ext.deps = deps

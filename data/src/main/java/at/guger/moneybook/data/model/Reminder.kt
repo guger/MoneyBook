@@ -22,7 +22,7 @@ import at.guger.moneybook.data.Database.Reminders.COL_DATE
 import at.guger.moneybook.data.Database.Reminders.COL_ID
 import at.guger.moneybook.data.Database.Reminders.COL_TRANSACTION_ID
 import at.guger.moneybook.data.provider.local.AppDatabase
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 /**
  * [AppDatabase] entity for reminders for [transactions][Transaction] of type [Transaction.TransactionType.CLAIM] or [Transaction.TransactionType.DEBT].

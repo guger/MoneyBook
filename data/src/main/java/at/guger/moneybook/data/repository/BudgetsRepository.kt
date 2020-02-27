@@ -21,8 +21,8 @@ import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.BudgetsDao
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
+import java.time.LocalDate
+import java.time.ZoneId
 
 /**
  * Repository class for handling [budgets][Budget].

@@ -32,6 +32,8 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -47,6 +49,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$deps.jdklibs"
 
     testImplementation "junit:junit:$deps.test.junit"
     testImplementation "org.robolectric:robolectric:$deps.test.robolectric"
@@ -79,6 +83,5 @@ dependencies {
 
     implementation "androidx.work:work-runtime-ktx:$deps.arch.work"
 
-    implementation "com.jakewharton.threetenabp:threetenabp:$deps.libs.threetenabp"
     implementation "com.maltaisn:recurpicker:$deps.libs.recurpickerdialog"
 }

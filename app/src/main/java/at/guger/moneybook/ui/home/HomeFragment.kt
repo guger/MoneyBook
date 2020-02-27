@@ -171,7 +171,7 @@ class HomeFragment : BaseFragment() {
                 onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
             }
         ) {
-            if (!it.isAllGranted(it.permissions)) {
+            if (!it.isAllGranted()) {
                 Snackbar.make(fabHomeAddTransaction, R.string.ContactsPermissionDenied, Snackbar.LENGTH_LONG)
                     .setAction(R.string.Retry) { requestPermissions() }
                     .show()

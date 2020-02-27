@@ -17,10 +17,10 @@
 package at.guger.moneybook.data.provider.local.converter
 
 import androidx.room.TypeConverter
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 /**
  * [TypeConverter] for [LocalDate] and [LocalDateTime].

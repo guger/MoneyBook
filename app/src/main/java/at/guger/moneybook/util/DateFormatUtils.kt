@@ -18,9 +18,9 @@ package at.guger.moneybook.util
 
 import android.content.Context
 import at.guger.moneybook.R
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.FormatStyle
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 /**
  * Utils for Transaction/Due items date format.
