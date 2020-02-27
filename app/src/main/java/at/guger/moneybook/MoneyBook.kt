@@ -23,7 +23,6 @@ import at.guger.moneybook.di.dataModule
 import at.guger.moneybook.di.mainModule
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.jakewharton.threetenabp.AndroidThreeTen
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext

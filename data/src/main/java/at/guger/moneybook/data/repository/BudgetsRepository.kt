@@ -39,7 +39,7 @@ class BudgetsRepository(database: AppDatabase) {
 
     fun getBudgets(): LiveData<List<Budget>> = budgetsDao.getBudgets()
 
-    fun getBudgetsWithBalance(): LiveData<List<BudgetWithBalance>> = budgetsDao.getBudgetsWithBalance(getCurrentMonth())
+    fun getBudgetsWithBalance(): LiveData<List<BudgetWithBalance>> = budgetsDao.getBudgetsWithBalance(getCurrentMonthStart(), getCurrentMonthEnd())
 
     suspend fun insert(vararg budget: Budget) {
         budgetsDao.insert(*budget)
@@ -53,7 +53,8 @@ class BudgetsRepository(database: AppDatabase) {
         budgetsDao.delete(*budget)
     }
 
-    private fun getCurrentMonth() = LocalDate.now().withDayOfMonth(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    private fun getCurrentMonthStart() = LocalDate.now().withDayOfMonth(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    private fun getCurrentMonthEnd() = LocalDate.now().run { withDayOfMonth(this.lengthOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli() }
 
     //endregion
 }
