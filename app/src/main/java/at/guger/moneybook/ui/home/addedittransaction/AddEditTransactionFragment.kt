@@ -20,6 +20,7 @@ import android.Manifest
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.InputType
 import android.transition.Slide
 import android.view.LayoutInflater
@@ -29,7 +30,6 @@ import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.view.forEach
 import androidx.core.view.postDelayed
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Observer
@@ -47,19 +47,17 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
 import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.util.DateFormatUtils
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
 import com.maltaisn.calcdialog.CalcDialog
 import kotlinx.android.synthetic.main.fragment_add_edit_transaction.*
-import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.time.LocalDate
-import java.time.LocalTime
 import java.math.BigDecimal
 import java.text.DecimalFormat
+import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * Dialog fragment for creating/editing a [transaction][Transaction].
@@ -107,14 +105,14 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
         startTransition()
 
         edtAddEditTransactionTitle.requestFocus()
-        if (args.transaction != null) Handler().postDelayed({ edtAddEditTransactionTitle.setSelection(edtAddEditTransactionTitle.text?.length ?: 0) }, 200)
+        if (args.transaction != null) Handler(Looper.getMainLooper()).postDelayed({ edtAddEditTransactionTitle.setSelection(edtAddEditTransactionTitle.text?.length ?: 0) }, 200)
     }
 
     override fun onPause() {
         super.onPause()
 
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        imm.hideSoftInputFromWindow(requireView().windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
     //endregion
@@ -127,13 +125,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
         edtAddEditTransactionAccount.inputType = InputType.TYPE_NULL
         edtAddEditTransactionBudget.inputType = InputType.TYPE_NULL
 
-        mAddEditTransactionTypeToggleButtonGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            var hasChecked = false
-
-            group.forEach { if ((it as MaterialButton).isChecked) hasChecked = true }
-
-            if (!isChecked && !hasChecked) group.find<MaterialButton>(checkedId).isChecked = true
-
+        mAddEditTransactionTypeToggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) viewModel.onTransactionTypeChanged(checkedId)
         }
 
@@ -145,7 +137,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
             addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN)
         }
         viewModel.addressBook.observe(viewLifecycleOwner, Observer { contacts ->
-            edtAddEditTransactionContacts.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, contacts.values.toList()))
+            edtAddEditTransactionContacts.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, contacts.values.toList()))
         })
 
         val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable

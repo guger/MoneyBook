@@ -32,7 +32,7 @@ import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.TabListMediator
 import at.guger.moneybook.core.util.ext.hideIfShown
-import at.guger.moneybook.core.util.ext.resolveColor
+import at.guger.moneybook.core.util.ext.colorAttr
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.core.util.ext.showIfHidden
 import at.guger.moneybook.data.model.Account
@@ -169,7 +169,7 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
         }
 
         val lineData = LineData(LineDataSet(chartEntries, "").apply {
-            color = requireContext().resolveColor(R.attr.colorSecondaryVariant)
+            color = requireContext().colorAttr(R.attr.colorSecondaryVariant)
             lineWidth = 2.5f
             setDrawCircles(false)
             mode = LineDataSet.Mode.HORIZONTAL_BEZIER

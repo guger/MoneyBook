@@ -28,7 +28,7 @@ import androidx.core.graphics.applyCanvas
 import androidx.core.view.ViewCompat
 import androidx.core.view.forEach
 import at.guger.moneybook.core.R
-import at.guger.moneybook.core.util.ext.resolveColor
+import at.guger.moneybook.core.util.ext.colorAttr
 
 /**
  * Search this view and any children for a [ColorDrawable] `background` and return it's `color`,
@@ -47,7 +47,7 @@ fun View.descendantBackgroundColor(): Int {
             }
         }
     }
-    return context.resolveColor(R.attr.colorSurface)
+    return context.colorAttr(R.attr.colorSurface)
 }
 
 @ColorInt

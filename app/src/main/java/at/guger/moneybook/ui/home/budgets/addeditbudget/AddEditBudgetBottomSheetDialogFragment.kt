@@ -18,6 +18,7 @@ package at.guger.moneybook.ui.home.budgets.addeditbudget
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +69,7 @@ class AddEditBudgetBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         edtAddEditBudgetName.requestFocus()
 
-        if (args.budget != null) Handler().postDelayed({ edtAddEditBudgetName.setSelection(edtAddEditBudgetName.text?.length ?: 0) }, 200)
+        if (args.budget != null) Handler(Looper.getMainLooper()).postDelayed({ edtAddEditBudgetName.setSelection(edtAddEditBudgetName.text?.length ?: 0) }, 200)
     }
 
     //endregion

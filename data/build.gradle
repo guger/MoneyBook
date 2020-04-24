@@ -67,7 +67,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$deps.androidx.appcompat"
     implementation "androidx.annotation:annotation:$deps.androidx.annotation"
     implementation "androidx.fragment:fragment-ktx:$deps.androidx.fragment"
-    implementation "androidx.preference:preference:$deps.androidx.preference"
+    implementation "androidx.preference:preference-ktx:$deps.androidx.preference"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$deps.arch.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.arch.lifecycle"

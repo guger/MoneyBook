@@ -58,7 +58,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$deps.androidx.appcompat"
     implementation "androidx.annotation:annotation:$deps.androidx.annotation"
     implementation "androidx.fragment:fragment-ktx:$deps.androidx.fragment"
-    implementation "androidx.preference:preference:$deps.androidx.preference"
+    implementation "androidx.preference:preference-ktx:$deps.androidx.preference"
     implementation "androidx.constraintlayout:constraintlayout:$deps.androidx.constraintlayout"
 
     implementation "com.google.android.material:material:$deps.google.material"

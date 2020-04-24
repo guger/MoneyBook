@@ -28,7 +28,7 @@ import java.text.NumberFormat
 /**
  * [TextInputEditText] with some additional functions to display a currency value.
  */
-class CurrencyTextInputEditText @JvmOverloads constructor(context: Context? = null, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.editTextStyle) :
+class CurrencyTextInputEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.editTextStyle) :
     TextInputEditText(context, attrs, defStyleAttr) {
 
     init {

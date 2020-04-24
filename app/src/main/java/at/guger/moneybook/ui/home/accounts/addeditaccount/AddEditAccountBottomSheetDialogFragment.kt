@@ -18,6 +18,7 @@ package at.guger.moneybook.ui.home.accounts.addeditaccount
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +65,7 @@ class AddEditAccountBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         edtAddEditAccountName.requestFocus()
 
-        if (args.account != null) Handler().postDelayed({ edtAddEditAccountName.setSelection(edtAddEditAccountName.text?.length ?: 0) }, 200)
+        if (args.account != null) Handler(Looper.getMainLooper()).postDelayed({ edtAddEditAccountName.setSelection(edtAddEditAccountName.text?.length ?: 0) }, 200)
     }
 
     //endregion

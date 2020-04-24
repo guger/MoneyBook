@@ -29,6 +29,7 @@ import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.activity.BaseActivity
 import at.guger.moneybook.core.ui.dialog.BottomNavigationViewDialog
+import at.guger.moneybook.core.util.ext.colorAttr
 import at.guger.moneybook.util.NavUtils
 import com.afollestad.materialcab.CabApply
 import com.afollestad.materialcab.attached.AttachedCab
@@ -37,7 +38,6 @@ import com.afollestad.materialcab.attached.isActive
 import com.afollestad.materialcab.createCab
 import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.colorAttr
 
 /**
  * Main activity class for all content fragments.

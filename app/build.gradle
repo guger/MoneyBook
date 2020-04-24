@@ -64,15 +64,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude("META-INF/*.kotlin_module")
+        exclude 'META-INF/*.kotlin_module'
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -104,8 +96,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$deps.kotlin.common"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.kotlin.coroutines"
-    implementation "org.jetbrains.anko:anko-commons:$deps.kotlin.anko"
-    implementation "org.jetbrains.anko:anko-design:$deps.kotlin.anko"
 
     implementation "org.koin:koin-android:$deps.koin"
     implementation "org.koin:koin-androidx-scope:$deps.koin"
@@ -118,7 +108,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$deps.androidx.appcompat"
     implementation "androidx.annotation:annotation:$deps.androidx.annotation"
     implementation "androidx.fragment:fragment-ktx:$deps.androidx.fragment"
-    implementation "androidx.preference:preference:$deps.androidx.preference"
+    implementation "androidx.preference:preference-ktx:$deps.androidx.preference"
     implementation "androidx.biometric:biometric:$deps.androidx.biometric"
     implementation "androidx.constraintlayout:constraintlayout:$deps.androidx.constraintlayout"
     implementation "androidx.viewpager2:viewpager2:$deps.androidx.viewpager2"
@@ -144,7 +134,6 @@ dependencies {
     implementation "com.afollestad:material-cab:$deps.libs.material_cab"
     implementation "com.afollestad.material-dialogs:core:$deps.libs.material_dialogs"
     implementation "com.afollestad.material-dialogs:color:$deps.libs.material_dialogs"
-    implementation "com.afollestad.material-dialogs:datetime:$deps.libs.material_dialogs"
     implementation "com.maltaisn:calcdialog:$deps.libs.calcdialog"
     implementation "com.maltaisn:icondialog:$deps.libs.icondialog"
     implementation "com.maltaisn:recurpicker:$deps.libs.recurpickerdialog"

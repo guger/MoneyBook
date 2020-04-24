@@ -71,7 +71,7 @@ fun Context.dimen(
  * @return The color as Integer.
  */
 @ColorInt
-fun Context.resolveColor(colorAttr: Int): Int {
+fun Context.colorAttr(colorAttr: Int): Int {
     val typedValue = TypedValue()
     val ta = obtainStyledAttributes(typedValue.data, intArrayOf(colorAttr))
 
