@@ -26,11 +26,10 @@ import at.guger.moneybook.BuildConfig
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import io.fabric.sdk.android.Fabric
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlin.system.exitProcess
 
 
@@ -47,6 +46,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     private lateinit var prefInformation: Preference
 
     private val analytics: FirebaseAnalytics by lazy { FirebaseAnalytics.getInstance(requireContext()) }
+    private val crashlytics: FirebaseCrashlytics by lazy { FirebaseCrashlytics.getInstance() }
     private var restartSnackbar: Snackbar? = null
 
     //endregion
@@ -74,7 +74,11 @@ class MainPreferenceFragment : BasePreferenceFragment() {
             true
         }
 
-        prefInformation.summary = getString(R.string.prefs_Information, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
+        prefInformation.summary = getString(
+            R.string.prefs_Information,
+            BuildConfig.VERSION_NAME,
+            BuildConfig.VERSION_CODE
+        )
     }
 
     override fun onDestroy() {
@@ -88,7 +92,11 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     //region Methods
 
     private fun showRestartSnackBar() {
-        restartSnackbar = Snackbar.make(requireView(), R.string.PreferencesRestartRequired, Snackbar.LENGTH_INDEFINITE)
+        restartSnackbar = Snackbar.make(
+            requireView(),
+            R.string.PreferencesRestartRequired,
+            Snackbar.LENGTH_INDEFINITE
+        )
             .setAnchorView(R.id.mBottomAppBar)
             .setAction(R.string.Restart) {
                 restartApplication()
@@ -97,7 +105,9 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     }
 
     private fun restartApplication() {
-        val restartIntent: Intent? = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
+        val restartIntent: Intent? =
+            requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)
+                ?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
 
         startActivity(restartIntent)
         exitProcess(0)
@@ -113,15 +123,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
                 analytics.setAnalyticsCollectionEnabled((preference as SwitchPreference).isChecked)
             }
             Preferences.CRASHLYTICS -> {
-                if (!(preference as SwitchPreference).isChecked) {
-                    requireRestart = true
-                    showRestartSnackBar()
-                } else {
-                    requireRestart = false
-                    restartSnackbar?.dismiss()?.also { restartSnackbar = null }
-
-                    Fabric.with(requireContext(), Crashlytics())
-                }
+                crashlytics.setCrashlyticsCollectionEnabled((preference as SwitchPreference).isChecked)
             }
             Preferences.PERMISSIONS -> {
                 MaterialAlertDialogBuilder(requireContext())
@@ -130,7 +132,12 @@ class MainPreferenceFragment : BasePreferenceFragment() {
                     .setPositiveButton(R.string.Close, null)
                     .show()
             }
-            Preferences.INFORMATION -> startActivity(Intent.parseUri("https://github.com/guger/MoneyBook", 0))
+            Preferences.INFORMATION -> startActivity(
+                Intent.parseUri(
+                    "https://github.com/guger/MoneyBook",
+                    0
+                )
+            )
         }
 
         return super.onPreferenceTreeClick(preference)
