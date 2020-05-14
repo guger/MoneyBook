@@ -39,8 +39,7 @@ object Versions {
         private fun beta() = Beta * 10
         private fun dev() = Dev
 
-        fun buildSignature() =
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+        fun buildSignature(): String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
     }
 
     object SDK {
@@ -48,7 +47,7 @@ object Versions {
         const val TARGET = 29
     }
 
-    const val Gradle = "4.0.0-beta05"
+    const val Gradle = "4.0.0-rc01"
 
     const val Koin = "2.1.5"
 
@@ -92,7 +91,7 @@ object Versions {
         const val Preference = "1.1.1"
         const val Biometric = "1.0.1"
         const val ViewPager2 = "1.0.0"
-        const val ConstraintLayout = "2.0.0-beta5"
+        const val ConstraintLayout = "2.0.0-beta6"
         const val RecyclerView = "1.1.0"
         const val CardView = "1.0.0"
     }
@@ -116,7 +115,7 @@ object Versions {
 
         const val Charts = "v3.1.0"
 
-        const val CalcDialog = "2.1.2"
+        const val CalcDialog = "2.2.0"
         const val IconDialog = "3.2.0"
         const val RecurPicker = "2.0.2"
     }
