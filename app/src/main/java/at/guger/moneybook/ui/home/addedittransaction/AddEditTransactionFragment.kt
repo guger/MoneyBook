@@ -37,6 +37,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.shape.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.core.ui.transition.MaterialContainerTransition
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
@@ -45,7 +46,6 @@ import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.core.util.ext.toLocalDate
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
-import at.guger.moneybook.util.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.util.DateFormatUtils
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -142,23 +142,19 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
 
         val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable
         bottomAppBarBackground.shapeAppearanceModel = bottomAppBarBackground.shapeAppearanceModel.toBuilder().setTopEdge(
-            BottomAppBarCutCornersTopEdge(
-                mBottomAppBar.fabCradleMargin,
-                mBottomAppBar.fabCradleRoundedCornerRadius,
-                mBottomAppBar.cradleVerticalOffset
-            )
+            BottomAppBarCutCornersTopEdge(mBottomAppBar.fabCradleMargin, mBottomAppBar.fabCradleRoundedCornerRadius, mBottomAppBar.cradleVerticalOffset)
         ).build()
         mBottomAppBar.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     private fun setupEvents() {
         viewModel.accounts.observe(viewLifecycleOwner, Observer { accounts ->
-            edtAddEditTransactionAccount.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
+            edtAddEditTransactionAccount.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
             if (args.transaction == null && args.account == null) edtAddEditTransactionAccount.setText(accounts.first().name, false)
         })
         viewModel.budgets.observe(viewLifecycleOwner, Observer { budgets ->
             val budgetEntries = budgets.map { it.name }.toMutableList().apply { add(0, "") }
-            edtAddEditTransactionBudget.setAdapter(ArrayAdapter<String>(requireContext(), R.layout.dropdown_layout_popup_item, budgetEntries))
+            edtAddEditTransactionBudget.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, budgetEntries))
         })
 
         viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDatePicker(selectedDate) })

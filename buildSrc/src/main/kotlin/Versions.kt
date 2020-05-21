@@ -85,7 +85,7 @@ object Versions {
 
     object AndroidX {
         const val Core = "1.3.0-rc01"
-        const val AppCompat = "1.2.0-beta01"
+        const val AppCompat = "1.2.0-rc01"
         const val Annotation = "1.1.0"
         const val Fragment = "1.2.4"
         const val Preference = "1.1.1"

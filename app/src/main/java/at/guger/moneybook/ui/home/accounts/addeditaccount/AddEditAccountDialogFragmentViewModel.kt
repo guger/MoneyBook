@@ -36,7 +36,7 @@ class AddEditAccountDialogFragmentViewModel(private val accountsRepository: Acco
 
     private var account: Account? = null
 
-    private val _titleRes = MutableLiveData<Int>(R.string.NewAccount)
+    private val _titleRes = MutableLiveData(R.string.NewAccount)
     val titleRes: LiveData<Int> = _titleRes
 
     val accountName = MutableLiveData<String>()

@@ -21,12 +21,9 @@ object Dependencies {
     object Plugins {
         object Path {
             const val Gradle = "com.android.tools.build:gradle:${Versions.Gradle}"
-            const val NavigationSafeArgs =
-                "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.Arch.Navigation}"
-            const val GoogleServices =
-                "com.google.gms:google-services:${Versions.Firebase.Plugins.GoogleServices}"
-            const val CrashlyticsGradle =
-                "com.google.firebase:firebase-crashlytics-gradle:${Versions.Firebase.Plugins.CrashlyticsGradle}"
+            const val NavigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.Arch.Navigation}"
+            const val GoogleServices = "com.google.gms:google-services:${Versions.Firebase.Plugins.GoogleServices}"
+            const val CrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.Firebase.Plugins.CrashlyticsGradle}"
         }
 
         object Name {
@@ -36,8 +33,7 @@ object Dependencies {
     }
 
     object D8 {
-        const val CoreLibraryDesugaring =
-            "com.android.tools:desugar_jdk_libs:${Versions.D8.CoreLibraryDesugaring}"
+        const val CoreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:${Versions.D8.CoreLibraryDesugaring}"
     }
 
     object Test {
@@ -49,19 +45,15 @@ object Dependencies {
 
         object AndroidX {
             const val Extensions = "androidx.test.ext:junit:${Versions.Test.AndroidX.Extensions}"
-            const val ArchCoreTesting =
-                "androidx.arch.core:core-testing:${Versions.Test.AndroidX.ArchCoreTesting}"
-            const val EspressoCore =
-                "androidx.test.espresso:espresso-core:${Versions.Test.AndroidX.Espresso}"
-            const val EspressoIdlingResource =
-                "androidx.test.espresso:espresso-idling-resource:${Versions.Test.AndroidX.Espresso}"
+            const val ArchCoreTesting = "androidx.arch.core:core-testing:${Versions.Test.AndroidX.ArchCoreTesting}"
+            const val EspressoCore = "androidx.test.espresso:espresso-core:${Versions.Test.AndroidX.Espresso}"
+            const val EspressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.Test.AndroidX.Espresso}"
         }
     }
 
     object Kotlin {
         const val StandardLibray = "stdlib-jdk8"
-        const val Coroutines =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.Coroutines}"
+        const val Coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.Coroutines}"
     }
 
     object Koin {
@@ -71,10 +63,8 @@ object Dependencies {
     }
 
     object Firebase {
-        const val Analytics =
-            "com.google.firebase:firebase-analytics:${Versions.Firebase.Analytics}"
-        const val Crashlytics =
-            "com.google.firebase:firebase-crashlytics:${Versions.Firebase.Crashlytics}"
+        const val Analytics = "com.google.firebase:firebase-analytics:${Versions.Firebase.Analytics}"
+        const val Crashlytics = "com.google.firebase:firebase-crashlytics:${Versions.Firebase.Crashlytics}"
     }
 
     object AndroidX {
@@ -83,29 +73,22 @@ object Dependencies {
         const val Annotation = "androidx.annotation:annotation:${Versions.AndroidX.Annotation}"
         const val Fragment = "androidx.fragment:fragment-ktx:${Versions.AndroidX.Fragment}"
         const val Preference = "androidx.preference:preference-ktx:${Versions.AndroidX.Preference}"
-        const val ConstraintLayout =
-            "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.ConstraintLayout}"
+        const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.ConstraintLayout}"
         const val ViewPager2 = "androidx.viewpager2:viewpager2:${Versions.AndroidX.ViewPager2}"
-        const val RecylerView =
-            "androidx.recyclerview:recyclerview:${Versions.AndroidX.RecyclerView}"
+        const val RecylerView = "androidx.recyclerview:recyclerview:${Versions.AndroidX.RecyclerView}"
         const val CardView = "androidx.cardview:cardview:${Versions.AndroidX.CardView}"
     }
 
     object Material {
-        const val MaterialDesign =
-            "com.google.android.material:material:${Versions.Material.Material}"
+        const val MaterialDesign = "com.google.android.material:material:${Versions.Material.Material}"
     }
 
     object Arch {
-        const val LifecycleExtensions =
-            "androidx.lifecycle:lifecycle-extensions:${Versions.Arch.Lifecycle}"
-        const val LifecycleViewModel =
-            "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Arch.Lifecycle}"
-        const val LifecycleCommon =
-            "androidx.lifecycle:lifecycle-common-java8:${Versions.Arch.Lifecycle}"
+        const val LifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.Arch.Lifecycle}"
+        const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Arch.Lifecycle}"
+        const val LifecycleCommon = "androidx.lifecycle:lifecycle-common-java8:${Versions.Arch.Lifecycle}"
 
-        const val NavigationFragment =
-            "androidx.navigation:navigation-fragment-ktx:${Versions.Arch.Navigation}"
+        const val NavigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.Arch.Navigation}"
         const val NavigationUI = "androidx.navigation:navigation-ui-ktx:${Versions.Arch.Navigation}"
 
         const val RoomRuntime = "androidx.room:room-runtime:${Versions.Arch.Room}"
@@ -120,10 +103,8 @@ object Dependencies {
         const val AssentCore = "com.afollestad.assent:core:${Versions.Libraries.Assent}"
         const val AssentRationales = "com.afollestad.assent:rationales:${Versions.Libraries.Assent}"
         const val MaterialCab = "com.afollestad:material-cab:${Versions.Libraries.MaterialCab}"
-        const val MaterialDialogsCore =
-            "com.afollestad.material-dialogs:core:${Versions.Libraries.MaterialDialogs}"
-        const val MaterialDialogsColor =
-            "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"
+        const val MaterialDialogsCore = "com.afollestad.material-dialogs:core:${Versions.Libraries.MaterialDialogs}"
+        const val MaterialDialogsColor = "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"
 
         const val Charts = "com.github.PhilJay:MPAndroidChart:${Versions.Libraries.Charts}"
 

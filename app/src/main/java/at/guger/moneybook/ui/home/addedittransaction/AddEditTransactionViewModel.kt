@@ -54,14 +54,14 @@ class AddEditTransactionViewModel(
 
     private var transaction: Transaction? = null
 
-    private val _titleRes = MutableLiveData<Int>(R.string.NewTransaction)
+    private val _titleRes = MutableLiveData(R.string.NewTransaction)
     val titleRes: LiveData<Int> = _titleRes
 
     val transactionTitle = MutableLiveData<String>()
     val transactionAccount = MutableLiveData<String>()
     val transactionBudget = MutableLiveData<String>()
-    val transactionType = MutableLiveData<@Transaction.TransactionType Int>(Transaction.TransactionType.EARNING)
-    val transactionDate = MutableLiveData<String>(LocalDate.now().format(MEDIUM_DATE_FORMAT))
+    val transactionType = MutableLiveData(Transaction.TransactionType.EARNING)
+    val transactionDate = MutableLiveData(LocalDate.now().format(MEDIUM_DATE_FORMAT))
     val transactionDueDate = MutableLiveData<String>()
     val transactionValue = MutableLiveData<String>()
 
@@ -70,16 +70,16 @@ class AddEditTransactionViewModel(
 
     val transactionNotes = MutableLiveData<String>()
 
-    private val _accountsInputVisibility = MutableLiveData<Int>(View.VISIBLE)
+    private val _accountsInputVisibility = MutableLiveData(View.VISIBLE)
     val accountsInputVisibility: LiveData<Int> = _accountsInputVisibility
 
-    private val _budgetsInputVisibility = MutableLiveData<Int>(View.GONE)
+    private val _budgetsInputVisibility = MutableLiveData(View.GONE)
     val budgetsInputVisibility: LiveData<Int> = _budgetsInputVisibility
 
-    private val _contactsInputVisibility = MutableLiveData<Int>(View.GONE)
+    private val _contactsInputVisibility = MutableLiveData(View.GONE)
     val contactsInputVisibility: LiveData<Int> = _contactsInputVisibility
 
-    private val _dueDateInputVisibility = MutableLiveData<Int>(View.GONE)
+    private val _dueDateInputVisibility = MutableLiveData(View.GONE)
     val dueDateInputVisibility: LiveData<Int> = _dueDateInputVisibility
 
     private val _showDatePicker = MutableLiveData<Event<LocalDate>>()
