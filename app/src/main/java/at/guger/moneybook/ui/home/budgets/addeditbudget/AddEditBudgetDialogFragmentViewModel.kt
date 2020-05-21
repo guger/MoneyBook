@@ -43,8 +43,7 @@ class AddEditBudgetDialogFragmentViewModel(private val budgetsRepository: Budget
 
     val budgetName = MutableLiveData<String>()
     val budgetBudget = MutableLiveData<String>()
-    private val _budgetColor = MutableLiveData(Color.parseColor("#BBDEFB"))
-    val budgetColor: LiveData<Int> = _budgetColor
+    val budgetColor = MutableLiveData(Color.parseColor("#BBDEFB"))
 
     private val _isValidForm = MutableLiveData<Boolean>()
     val isValidForm: LiveData<Boolean> = _isValidForm
@@ -66,7 +65,7 @@ class AddEditBudgetDialogFragmentViewModel(private val budgetsRepository: Budget
 
         budgetName.value = budget.name
         budgetBudget.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(budget.budget)
-        _budgetColor.value = budget.color
+        budgetColor.value = budget.color
     }
 
     fun showColorChooser() {
