@@ -17,7 +17,6 @@
 package at.guger.moneybook.scheduler.reminder
 
 import android.content.Context
-import android.widget.Toast
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -51,9 +50,6 @@ class ReminderScheduler(private val context: Context, private val repository: Re
                 repository.update(it.copy(date = date))
             } ?: repository.insert(Reminder(transactionId = transactionId, date = date))
         }
-
-        Toast.makeText(context, "Scheduled.", Toast.LENGTH_LONG).show()
-        //TODO remove
     }
 
     suspend fun cancelReminder(transactionId: Long) = withContext(Dispatchers.IO) {
@@ -65,7 +61,6 @@ class ReminderScheduler(private val context: Context, private val repository: Re
     }
 
     private fun calculateDelay(date: LocalDate): Long {
-        // TODO Make Time Adaptable
         return date.atTime(12, 0).toEpochMilli() - LocalDateTime.now().toEpochMilli()
     }
 

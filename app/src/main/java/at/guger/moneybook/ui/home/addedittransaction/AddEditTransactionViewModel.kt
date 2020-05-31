@@ -290,6 +290,12 @@ class AddEditTransactionViewModel(
             return null
         }
 
+        if (parsedDueDate != null && parsedDueDate.minusDays(1).isBefore(parsedDate)) {
+            _snackBarMessage.value = MessageEvent(R.string.TransactionDueDateBeforeDate)
+
+            return null
+        }
+
         val valueNumber = parseNumber(value)
 
         if (valueNumber <= 0) {

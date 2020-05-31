@@ -23,15 +23,19 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.app.TaskStackBuilder
+import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import at.guger.moneybook.R
 import at.guger.moneybook.core.util.Utils
-import at.guger.moneybook.core.util.ext.colorAttr
+import at.guger.moneybook.core.util.ext.size
+import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.RemindersRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.ui.main.MainActivity
+import at.guger.moneybook.util.CurrencyFormat
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -40,24 +44,28 @@ import org.koin.core.inject
  */
 class NotificationWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params), KoinComponent {
 
+    //region Variables
+
     private val transactionsRepository: TransactionsRepository by inject()
     private val remindersRepository: RemindersRepository by inject()
 
     private val notificationManager: NotificationManager by lazy { context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
+
+    //endregion
 
     override suspend fun doWork(): Result {
         val transaction = transactionsRepository.get(inputData.getLong(ReminderScheduler.EXTRA_TRANSACTION_ID, -1))
 
         setupNotificationChannel()
 
-        val notification = makeNotification(transaction)
-
         remindersRepository.deleteByTransactionId(transaction.id)
 
-        notificationManager.notify(transaction.id.toInt(), notification)
+        notificationManager.notify(transaction.id.toInt(), makeNotification(transaction))
 
         return Result.success()
     }
+
+    //region Methods
 
     private fun setupNotificationChannel() {
         if (Utils.isOreo()) {
@@ -79,19 +87,59 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
             ReminderScheduler.NOTIFICATION_CHANNEL_REMINDER
         )
 
-        val contentIntent = Intent(applicationContext, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val contentIntent = Intent(applicationContext, MainActivity::class.java)
+        val pendingIntent = TaskStackBuilder.create(applicationContext).addNextIntent(contentIntent).getPendingIntent(transaction.id.toInt(), PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val title = applicationContext.getString(
+            when (transaction.type) {
+                Transaction.TransactionType.CLAIM -> R.string.ReminderNotificationTitleClaim
+                Transaction.TransactionType.DEBT -> R.string.ReminderNotificationTitleDebt
+                else -> throw IllegalStateException("Reminder must not receive transactions of a type other than claim or debt.")
+            }
+        )
+
+        val contacts = transaction.contacts?.filter { it.paidState == Contact.PaidState.STATE_NOT_PAID }
+        val contactsCount = contacts.size()
+
+        val valueText = CurrencyFormat.formatShortened(applicationContext, transaction.value)
+
+        val contentResId = when (transaction.type) {
+            Transaction.TransactionType.CLAIM -> {
+                when (contactsCount) {
+                    0 -> R.string.ReminderNotificationTextClaimNoContact
+                    1 -> R.string.ReminderNotificationTextClaimOneContact
+                    else -> R.string.ReminderNotificationTextClaimMultipleContacts
+                }
+            }
+            Transaction.TransactionType.DEBT -> {
+                when (contactsCount) {
+                    0 -> R.string.ReminderNotificationTextDebtNoContact
+                    1 -> R.string.ReminderNotificationTextDebtOneContact
+                    else -> R.string.ReminderNotificationTextDebtMultipleContacts
+                }
+            }
+            else -> throw IllegalStateException("Reminder must not receive transactions of a type other than claim or debt.")
         }
 
+        val formatArgs = when (contactsCount) {
+            0 -> arrayOf(valueText)
+            1 -> arrayOf(contacts!!.first().contactName, valueText)
+            else -> arrayOf(contactsCount, valueText)
+        }
+
+        val contentText = applicationContext.getString(contentResId, *formatArgs)
+
         with(notificationBuilder) {
-            setContentTitle("MoneyBook Notification")
-            setContentText(transaction.title)
+            setContentTitle(title)
+            setContentText(contentText)
             setSmallIcon(R.drawable.ic_notification)
             setAutoCancel(true)
-            setContentIntent(PendingIntent.getBroadcast(applicationContext, transaction.id.toInt(), contentIntent, PendingIntent.FLAG_UPDATE_CURRENT))
-            color = applicationContext.colorAttr(R.attr.colorPrimary)
+            setContentIntent(pendingIntent)
+            color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
         }
 
         return notificationBuilder.build()
     }
+
+    //endregion
 }
