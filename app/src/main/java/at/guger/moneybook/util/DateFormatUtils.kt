@@ -21,18 +21,19 @@ import at.guger.moneybook.R
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.time.format.ResolverStyle
 
 /**
  * Utils for Transaction/Due items date format.
  */
 object DateFormatUtils {
 
-    val MEDIUM_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+    val SHORT_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withResolverStyle(ResolverStyle.LENIENT)
     const val MMM_YYYY_DATE_FORMAT: String = "MMM YYYY"
 
     @JvmStatic
-    fun formatTransactionDate(date: LocalDate): String = MEDIUM_DATE_FORMAT.format(date)
+    fun formatTransactionDate(date: LocalDate): String = SHORT_DATE_FORMAT.format(date)
 
     @JvmStatic
-    fun formatDueDate(context: Context, date: LocalDate) = context.getString(R.string.Due_x, MEDIUM_DATE_FORMAT.format(date))
+    fun formatDueDate(context: Context, date: LocalDate) = context.getString(R.string.Due_x, SHORT_DATE_FORMAT.format(date))
 }

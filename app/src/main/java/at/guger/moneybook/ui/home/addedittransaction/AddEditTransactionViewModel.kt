@@ -18,16 +18,14 @@ package at.guger.moneybook.ui.home.addedittransaction
 
 import android.view.View
 import androidx.annotation.IdRes
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.Event
+import at.guger.moneybook.core.ui.viewmodel.MessageEvent
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
-import at.guger.moneybook.core.util.Utils
-import at.guger.moneybook.core.util.ext.ifNull
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
@@ -36,9 +34,13 @@ import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.AddressBookRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
-import at.guger.moneybook.util.DateFormatUtils.MEDIUM_DATE_FORMAT
+import at.guger.moneybook.scheduler.reminder.ReminderScheduler
+import at.guger.moneybook.util.DateFormatUtils.SHORT_DATE_FORMAT
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 
 /**
  * [ViewModel] for the [AddEditTransactionFragment].
@@ -48,7 +50,7 @@ class AddEditTransactionViewModel(
     accountsRepository: AccountsRepository,
     budgetsRepository: BudgetsRepository,
     private val addressBookRepository: AddressBookRepository
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
 
     //region Variables
 
@@ -61,7 +63,7 @@ class AddEditTransactionViewModel(
     val transactionAccount = MutableLiveData<String>()
     val transactionBudget = MutableLiveData<String>()
     val transactionType = MutableLiveData(Transaction.TransactionType.EARNING)
-    val transactionDate = MutableLiveData(LocalDate.now().format(MEDIUM_DATE_FORMAT))
+    val transactionDate = MutableLiveData(LocalDate.now().format(SHORT_DATE_FORMAT))
     val transactionDueDate = MutableLiveData<String>()
     val transactionValue = MutableLiveData<String>()
 
@@ -91,8 +93,8 @@ class AddEditTransactionViewModel(
     private val _showCalculator = MutableLiveData<Event<Unit>>()
     val showCalculator: LiveData<Event<Unit>> = _showCalculator
 
-    private val _snackBarMessage = MutableLiveData<Event<@StringRes Int>>()
-    val snackBarMessage: LiveData<Event<Int>> = _snackBarMessage
+    private val _snackBarMessage = MutableLiveData<MessageEvent>()
+    val snackBarMessage: LiveData<MessageEvent> = _snackBarMessage
 
     private val _transactionSaved = MutableLiveData<Event<Unit>>()
     val transactionSaved: LiveData<Event<Unit>> = _transactionSaved
@@ -102,6 +104,8 @@ class AddEditTransactionViewModel(
 
     private val _addressBook = MutableLiveData<Map<Long, String>>()
     val addressBook: LiveData<Map<Long, String>> = _addressBook
+
+    private val reminderScheduler: ReminderScheduler by inject()
 
     //endregion
 
@@ -123,10 +127,10 @@ class AddEditTransactionViewModel(
             transactionType.value = type
             transactionAccount.value = account?.name
             transactionBudget.value = budget?.name
-            transactionDate.value = transaction.date.format(MEDIUM_DATE_FORMAT)
+            transactionDate.value = transaction.date.format(SHORT_DATE_FORMAT)
             transactionValue.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(value)
             _transactionContacts.value = contacts?.map { it.contactName }
-            transactionDueDate.value = transaction.due?.format(MEDIUM_DATE_FORMAT)
+            transactionDueDate.value = transaction.due?.format(SHORT_DATE_FORMAT)
             transactionNotes.value = notes
         }
     }
@@ -165,9 +169,9 @@ class AddEditTransactionViewModel(
     }
 
     fun showDatePicker() {
-        val selectedDate = if (transactionDate.value?.matches(Utils.getShortDatePattern().toRegex()) == true) {
-            LocalDate.parse(transactionDate.value, MEDIUM_DATE_FORMAT)
-        } else {
+        val selectedDate = try {
+            LocalDate.parse(transactionDate.value, SHORT_DATE_FORMAT)
+        } catch (e: DateTimeParseException) {
             LocalDate.now()
         }
 
@@ -175,8 +179,12 @@ class AddEditTransactionViewModel(
     }
 
     fun showDueDatePicker() {
-        val selectedDate = if (transactionDueDate.value?.matches(Utils.getShortDatePattern().toRegex()) == true) {
-            LocalDate.parse(transactionDueDate.value, MEDIUM_DATE_FORMAT)
+        val selectedDate = if (transactionDueDate.value != null) {
+            try {
+                LocalDate.parse(transactionDueDate.value, SHORT_DATE_FORMAT)
+            } catch (e: DateTimeParseException) {
+                LocalDate.now().plusDays(5)
+            }
         } else {
             LocalDate.now().plusDays(5)
         }
@@ -198,18 +206,9 @@ class AddEditTransactionViewModel(
         val budget = budgets.value?.find { it.name == transactionBudget.value }?.takeIf { type == Transaction.TransactionType.EXPENSE }
         val notes = transactionNotes.value?.trim() ?: ""
 
-        if (validateForm(title, date, value, dueDate)) {
-            val transactionEntity = Transaction.TransactionEntity(
-                title = title!!,
-                date = LocalDate.parse(date, MEDIUM_DATE_FORMAT),
-                value = parseNumber(value!!),
-                due = dueDate?.let { LocalDate.parse(it, MEDIUM_DATE_FORMAT) },
-                notes = notes,
-                type = type!!,
-                accountId = account?.id,
-                budgetId = budget?.id
-            )
+        val transactionEntity = parseTransactionForm(title, date, value, type, dueDate, account, budget, notes)
 
+        if (transactionEntity != null) {
             val contacts: List<Contact>? = if (type == Transaction.TransactionType.CLAIM || type == Transaction.TransactionType.DEBT) {
                 mutableListOf<Contact>().apply {
                     val addressBookContacts = addressBook.value?.filterValues { chippedContacts.any { contact -> contact == it } }
@@ -233,59 +232,88 @@ class AddEditTransactionViewModel(
             }
 
             viewModelScope.launch {
-                transaction.ifNull {
+                val id: Long = if (transaction == null) {
                     transactionsRepository.insert(
                         Transaction(
                             entity = transactionEntity,
                             contacts = contacts
                         )
                     )
-                } ?: transactionsRepository.update(
-                    Transaction(
-                        entity = transactionEntity.copy(id = transaction!!.id),
-                        contacts = contacts
+                } else {
+                    transactionsRepository.update(
+                        Transaction(
+                            entity = transactionEntity.copy(id = transaction!!.id),
+                            contacts = contacts
+                        )
                     )
-                )
+
+                    reminderScheduler.cancelReminder(transaction!!.id)
+
+                    transaction!!.id
+                }
+
+                transactionEntity.due?.let { date -> reminderScheduler.scheduleReminder(id, date) }
             }.invokeOnCompletion {
                 _transactionSaved.value = Event(Unit)
             }
         }
     }
 
-    private fun validateForm(title: String?, date: String?, value: String?, dueDate: String?): Boolean {
+    private fun parseTransactionForm(title: String?, date: String?, value: String?, type: Int?, dueDate: String?, account: Account?, budget: Budget?, notes: String): Transaction.TransactionEntity? {
         if (title.isNullOrBlank()) {
-            _snackBarMessage.value = Event(R.string.EmptyTransactionTitle)
+            _snackBarMessage.value = MessageEvent(R.string.EmptyTransactionTitle)
 
-            return false
+            return null
         }
 
-        if (date.isNullOrBlank() || !date.matches(Utils.getShortDatePattern().toRegex())) {
-            _snackBarMessage.value = Event(R.string.InvalidTransactionDate)
-
-            return false
+        val parsedDate: LocalDate? = try {
+            LocalDate.parse(date, SHORT_DATE_FORMAT)
+        } catch (e: DateTimeParseException) {
+            null
         }
 
-        if (dueDate?.isNotBlank() == true && !dueDate.matches(Utils.getShortDatePattern().toRegex())) {
-            _snackBarMessage.value = Event(R.string.InvalidTransactionDueDate)
+        if (parsedDate == null) {
+            _snackBarMessage.value = MessageEvent(R.string.InvalidTransactionDate, SHORT_DATE_FORMAT.format(LocalDate.now()))
 
-            return false
+            return null
+        }
+
+        val parsedDueDate: LocalDate? = try {
+            LocalDate.parse(dueDate, SHORT_DATE_FORMAT)
+        } catch (e: DateTimeParseException) {
+            null
+        }
+
+        if (dueDate?.isNotBlank() == true && parsedDueDate == null) {
+            _snackBarMessage.value = MessageEvent(R.string.InvalidTransactionDueDate, SHORT_DATE_FORMAT.format(LocalDate.now()))
+
+            return null
         }
 
         val valueNumber = parseNumber(value)
 
         if (valueNumber <= 0) {
-            _snackBarMessage.value = Event(R.string.InvalidTransactionValue_NotPositive)
+            _snackBarMessage.value = MessageEvent(R.string.InvalidTransactionValue_NotPositive)
 
-            return false
+            return null
         }
 
         if (valueNumber > 1E6) {
-            _snackBarMessage.value = Event(R.string.InvalidTransactionValue_TooHigh)
+            _snackBarMessage.value = MessageEvent(R.string.InvalidTransactionValue_TooHigh)
 
-            return false
+            return null
         }
 
-        return true
+        return Transaction.TransactionEntity(
+            title = title,
+            date = parsedDate,
+            value = parseNumber(value),
+            due = parsedDueDate,
+            notes = notes,
+            type = type!!,
+            accountId = account?.id,
+            budgetId = budget?.id
+        )
     }
 
     private fun parseNumber(text: String?) = text?.replace(",", ".")?.toDoubleOrNull() ?: 0.0

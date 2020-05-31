@@ -17,7 +17,7 @@
 package at.guger.moneybook.di
 
 import at.guger.moneybook.core.preferences.Preferences
-import at.guger.moneybook.core.scheduler.reminder.ReminderScheduler
+import at.guger.moneybook.scheduler.reminder.ReminderScheduler
 import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.home.accounts.addeditaccount.AddEditAccountDialogFragmentViewModel
 import at.guger.moneybook.ui.home.accounts.detail.AccountDetailViewModel

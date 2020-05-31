@@ -47,7 +47,7 @@ object Versions {
         const val TARGET = 29
     }
 
-    const val Gradle = "4.0.0-rc01"
+    const val Gradle = "4.0.0"
 
     const val Koin = "2.1.5"
 
@@ -97,7 +97,7 @@ object Versions {
     }
 
     object Material {
-        const val Material = "1.2.0-alpha06"
+        const val Material = "1.2.0-beta01"
         const val Flexbox = "1.1.0"
     }
 
@@ -117,6 +117,6 @@ object Versions {
 
         const val CalcDialog = "2.2.0"
         const val IconDialog = "3.2.0"
-        const val RecurPicker = "2.0.2"
+        const val RecurPicker = "2.1.1"
     }
 }

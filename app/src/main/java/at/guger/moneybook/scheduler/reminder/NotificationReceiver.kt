@@ -14,12 +14,13 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.core.scheduler.reminder
+package at.guger.moneybook.scheduler.reminder
 
 import android.content.BroadcastReceiver
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 
 /**
  * [BroadcastReceiver] receiving actions from a reminder [Notification].
@@ -31,13 +32,13 @@ class NotificationReceiver : BroadcastReceiver() {
 
         when (intent.action) {
             NOTIFICATION_ACTION_SNOOZE -> {
-
+                Toast.makeText(context, "Snooze Id: $transactionId", Toast.LENGTH_LONG).show()
             }
             NOTIFICATION_ACTION_SEND_MESSAGE -> {
-
+                Toast.makeText(context, "Message Id: $transactionId", Toast.LENGTH_LONG).show()
             }
             NOTIFICATION_ACTION_PAID -> {
-
+                Toast.makeText(context, "Paid Id: $transactionId", Toast.LENGTH_LONG).show()
             }
         }
     }

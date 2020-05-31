@@ -14,11 +14,10 @@
  *    limitations under the License.
  */
 
-package at.guger.moneybook.core.scheduler.reminder
+package at.guger.moneybook.scheduler.reminder
 
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
+import android.widget.Toast
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -52,6 +51,9 @@ class ReminderScheduler(private val context: Context, private val repository: Re
                 repository.update(it.copy(date = date))
             } ?: repository.insert(Reminder(transactionId = transactionId, date = date))
         }
+
+        Toast.makeText(context, "Scheduled.", Toast.LENGTH_LONG).show()
+        //TODO remove
     }
 
     suspend fun cancelReminder(transactionId: Long) = withContext(Dispatchers.IO) {
@@ -59,22 +61,12 @@ class ReminderScheduler(private val context: Context, private val repository: Re
             WorkManager.getInstance(context).cancelUniqueWork(makeWorkerName(transactionId))
 
             repository.delete(it)
-        } ?: throw IllegalStateException("Attempt to cancel a not-existing reminder.")
-    }
-
-    private fun calculateDelay(date: LocalDate): Long {
-        return date.atTime(12, 0).toEpochMilli() - LocalDateTime.now().toEpochMilli()
-    }
-
-    private fun makeIntent(transactionId: Long): Intent {
-        return Intent(context, ReminderScheduler::class.java).apply {
-            action = ACTION_REMINDER
-            putExtra(EXTRA_TRANSACTION_ID, transactionId)
         }
     }
 
-    private fun makePendingIntent(transactionId: Long): PendingIntent {
-        return PendingIntent.getBroadcast(context, transactionId.toInt(), makeIntent(transactionId), PendingIntent.FLAG_UPDATE_CURRENT)
+    private fun calculateDelay(date: LocalDate): Long {
+        // TODO Make Time Adaptable
+        return date.atTime(12, 0).toEpochMilli() - LocalDateTime.now().toEpochMilli()
     }
 
     //endregion

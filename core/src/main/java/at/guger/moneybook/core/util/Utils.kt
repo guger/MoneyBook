@@ -26,9 +26,4 @@ object Utils {
     fun isOreo() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
     fun isNougat() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-
-    /**
-     * Returns a regex pattern in the format of DD.MM.YYYY.
-     */
-    fun getShortDatePattern() = """\d{2}\.\d{2}\.\d{4}"""
 }

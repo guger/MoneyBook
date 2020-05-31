@@ -162,7 +162,8 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
         viewModel.showCalculator.observe(viewLifecycleOwner, EventObserver { showCalculator() })
 
         viewModel.snackBarMessage.observe(viewLifecycleOwner, EventObserver {
-            Snackbar.make(mBottomAppBar, it, Snackbar.LENGTH_LONG)
+            val text = requireContext().getString(it.stringRes, it.text)
+            Snackbar.make(mBottomAppBar, text, Snackbar.LENGTH_LONG)
                 .setAnchorView(fabAddEditTransactionSave)
                 .show()
         })
@@ -203,7 +204,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {
-            viewModel.transactionDate.value = it.toLocalDate().format(DateFormatUtils.MEDIUM_DATE_FORMAT)
+            viewModel.transactionDate.value = it.toLocalDate().format(DateFormatUtils.SHORT_DATE_FORMAT)
             edtAddEditTransactionDate.postDelayed(25) { edtAddEditTransactionDate.apply { setSelection(text?.length ?: 0) } }
         }
 
@@ -217,8 +218,8 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {
-            viewModel.transactionDueDate.value = it.toLocalDate().format(DateFormatUtils.MEDIUM_DATE_FORMAT)
-            edtAddEditTransactionDate.postDelayed(25) { edtAddEditTransactionDueDate.apply { setSelection(text?.length ?: 0) } }
+            viewModel.transactionDueDate.value = it.toLocalDate().format(DateFormatUtils.SHORT_DATE_FORMAT)
+            edtAddEditTransactionDueDate.postDelayed(25) { edtAddEditTransactionDueDate.apply { setSelection(text?.length ?: 0) } }
         }
 
         datePickerDialog.show(childFragmentManager, null)
