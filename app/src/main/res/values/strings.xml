@@ -120,4 +120,7 @@
     <string name="ReminderNotificationTextClaimMultipleContacts">%d contacts owe you %s.</string>
     <string name="ReminderNotificationTextDebtMultipleContacts">You owe %d contacts %s.</string>
     <string name="TransactionDueDateBeforeDate">Please select a due date later than the transactions date.</string>
+    <string name="Snooze">Snooze</string>
+    <string name="Message">Message</string>
+    <string name="Paid">Paid</string>
 </resources>

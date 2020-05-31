@@ -138,6 +138,36 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Coroutine
             color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
         }
 
+        val actionIntent = Intent(applicationContext, NotificationReceiver::class.java).apply {
+            putExtra(ReminderScheduler.EXTRA_TRANSACTION_ID, transaction.id)
+        }
+
+        val snoozePendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            transaction.id.toInt(),
+            actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_SNOOZE },
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_snooze, applicationContext.getString(R.string.Snooze), snoozePendingIntent))
+
+        if (transaction.type == Transaction.TransactionType.CLAIM && contacts.size() > 0) {
+            val messagePendingIntent = PendingIntent.getBroadcast(
+                applicationContext,
+                transaction.id.toInt(),
+                actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_SEND_MESSAGE },
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_message, applicationContext.getString(R.string.Message), messagePendingIntent))
+        }
+
+        val paidPendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            transaction.id.toInt(),
+            actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_PAID },
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_paid, applicationContext.getString(R.string.Paid), paidPendingIntent))
+
         return notificationBuilder.build()
     }
 
