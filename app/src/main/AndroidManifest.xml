@@ -49,6 +49,8 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
+        <receiver android:name=".scheduler.reminder.NotificationReceiver" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

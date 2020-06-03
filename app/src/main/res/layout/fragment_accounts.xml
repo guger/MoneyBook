@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -32,30 +33,43 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mAccountsRecyclerView"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/mAccountsScrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mAccountsPieChart"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_account" />
+            app:layout_constraintTop_toBottomOf="@+id/mAccountsProgressbar">
 
-        <at.guger.strokepiechart.StrokePieChart
-            android:id="@+id/mAccountsPieChart"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/default_chart_height"
-            app:accounts="@{viewModel.coloredAccounts}"
-            app:bold="true"
-            app:fontResId="@font/eczar_regular"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mAccountsProgressbar"
-            app:textSize="42sp"
-            tools:text="$ 1234,56" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <at.guger.strokepiechart.StrokePieChart
+                    android:id="@+id/mAccountsPieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_chart_height"
+                    app:accounts="@{viewModel.coloredAccounts}"
+                    app:bold="true"
+                    app:fontResId="@font/eczar_regular"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mAccountsProgressbar"
+                    app:textSize="42sp"
+                    tools:text="$ 1234,56" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mAccountsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_account" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>

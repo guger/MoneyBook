@@ -16,10 +16,7 @@
 
 package at.guger.moneybook.core.util.ext
 
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
+import java.time.*
 
 /**
  * Useful methods for converting long dates to [LocalDate] and [LocalDateTime].
@@ -31,3 +28,6 @@ fun Long.toLocalDateTime(): LocalDateTime = Instant.ofEpochMilli(this).atZone(Zo
 
 fun LocalDate.toEpochMilli(): Long = atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 fun LocalDateTime.toEpochMilli(): Long = atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+fun LocalDate.atUTC() = atStartOfDay(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC)
+fun ZonedDateTime.toEpochMilli() = toInstant().toEpochMilli()

@@ -41,6 +41,7 @@ import at.guger.moneybook.core.ui.shape.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.core.ui.transition.MaterialContainerTransition
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
+import at.guger.moneybook.core.util.ext.atUTC
 import at.guger.moneybook.core.util.ext.hasPermission
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.core.util.ext.toLocalDate
@@ -57,7 +58,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.time.LocalDate
-import java.time.LocalTime
 
 /**
  * Dialog fragment for creating/editing a [transaction][Transaction].
@@ -200,7 +200,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
     private fun showDatePicker(selectedDate: LocalDate) {
         val datePickerDialog = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.ChooseDate)
-            .setSelection(selectedDate.atTime(LocalTime.NOON).toEpochMilli())
+            .setSelection(selectedDate.atUTC().toEpochMilli())
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {
@@ -214,7 +214,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
     private fun showDueDatePicker(selectedDate: LocalDate) {
         val datePickerDialog = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.ChooseDueDate)
-            .setSelection(selectedDate.atTime(LocalTime.NOON).toEpochMilli())
+            .setSelection(selectedDate.atUTC().toEpochMilli())
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {
