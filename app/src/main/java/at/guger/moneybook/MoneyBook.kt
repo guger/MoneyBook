@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,10 +17,13 @@
 package at.guger.moneybook
 
 import android.app.Application
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.di.appModule
 import at.guger.moneybook.di.dataModule
 import at.guger.moneybook.di.mainModule
+import at.guger.moneybook.scheduler.reminder.ForceStopWorker
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.koin.android.ext.android.inject
@@ -45,5 +48,11 @@ class MoneyBook : Application() {
         if (preferences.analytics) FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true)
 
         if (preferences.crashlytics) FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+
+        checkForceStopped()
+    }
+
+    private fun checkForceStopped() {
+        if (ForceStopWorker.isForceStopped(applicationContext)) WorkManager.getInstance(applicationContext).enqueue(OneTimeWorkRequestBuilder<ForceStopWorker>().build())
     }
 }

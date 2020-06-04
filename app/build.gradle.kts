@@ -51,7 +51,7 @@ android {
             versionNameSuffix = "-dev-${Versions.App.buildSignature()}"
         }
         getByName("release") {
-            if (Versions.App.Beta > 0) versionNameSuffix = "-beta-" + Versions.App.Beta
+            if (Versions.App.isBeta()) versionNameSuffix = "-beta-" + Versions.App.Beta
 
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }

@@ -32,6 +32,8 @@ object Versions {
         fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev()
         fun versionName() = "$Major.$Minor.$Patch"
 
+        fun isBeta(): Boolean = Beta > 0
+
         private fun major() = Major * (10.0.pow(5)).toInt()
         private fun minor() = Minor * (10.0.pow(4)).toInt()
         private fun patch() = Patch * (10.0.pow(3)).toInt()

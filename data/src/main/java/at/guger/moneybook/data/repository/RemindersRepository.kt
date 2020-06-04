@@ -33,6 +33,10 @@ class RemindersRepository(database: AppDatabase) {
 
     //region Methods
 
+    suspend fun getReminders(): List<Reminder> {
+        return reminderDao.getReminders()
+    }
+
     suspend fun getReminderForTransaction(transactionId: Long): Reminder? {
         return reminderDao.getReminderForTransaction(transactionId)
     }

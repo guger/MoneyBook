@@ -16,11 +16,13 @@
 
 package at.guger.moneybook.scheduler.reminder
 
+import android.app.AlarmManager
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
+import android.content.Intent
+import android.widget.Toast
+import androidx.core.app.AlarmManagerCompat
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.data.model.Reminder
 import at.guger.moneybook.data.repository.RemindersRepository
@@ -28,53 +30,61 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.concurrent.TimeUnit
 
 /**
  * Scheduler class for managing [reminders][Reminder].
  */
 class ReminderScheduler(private val context: Context, private val repository: RemindersRepository) {
 
+    private val alarmManager: AlarmManager by lazy { context.getSystemService(Context.ALARM_SERVICE) as AlarmManager }
+    private val notificationManager: NotificationManager by lazy { context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
+
     //region Methods
 
     suspend fun scheduleReminder(transactionId: Long, date: LocalDate) {
-        val work = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInputData(workDataOf(EXTRA_TRANSACTION_ID to transactionId))
-            .setInitialDelay(calculateDelay(date), TimeUnit.MILLISECONDS)
-            .build()
-
-        WorkManager.getInstance(context).enqueueUniqueWork(makeWorkerName(transactionId), ExistingWorkPolicy.REPLACE, work)
+        AlarmManagerCompat.setAndAllowWhileIdle(
+            alarmManager,
+            AlarmManager.RTC,
+            calculateReminderTime(date),
+            makePendingIntent(context, transactionId)
+        )
 
         withContext(Dispatchers.IO) {
             repository.getReminderForTransaction(transactionId)?.let {
                 repository.update(it.copy(date = date))
             } ?: repository.insert(Reminder(transactionId = transactionId, date = date))
         }
+
+        Toast.makeText(context, "Scheduled.", Toast.LENGTH_LONG).show()
     }
 
     suspend fun cancelReminder(transactionId: Long) = withContext(Dispatchers.IO) {
         repository.getReminderForTransaction(transactionId)?.let {
-            WorkManager.getInstance(context).cancelUniqueWork(makeWorkerName(transactionId))
+            alarmManager.cancel(makePendingIntent(context, transactionId))
+            notificationManager.cancel(transactionId.toInt())
 
             repository.delete(it)
         }
     }
 
-    private fun calculateDelay(date: LocalDate): Long {
-        return date.atTime(12, 0).toEpochMilli() - LocalDateTime.now().toEpochMilli()
-    }
+    private fun calculateReminderTime(date: LocalDate): Long = LocalDateTime.now().plusMinutes(1).toEpochMilli()//date.atTime(12, 0).toEpochMilli()
 
     //endregion
 
     companion object {
-        private const val REMINDER_WORKER_NAME_TEMPLATE = "at.guger.moneybook.reminder.%d"
-
-        fun makeWorkerName(transactionId: Long) = REMINDER_WORKER_NAME_TEMPLATE.format(transactionId)
-
         const val ACTION_REMINDER = "at.guger.moneybook.action.REMINDER"
 
         const val NOTIFICATION_CHANNEL_REMINDER = "at.guger.moneybook.notification.REMINDER"
 
         const val EXTRA_TRANSACTION_ID = "extra_transaction_id"
+
+        private fun makePendingIntent(context: Context, transactionId: Long): PendingIntent {
+            val reminderIntent = Intent(context, ReminderReceiver::class.java).apply {
+                action = ACTION_REMINDER
+                putExtra(EXTRA_TRANSACTION_ID, transactionId)
+            }
+
+            return PendingIntent.getBroadcast(context, transactionId.toInt(), reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
     }
 }

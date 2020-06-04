@@ -25,6 +25,9 @@ import at.guger.moneybook.data.model.Reminder
 @Dao
 internal interface ReminderDao {
 
+    @Query("SELECT * FROM reminders")
+    suspend fun getReminders(): List<Reminder>
+
     @Query("SELECT * FROM reminders WHERE transaction_id = :transactionId")
     suspend fun getReminderForTransaction(transactionId: Long): Reminder?
 
