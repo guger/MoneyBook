@@ -10,6 +10,7 @@ jobs:
       - image: circleci/android:api-29
     environment:
       JAVA_TOOL_OPTIONS: "-Xmx3200m"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout
       - restore_cache:
