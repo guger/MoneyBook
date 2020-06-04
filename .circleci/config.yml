@@ -6,9 +6,6 @@ references:
 
 jobs:
   build:
-    branches:
-      only:
-        - master
     docker:
       - image: circleci/android:api-29
     environment:
