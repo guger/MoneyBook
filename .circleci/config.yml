@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 references:
   cache_key: &cache_key
@@ -32,7 +32,7 @@ jobs:
           command: echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
       - run:
           name: Run Tests
-          command: ./gradlew lint
+          command: ./gradlew assemble
       - store_artifacts:
           path: app/build/reports
           destination: reports
