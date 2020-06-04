@@ -54,8 +54,6 @@ class ReminderScheduler(private val context: Context, private val repository: Re
                 repository.update(it.copy(date = date))
             } ?: repository.insert(Reminder(transactionId = transactionId, date = date))
         }
-
-        Toast.makeText(context, "Scheduled.", Toast.LENGTH_LONG).show()
     }
 
     suspend fun cancelReminder(transactionId: Long) = withContext(Dispatchers.IO) {
@@ -67,7 +65,7 @@ class ReminderScheduler(private val context: Context, private val repository: Re
         }
     }
 
-    private fun calculateReminderTime(date: LocalDate): Long = LocalDateTime.now().plusMinutes(1).toEpochMilli()//date.atTime(12, 0).toEpochMilli()
+    private fun calculateReminderTime(date: LocalDate): Long = date.atTime(12, 0).toEpochMilli()
 
     //endregion
 
