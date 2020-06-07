@@ -44,7 +44,7 @@ class ReminderScheduler(private val context: Context, private val repository: Re
     suspend fun scheduleReminder(transactionId: Long, date: LocalDate) {
         AlarmManagerCompat.setAndAllowWhileIdle(
             alarmManager,
-            AlarmManager.RTC,
+            AlarmManager.RTC_WAKEUP,
             calculateReminderTime(date),
             makePendingIntent(context, transactionId)
         )

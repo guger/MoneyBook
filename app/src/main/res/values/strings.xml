@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -115,7 +115,7 @@
     <string name="ReminderNotificationTitleDebt">Pending Debt</string>
     <string name="ReminderNotificationTextClaimNoContact">You\'ve an open claim over %s.</string>
     <string name="ReminderNotificationTextDebtNoContact">You\'ve an open debt over %s.</string>
-    <string name="ReminderNotificationTextClaimOneContact">%s owe\'s you %s.</string>
+    <string name="ReminderNotificationTextClaimOneContact">%s owes you %s.</string>
     <string name="ReminderNotificationTextDebtOneContact">You owe %s %s.</string>
     <string name="ReminderNotificationTextClaimMultipleContacts">%d contacts owe you %s.</string>
     <string name="ReminderNotificationTextDebtMultipleContacts">You owe %d contacts %s.</string>
