@@ -17,6 +17,7 @@
 package at.guger.moneybook.data.repository
 
 import androidx.lifecycle.LiveData
+import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.ContactsDao
@@ -73,6 +74,23 @@ class TransactionsRepository(database: AppDatabase) {
 
     suspend fun delete(vararg transaction: Transaction) {
         transactionsDao.delete(*transaction.map { it.entity }.toTypedArray())
+    }
+
+    suspend fun markAsPaid(transactionId: Long) {
+        markAsPaid(get(transactionId))
+    }
+
+    private suspend fun markAsPaid(transaction: Transaction) {
+        update(
+            when (transaction.type) {
+                Transaction.TransactionType.EARNING, Transaction.TransactionType.EXPENSE -> throw IllegalArgumentException("Earnings and expenses must not be marked as paid.")
+                else -> Transaction(
+                    entity = transaction.entity.copy(isPaid = true),
+                    contacts = transaction.contacts?.also { contacts ->
+                        contacts.forEach { it.copy(paidState = Contact.PaidState.STATE_PAID) }
+                    })
+            }
+        )
     }
 
     //endregion

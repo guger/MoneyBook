@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fd3be42ed7b585fed93750414fe0a824",
+    "identityHash": "65cd796cf8be7c1713973b35ed4d472f",
     "entities": [
       {
         "tableName": "transactions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `date` INTEGER NOT NULL, `due` INTEGER, `value` REAL NOT NULL, `notes` TEXT NOT NULL, `type` INTEGER NOT NULL, `account_id` INTEGER, `budget_id` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `accounts`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `date` INTEGER NOT NULL, `due` INTEGER, `value` REAL NOT NULL, `notes` TEXT NOT NULL, `type` INTEGER NOT NULL, `paid` INTEGER NOT NULL, `account_id` INTEGER, `budget_id` INTEGER, FOREIGN KEY(`account_id`) REFERENCES `accounts`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -47,6 +47,12 @@
           {
             "fieldPath": "type",
             "columnName": "type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPaid",
+            "columnName": "paid",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -279,7 +285,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fd3be42ed7b585fed93750414fe0a824')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '65cd796cf8be7c1713973b35ed4d472f')"
     ]
   }
 }

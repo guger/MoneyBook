@@ -36,6 +36,7 @@ object Database {
         const val COL_VALUE = "value"
         const val COL_NOTES = "notes"
         const val COL_TYPE = "type"
+        const val COL_IS_PAID = "paid"
         const val COL_ACCOUNT_ID = "account_id"
         const val COL_BUDGET_ID = "budget_id"
     }

@@ -21,7 +21,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.core.app.AlarmManagerCompat
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.data.model.Reminder
@@ -42,10 +41,14 @@ class ReminderScheduler(private val context: Context, private val repository: Re
     //region Methods
 
     suspend fun scheduleReminder(transactionId: Long, date: LocalDate) {
+        scheduleReminder(transactionId, calculateReminderTime(date))
+    }
+
+    suspend fun scheduleReminder(transactionId: Long, date: LocalDateTime) {
         AlarmManagerCompat.setAndAllowWhileIdle(
             alarmManager,
             AlarmManager.RTC_WAKEUP,
-            calculateReminderTime(date),
+            date.toEpochMilli(),
             makePendingIntent(context, transactionId)
         )
 
@@ -65,7 +68,7 @@ class ReminderScheduler(private val context: Context, private val repository: Re
         }
     }
 
-    private fun calculateReminderTime(date: LocalDate): Long = date.atTime(12, 0).toEpochMilli()
+    private fun calculateReminderTime(date: LocalDate): LocalDateTime = date.atTime(12, 0)
 
     //endregion
 

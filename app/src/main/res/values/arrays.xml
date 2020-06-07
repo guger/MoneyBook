@@ -16,7 +16,7 @@
   -->
 
 <resources>
-
+s
     <string-array name="Currencies">
         <item>@string/Default</item>
         <item>@string/Dollar</item>
@@ -31,5 +31,21 @@
         <item>EUR</item>
         <item>GBP</item>
         <item>JPY</item>
+    </string-array>
+
+    <string-array name="SnoozeDelays">
+        <item>@string/FiveHours</item>
+        <item>@string/OneDay</item>
+        <item>@string/ThreeDays</item>
+        <item>@string/FiveDays</item>
+        <item>@string/OneWeek</item>
+    </string-array>
+
+    <string-array name="SnoozeDelayValues">
+        <item>18000000</item>
+        <item>86400000</item>
+        <item>259200000</item>
+        <item>432000000</item>
+        <item>604800000</item>
     </string-array>
 </resources>

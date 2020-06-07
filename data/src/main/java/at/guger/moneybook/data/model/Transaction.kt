@@ -56,9 +56,12 @@ class Transaction(
     val type: Int
         get() = entity.type
 
+    val isPaid: Boolean
+        get() = entity.isPaid
+
     override fun equals(other: Any?): Boolean {
         return other is Transaction && other.id == id && other.title == title && other.date == date &&
-                other.value == value && other.due == due && other.notes == notes && other.type == type &&
+                other.value == value && other.due == due && other.notes == notes && other.type == type && other.isPaid == isPaid &&
                 other.account == account && other.budget == budget && other.contacts == contacts
     }
 
@@ -84,10 +87,12 @@ class Transaction(
         @ColumnInfo(name = Database.Transactions.COL_VALUE) val value: Double = 0.0,
         @ColumnInfo(name = Database.Transactions.COL_NOTES) val notes: String = "",
         @ColumnInfo(name = Database.Transactions.COL_TYPE) @TransactionType val type: Int = TransactionType.EARNING,
+        @ColumnInfo(name = Database.Transactions.COL_IS_PAID) val isPaid: Boolean = false,
         @ColumnInfo(name = Database.Transactions.COL_ACCOUNT_ID) val accountId: Long? = null,
         @ColumnInfo(name = Database.Transactions.COL_BUDGET_ID) val budgetId: Long? = null
     ) : Model
 
+    // TODO Check replacement with sealed class
     @Target(AnnotationTarget.TYPE, AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.CLASS)
     @IntDef(value = [TransactionType.EARNING, TransactionType.EXPENSE, TransactionType.CLAIM, TransactionType.DEBT])
     @Retention(AnnotationRetention.SOURCE)

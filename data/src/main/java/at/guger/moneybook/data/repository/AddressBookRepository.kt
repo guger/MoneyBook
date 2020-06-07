@@ -66,7 +66,7 @@ class AddressBookRepository(private val contentResolver: ContentResolver) {
         val args: Array<String> = Array(ids.size) { i -> ids.toList()[i].toString() }
 
         makePhoneNumberCursor(args)?.run {
-            val idCol = getColumnIndex(CONTACT_ID)
+            val idCol = getColumnIndex(PHONE_CONTACT_ID)
             val numberCol = getColumnIndex(PHONE_NUMBER_NORMALIZED)
             val numberTypeCol = getColumnIndex(PHONE_NUMBER_TYPE)
 

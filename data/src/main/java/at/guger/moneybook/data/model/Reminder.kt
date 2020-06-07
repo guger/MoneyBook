@@ -23,6 +23,7 @@ import at.guger.moneybook.data.Database.Reminders.COL_ID
 import at.guger.moneybook.data.Database.Reminders.COL_TRANSACTION_ID
 import at.guger.moneybook.data.provider.local.AppDatabase
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 /**
  * [AppDatabase] entity for reminders for [transactions][Transaction] of type [Transaction.TransactionType.CLAIM] or [Transaction.TransactionType.DEBT].
@@ -35,5 +36,5 @@ import java.time.LocalDate
 data class Reminder(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = COL_ID) val id: Long = 0,
     @ColumnInfo(name = COL_TRANSACTION_ID) val transactionId: Long = -1,
-    @ColumnInfo(name = COL_DATE) val date: LocalDate = LocalDate.MIN
+    @ColumnInfo(name = COL_DATE) val date: LocalDateTime = LocalDateTime.MIN
 )
