@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ class OverviewBudgetsViewHolder(binding: ItemOverviewBudgetsBinding) : BindingVi
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewBudgetsListAdapter().apply {
                 viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, Observer { budgets ->
-                    submitList(budgets.subList(0, min(budgets.size, 3)))
+                    submitList(budgets.sortedBy { if (it.balance > 0) it.budget - it.balance else Double.MAX_VALUE }.subList(0, min(budgets.size, 3)))
                 })
             }
         }

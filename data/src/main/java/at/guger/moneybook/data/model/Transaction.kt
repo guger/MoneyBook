@@ -92,7 +92,6 @@ class Transaction(
         @ColumnInfo(name = Database.Transactions.COL_BUDGET_ID) val budgetId: Long? = null
     ) : Model
 
-    // TODO Check replacement with sealed class
     @Target(AnnotationTarget.TYPE, AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.CLASS)
     @IntDef(value = [TransactionType.EARNING, TransactionType.EXPENSE, TransactionType.CLAIM, TransactionType.DEBT])
     @Retention(AnnotationRetention.SOURCE)
