@@ -39,8 +39,8 @@ class OverviewDuesViewHolder(binding: ItemOverviewDuesBinding) : BindingViewHold
         viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, Observer { transactions ->
             mOverviewDuesDivider.setDistributions(
                 listOf(
-                    transactions.filter { it.type == Transaction.TransactionType.CLAIM }.sumByDouble { it.value }.toFloat(),
-                    transactions.filter { it.type == Transaction.TransactionType.DEBT }.sumByDouble { it.value }.toFloat()
+                    transactions.filter { !it.isPaid && it.type == Transaction.TransactionType.CLAIM }.sumByDouble { it.value }.toFloat(),
+                    transactions.filter { !it.isPaid && it.type == Transaction.TransactionType.DEBT }.sumByDouble { it.value }.toFloat()
                 ),
                 colorsRes = listOf(
                     R.color.color_claim,

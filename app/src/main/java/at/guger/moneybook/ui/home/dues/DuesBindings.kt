@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ package at.guger.moneybook.ui.home.dues
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.R
-import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.util.CurrencyFormat
 import at.guger.strokepiechart.Entry
 import at.guger.strokepiechart.StrokePieChart
 import kotlin.math.max
@@ -32,8 +32,8 @@ import kotlin.math.max
 
 @BindingAdapter("dues")
 fun StrokePieChart.setDues(dues: List<Transaction>?) {
-    val claimsSum = dues?.filter { it.type == Transaction.TransactionType.CLAIM }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
-    val debtsSum = dues?.filter { it.type == Transaction.TransactionType.DEBT }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
+    val claimsSum = dues?.filter { !it.isPaid && it.type == Transaction.TransactionType.CLAIM }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
+    val debtsSum = dues?.filter { !it.isPaid && it.type == Transaction.TransactionType.DEBT }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
 
     setEntries(
         arrayListOf(

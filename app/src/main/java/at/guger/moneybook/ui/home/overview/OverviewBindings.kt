@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@ package at.guger.moneybook.ui.home.overview
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.util.CurrencyFormat
 import kotlin.math.max
 
 /**
@@ -33,8 +33,9 @@ fun TextView.setTransactions(transactions: List<Transaction>?) {
     transactions?.let {
         setCurrency(it.sumByDouble { transaction ->
             when (transaction.type) {
-                Transaction.TransactionType.EARNING, Transaction.TransactionType.CLAIM -> transaction.value
-                else -> transaction.value.unaryMinus()
+                Transaction.TransactionType.EARNING -> transaction.value
+                Transaction.TransactionType.EXPENSE -> -transaction.value
+                else -> throw IllegalArgumentException("Transaction sums must not include claims or debts.")
             }
         })
     }
@@ -43,12 +44,11 @@ fun TextView.setTransactions(transactions: List<Transaction>?) {
 @BindingAdapter("dues", requireAll = true)
 fun TextView.setDues(transactions: List<Transaction>?) {
     transactions?.let {
-        setCurrency(it.sumByDouble { transaction ->
+        setCurrency(it.filterNot { it.isPaid }.sumByDouble { transaction ->
             when (transaction.type) {
-                Transaction.TransactionType.EARNING -> transaction.value
-                Transaction.TransactionType.EXPENSE -> -transaction.value
                 Transaction.TransactionType.CLAIM -> transaction.value * max(transaction.contacts.size(), 1)
-                else -> -transaction.value * max(transaction.contacts.size(), 1)
+                Transaction.TransactionType.DEBT -> -transaction.value * max(transaction.contacts.size(), 1)
+                else -> throw IllegalArgumentException("Debt sums must not include earnings or expenses.")
             }
         })
     }
