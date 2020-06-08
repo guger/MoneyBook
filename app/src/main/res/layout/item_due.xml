@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
         android:padding="@dimen/item_padding">
 
         <TextView
-            android:id="@+id/txvTransactionDetailTitle"
+            android:id="@+id/txvTransactionDueTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_text_spacing"
@@ -35,13 +35,13 @@
             android:singleLine="true"
             android:text="@{transaction.title}"
             android:textAppearance="?textAppearanceSubtitle1"
-            app:layout_constraintEnd_toStartOf="@+id/txvTransactionDetailType"
+            app:layout_constraintEnd_toStartOf="@+id/txvTransactionDueType"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
         <TextView
-            android:id="@+id/txvTransactionDetailDate"
+            android:id="@+id/txvTransactionDueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -49,29 +49,42 @@
             android:text="@{transaction.due != null ? DateFormatUtils.formatDueDate(context, transaction.due) : DateFormatUtils.formatTransactionDate(transaction.date)}"
             android:textAppearance="?textAppearanceBody2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txvTransactionDetailTitle"
-            app:layout_constraintTop_toBottomOf="@+id/txvTransactionDetailTitle"
+            app:layout_constraintStart_toStartOf="@+id/txvTransactionDueTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txvTransactionDueTitle"
             tools:text="Due 12.04.2019" />
 
-        <TextView
-            android:id="@+id/txvTransactionDetailValue"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txvTransactionDueValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_text_spacing"
+            android:layout_marginEnd="@dimen/default_icon_spacing"
+            app:layout_goneMarginEnd="0dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:textAlignment="viewEnd"
             android:textAppearance="?textAppearanceBody1"
             app:contactsCount="@{transaction.contacts.size()}"
             app:currency="@{transaction.value}"
-            app:layout_constraintBottom_toBottomOf="@+id/txvTransactionDetailDate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txvTransactionDetailType"
-            app:layout_constraintTop_toTopOf="@+id/txvTransactionDetailTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/txvTransactionDueDate"
+            app:layout_constraintEnd_toStartOf="@+id/imvTransactionDuePaid"
+            app:layout_constraintStart_toEndOf="@+id/txvTransactionDueType"
+            app:layout_constraintTop_toTopOf="@+id/txvTransactionDueTitle"
             tools:text="€ 1.234,78" />
 
+        <ImageView
+            android:id="@+id/imvTransactionDuePaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/MarkAsPaid"
+            android:src="@drawable/ic_mark_as_paid"
+            android:visibility="@{transaction.isPaid ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:id="@+id/txvTransactionDetailType"
+            android:id="@+id/txvTransactionDueType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha=".75"
@@ -89,11 +102,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".65" />
+            app:layout_constraintGuide_percent="@dimen/item_guideline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
+
+        <import type="android.view.View" />
 
         <import type="at.guger.moneybook.util.DateFormatUtils" />
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -53,7 +53,8 @@ class OverviewDuesViewHolder(binding: ItemOverviewDuesBinding) : BindingViewHold
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewDuesListAdapter().apply {
                 viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, Observer { transactions ->
-                    submitList(transactions.subList(0, min(transactions.size, 3)))
+                    val unpaidDues = transactions.filterNot { it.isPaid }
+                    submitList(unpaidDues.subList(0, min(unpaidDues.size, 3)))
                 })
             }
         }

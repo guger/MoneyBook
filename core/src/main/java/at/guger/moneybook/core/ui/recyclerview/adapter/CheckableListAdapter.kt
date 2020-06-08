@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,25 +17,28 @@
 package at.guger.moneybook.core.ui.recyclerview.adapter
 
 import androidx.annotation.CallSuper
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import at.guger.moneybook.data.model.base.Model
 
 /**
  * Interface for a [RecyclerView.Adapter] supporting checked items.
  */
-interface CheckableList {
+abstract class CheckableListAdapter<T : Model, VH : RecyclerView.ViewHolder>(diffCallback: DiffUtil.ItemCallback<T>) : ListAdapter<T, VH>(diffCallback) {
 
-    val checkedItems: MutableList<Int>
+    abstract val checkedItems: MutableList<Int>
 
     val checkedCount: Int
         get() = checkedItems.count()
 
     @CallSuper
-    fun toggleChecked(pos: Int) {
+    open fun toggleChecked(pos: Int) {
         if (!checkedItems.contains(pos)) checkedItems.add(pos) else checkedItems.remove(pos)
     }
 
     @CallSuper
-    fun clearChecked() {
+    open fun clearChecked() {
         checkedItems.clear()
     }
 }

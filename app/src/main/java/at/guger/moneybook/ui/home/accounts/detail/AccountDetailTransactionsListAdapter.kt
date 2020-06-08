@@ -19,17 +19,15 @@ package at.guger.moneybook.ui.home.accounts.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
+import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
  * [RecyclerView.Adapter] for overview coloredAccounts card.
  */
-class AccountDetailTransactionsListAdapter : ListAdapter<Transaction, AccountDetailTransactionViewHolder>(AccountsDetailsTransactionsDiffCallback()),
-    CheckableList {
+class AccountDetailTransactionsListAdapter : CheckableListAdapter<Transaction, AccountDetailTransactionViewHolder>(AccountsDetailsTransactionsDiffCallback()) {
 
     //region Variables
 
@@ -53,13 +51,13 @@ class AccountDetailTransactionsListAdapter : ListAdapter<Transaction, AccountDet
 
     //region Methods
 
-    override fun toggleChecked(pos: Int) {
+    public override fun toggleChecked(pos: Int) {
         super.toggleChecked(pos)
 
         notifyItemChanged(pos)
     }
 
-    override fun clearChecked() {
+    public override fun clearChecked() {
         super.clearChecked()
 
         notifyDataSetChanged()

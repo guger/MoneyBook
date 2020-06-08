@@ -80,7 +80,7 @@ class TransactionsRepository(database: AppDatabase) {
         markAsPaid(get(transactionId))
     }
 
-    private suspend fun markAsPaid(transaction: Transaction) {
+    suspend fun markAsPaid(transaction: Transaction) {
         update(
             when (transaction.type) {
                 Transaction.TransactionType.EARNING, Transaction.TransactionType.EXPENSE -> throw IllegalArgumentException("Earnings and expenses must not be marked as paid.")

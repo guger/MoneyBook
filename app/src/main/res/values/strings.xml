@@ -133,4 +133,5 @@
     <string name="ScreenOverlayNotPermitted">The snooze dialog can\'t be shown due to screen overlay being not permitted. Open settings to enable.</string>
     <string name="ReminderMessage">I\'ve borrowed you %s.\n\nReminded by MoneyBook.</string>
     <string name="NoSMSAppFound">It looks like there is no SMS application installed.</string>
+    <string name="MarkAsPaid">Mark as Paid</string>
 </resources>

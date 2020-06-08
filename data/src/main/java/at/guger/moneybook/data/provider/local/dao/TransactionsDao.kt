@@ -55,7 +55,10 @@ internal interface TransactionsDao {
         """
         SELECT transactions.* FROM transactions
         WHERE type IN (${Transaction.TransactionType.CLAIM}, ${Transaction.TransactionType.DEBT})
-        ORDER BY due ASC, date DESC, title ASC
+        ORDER BY
+            paid ASC,
+            due ASC,
+            date DESC, title ASC
         """
     )
     fun getClaimsAndDebts(): LiveData<List<Transaction>>

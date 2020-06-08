@@ -35,7 +35,7 @@ val appModule = module {
     single { Preferences(get()) }
     single { ReminderScheduler(get(), get()) }
 
-    viewModel { HomeViewModel(get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { (accountId: Long) -> AccountDetailViewModel(get(), get(), accountId) }
     viewModel { AddEditTransactionViewModel(get(), get(), get(), get()) }
     viewModel { AddEditAccountDialogFragmentViewModel(get()) }

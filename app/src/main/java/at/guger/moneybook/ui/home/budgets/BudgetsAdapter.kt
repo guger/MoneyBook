@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,16 +19,15 @@ package at.guger.moneybook.ui.home.budgets
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
+import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.databinding.ItemBudgetBinding
 
 /**
  * [RecyclerView.Adapter] showing all budgets.
  */
-class BudgetsAdapter : ListAdapter<BudgetWithBalance, BudgetViewHolder>(BudgetsDiffCallback()), CheckableList {
+class BudgetsAdapter : CheckableListAdapter<BudgetWithBalance, BudgetViewHolder>(BudgetsDiffCallback()) {
 
     //region Variables
 

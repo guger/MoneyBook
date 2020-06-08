@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,9 +19,8 @@ package at.guger.moneybook.ui.home.accounts
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableList
+import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.databinding.ItemAccountBinding
 import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel
@@ -29,7 +28,7 @@ import at.guger.moneybook.ui.home.HomeViewModel
 /**
  * [RecyclerView.Adapter] showing all accounts and details.
  */
-class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<ColoredAccount, AccountViewHolder>(AccountsDiffCallback()), CheckableList {
+class AccountsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapter<ColoredAccount, AccountViewHolder>(AccountsDiffCallback()) {
 
     //region Variables
 
@@ -53,13 +52,13 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : ListAdapter<Colore
 
     //region Methods
 
-    override fun toggleChecked(pos: Int) {
+    public override fun toggleChecked(pos: Int) {
         super.toggleChecked(pos)
 
         notifyItemChanged(pos)
     }
 
-    override fun clearChecked() {
+    public override fun clearChecked() {
         super.clearChecked()
 
         notifyDataSetChanged()

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                 requireAppCompatActivity<MainActivity>().mCab!!.apply {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
-                    TransactionMenuUtils.prepareMenu(getMenu(), adapter)
+                    TransactionMenuUtils.prepareMenu(getMenu(), adapter, markAsPaid = true)
                 }
             } else {
                 requireAppCompatActivity<MainActivity>().destroyCab()
@@ -110,7 +110,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                 requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_transaction) {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
-                    onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter) }
+                    onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter, markAsPaid = true) }
 
                     onDestroy {
                         adapter.clearChecked()
@@ -118,7 +118,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                     }
 
                     onSelection { menuItem ->
-                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, viewModel::deleteTransaction)
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, viewModel::markAsPaid, viewModel::deleteTransaction)
                         destroy()
                     }
                 }

@@ -24,6 +24,11 @@
         android:title="@string/Edit"
         app:showAsAction="always" />
     <item
+        android:id="@+id/actionTransactionMarkAsPaid"
+        android:icon="@drawable/ic_mark_as_paid"
+        android:title="@string/MarkAsPaid"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/actionTransactionDelete"
         android:icon="@drawable/ic_delete"
         android:title="@string/Delete"

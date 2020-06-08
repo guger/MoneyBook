@@ -22,4 +22,6 @@
     <dimen name="item_padding">12dp</dimen>
 
     <dimen name="default_text_spacing">24dp</dimen>
+    <dimen name="default_icon_spacing">12dp</dimen>
+    <dimen name="item_guideline">.6</dimen>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import at.guger.moneybook.core.ui.recyclerview.layoutmanager.SnappingLinearLayou
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.TabListMediator
-import at.guger.moneybook.core.util.ext.hideIfShown
 import at.guger.moneybook.core.util.ext.colorAttr
+import at.guger.moneybook.core.util.ext.hideIfShown
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.core.util.ext.showIfHidden
 import at.guger.moneybook.data.model.Account
@@ -244,7 +244,7 @@ class AccountDetailFragment : BaseFragment(), OnItemTouchListener.ItemTouchListe
                     }
 
                     onSelection { menuItem ->
-                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, viewModel::delete)
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, editAction = ::editTransaction, deleteAction = viewModel::delete)
                         destroy()
                     }
                 }

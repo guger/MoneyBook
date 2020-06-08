@@ -278,9 +278,13 @@ class AddEditTransactionViewModel(
             return null
         }
 
-        val parsedDueDate: LocalDate? = try {
-            LocalDate.parse(dueDate, SHORT_DATE_FORMAT)
-        } catch (e: DateTimeParseException) {
+        val parsedDueDate: LocalDate? = if (!dueDate.isNullOrBlank()) {
+            try {
+                LocalDate.parse(dueDate, SHORT_DATE_FORMAT)
+            } catch (e: DateTimeParseException) {
+                null
+            }
+        } else {
             null
         }
 

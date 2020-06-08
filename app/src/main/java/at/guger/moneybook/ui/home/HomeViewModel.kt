@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
+import at.guger.moneybook.scheduler.reminder.ReminderScheduler
 import at.guger.moneybook.util.DataUtils
 import kotlinx.coroutines.launch
 
@@ -34,7 +35,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val transactionsRepository: TransactionsRepository,
     private val accountsRepository: AccountsRepository,
-    private val budgetsRepository: BudgetsRepository
+    private val budgetsRepository: BudgetsRepository,
+    private val scheduler: ReminderScheduler
 ) : ViewModel() {
 
     //region Variables
@@ -75,6 +77,16 @@ class HomeViewModel(
 
     fun showAccount(account: ColoredAccount) {
         _showAccount.value = Event(account.id)
+    }
+
+    fun markAsPaid(vararg transaction: Transaction) {
+        viewModelScope.launch {
+            transaction.forEach {
+                transactionsRepository.markAsPaid(it)
+
+                if (it.due != null) scheduler.cancelReminder(it.id)
+            }
+        }
     }
 
     fun deleteTransaction(vararg transaction: Transaction) {
