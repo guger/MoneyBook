@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 29
     }
 
-    const val Gradle = "4.0.0"
+    const val Gradle = "4.1.0-beta01"
 
     const val Koin = "2.1.5"
 
@@ -78,22 +78,22 @@ object Versions {
 
         object Plugins {
             const val GoogleServices = "4.3.3"
-            const val CrashlyticsGradle = "2.0.0"
+            const val CrashlyticsGradle = "2.1.1"
         }
 
-        const val Analytics = "17.4.0"
-        const val Crashlytics = "17.0.0"
+        const val Analytics = "17.4.3"
+        const val Crashlytics = "17.0.1"
     }
 
     object AndroidX {
         const val Core = "1.3.0-rc01"
         const val AppCompat = "1.2.0-rc01"
         const val Annotation = "1.1.0"
-        const val Fragment = "1.2.4"
+        const val Fragment = "1.2.5"
         const val Preference = "1.1.1"
         const val Biometric = "1.0.1"
         const val ViewPager2 = "1.0.0"
-        const val ConstraintLayout = "2.0.0-beta6"
+        const val ConstraintLayout = "2.0.0-beta7"
         const val RecyclerView = "1.1.0"
         const val CardView = "1.0.0"
     }
@@ -105,7 +105,7 @@ object Versions {
 
     object Arch {
         const val Lifecycle = "2.2.0"
-        const val Navigation = "2.2.2"
+        const val Navigation = "2.3.0-rc01"
         const val Room = "2.2.5"
         const val Work = "2.3.4"
     }

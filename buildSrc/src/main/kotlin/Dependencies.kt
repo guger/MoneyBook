@@ -84,8 +84,8 @@ object Dependencies {
     }
 
     object Arch {
-        const val LifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.Arch.Lifecycle}"
         const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Arch.Lifecycle}"
+        const val LifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.Arch.Lifecycle}"
         const val LifecycleCommon = "androidx.lifecycle:lifecycle-common-java8:${Versions.Arch.Lifecycle}"
 
         const val NavigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.Arch.Navigation}"
@@ -121,8 +121,8 @@ fun DependencyHandler.koin() {
 }
 
 fun DependencyHandler.lifecycle() {
-    implementation(Dependencies.Arch.LifecycleExtensions)
     implementation(Dependencies.Arch.LifecycleViewModel)
+    implementation(Dependencies.Arch.LifecycleLiveData)
     kapt(Dependencies.Arch.LifecycleCommon)
 }
 
