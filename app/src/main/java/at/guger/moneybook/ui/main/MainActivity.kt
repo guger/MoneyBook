@@ -122,6 +122,9 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
      */
     private fun prepareAppBar(destination: NavDestination) {
         when (destination.id) {
+            R.id.onBoardingFragment -> {
+                mBottomAppBar.visibility = View.GONE
+            }
             R.id.addEditTransactionFragment -> {
                 mBottomAppBar.performHide()
                 mBottomAppBar.visibility = View.GONE

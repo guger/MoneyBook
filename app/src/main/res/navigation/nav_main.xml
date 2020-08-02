@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -111,4 +111,10 @@
             app:argType="at.guger.moneybook.data.model.Budget"
             app:nullable="true" />
     </dialog>
+
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="at.guger.moneybook.ui.onboarding.OnBoardingFragment"
+        android:label="OnBoardingFragment"
+        tools:layout="@layout/fragment_onboarding" />
 </navigation>

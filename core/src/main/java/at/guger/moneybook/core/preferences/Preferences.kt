@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,6 +30,10 @@ class Preferences(context: Context) {
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
+    var firstStart: Boolean
+        get() = preferences.getBoolean(FIRST_START, true)
+        set(value) = preferences.edit { putBoolean(FIRST_START, value) }
+
     var analytics: Boolean
         get() = preferences.getBoolean(ANALYTICS, true)
         set(value) = preferences.edit { putBoolean(ANALYTICS, value) }
@@ -43,6 +47,7 @@ class Preferences(context: Context) {
         set(value) = preferences.edit { putString(CURRENCY, value.currencyCode) }
 
     companion object {
+        const val FIRST_START = "pref_firstStart"
         const val CURRENCY = "pref_currency"
         const val ANALYTICS = "pref_analytics"
         const val CRASHLYTICS = "pref_crashlytics"

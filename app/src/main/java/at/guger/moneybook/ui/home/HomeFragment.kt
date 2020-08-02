@@ -30,6 +30,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
+import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
@@ -45,6 +46,7 @@ import com.afollestad.assent.askForPermissions
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -53,6 +55,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class HomeFragment : BaseFragment() {
 
     //region Variables
+
+    private val preferences: Preferences by inject()
 
     private val destinations = Destination.values()
 
@@ -65,6 +69,8 @@ class HomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        /*if (preferences.firstStart)*/ showOnBoardingFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -99,6 +105,11 @@ class HomeFragment : BaseFragment() {
     //endregion
 
     //region Methods
+
+    private fun showOnBoardingFragment() {
+        findNavController().navigate(R.id.onBoardingFragment)
+        //preferences.firstStart = false TODO
+    }
 
     private fun setupLayout() {
         TooltipCompat.setTooltipText(fabHomeAddTransaction, getString(R.string.NewTransaction))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package at.guger.moneybook.data.migration
 
 import android.content.Context
+import java.io.File
 
 /**
  * Migration helper for converting v1 data to v2.
@@ -31,5 +32,11 @@ class MigrationHelper(context: Context) {
         TODO()
 
         finished()
+    }
+
+    companion object {
+        const val LegacyDB = "MoneyBookDB.db"
+
+        fun needMigration() = File(LegacyDB).exists()
     }
 }

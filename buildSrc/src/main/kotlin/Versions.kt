@@ -46,15 +46,15 @@ object Versions {
 
     object SDK {
         const val MIN = 21
-        const val TARGET = 29
+        const val TARGET = 30
     }
 
-    const val Gradle = "4.1.0-beta01"
+    const val Gradle = "4.1.0-beta05"
 
-    const val Koin = "2.1.5"
+    const val Koin = "2.1.6"
 
     object D8 {
-        const val CoreLibraryDesugaring = "1.0.5"
+        const val CoreLibraryDesugaring = "1.0.9"
     }
 
     object Test {
@@ -78,36 +78,36 @@ object Versions {
 
         object Plugins {
             const val GoogleServices = "4.3.3"
-            const val CrashlyticsGradle = "2.1.1"
+            const val CrashlyticsGradle = "2.2.0"
         }
 
-        const val Analytics = "17.4.3"
-        const val Crashlytics = "17.0.1"
+        const val Analytics = "17.4.4"
+        const val Crashlytics = "17.1.1"
     }
 
     object AndroidX {
-        const val Core = "1.3.0-rc01"
-        const val AppCompat = "1.2.0-rc01"
+        const val Core = "1.3.1"
+        const val AppCompat = "1.2.0-rc02"
         const val Annotation = "1.1.0"
         const val Fragment = "1.2.5"
         const val Preference = "1.1.1"
         const val Biometric = "1.0.1"
         const val ViewPager2 = "1.0.0"
-        const val ConstraintLayout = "2.0.0-beta7"
+        const val ConstraintLayout = "2.0.0-rc1"
         const val RecyclerView = "1.1.0"
         const val CardView = "1.0.0"
     }
 
     object Material {
-        const val Material = "1.2.0-beta01"
+        const val Material = "1.2.0-rc01"
         const val Flexbox = "1.1.0"
     }
 
     object Arch {
         const val Lifecycle = "2.2.0"
-        const val Navigation = "2.3.0-rc01"
+        const val Navigation = "2.3.0"
         const val Room = "2.2.5"
-        const val Work = "2.3.4"
+        const val Work = "2.4.0"
     }
 
     object Libraries {
@@ -116,9 +116,10 @@ object Versions {
         const val MaterialDialogs = "3.3.0"
 
         const val Charts = "v3.1.0"
+        const val ViewPagerDots = "4.1.2"
 
-        const val CalcDialog = "2.2.0"
-        const val IconDialog = "3.2.0"
+        const val CalcDialog = "2.2.1"
+        const val IconDialog = "3.3.0"
         const val RecurPicker = "2.1.1"
     }
 }

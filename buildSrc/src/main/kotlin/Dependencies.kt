@@ -63,8 +63,8 @@ object Dependencies {
     }
 
     object Firebase {
-        const val Analytics = "com.google.firebase:firebase-analytics:${Versions.Firebase.Analytics}"
-        const val Crashlytics = "com.google.firebase:firebase-crashlytics:${Versions.Firebase.Crashlytics}"
+        const val Analytics = "com.google.firebase:firebase-analytics-ktx:${Versions.Firebase.Analytics}"
+        const val Crashlytics = "com.google.firebase:firebase-crashlytics-ktx:${Versions.Firebase.Crashlytics}"
     }
 
     object AndroidX {
@@ -107,6 +107,8 @@ object Dependencies {
         const val MaterialDialogsColor = "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"
 
         const val Charts = "com.github.PhilJay:MPAndroidChart:${Versions.Libraries.Charts}"
+
+        const val ViewPagerDots = "com.tbuonomo.andrui:viewpagerdotsindicator:${Versions.Libraries.ViewPagerDots}"
 
         const val CalcDialog = "com.maltaisn:calcdialog:${Versions.Libraries.CalcDialog}"
         const val IconDialog = "com.maltaisn:icondialog:${Versions.Libraries.IconDialog}"

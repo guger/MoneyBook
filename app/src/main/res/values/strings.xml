@@ -134,4 +134,18 @@
     <string name="ReminderMessage">I\'ve borrowed you %s.\n\nReminded by MoneyBook.</string>
     <string name="NoSMSAppFound">It looks like there is no SMS application installed.</string>
     <string name="MarkAsPaid">Mark as Paid</string>
+    <string name="Next">Next</string>
+    <string name="Skip">Skip</string>
+    <string name="GetStarted">Get Started</string>
+    <string name="StartMigrating">Start Migrating</string>
+    <string name="Welcome">Welcome to MoneyBook</string>
+    <string name="YourPersonalFinanceManager">Your personal finance manager</string>
+    <string name="StayOnTopOfYourFinances">Stay on top of your finances.</string>
+    <string name="TrackSpendingsWithAccounts">Track your spendings with accounts</string>
+    <string name="CreateAccountsOrganiseTransactions">Create up to four accounts and organize your transactions.</string>
+    <string name="KeepEyeOfDues">Keey an eye on your dues</string>
+    <string name="NeverForgetAnyDue">Get reminded about money you borrowed or lent.</string>
+    <string name="OrganizeBudget">Organize your monthly budget</string>
+    <string name="OrganizeInBudgets">Always know whats left.</string>
+    <string name="GetStartedNow">Start tracking your finances. With your personal and secure finance manager.</string>
 </resources>
