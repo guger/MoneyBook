@@ -34,10 +34,10 @@ object Versions {
 
         fun isBeta(): Boolean = Beta > 0
 
-        private fun major() = Major * (10.0.pow(5)).toInt()
-        private fun minor() = Minor * (10.0.pow(4)).toInt()
-        private fun patch() = Patch * (10.0.pow(3)).toInt()
-        private fun release() = Release * (10.0.pow(2)).toInt()
+        private fun major() = Major * (10.0.pow(7)).toInt()
+        private fun minor() = Minor * (10.0.pow(6)).toInt()
+        private fun patch() = Patch * (10.0.pow(4)).toInt()
+        private fun release() = Release * (10.0.pow(3)).toInt()
         private fun beta() = Beta * 10
         private fun dev() = Dev
 
