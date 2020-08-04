@@ -86,6 +86,7 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="?colorPrimary"
             android:clickable="true"
+            android:contentDescription="@string/AddTransaction"
             android:focusable="true"
             android:onClick="@{() -> viewModel.showAddEditTransactionDialogFragment()}"
             android:src="@drawable/ic_add"

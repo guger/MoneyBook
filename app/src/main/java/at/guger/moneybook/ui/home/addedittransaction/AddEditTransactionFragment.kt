@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,10 +41,9 @@ import at.guger.moneybook.core.ui.shape.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.core.ui.transition.MaterialContainerTransition
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
-import at.guger.moneybook.core.util.ext.atUTC
 import at.guger.moneybook.core.util.ext.hasPermission
-import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.core.util.ext.toLocalDate
+import at.guger.moneybook.core.util.ext.utcMillis
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
 import at.guger.moneybook.util.DateFormatUtils
@@ -200,7 +199,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
     private fun showDatePicker(selectedDate: LocalDate) {
         val datePickerDialog = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.ChooseDate)
-            .setSelection(selectedDate.atUTC().toEpochMilli())
+            .setSelection(selectedDate.utcMillis())
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {
@@ -214,7 +213,7 @@ class AddEditTransactionFragment : BaseFragment(), CalcDialog.CalcDialogCallback
     private fun showDueDatePicker(selectedDate: LocalDate) {
         val datePickerDialog = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.ChooseDueDate)
-            .setSelection(selectedDate.atUTC().toEpochMilli())
+            .setSelection(selectedDate.utcMillis())
             .build()
 
         datePickerDialog.addOnPositiveButtonClickListener {

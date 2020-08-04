@@ -29,5 +29,4 @@ fun Long.toLocalDateTime(): LocalDateTime = Instant.ofEpochMilli(this).atZone(Zo
 fun LocalDate.toEpochMilli(): Long = atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 fun LocalDateTime.toEpochMilli(): Long = atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-fun LocalDate.atUTC() = atStartOfDay(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC)
-fun ZonedDateTime.toEpochMilli() = toInstant().toEpochMilli()
+fun LocalDate.utcMillis() = atStartOfDay(ZoneId.ofOffset("UTC", ZoneOffset.UTC)).toInstant().toEpochMilli()

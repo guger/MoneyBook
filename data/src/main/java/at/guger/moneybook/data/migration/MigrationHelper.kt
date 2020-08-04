@@ -26,7 +26,6 @@ import java.io.File
  */
 class MigrationHelper(context: Context) {
 
-
     @Suppress("UNREACHABLE_CODE")
     fun start(finished: () -> Unit) {
         TODO()
@@ -35,8 +34,8 @@ class MigrationHelper(context: Context) {
     }
 
     companion object {
-        const val LegacyDB = "MoneyBookDB.db"
+        const val LEGACY_DB = "MoneyBookDB.db"
 
-        fun needMigration() = File(LegacyDB).exists()
+        fun needMigration() = File(LEGACY_DB).exists()
     }
 }

@@ -148,4 +148,5 @@
     <string name="OrganizeBudget">Organize your monthly budget</string>
     <string name="OrganizeInBudgets">Always know whats left.</string>
     <string name="GetStartedNow">Start tracking your finances. With your personal and secure finance manager.</string>
+    <string name="FeatureInDevelopment">Unfortunately, this feature is not finished yet. Stay curious.</string>
 </resources>

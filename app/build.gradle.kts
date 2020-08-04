@@ -83,6 +83,7 @@ dependencies {
     implementation(project(":data"))
 
     testImplementation(Test.JUnit)
+    testImplementation(Test.Truth)
     testImplementation(Test.Robolectric)
     androidTestImplementation(Test.AndroidX.Extensions)
     androidTestImplementation(Test.AndroidX.EspressoCore)

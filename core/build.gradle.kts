@@ -62,6 +62,8 @@ dependencies {
 
     implementation(project(":data"))
 
+    testImplementation(Test.JUnit)
+    testImplementation(Test.Truth)
     testImplementation(Test.Robolectric)
 
     kotlin(Kotlin.StandardLibray, Versions.Kotlin.Common)

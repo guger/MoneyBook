@@ -71,7 +71,7 @@ object Versions {
 
     object Kotlin {
         const val Common = "1.3.72"
-        const val Coroutines = "1.3.5"
+        const val Coroutines = "1.3.8"
     }
 
     object Firebase {
@@ -99,7 +99,7 @@ object Versions {
     }
 
     object Material {
-        const val Material = "1.2.0-rc01"
+        const val Material = "1.3.0-alpha02"
         const val Flexbox = "1.1.0"
     }
 

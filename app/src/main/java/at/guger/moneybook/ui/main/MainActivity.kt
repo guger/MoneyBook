@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
 import com.afollestad.materialcab.createCab
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -162,6 +163,13 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
         }
     }
 
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        prepareAppBar(destination)
+        prepareMenu(mBottomAppBar)
+
+        invalidateOptionsMenu()
+    }
+
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.actionAddAccount -> {
@@ -172,16 +180,12 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
                 navController.navigate(MainNavDirections.actionGlobalAddEditBudgetBottomSheetDialogFragment())
                 true
             }
-            R.id.actionSearch -> true
+            R.id.actionSearch -> {
+                Snackbar.make(nav_host_fragment, R.string.FeatureInDevelopment, Snackbar.LENGTH_LONG).show()
+                true
+            }
             else -> false
         }
-    }
-
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
-        prepareAppBar(destination)
-        prepareMenu(mBottomAppBar)
-
-        invalidateOptionsMenu()
     }
 
     //endregion

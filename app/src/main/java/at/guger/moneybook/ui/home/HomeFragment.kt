@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ class HomeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        /*if (preferences.firstStart)*/ showOnBoardingFragment()
+        if (preferences.firstStart) showOnBoardingFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -108,7 +108,7 @@ class HomeFragment : BaseFragment() {
 
     private fun showOnBoardingFragment() {
         findNavController().navigate(R.id.onBoardingFragment)
-        //preferences.firstStart = false TODO
+        preferences.firstStart = false
     }
 
     private fun setupLayout() {

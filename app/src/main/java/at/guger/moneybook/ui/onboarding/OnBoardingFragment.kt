@@ -46,12 +46,12 @@ class OnBoardingFragment : BaseFragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {}
 
         with(mOnBoardingView) {
-            skipButtonCallback = { navigateToHomeOrMigration() }
-            startMigrateButtonCallback = { navigateToHomeOrMigration() }
+            skipButtonCallback = { navigateToHomeOrMigrate() }
+            startMigrateButtonCallback = { navigateToHomeOrMigrate() }
         }
     }
 
-    private fun navigateToHomeOrMigration() {
+    private fun navigateToHomeOrMigrate() {
         if (MigrationHelper.needMigration()) {
             Toast.makeText(requireContext(), "Migrate", Toast.LENGTH_LONG).show()
         } else {
