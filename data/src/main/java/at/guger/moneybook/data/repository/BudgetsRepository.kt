@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,6 +40,10 @@ class BudgetsRepository(database: AppDatabase) {
     fun getBudgets(): LiveData<List<Budget>> = budgetsDao.getBudgets()
 
     fun getBudgetsWithBalance(): LiveData<List<BudgetWithBalance>> = budgetsDao.getBudgetsWithBalance(getCurrentMonthStart(), getCurrentMonthEnd())
+
+    suspend fun insert(budget: Budget): Long {
+        return budgetsDao.insert(budget)
+    }
 
     suspend fun insert(vararg budget: Budget) {
         budgetsDao.insert(*budget)

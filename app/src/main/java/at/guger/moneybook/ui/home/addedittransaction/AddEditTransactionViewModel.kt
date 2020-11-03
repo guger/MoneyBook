@@ -99,7 +99,7 @@ class AddEditTransactionViewModel(
     private val _transactionSaved = MutableLiveData<Event<Unit>>()
     val transactionSaved: LiveData<Event<Unit>> = _transactionSaved
 
-    val accounts: LiveData<List<Account>> = accountsRepository.getAccounts()
+    val accounts: LiveData<List<Account>> = accountsRepository.getObservableAccounts()
     val budgets: LiveData<List<Budget>> = budgetsRepository.getBudgets()
 
     private val _addressBook = MutableLiveData<Map<Long, String>>()

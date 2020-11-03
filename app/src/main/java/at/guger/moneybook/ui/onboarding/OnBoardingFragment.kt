@@ -1,18 +1,18 @@
 /*
  *
- *  * Copyright 2020 Daniel Guger
- *  *
- *  *    Licensed under the Apache License, Version 2.0 (the "License");
- *  *    you may not use this file except in compliance with the License.
- *  *    You may obtain a copy of the License at
- *  *
- *  *      http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  *    Unless required by applicable law or agreed to in writing, software
- *  *    distributed under the License is distributed on an "AS IS" BASIS,
- *  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  *    See the License for the specific language governing permissions and
- *  *    limitations under the License.
+ * Copyright 2020 Daniel Guger
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  *
  *
  */
@@ -23,18 +23,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import at.guger.moneybook.R
+import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.fragment.BaseFragment
-import at.guger.moneybook.data.migration.MigrationHelper
+import at.guger.moneybook.data.repository.AccountsRepository
+import at.guger.moneybook.util.migration.MigrationHelper
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import kotlinx.android.synthetic.main.fragment_onboarding.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 /**
  * OnBoarding fragment class.
  */
 class OnBoardingFragment : BaseFragment() {
+
+    //region Variables
+
+    private val preferences: Preferences by inject()
+
+    private val accountsRepository: AccountsRepository by inject()
+
+    private val migrationHelper by lazy { MigrationHelper(requireContext(), get(), get(), get(), get()) }
+
+    //endregion
+
+    //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_onboarding, container, false)
@@ -51,11 +72,77 @@ class OnBoardingFragment : BaseFragment() {
         }
     }
 
+    //endregion
+
+    //region Methods
+
     private fun navigateToHomeOrMigrate() {
-        if (MigrationHelper.needMigration()) {
-            Toast.makeText(requireContext(), "Migrate", Toast.LENGTH_LONG).show()
+        if (MigrationHelper.needMigration(requireContext())) {
+            startMigration()
         } else {
-            findNavController().navigateUp()
+            close()
         }
     }
+
+    private fun startMigration() = GlobalScope.launch(Dispatchers.Main) {
+        val categories = migrationHelper.getUsedCategories()
+
+        when {
+            categories == null -> {
+                migrationHelper.finishMigration()
+                close()
+            }
+            categories.isNotEmpty() -> {
+                MaterialDialog(requireContext()).show {
+                    title(text = "Which categories do you want to migrate?")
+                    message(text = "Categories will be converted to budgets. Book Entries, whose categories are not migrated, will be copied uncategorized.")
+                    listItemsMultiChoice(items = categories.map { it.name }, allowEmptySelection = true) { _, _, items ->
+                        migrationHelper.categories = categories.filter { items.contains(it.name) }
+                    }
+                    positiveButton(res = R.string.Next) {
+                        chooseAccount()
+                    }
+                    cancelOnTouchOutside(false)
+                }
+            }
+            else -> chooseAccount()
+        }
+    }
+
+    private fun chooseAccount() = GlobalScope.launch(Dispatchers.Main) {
+        val accounts = accountsRepository.getAccounts()
+
+        MaterialDialog(requireContext()).show {
+            title(text = "Choose an account")
+            listItemsSingleChoice(items = accounts.map { it.name }, initialSelection = 0, waitForPositiveButton = true) { _, _, text ->
+                migrationHelper.account = accounts.find { it.name == text }!!
+            }
+            positiveButton(res = R.string.Next) {
+                runMigration()
+            }
+            cancelOnTouchOutside(false)
+        }
+    }
+
+    private fun runMigration() {
+        GlobalScope.launch(Dispatchers.Main) {
+            migrationHelper.migrate()
+
+            close()
+
+            MaterialDialog(requireContext()).show {
+                icon(R.drawable.ic_launcher_foreground)
+                title(res = R.string.LetsGetStarted)
+                message(res = R.string.MigrationCompletedSuccessfully)
+                positiveButton(R.string.OK)
+            }
+        }
+    }
+
+    private fun close() {
+        preferences.firstStart = false
+        findNavController().navigateUp()
+    }
+
+    //endregion
 }

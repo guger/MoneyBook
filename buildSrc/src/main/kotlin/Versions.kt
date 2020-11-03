@@ -41,7 +41,7 @@ object Versions {
         private fun beta() = Beta * 10
         private fun dev() = Dev
 
-        fun buildSignature(): String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+        fun buildSignature(): String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
     }
 
     object SDK {
@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "4.1.0-beta05"
+    const val Gradle = "4.1.0"
 
     const val Koin = "2.1.6"
 
@@ -59,7 +59,7 @@ object Versions {
 
     object Test {
         const val JUnit = "4.12"
-        const val Robolectric = "4.3.1"
+        const val Robolectric = "4.4"
         const val Truth = "1.0"
 
         object AndroidX {
@@ -70,8 +70,8 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.3.72"
-        const val Coroutines = "1.3.8"
+        const val Common = "1.4.0"
+        const val Coroutines = "1.3.9"
     }
 
     object Firebase {
@@ -86,21 +86,20 @@ object Versions {
     }
 
     object AndroidX {
-        const val Core = "1.3.1"
-        const val AppCompat = "1.2.0-rc02"
+        const val Core = "1.3.2"
+        const val AppCompat = "1.2.0"
         const val Annotation = "1.1.0"
         const val Fragment = "1.2.5"
         const val Preference = "1.1.1"
-        const val Biometric = "1.0.1"
+        const val Biometric = "1.1.0-beta01"
         const val ViewPager2 = "1.0.0"
-        const val ConstraintLayout = "2.0.0-rc1"
+        const val ConstraintLayout = "2.0.4"
         const val RecyclerView = "1.1.0"
         const val CardView = "1.0.0"
     }
 
     object Material {
-        const val Material = "1.3.0-alpha02"
-        const val Flexbox = "1.1.0"
+        const val Material = "1.2.1"
     }
 
     object Arch {
@@ -120,6 +119,6 @@ object Versions {
 
         const val CalcDialog = "2.2.1"
         const val IconDialog = "3.3.0"
-        const val RecurPicker = "2.1.1"
+        const val RecurPicker = "2.1.3"
     }
 }

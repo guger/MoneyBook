@@ -108,6 +108,8 @@ dependencies {
 
     implementation(Material.MaterialDesign)
 
+    room()
+
     lifecycle()
 
     navigation()

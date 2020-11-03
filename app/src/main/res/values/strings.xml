@@ -149,4 +149,6 @@
     <string name="OrganizeInBudgets">Always know whats left.</string>
     <string name="GetStartedNow">Start tracking your finances. With your personal and secure finance manager.</string>
     <string name="FeatureInDevelopment">Unfortunately, this feature is not finished yet. Stay curious.</string>
+    <string name="LetsGetStarted">Let\'s get started</string>
+    <string name="MigrationCompletedSuccessfully">Migration completed successfully.</string>
 </resources>

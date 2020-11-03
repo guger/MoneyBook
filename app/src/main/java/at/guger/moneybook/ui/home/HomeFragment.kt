@@ -25,7 +25,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -70,7 +69,9 @@ class HomeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        if (preferences.firstStart) showOnBoardingFragment()
+        if (preferences.firstStart) {
+            findNavController().navigate(R.id.onBoardingFragment)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -98,18 +99,13 @@ class HomeFragment : BaseFragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
-        viewModel.coloredAccounts.observe(viewLifecycleOwner, Observer { menu.findItem(R.id.actionAddAccount)?.isVisible = mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
-        viewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer { menu.findItem(R.id.actionAddBudget)?.isVisible = mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
+        viewModel.coloredAccounts.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddAccount)?.isVisible = mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
+        viewModel.budgetsWithBalance.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddBudget)?.isVisible = mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
     }
 
     //endregion
 
     //region Methods
-
-    private fun showOnBoardingFragment() {
-        findNavController().navigate(R.id.onBoardingFragment)
-        preferences.firstStart = false
-    }
 
     private fun setupLayout() {
         TooltipCompat.setTooltipText(fabHomeAddTransaction, getString(R.string.NewTransaction))

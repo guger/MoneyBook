@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,7 +32,10 @@ internal interface AccountsDao {
     suspend fun get(id: Long): Account
 
     @Query("SELECT * FROM accounts")
-    fun getAccounts(): LiveData<List<Account>>
+    suspend fun getAccounts(): List<Account>
+
+    @Query("SELECT * FROM accounts")
+    fun getObservableAccounts(): LiveData<List<Account>>
 
     @Query(
         """

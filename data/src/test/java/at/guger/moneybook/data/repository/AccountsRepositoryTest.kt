@@ -46,7 +46,7 @@ class AccountsRepositoryTest : DatabaseTest() {
     fun testInsertAccount() = runBlocking {
         repository.insert(ACCOUNT)
 
-        repository.getAccounts().observeOnce {
+        repository.getObservableAccounts().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it).contains(ACCOUNT)
         }
@@ -56,11 +56,11 @@ class AccountsRepositoryTest : DatabaseTest() {
     fun testUpdateAccount() = runBlocking {
         repository.insert(ACCOUNT)
 
-        repository.getAccounts().observeOnce { assertThat(it).contains(ACCOUNT) }
+        repository.getObservableAccounts().observeOnce { assertThat(it).contains(ACCOUNT) }
 
         repository.update(Account(id = ACCOUNT.id, name = UPDATED_ACCOUNT_NAME))
 
-        repository.getAccounts().observeOnce {
+        repository.getObservableAccounts().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it).contains(Account(id = ACCOUNT.id, name = UPDATED_ACCOUNT_NAME))
         }
@@ -70,11 +70,11 @@ class AccountsRepositoryTest : DatabaseTest() {
     fun testDeleteAccount() = runBlocking {
         repository.insert(ACCOUNT)
 
-        repository.getAccounts().observeOnce { assertThat(it).isNotEmpty() }
+        repository.getObservableAccounts().observeOnce { assertThat(it).isNotEmpty() }
 
         repository.delete(ACCOUNT)
 
-        repository.getAccounts().observeOnce { assertThat(it).isEmpty() }
+        repository.getObservableAccounts().observeOnce { assertThat(it).isEmpty() }
     }
 
     companion object {
