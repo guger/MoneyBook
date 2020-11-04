@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ object AccountMenuUtils {
 
     fun prepareMenu(menu: Menu, adapter: AccountsAdapter) {
         with(adapter) {
-            menu.findItem(R.id.actionAccountEdit).isVisible = checkedCount == 1 && isDefaultAccount(adapter)
+            menu.findItem(R.id.actionAccountEdit).isVisible = checkedCount == 1
             menu.findItem(R.id.actionAccountDelete).isVisible = isDefaultAccount(adapter)
         }
     }

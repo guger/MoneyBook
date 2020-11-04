@@ -67,6 +67,7 @@ object Database {
 
         const val COL_ID = ID
         const val COL_NAME = "name"
+        const val COL_START_BALANCE = "start_balance"
         const val COL_BALANCE = "balance"
     }
 

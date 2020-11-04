@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.Event
+import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.ext.ifNull
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.repository.AccountsRepository
@@ -40,6 +41,10 @@ class AddEditAccountDialogFragmentViewModel(private val accountsRepository: Acco
     val titleRes: LiveData<Int> = _titleRes
 
     val accountName = MutableLiveData<String>()
+    val accountStartBalance = MutableLiveData<String>()
+
+    private val _accountStartBalanceError = MutableLiveData<Event<Unit>>()
+    val accountStartBalanceError: LiveData<Event<Unit>> = _accountStartBalanceError
 
     private val _accountSaved = MutableLiveData<Event<Unit>>()
     val accountSaved: LiveData<Event<Unit>> = _accountSaved
@@ -54,26 +59,37 @@ class AddEditAccountDialogFragmentViewModel(private val accountsRepository: Acco
         _titleRes.value = R.string.EditAccount
 
         accountName.value = account.name
+        accountStartBalance.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(account.startBalance) // TODO check validity
     }
 
     fun save() {
         viewModelScope.launch {
-            account.ifNull {
-                accountsRepository.insert(
+            val startBalance = parseNumber(accountStartBalance.value)
+
+            if (startBalance != null) {
+                account.ifNull {
+                    accountsRepository.insert(
+                        Account(
+                            name = accountName.value!!.trim(),
+                            startBalance = startBalance
+                        )
+                    )
+                } ?: accountsRepository.update(
                     Account(
-                        name = accountName.value!!.trim()
+                        id = account!!.id,
+                        name = accountName.value!!.trim(),
+                        startBalance = startBalance
                     )
                 )
-            } ?: accountsRepository.update(
-                Account(
-                    id = account!!.id,
-                    name = accountName.value!!
-                )
-            )
 
-            _accountSaved.value = Event(Unit)
+                _accountSaved.value = Event(Unit)
+            } else {
+                _accountStartBalanceError.value = Event(Unit)
+            }
         }
     }
+
+    private fun parseNumber(text: String?) = if (text.isNullOrBlank()) 0.0 else text.replace(",", ".").toDoubleOrNull()
 
     //endregion
 }

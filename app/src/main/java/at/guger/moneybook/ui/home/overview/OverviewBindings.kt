@@ -21,6 +21,7 @@ import androidx.databinding.BindingAdapter
 import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.util.CurrencyFormat
 import kotlin.math.max
 
@@ -28,23 +29,17 @@ import kotlin.math.max
  * Binding adapters for the overview screen.
  */
 
-@BindingAdapter("transactions", requireAll = true)
-fun TextView.setTransactions(transactions: List<Transaction>?) {
-    transactions?.let {
-        setCurrency(it.sumByDouble { transaction ->
-            when (transaction.type) {
-                Transaction.TransactionType.EARNING -> transaction.value
-                Transaction.TransactionType.EXPENSE -> -transaction.value
-                else -> throw IllegalArgumentException("Transaction sums must not include claims or debts.")
-            }
-        })
+@BindingAdapter("accounts", requireAll = true)
+fun TextView.setAccounts(accounts: List<ColoredAccount>?) {
+    accounts?.let { account ->
+        setCurrency(account.sumByDouble { it.balance + it.startBalance })
     }
 }
 
 @BindingAdapter("dues", requireAll = true)
 fun TextView.setDues(transactions: List<Transaction>?) {
-    transactions?.let {
-        setCurrency(it.filterNot { it.isPaid }.sumByDouble { transaction ->
+    transactions?.let { dues ->
+        setCurrency(dues.filterNot { it.isPaid }.sumByDouble { transaction ->
             when (transaction.type) {
                 Transaction.TransactionType.CLAIM -> transaction.value * max(transaction.contacts.size(), 1)
                 Transaction.TransactionType.DEBT -> -transaction.value * max(transaction.contacts.size(), 1)

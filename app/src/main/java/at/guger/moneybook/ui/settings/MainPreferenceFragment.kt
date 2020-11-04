@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,8 +28,9 @@ import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import kotlin.system.exitProcess
 
 
@@ -45,8 +46,6 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     private lateinit var prefCurrency: ListPreference
     private lateinit var prefInformation: Preference
 
-    private val analytics: FirebaseAnalytics by lazy { FirebaseAnalytics.getInstance(requireContext()) }
-    private val crashlytics: FirebaseCrashlytics by lazy { FirebaseCrashlytics.getInstance() }
     private var restartSnackbar: Snackbar? = null
 
     //endregion
@@ -120,10 +119,10 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
             Preferences.ANALYTICS -> {
-                analytics.setAnalyticsCollectionEnabled((preference as SwitchPreference).isChecked)
+                Firebase.analytics.setAnalyticsCollectionEnabled((preference as SwitchPreference).isChecked)
             }
             Preferences.CRASHLYTICS -> {
-                crashlytics.setCrashlyticsCollectionEnabled((preference as SwitchPreference).isChecked)
+                Firebase.crashlytics.setCrashlyticsCollectionEnabled((preference as SwitchPreference).isChecked)
             }
             Preferences.PERMISSIONS -> {
                 MaterialAlertDialogBuilder(requireContext())

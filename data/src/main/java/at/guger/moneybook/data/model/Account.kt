@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = Database.Accounts.TABLE_NAME)
 open class Account(
     @JvmField @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Accounts.COL_ID) var id: Long = 0,
-    @JvmField @ColumnInfo(name = Database.Accounts.COL_NAME) var name: String = ""
+    @JvmField @ColumnInfo(name = Database.Accounts.COL_NAME) var name: String = "",
+    @JvmField @ColumnInfo(name = Database.Accounts.COL_START_BALANCE) var startBalance: Double = 0.0
 ) : Model {
 
     companion object {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,5 +30,6 @@ data class ColoredAccount(
     val id: Long = account.id,
     val name: String = account.name,
     val balance: Double = account.balance,
+    val startBalance: Double = account.startBalance,
     @ColorInt val color: Int
 ) : Model

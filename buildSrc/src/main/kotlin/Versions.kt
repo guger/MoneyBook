@@ -71,18 +71,18 @@ object Versions {
 
     object Kotlin {
         const val Common = "1.4.0"
-        const val Coroutines = "1.3.9"
+        const val Coroutines = "1.4.1"
     }
 
     object Firebase {
 
         object Plugins {
-            const val GoogleServices = "4.3.3"
-            const val CrashlyticsGradle = "2.2.0"
+            const val GoogleServices = "4.3.4"
+            const val CrashlyticsGradle = "2.3.0"
         }
 
-        const val Analytics = "17.4.4"
-        const val Crashlytics = "17.1.1"
+        const val Analytics = "18.0.0"
+        const val Crashlytics = "17.2.2"
     }
 
     object AndroidX {

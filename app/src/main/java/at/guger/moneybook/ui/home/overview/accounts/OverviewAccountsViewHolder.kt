@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,9 +33,9 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, Observer { coloredAccounts ->
+        viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, { coloredAccounts ->
             mOverviewAccountsDivider.setDistributions(
-                distributions = coloredAccounts.map { it.balance.toFloat() },
+                distributions = coloredAccounts.map { (it.balance + it.startBalance).toFloat() },
                 colors = coloredAccounts.map { it.color }
             )
         })

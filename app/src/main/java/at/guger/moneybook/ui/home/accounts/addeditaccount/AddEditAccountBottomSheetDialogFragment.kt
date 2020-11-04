@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,9 +22,10 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.databinding.DialogFragmentAddEditAccountBinding
@@ -73,9 +74,19 @@ class AddEditAccountBottomSheetDialogFragment : BottomSheetDialogFragment() {
     //region Methods
 
     private fun setupEvents() {
-        viewModel.accountName.observe(viewLifecycleOwner, Observer { btnAddEditAccountSave.isEnabled = it.isNotBlank() })
+        viewModel.accountName.observe(viewLifecycleOwner, {
+            btnAddEditAccountSave.isEnabled = it.isNotBlank()
+        })
 
-        viewModel.accountSaved.observe(viewLifecycleOwner, EventObserver { findNavController().navigateUp() })
+        viewModel.accountStartBalanceError.observe(viewLifecycleOwner, EventObserver {
+            tilAddEditAccountStartBalance.error = getString(R.string.InvalidValue)
+        })
+
+        edtAddEditAccountStartBalance.doOnTextChanged { _, _, _, _ -> tilAddEditAccountStartBalance.error = null }
+
+        viewModel.accountSaved.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigateUp()
+        })
     }
 
     //endregion

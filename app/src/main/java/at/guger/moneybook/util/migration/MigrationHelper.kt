@@ -16,7 +16,9 @@
 
 package at.guger.moneybook.util.migration
 
+import android.Manifest
 import android.content.Context
+import at.guger.moneybook.core.util.ext.hasPermission
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
@@ -105,7 +107,7 @@ class MigrationHelper(
             )
 
             var contacts: List<Contact>? = null
-            if (entry.embeddedContacts != null) {
+            if (context.hasPermission(Manifest.permission.READ_CONTACTS) && entry.embeddedContacts != null) {
                 val contactNames = addressBookRepository.loadContacts(entry.embeddedContacts!!.map { it.contactId }.toSet())
 
                 contacts = entry.embeddedContacts!!.map { entity ->
