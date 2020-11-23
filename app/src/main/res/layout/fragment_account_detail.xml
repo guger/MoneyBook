@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,40 +27,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mAccountDetailRecyclerView"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/mAccountDetailViewPager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mAccountDetailTabs"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_transaction" />
+                app:layout_constraintTop_toBottomOf="@+id/mAccountDetailTabs" />
 
-            <com.github.mikephil.charting.charts.LineChart
+            <!-- TODO Make ColoredAccount default, add color to db & choose accountcolor here-->
+            <at.guger.moneybook.core.ui.widget.LineGraphChart
                 android:id="@+id/mAccountDetailChart"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/default_chart_height"
                 android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:barColor="?attr/colorOnSurface"
+                app:curveBorderColor="@color/color1"
+                app:curveTopMargin="@dimen/curveTopMargin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.tabs.TabLayout
+            <at.guger.moneybook.core.ui.widget.ScrollableTab
                 android:id="@+id/mAccountDetailTabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/colorSurface"
                 android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mAccountDetailChart"
-                app:tabGravity="center"
-                app:tabIconTint="@color/tab_highlight_selector"
-                app:tabIndicator="@null"
-                app:tabMode="scrollable"
-                app:tabRippleColor="@color/colorRippleMaterialDark"
-                app:tabTextColor="@color/tab_highlight_selector" />
+                app:selectedColor="?attr/colorOnSurface"
+                app:tabTextAppearance="?attr/textAppearanceButton"
+                app:unSelectedColor="@color/colorOnSurface" />
 
             <TextView
                 android:id="@+id/txvTransactionsEmpty"
@@ -70,10 +70,10 @@
                 android:text="@string/NoTransactions"
                 android:textAppearance="?textAppearanceSubtitle1"
                 android:visibility="@{viewModel.transactions.size() > 0 ? View.GONE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@+id/mAccountDetailRecyclerView"
+                app:layout_constraintBottom_toBottomOf="@+id/mAccountDetailViewPager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/mAccountDetailRecyclerView"
+                app:layout_constraintTop_toTopOf="@+id/mAccountDetailViewPager"
                 tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -90,7 +90,7 @@
             android:focusable="true"
             android:onClick="@{() -> viewModel.showAddEditTransactionDialogFragment()}"
             android:src="@drawable/ic_add"
-            app:layout_anchor="@+id/mAccountDetailRecyclerView"
+            app:layout_anchor="@+id/mAccountDetailViewPager"
             app:layout_anchorGravity="bottom|end"
             app:layout_behavior="at.guger.moneybook.core.ui.behaviour.ScrollAwareFloatingActionButtonBehaviour"
             app:tint="?colorOnPrimary" />

@@ -28,11 +28,16 @@ import androidx.navigation.fragment.findNavController
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.util.migration.MigrationHelper
+import com.afollestad.assent.Permission
+import com.afollestad.assent.askForPermissions
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_onboarding.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -68,7 +73,9 @@ class OnBoardingFragment : BaseFragment() {
 
         with(mOnBoardingView) {
             skipButtonCallback = { navigateToHomeOrMigrate() }
-            startMigrateButtonCallback = { navigateToHomeOrMigrate() }
+            startMigrateButtonCallback = {
+                navigateToHomeOrMigrate()
+            }
         }
     }
 
@@ -76,11 +83,34 @@ class OnBoardingFragment : BaseFragment() {
 
     //region Methods
 
+    private fun requestPermissions() {
+        askForPermissions(
+            Permission.READ_CONTACTS,
+            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
+                onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
+            }
+        ) {
+            if (!it.isAllGranted()) {
+                Snackbar.make(fabHomeAddTransaction, R.string.ContactsPermissionDenied, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.Retry) { requestPermissions() }
+                    .show()
+            }
+        }
+    }
+
     private fun navigateToHomeOrMigrate() {
-        if (MigrationHelper.needMigration(requireContext())) {
-            startMigration()
-        } else {
-            close()
+        val migrate = MigrationHelper.needMigration(requireContext())
+
+        askForPermissions(Permission.READ_CONTACTS,
+            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
+                onPermission(Permission.READ_CONTACTS, if (migrate) R.string.ContactsPermissionNeededMigration else R.string.ContactsPermissionNeeded)
+            }
+        ) {
+            if (migrate) {
+                startMigration()
+            } else {
+                close()
+            }
         }
     }
 

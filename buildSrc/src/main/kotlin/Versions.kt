@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "4.1.0"
+    const val Gradle = "4.1.1"
 
     const val Koin = "2.1.6"
 
@@ -70,7 +70,7 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.4.0"
+        const val Common = "1.4.20"
         const val Coroutines = "1.4.1"
     }
 
@@ -91,7 +91,7 @@ object Versions {
         const val Annotation = "1.1.0"
         const val Fragment = "1.2.5"
         const val Preference = "1.1.1"
-        const val Biometric = "1.1.0-beta01"
+        const val Biometric = "1.1.0-rc01"
         const val ViewPager2 = "1.0.0"
         const val ConstraintLayout = "2.0.4"
         const val RecyclerView = "1.1.0"

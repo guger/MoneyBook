@@ -30,8 +30,11 @@ abstract class BaseFragment : Fragment() {
 
     //region Methods
 
-    @Suppress("UNCHECKED_CAST")
-    fun <T : AppCompatActivity> requireAppCompatActivity() = requireActivity() as T
+    inline fun <reified T : AppCompatActivity> getAppCompatActivity(): T? {
+        return if (isAdded) {
+            requireActivity() as T
+        } else null
+    }
 
     //endregion
 }

@@ -59,7 +59,7 @@ class HomeFragment : BaseFragment() {
 
     private val destinations = Destination.values()
 
-    private val viewModel: HomeViewModel by sharedViewModel()
+    private val viewModel by sharedViewModel<HomeViewModel>()
 
     //endregion
 
@@ -84,10 +84,6 @@ class HomeFragment : BaseFragment() {
         setupLayout()
 
         setupEventListeners()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         requestPermissions()
     }
@@ -128,17 +124,15 @@ class HomeFragment : BaseFragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-                requireAppCompatActivity<MainActivity>().run {
-                    invalidateOptionsMenu()
-                }
+                getAppCompatActivity<MainActivity>()?.invalidateOptionsMenu()
             }
 
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
 
-                when (state) {
-                    ViewPager2.SCROLL_STATE_DRAGGING -> requireAppCompatActivity<MainActivity>().cabEnabled = false
-                    ViewPager2.SCROLL_STATE_SETTLING, ViewPager2.SCROLL_STATE_IDLE -> requireAppCompatActivity<MainActivity>().cabEnabled = true
+                requireView().post {
+                    getAppCompatActivity<MainActivity>()?.destroyCab() // TODO looks like it doesn't solve the problem
+                    // TODO Fixes appearing CAB when dragging ViewPager for now, but needs to be done better.
                 }
             }
         })

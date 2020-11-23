@@ -1,87 +1,88 @@
 /*
  * Copyright 2020 Daniel Guger
  *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-package at.guger.moneybook.ui.home.dues
+package at.guger.moneybook.ui.home.accounts.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
+import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.databinding.FragmentDuesBinding
-import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
-import kotlinx.android.synthetic.main.fragment_dues.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import kotlinx.android.synthetic.main.layout_recyclerview.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
+import java.time.LocalDate
 
 /**
- * Fragment for [home view pager's][ViewPager2] bills content.
+ * Fragment displaying the monthly [transactions][Transaction] of an [account][Account].
  */
-class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
+class AccountDetailMonthlyFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
-    lateinit var adapter: DuesAdapter
+    private val adapter: AccountDetailTransactionsListAdapter = AccountDetailTransactionsListAdapter()
 
-    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), mDuesRecyclerView, this) }
+    private val month: LocalDate by lazy { requireArguments()[KEY_MONTH] as LocalDate }
 
-    private val viewModel: HomeViewModel by sharedViewModel()
+    private val viewModel by viewModel<AccountDetailViewModel> { parametersOf(requireArguments()[KEY_ACCOUNT_ID]) }
 
     //endregion
 
     //region Fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentDuesBinding.inflate(inflater, container, false)
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return binding.root
+        return inflater.inflate(R.layout.layout_recyclerview, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DuesAdapter().apply { viewModel.claimsAndDebts.observe(viewLifecycleOwner, Observer(::submitList)) }
-
-        mDuesRecyclerView.setup(LinearLayoutManager(context), adapter, hasFixedSize = false) {
-            addOnItemTouchListener(onItemTouchListener)
-        }
+        setupLayout()
     }
 
     //endregion
 
     //region Methods
 
+    private fun setupLayout() {
+        mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
+            addOnItemTouchListener(OnItemTouchListener(requireContext(), this, this@AccountDetailMonthlyFragment))
+        }
+
+        viewModel.transactionsByMonth(month).observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+    }
+
     private fun editTransaction(transaction: Transaction) {
-        findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
+        requireParentFragment().findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
     }
 
     //endregion
@@ -96,7 +97,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                 getAppCompatActivity<MainActivity>()?.mCab!!.apply {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
-                    TransactionMenuUtils.prepareMenu(getMenu(), adapter, markAsPaid = true)
+                    TransactionMenuUtils.prepareMenu(getMenu(), adapter)
                 }
             } else {
                 getAppCompatActivity<MainActivity>()?.destroyCab()
@@ -112,7 +113,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                 getAppCompatActivity<MainActivity>()?.attachCab(R.menu.menu_transaction) {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
-                    onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter, markAsPaid = true) }
+                    onCreate { _, menu -> TransactionMenuUtils.prepareMenu(menu, adapter) }
 
                     onDestroy {
                         adapter.clearChecked()
@@ -120,7 +121,7 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                     }
 
                     onSelection { menuItem ->
-                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, viewModel::markAsPaid, viewModel::deleteTransaction)
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, editAction = ::editTransaction, deleteAction = viewModel::delete)
                         destroy()
                     }
                 }
@@ -139,6 +140,13 @@ class DuesFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     //endregion
 
     companion object {
-        fun instantiate(): DuesFragment = DuesFragment()
+        private const val KEY_ACCOUNT_ID: String = "key_account_id"
+        private const val KEY_MONTH: String = "key_month"
+
+        fun instantiate(accountId: Long, month: LocalDate): AccountDetailMonthlyFragment {
+            return AccountDetailMonthlyFragment().apply {
+                arguments = bundleOf(KEY_ACCOUNT_ID to accountId, KEY_MONTH to month)
+            }
+        }
     }
 }

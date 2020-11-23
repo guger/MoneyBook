@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 /**
  * [ViewModel] for the [AccountDetailFragment].
@@ -42,6 +43,7 @@ class AccountDetailViewModel(
     val account: LiveData<Account> = _account
 
     val transactions: LiveData<List<Transaction>>
+    val transactionMonths: LiveData<List<LocalDate>>
 
     private val _showAddEditTransactionDialogFragment = MutableLiveData<Event<Account>>()
     val showAddEditTransactionDialogFragment: LiveData<Event<Account>> = _showAddEditTransactionDialogFragment
@@ -53,10 +55,13 @@ class AccountDetailViewModel(
             _account.value = accountsRepository.get(accountId)
         }
 
-        transactions = transactionsRepository.getByAccount(accountId)
+        transactions = transactionsRepository.byAccount(accountId)
+        transactionMonths = transactionsRepository.listMonths(accountId)
     }
 
     //region Methods
+
+    fun transactionsByMonth(month: LocalDate): LiveData<List<Transaction>> = transactionsRepository.byMonth(accountId, month)
 
     fun showAddEditTransactionDialogFragment() {
         _showAddEditTransactionDialogFragment.value = Event(account.value!!)

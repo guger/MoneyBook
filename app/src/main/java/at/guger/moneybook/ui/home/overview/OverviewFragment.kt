@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
@@ -51,8 +52,27 @@ class OverviewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val animSet = AnimationSet(true).apply {
+            interpolator = DecelerateInterpolator()
+
+            addAnimation(
+                AlphaAnimation(0.0f, 1.0f).apply {
+                    duration = 600
+                }
+            )
+            addAnimation(
+                TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.25f, Animation.RELATIVE_TO_SELF, 0.0f
+                ).apply {
+                    duration = 450
+                }
+            )
+        }
+
         mOverviewRecyclerView.setup(LinearLayoutManager(requireContext()), OverviewAdapter(viewModel, viewLifecycleOwner)) {
             addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
+
+            layoutAnimation = LayoutAnimationController(animSet, 0.4f)
         }
     }
 

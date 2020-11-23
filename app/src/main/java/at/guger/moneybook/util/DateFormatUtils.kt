@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.time.format.ResolverStyle
 object DateFormatUtils {
 
     val SHORT_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withResolverStyle(ResolverStyle.LENIENT)
-    const val MMM_YYYY_DATE_FORMAT: String = "MMM YYYY"
+    const val MMM_YYYY_DATE_FORMAT: String = "MMM yyyy"
 
     @JvmStatic
     fun formatTransactionDate(date: LocalDate): String = SHORT_DATE_FORMAT.format(date)

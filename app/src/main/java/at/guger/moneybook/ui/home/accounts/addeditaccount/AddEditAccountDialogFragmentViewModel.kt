@@ -59,7 +59,7 @@ class AddEditAccountDialogFragmentViewModel(private val accountsRepository: Acco
         _titleRes.value = R.string.EditAccount
 
         accountName.value = account.name
-        accountStartBalance.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(account.startBalance) // TODO check validity
+        accountStartBalance.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(account.startBalance)
     }
 
     fun save() {

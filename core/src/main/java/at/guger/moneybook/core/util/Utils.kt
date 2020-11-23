@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package at.guger.moneybook.core.util
 
 import android.os.Build
+import kotlin.math.pow
 
 /**
  * Utils for the core module.
@@ -26,4 +27,18 @@ object Utils {
     fun isOreo() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
     fun isMarshmallow() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+    fun getGaussianScale(
+        childCenterX: Int,
+        minScaleOffset: Float,
+        scaleFactor: Float,
+        spreadFactor: Double,
+        left: Int,
+        right: Int
+    ): Float {
+        val recyclerCenterX = (left + right) / 2
+        return (Math.E.pow(
+            -(childCenterX - recyclerCenterX.toDouble()).pow(2.toDouble()) / (2 * spreadFactor.pow(2.toDouble()))
+        ) * scaleFactor + minScaleOffset).toFloat()
+    }
 }

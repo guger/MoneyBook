@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -16,6 +16,19 @@
 
 <resources>
 
+    <declare-styleable name="LineGraphChart">
+        <attr name="barColor" format="color"/>
+        <attr name="curveBorderColor" format="color"/>
+        <attr name="curveFillColor" format="color"/>
+        <attr name="curveTopMargin" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="ScrollableTab">
+        <attr name="selectedColor" format="color"/>
+        <attr name="unSelectedColor" format="color"/>
+        <attr name="tabTextAppearance" format="reference"/>
+    </declare-styleable>
+
     <declare-styleable name="VerticalProgressBar">
         <attr name="progress" format="float" />
         <attr name="progressColor" format="color" />
@@ -24,12 +37,5 @@
     <declare-styleable name="VisualizeDividerView">
         <attr name="colors" format="reference" />
         <attr name="distributions" format="reference" />
-    </declare-styleable>
-
-    <declare-styleable name="MorphTransform">
-        <attr name="startColor" format="color" />
-        <attr name="endColor" format="color" />
-        <attr name="startCornerRadius" format="dimension" />
-        <attr name="endCornerRadius" format="dimension" />
     </declare-styleable>
 </resources>

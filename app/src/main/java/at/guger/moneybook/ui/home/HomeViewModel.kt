@@ -56,7 +56,7 @@ class HomeViewModel(
     //endregion
 
     init {
-        val colors = DataUtils.getAccountColors()
+        val colors = DataUtils.accountColors
 
         claimsAndDebts = transactionsRepository.getClaimsAndDebts()
 

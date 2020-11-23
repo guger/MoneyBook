@@ -49,6 +49,8 @@ class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
     private lateinit var adapter: BudgetsAdapter
 
+    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), mBudgetsRecyclerView, this) }
+
     private val viewModel: HomeViewModel by sharedViewModel()
 
     //endregion
@@ -70,7 +72,7 @@ class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
         adapter = BudgetsAdapter().apply { viewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
 
         mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false) {
-            addOnItemTouchListener(OnItemTouchListener(context, this, this@BudgetsFragment))
+            addOnItemTouchListener(onItemTouchListener)
         }
     }
 
@@ -87,17 +89,17 @@ class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     //region Callback
 
     override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
-        if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+        if (getAppCompatActivity<MainActivity>()?.mCab.isActive()) {
             adapter.toggleChecked(pos)
 
             if (adapter.checkedCount > 0) {
-                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                getAppCompatActivity<MainActivity>()?.mCab!!.apply {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     BudgetMenuUtils.prepareMenu(getMenu(), adapter)
                 }
             } else {
-                requireAppCompatActivity<MainActivity>().destroyCab()
+                getAppCompatActivity<MainActivity>()?.destroyCab()
             }
         }
     }
@@ -106,8 +108,8 @@ class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
         adapter.toggleChecked(pos)
 
         if (adapter.checkedCount > 0) {
-            if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
-                requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_budget) {
+            if (!getAppCompatActivity<MainActivity>()?.mCab.isActive()) {
+                getAppCompatActivity<MainActivity>()?.attachCab(R.menu.menu_budget) {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     onCreate { _, menu -> BudgetMenuUtils.prepareMenu(menu, adapter) }
@@ -123,14 +125,14 @@ class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                     }
                 }
             } else {
-                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                getAppCompatActivity<MainActivity>()?.mCab!!.apply {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     BudgetMenuUtils.prepareMenu(getMenu(), adapter)
                 }
             }
         } else {
-            requireAppCompatActivity<MainActivity>().destroyCab()
+            getAppCompatActivity<MainActivity>()?.destroyCab()
         }
     }
 

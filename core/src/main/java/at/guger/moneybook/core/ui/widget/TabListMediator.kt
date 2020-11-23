@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ class TabListMediator(
 
     private var currentTitleItemPosition: Int = -1
 
-    private val tabs = mutableMapOf<IntRange, String>()
+    private val tabElements = mutableMapOf<IntRange, String>()
 
     private var state: Int = STATE_IDLE
 
@@ -70,7 +70,8 @@ class TabListMediator(
         onItemsUpdated()
 
         tabLayout.removeAllTabs()
-        tabs.values.reversed().map(::createTab).forEachIndexed { index, tab -> tabLayout.addTab(tab, index == tabs.size - 1) }
+        tabElements.values.reversed().map(::createTab).forEachIndexed { index, tab -> tabLayout.addTab(tab, index == tabElements.size - 1) }
+
         state = STATE_IDLE
     }
 
@@ -93,7 +94,7 @@ class TabListMediator(
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val currentItem = tabs.toList().single { it.second == tab!!.text }
+                val currentItem = tabElements.toList().single { it.second == tab!!.text }
 
                 if (state != STATE_RECYCLER_VIEW_SCROLLING) {
                     state = STATE_TAB_SELECTED
@@ -112,7 +113,7 @@ class TabListMediator(
     }
 
     private fun onItemsUpdated() {
-        tabs.clear()
+        tabElements.clear()
 
         if (layoutManager.itemCount == 0) return
 
@@ -129,10 +130,10 @@ class TabListMediator(
         for (i in 1 until indicesList.size) {
             val range = IntRange(indicesList[i - 1], indicesList[i] - 1)
 
-            tabs[range] = itemTitleProvider(indicesList[i - 1])
+            tabElements[range] = itemTitleProvider(indicesList[i - 1])
         }
 
-        updateTabLayout(tabs.size - 1)
+        updateTabLayout(tabElements.size - 1)
     }
 
     private fun invalidate() {
@@ -144,11 +145,11 @@ class TabListMediator(
             else -> getMidVisibleRecyclerItemPosition()
         }
 
-        if (viewItemPosition >= 0) {
+        if (viewItemPosition >= 0 && currentTitleItemPosition >= 0) {
             if (!itemComparator(currentTitleItemPosition, viewItemPosition)) {
                 currentTitleItemPosition = viewItemPosition
 
-                val tabIndex = tabs.keys.reversed().withIndex().find { it.value.contains(currentTitleItemPosition) }!!.index
+                val tabIndex = tabElements.keys.reversed().withIndex().find { it.value.contains(currentTitleItemPosition) }!!.index
                 updateTabLayout(tabIndex)
             }
         }

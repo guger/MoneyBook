@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -50,6 +50,8 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
 
     private lateinit var adapter: AccountsAdapter
 
+    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), mAccountsRecyclerView, this) }
+
     private val viewModel: HomeViewModel by sharedViewModel()
 
     //endregion
@@ -71,7 +73,7 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
         adapter = AccountsAdapter(viewModel).apply { viewModel.coloredAccounts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
         mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
-            addOnItemTouchListener(OnItemTouchListener(requireContext(), this, this@AccountsFragment))
+            addOnItemTouchListener(onItemTouchListener)
         }
     }
 
@@ -96,17 +98,17 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     //region Callback
 
     override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
-        if (requireAppCompatActivity<MainActivity>().mCab.isActive()) {
+        if (getAppCompatActivity<MainActivity>()?.mCab.isActive()) {
             adapter.toggleChecked(pos)
 
             if (adapter.checkedCount > 0) {
-                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                getAppCompatActivity<MainActivity>()?.mCab!!.apply {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     AccountMenuUtils.prepareMenu(getMenu(), adapter)
                 }
             } else {
-                requireAppCompatActivity<MainActivity>().destroyCab()
+                getAppCompatActivity<MainActivity>()?.destroyCab()
             }
         } else {
             viewModel.showAccount(adapter.currentList[pos])
@@ -117,8 +119,8 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
         adapter.toggleChecked(pos)
 
         if (adapter.checkedCount > 0) {
-            if (!requireAppCompatActivity<MainActivity>().mCab.isActive()) {
-                requireAppCompatActivity<MainActivity>().attachCab(R.menu.menu_account) {
+            if (!getAppCompatActivity<MainActivity>()?.mCab.isActive()) {
+                getAppCompatActivity<MainActivity>()?.attachCab(R.menu.menu_account) {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     onCreate { _, menu -> AccountMenuUtils.prepareMenu(menu, adapter) }
@@ -134,14 +136,14 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                     }
                 }
             } else {
-                requireAppCompatActivity<MainActivity>().mCab!!.apply {
+                getAppCompatActivity<MainActivity>()?.mCab!!.apply {
                     title(literal = getString(R.string.x_selected, adapter.checkedCount))
 
                     AccountMenuUtils.prepareMenu(getMenu(), adapter)
                 }
             }
         } else {
-            requireAppCompatActivity<MainActivity>().destroyCab()
+            getAppCompatActivity<MainActivity>()?.destroyCab()
         }
     }
 

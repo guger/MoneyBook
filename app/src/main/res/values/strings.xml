@@ -76,6 +76,7 @@
     <string name="NoTransactions">Looks like you\'ve no transactions in here.</string>
     <string name="ContactsPermission">Contacts Permission</string>
     <string name="ContactsPermissionNeeded">Contacts permission is required to support sending messages as reminders for claims.</string>
+    <string name="ContactsPermissionNeededMigration">Contacts permission is required for migrating your contacts and to support sending messages as reminders for claims.</string>
     <string name="Due_x">Due %s</string>
     <string name="prefs_Information">MoneyBook is an open-source app developed by Daniel Guger.\n\nVersion: %1$s\nBuild: %2$d\n\nhttps://github.com/guger/MoneyBook</string>
     <string name="Information">Information</string>

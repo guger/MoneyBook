@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,11 +17,16 @@
 package at.guger.moneybook.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.ContactsDao
 import at.guger.moneybook.data.provider.local.dao.TransactionsDao
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 
 /**
  * Repository class for handling [transactions][Transaction].
@@ -39,7 +44,15 @@ class TransactionsRepository(database: AppDatabase) {
 
     suspend fun get(id: Long): Transaction = transactionsDao.get(id)
 
-    fun getByAccount(accountId: Long): LiveData<List<Transaction>> = transactionsDao.getByAccount(accountId)
+    fun byAccount(accountId: Long): LiveData<List<Transaction>> = transactionsDao.byAccount(accountId)
+
+    fun listMonths(accountId: Long): LiveData<List<LocalDate>> = byAccount(accountId).map {
+        it.map { transaction -> transaction.date }.groupBy { date -> date.withDayOfMonth(1) }.keys.reversed()
+    }
+
+    fun byMonth(accountId: Long, month: LocalDate): LiveData<List<Transaction>> = byAccount(accountId).map {
+        it.filter { transaction -> transaction.date.withDayOfMonth(1).isEqual(month) }
+    }
 
     fun getEarningsAndExpenses(): LiveData<List<Transaction>> = transactionsDao.getEarningsAndExpenses()
 

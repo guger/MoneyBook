@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -14,15 +14,17 @@
   ~    limitations under the License.
   -->
 
-<resources>
-    <dimen name="item_content_margin">16dp</dimen>
-    <dimen name="recyclerview_item_spacing">4dp</dimen>
-
-    <dimen name="default_chart_height">225dp</dimen>
-    <dimen name="item_padding">12dp</dimen>
-
-    <dimen name="default_text_spacing">24dp</dimen>
-    <dimen name="default_icon_spacing">12dp</dimen>
-    <dimen name="item_guideline">.6</dimen>
-    <dimen name="curveTopMargin">36dp</dimen>
-</resources>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/txvScrollableTabTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:paddingTop="18dp"
+    android:paddingBottom="18dp"
+    android:textColor="#fff"
+    android:textStyle="bold"
+    tools:text="Tab 1" />

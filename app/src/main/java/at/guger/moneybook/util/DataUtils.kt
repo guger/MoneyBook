@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -39,14 +39,12 @@ object DataUtils {
 
     const val MAX_ACCOUNTS = 4
 
-    fun getAccountColors(): Array<Int> {
-        return arrayOf(
-            Color.parseColor("#007d51"),
-            Color.parseColor("#37efba"),
-            Color.parseColor("#1eb980"),
-            Color.parseColor("#005d57")
-        )
-    }
+    val accountColors: Array<Int> = arrayOf(
+        Color.parseColor("#007d51"),
+        Color.parseColor("#37efba"),
+        Color.parseColor("#1eb980"),
+        Color.parseColor("#005d57")
+    )
 
     const val MAX_BUDGETS = 9
 

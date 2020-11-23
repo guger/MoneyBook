@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package at.guger.moneybook.data.provider.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import at.guger.moneybook.data.model.Transaction
+import kotlinx.coroutines.flow.Flow
 
 /**
  * [Dao] method for querying [transactions][Transaction].
@@ -38,7 +39,7 @@ internal interface TransactionsDao {
         ORDER BY date DESC, title ASC
         """
     )
-    fun getByAccount(accountId: Long): LiveData<List<Transaction>>
+    fun byAccount(accountId: Long): LiveData<List<Transaction>>
 
     @androidx.room.Transaction
     @Query(
