@@ -32,9 +32,11 @@ import at.guger.moneybook.core.util.Utils
 import kotlinx.android.synthetic.main.item_scrollable_tab.view.*
 
 /**
- * TODO
+ * Custom TabLayout implemented with a [RecyclerView].
  */
 class ScrollableTab : RecyclerView {
+
+    //region Variables
 
     private val tabAdapter by lazy { TabAdapter(tabTextStyle = tabTextStyle) }
     private var selectedColor = Color.WHITE
@@ -48,6 +50,10 @@ class ScrollableTab : RecyclerView {
     private var isRVScrolling = true
     private var listener: ((position: Int) -> Unit)? = null
     private var pageChangeListener: ((position: Int) -> Unit)? = null
+
+    //endregion
+
+    //region Constructor
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(attrs)
@@ -114,12 +120,17 @@ class ScrollableTab : RecyclerView {
 
     private fun initAttributes(set: AttributeSet?) {
         val ta = context.obtainStyledAttributes(set, R.styleable.ScrollableTab)
+
         selectedColor = ta.getColor(R.styleable.ScrollableTab_selectedColor, Color.WHITE)
         unSelectedColor = ta.getColor(R.styleable.ScrollableTab_unSelectedColor, Color.GRAY)
         tabTextStyle = ta.getResourceId(R.styleable.ScrollableTab_tabTextAppearance, R.style.TabTextAppearance)
-        ta.recycle()
 
+        ta.recycle()
     }
+
+    //endregion
+
+    //region Methods
 
     private fun createPagerStyle() {
         //add padding and set clipToPadding false so other tab items are also visible at left,right edge screen
@@ -131,6 +142,10 @@ class ScrollableTab : RecyclerView {
 
     fun addTabs(list: List<String>) {
         tabAdapter.addAll(list)
+
+        post {
+            viewPager?.setCurrentItem(list.size - 1, false)
+        }
     }
 
     fun addOnTabListener(listener: (position: Int) -> Unit) {
@@ -165,6 +180,8 @@ class ScrollableTab : RecyclerView {
         viewPager?.unregisterOnPageChangeCallback(callback)
         viewPager = null
     }
+
+    //endregion
 
     private inner class PageChangeCallback : ViewPager2.OnPageChangeCallback() {
 

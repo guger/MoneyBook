@@ -27,20 +27,15 @@ import at.guger.moneybook.core.R
 import kotlinx.android.synthetic.main.item_scrollable_tab.view.*
 
 /**
- * TODO
+ * Adapter for tabs of [ScrollableTab].
  */
-class TabAdapter(
-    private val tabs: MutableList<String> = mutableListOf(),
-    @StyleRes
-    private val tabTextStyle: Int
-) : RecyclerView.Adapter<TabAdapter.TabViewHolder>() {
+class TabAdapter(private val tabs: MutableList<String> = mutableListOf(), @StyleRes private val tabTextStyle: Int) : RecyclerView.Adapter<TabAdapter.TabViewHolder>() {
 
     private var listener: ((position: Int) -> Unit)? = null
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): TabViewHolder {
+    //region Methods
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TabViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_scrollable_tab, parent, false)
 
         TextViewCompat.setTextAppearance(view.txvScrollableTabTitle, tabTextStyle)
@@ -51,10 +46,7 @@ class TabAdapter(
         return tabs.size
     }
 
-    override fun onBindViewHolder(
-        holder: TabViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: TabViewHolder, position: Int) {
         holder.bind(tabs[position])
     }
 
@@ -68,14 +60,11 @@ class TabAdapter(
         this.listener = listener
     }
 
-    internal fun listenTabChangeForPager() {}
+    //endregion
 
-    class TabViewHolder(
-        view: View,
-        private val listener: ((position: Int) -> Unit)?
-    ) : RecyclerView.ViewHolder(view) {
+    class TabViewHolder(view: View, private val listener: ((position: Int) -> Unit)?) : RecyclerView.ViewHolder(view) {
 
-        private val tab: TextView = view.txvScrollableTabTitle
+        private val txvTab: TextView = view.txvScrollableTabTitle
 
         init {
             view.setOnClickListener {
@@ -84,7 +73,7 @@ class TabAdapter(
         }
 
         fun bind(model: String) {
-            tab.text = model
+            txvTab.text = model
         }
     }
 }

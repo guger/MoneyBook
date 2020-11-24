@@ -60,7 +60,7 @@ class AccountDetailFragment : BaseFragment() {
 
     //region Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentAccountDetailBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
@@ -86,8 +86,6 @@ class AccountDetailFragment : BaseFragment() {
         viewModel.transactionMonths.observe(viewLifecycleOwner) {
             months = it
 
-            mAccountDetailTabs.addTabs(it.map { date -> monthYearDateFormatter.format(date) })
-
             mAccountDetailViewPager.adapter = object : FragmentStateAdapter(this) {
                 override fun createFragment(position: Int): Fragment {
                     return AccountDetailMonthlyFragment.instantiate(args.accountId, it[position])
@@ -95,6 +93,8 @@ class AccountDetailFragment : BaseFragment() {
 
                 override fun getItemCount(): Int = it.size
             }
+
+            mAccountDetailTabs.addTabs(it.map { date -> monthYearDateFormatter.format(date) })
         }
 
         mAccountDetailTabs.setUpWithViewPager(mAccountDetailViewPager)
