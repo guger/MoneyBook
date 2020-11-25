@@ -148,7 +148,11 @@ class MigrationHelper(
 
         val months: Double = (lastDate - firstDate) / 30.0
 
-        return sum / max(months, 1.0) // TODO round next 100
+        return roundUpTo(sum / max(months, 1.0), 25)
+    }
+
+    fun roundUpTo(x: Double, n: Int): Double {
+        return (((x + if (x % n > 0.001) n.toDouble() else n / 2.0) / n).toLong() * n).toDouble()
     }
 
     //endregion
