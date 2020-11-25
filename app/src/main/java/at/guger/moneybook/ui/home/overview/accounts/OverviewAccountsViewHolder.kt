@@ -33,7 +33,7 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, { coloredAccounts ->
+        viewModel.accounts.observe(binding.lifecycleOwner!!, { coloredAccounts ->
             mOverviewAccountsDivider.setDistributions(
                 distributions = coloredAccounts.map { (it.balance + it.startBalance).toFloat() },
                 colors = coloredAccounts.map { it.color }
@@ -42,7 +42,7 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
 
         with(mOverviewAccountsRecyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.coloredAccounts.observe(binding.lifecycleOwner!!, Observer(::submitList)) }
+            adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.accounts.observe(binding.lifecycleOwner!!, Observer(::submitList)) }
         }
     }
 

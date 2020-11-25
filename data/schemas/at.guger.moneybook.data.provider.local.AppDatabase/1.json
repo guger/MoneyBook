@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "65c3faea4154830d7ae2381e36eda683",
+    "identityHash": "59987e954f08169f5d8457b805f88f30",
     "entities": [
       {
         "tableName": "transactions",
@@ -101,7 +101,7 @@
       },
       {
         "tableName": "accounts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `start_balance` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER NOT NULL, `start_balance` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -113,6 +113,12 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -291,7 +297,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '65c3faea4154830d7ae2381e36eda683')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '59987e954f08169f5d8457b805f88f30')"
     ]
   }
 }

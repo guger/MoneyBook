@@ -21,14 +21,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.databinding.ItemOverviewAccountBinding
-import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.Adapter] for the overview accounts card.
  */
-class OverviewAccountsListAdapter(private val viewModel: HomeViewModel) : ListAdapter<ColoredAccount, OverviewAccountsAccountViewHolder>(OverviewAccountsDiffCallback()) {
+class OverviewAccountsListAdapter(private val viewModel: HomeViewModel) : ListAdapter<AccountWithBalance, OverviewAccountsAccountViewHolder>(OverviewAccountsDiffCallback()) {
 
     //region Adapter
 
@@ -42,12 +42,12 @@ class OverviewAccountsListAdapter(private val viewModel: HomeViewModel) : ListAd
 
     //endregion
 
-    class OverviewAccountsDiffCallback : DiffUtil.ItemCallback<ColoredAccount>() {
-        override fun areItemsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {
+    class OverviewAccountsDiffCallback : DiffUtil.ItemCallback<AccountWithBalance>() {
+        override fun areItemsTheSame(oldItem: AccountWithBalance, newItem: AccountWithBalance): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {
+        override fun areContentsTheSame(oldItem: AccountWithBalance, newItem: AccountWithBalance): Boolean {
             return oldItem == newItem
         }
     }

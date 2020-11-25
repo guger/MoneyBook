@@ -70,7 +70,7 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = AccountsAdapter(viewModel).apply { viewModel.coloredAccounts.observe(viewLifecycleOwner, Observer(::submitList)) }
+        adapter = AccountsAdapter(viewModel).apply { viewModel.accounts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
         mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(onItemTouchListener)

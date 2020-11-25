@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.data.model
 
+import androidx.annotation.ColorInt
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -31,6 +32,7 @@ import kotlinx.android.parcel.Parcelize
 open class Account(
     @JvmField @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Database.Accounts.COL_ID) var id: Long = 0,
     @JvmField @ColumnInfo(name = Database.Accounts.COL_NAME) var name: String = "",
+    @JvmField @ColumnInfo(name = Database.Accounts.COL_COLOR) @ColorInt var color: Int = -1,
     @JvmField @ColumnInfo(name = Database.Accounts.COL_START_BALANCE) var startBalance: Double = 0.0
 ) : Model {
 

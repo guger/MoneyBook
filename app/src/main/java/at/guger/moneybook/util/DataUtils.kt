@@ -29,7 +29,7 @@ import at.guger.moneybook.data.model.Budget
  */
 object DataUtils {
 
-    fun getDefaultAccount(context: Context) = Account(DEFAULT_ACCOUNT_ID, context.getString(R.string.Checking))
+    fun getDefaultAccount(context: Context) = Account(DEFAULT_ACCOUNT_ID, context.getString(R.string.Checking), Color.parseColor("#007d51"))
 
     fun getDefaultBudgets(context: Context): Array<Budget> = arrayOf(
         Budget(id = -100, name = context.getString(R.string.Housekeeping), budget = 400.0, color = Color.parseColor("#BBDEFB")),
@@ -39,7 +39,7 @@ object DataUtils {
 
     const val MAX_ACCOUNTS = 4
 
-    val accountColors: Array<Int> = arrayOf(
+    val ACCOUNT_COLORS: Array<Int> = arrayOf(
         Color.parseColor("#007d51"),
         Color.parseColor("#37efba"),
         Color.parseColor("#1eb980"),

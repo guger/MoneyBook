@@ -48,7 +48,7 @@
                 android:singleLine="true"
                 android:textAppearance="?textAppearanceHeadline3"
                 android:textColor="?colorOnSurface"
-                app:accounts="@{viewModel.coloredAccounts}"
+                app:accounts="@{viewModel.accounts}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/txvOverviewAccountsTitle"

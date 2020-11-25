@@ -26,6 +26,7 @@ import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.ext.ifNull
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.repository.AccountsRepository
+import at.guger.moneybook.util.DataUtils
 import kotlinx.coroutines.launch
 
 /**
@@ -68,9 +69,13 @@ class AddEditAccountDialogFragmentViewModel(private val accountsRepository: Acco
 
             if (startBalance != null) {
                 account.ifNull {
+                    val colors = DataUtils.ACCOUNT_COLORS
+                    val accountColor: Int = accountsRepository.countAccounts() % colors.size
+
                     accountsRepository.insert(
                         Account(
                             name = accountName.value!!.trim(),
+                            color = colors[accountColor],
                             startBalance = startBalance
                         )
                     )

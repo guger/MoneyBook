@@ -19,9 +19,9 @@ package at.guger.moneybook.ui.home.overview
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.core.util.ext.size
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.util.CurrencyFormat
 import kotlin.math.max
 
@@ -30,7 +30,7 @@ import kotlin.math.max
  */
 
 @BindingAdapter("accounts", requireAll = true)
-fun TextView.setAccounts(accounts: List<ColoredAccount>?) {
+fun TextView.setAccounts(accounts: List<AccountWithBalance>?) {
     accounts?.let { account ->
         setCurrency(account.sumByDouble { it.balance + it.startBalance })
     }

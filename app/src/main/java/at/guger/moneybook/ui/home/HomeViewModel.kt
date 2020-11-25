@@ -16,17 +16,19 @@
 
 package at.guger.moneybook.ui.home
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.data.model.Budget
-import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.scheduler.reminder.ReminderScheduler
-import at.guger.moneybook.util.DataUtils
 import kotlinx.coroutines.launch
 
 /**
@@ -41,11 +43,11 @@ class HomeViewModel(
 
     //region Variables
 
-    val claimsAndDebts: LiveData<List<Transaction>>
+    val claimsAndDebts = transactionsRepository.getClaimsAndDebts()
 
-    val coloredAccounts: LiveData<List<ColoredAccount>>
+    val accounts = accountsRepository.getObservableAccountsWithBalance()
 
-    val budgetsWithBalance: LiveData<List<BudgetWithBalance>>
+    val budgetsWithBalance = budgetsRepository.getBudgetsWithBalance()
 
     private val _navigateToPage = MutableLiveData<Event<HomeFragment.Destination>>()
     val navigateToPage: LiveData<Event<HomeFragment.Destination>> = _navigateToPage
@@ -55,25 +57,13 @@ class HomeViewModel(
 
     //endregion
 
-    init {
-        val colors = DataUtils.accountColors
-
-        claimsAndDebts = transactionsRepository.getClaimsAndDebts()
-
-        coloredAccounts = Transformations.map(accountsRepository.getObservableAccountsWithBalance()) { accounts ->
-            accounts.mapIndexed { index, accountWithBalance -> ColoredAccount(accountWithBalance, color = colors[index]) }
-        }
-
-        budgetsWithBalance = budgetsRepository.getBudgetsWithBalance()
-    }
-
     //region Methods
 
     fun navigateTo(destination: HomeFragment.Destination) {
         _navigateToPage.value = Event(destination)
     }
 
-    fun showAccount(account: ColoredAccount) {
+    fun showAccount(account: AccountWithBalance) {
         _showAccount.value = Event(account.id)
     }
 

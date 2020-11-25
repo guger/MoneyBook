@@ -21,14 +21,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.databinding.ItemAccountBinding
-import at.guger.moneybook.ui.home.ColoredAccount
 import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.Adapter] showing all accounts and details.
  */
-class AccountsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapter<ColoredAccount, AccountViewHolder>(AccountsDiffCallback()) {
+class AccountsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapter<AccountWithBalance, AccountViewHolder>(AccountsDiffCallback()) {
 
     //region Variables
 
@@ -66,12 +66,12 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapt
 
     //endregion
 
-    class AccountsDiffCallback : DiffUtil.ItemCallback<ColoredAccount>() {
-        override fun areItemsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {
+    class AccountsDiffCallback : DiffUtil.ItemCallback<AccountWithBalance>() {
+        override fun areItemsTheSame(oldItem: AccountWithBalance, newItem: AccountWithBalance): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ColoredAccount, newItem: ColoredAccount): Boolean {
+        override fun areContentsTheSame(oldItem: AccountWithBalance, newItem: AccountWithBalance): Boolean {
             return oldItem == newItem
         }
     }

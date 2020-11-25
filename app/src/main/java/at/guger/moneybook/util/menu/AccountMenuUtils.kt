@@ -37,11 +37,11 @@ object AccountMenuUtils {
     fun onItemSelected(item: MenuItem, adapter: AccountsAdapter, editAction: (Account) -> Unit, deleteAction: (Array<Account>) -> Unit): Boolean {
         return when (item.itemId) {
             R.id.actionAccountEdit -> {
-                editAction(adapter.currentList[adapter.checkedItems.first()].account)
+                editAction(adapter.currentList[adapter.checkedItems.first()])
                 true
             }
             R.id.actionAccountDelete -> {
-                deleteAction(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.map { it.account }.toTypedArray())
+                deleteAction(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.map { it }.toTypedArray())
                 true
             }
             else -> false

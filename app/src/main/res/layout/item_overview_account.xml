@@ -108,7 +108,7 @@
 
         <variable
             name="account"
-            type="at.guger.moneybook.ui.home.ColoredAccount" />
+            type="at.guger.moneybook.data.model.AccountWithBalance" />
 
     </data>
 </layout>

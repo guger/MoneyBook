@@ -21,8 +21,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
+import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import at.guger.moneybook.core.R
 import kotlinx.coroutines.Dispatchers
@@ -314,8 +313,8 @@ class LineGraphChart : View {
         conPoint2.clear()
     }
 
-    fun setCurveBorderColor(@ColorRes color: Int) {
-        borderPathPaint.color = ContextCompat.getColor(context, color)
+    fun setCurveBorderColor(@ColorInt color: Int) {
+        borderPathPaint.color = color
     }
 
     //endregion

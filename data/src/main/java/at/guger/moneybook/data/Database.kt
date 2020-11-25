@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -67,6 +67,7 @@ object Database {
 
         const val COL_ID = ID
         const val COL_NAME = "name"
+        const val COL_COLOR = "color"
         const val COL_START_BALANCE = "start_balance"
         const val COL_BALANCE = "balance"
     }

@@ -49,6 +49,9 @@ internal interface AccountsDao {
     )
     fun getAccountsWithBalance(): LiveData<List<AccountWithBalance>>
 
+    @Query("SELECT COUNT(*) FROM accounts")
+    suspend fun countAccounts(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(account: Account)
 

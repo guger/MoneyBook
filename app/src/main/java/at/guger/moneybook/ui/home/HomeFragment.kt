@@ -95,7 +95,7 @@ class HomeFragment : BaseFragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
-        viewModel.coloredAccounts.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddAccount)?.isVisible = mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
+        viewModel.accounts.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddAccount)?.isVisible = mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
         viewModel.budgetsWithBalance.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddBudget)?.isVisible = mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
     }
 

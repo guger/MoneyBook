@@ -24,6 +24,6 @@ import kotlinx.android.parcel.Parcelize
  * AppDatabase entity for accounts being part of a [Transaction].
  */
 @Parcelize
-open class AccountWithBalance(
+data class AccountWithBalance(
     @ColumnInfo(name = Database.Accounts.COL_BALANCE) var balance: Double = 0.0
 ) : Account()
