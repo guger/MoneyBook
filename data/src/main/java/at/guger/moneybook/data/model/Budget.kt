@@ -17,6 +17,7 @@
 package at.guger.moneybook.data.model
 
 import androidx.annotation.ColorInt
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -27,6 +28,7 @@ import kotlinx.android.parcel.Parcelize
 /**
  * AppDatabase entity for budgets being part of a [Transaction].
  */
+@Keep
 @Parcelize
 @Entity(tableName = Database.Budgets.TABLE_NAME)
 open class Budget(

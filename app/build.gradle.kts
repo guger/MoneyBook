@@ -53,7 +53,10 @@ android {
         getByName("release") {
             if (Versions.App.isBeta()) versionNameSuffix = "-beta-" + Versions.App.Beta
 
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     packagingOptions {
