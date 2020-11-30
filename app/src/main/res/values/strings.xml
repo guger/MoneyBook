@@ -30,10 +30,8 @@
     <string name="Budgets">Budgets</string>
     <string name="Add">Add</string>
     <string name="AddTransaction">Add Transaction</string>
-    <string name="Manage">Manage</string>
-    <string name="ZeroMoney">$ 0.00</string>
     <string name="Checking">Checking</string>
-    <string name="AccountNumberDots">ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ</string>
+    <string name="AccountNumberDots" translatable="false">ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ</string>
     <string name="NewTransaction">New Transaction</string>
     <string name="Title">Title</string>
     <string name="Earning">Earning</string>
@@ -86,7 +84,7 @@
     <string name="PermissionDetails">MoneyBook values your privacy and does only request permissions it absolutely needs:\n\n<b>Reading Contacts:</b>\nA key feature of MoneyBook is the reminder. Access to the address book is needed to link claims or debts with contacts, to be able to write a message to them if claims are outstanding.\n\n<b>Internet:</b>\nMoneyBook should provide you an excellent user experience. However, app crashes may occur. In this case, MoneyBook sends detailed error statistics to its developer, to help fixing the problem immediately. Thereby, just application relevant details (logs) are transmitted, no transactions or personal data.\n\nFor more information, feel free to contact the developer.</string>
     <string name="ContactsPermissionDenied">Contacts feature will be limited due to denied permission.</string>
     <string name="Retry">Retry</string>
-    <string name="Balance_of_Budget">%1$s / %2$s</string>
+    <string name="Balance_of_Budget" translatable="false">%1$s / %2$s</string>
     <string name="Left">Left</string>
     <string name="ChooseColor">Choose Color</string>
     <string name="EditBudget">Edit Budget</string>
@@ -152,6 +150,8 @@
     <string name="FeatureInDevelopment">Unfortunately, this feature is not finished yet. Stay curious.</string>
     <string name="LetsGetStarted">Let\'s get started</string>
     <string name="MigrationCompletedSuccessfully">Migration completed successfully.</string>
-    <string name="StartBalance">Start Balance</string>
+    <string name="InitialBalance">Initial Balance</string>
     <string name="InvalidValue">Invalid value.</string>
+    <string name="notification_channel_reminder">Reminders</string>
+    <string name="notification_channel_reminder_description">Reminds you of your claims and debts.</string>
 </resources>

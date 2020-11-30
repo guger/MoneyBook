@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2020 Daniel Guger
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">MoneyBook</string>
+    <string name="Overview">Übersicht</string>
+    <string name="Earnings">Einnahmen</string>
+    <string name="Expenses">Ausgaben</string>
+    <string name="Claims">Forderungen</string>
+    <string name="Debts">Schulden</string>
+    <string name="Accounts">Konten</string>
+    <string name="SeeAll">Alle Anzeigen</string>
+    <string name="Home">Startseite</string>
+    <string name="Settings">Einstellungen</string>
+    <string name="Search">Suche</string>
+    <string name="Dues">Rechnungen</string>
+    <string name="Budgets">Budgets</string>
+    <string name="Add">Hinzufügen</string>
+    <string name="AddTransaction">Neue Buchung</string>
+    <string name="Checking">Girokonto</string>
+    <string name="NewTransaction">Buchung erstellen</string>
+    <string name="Title">Titel</string>
+    <string name="Earning">Einnahme</string>
+    <string name="Debt">Schuld</string>
+    <string name="Claim">Forderung</string>
+    <string name="Expense">Ausgabe</string>
+    <string name="Save">Speichern</string>
+    <string name="Value">Betrag</string>
+    <string name="Value_per_Contact">Betrag pro Kontakt</string>
+    <string name="Contacts">Kontakte</string>
+    <string name="Notes">Notizen</string>
+    <string name="Date">Datum</string>
+    <string name="ChooseDate">Datum auswählen</string>
+    <string name="OpenCalculator">Taschenrechner öffnen</string>
+    <string name="EmptyTransactionTitle">Bitte geben Sie einen Titel ein.</string>
+    <string name="InvalidTransactionDate">Bitte geben Sie ein Datum ein (%s).</string>
+    <string name="InvalidTransactionDueDate">Bitte geben Sie einen Betrag ein (%s).</string>
+    <string name="InvalidTransactionValue_NotPositive">Bitte geben Sie einen Betrag größer null ein.</string>
+    <string name="InvalidTransactionValue_TooHigh">Bitte geben Sie nur Beträge kleiner als 1 Mio. ein.</string>
+    <string name="Account">Konto</string>
+    <string name="Budget">Budget</string>
+    <string name="Housekeeping">Haushalt</string>
+    <string name="Leisure">Freizeit</string>
+    <string name="Shopping">Shopping</string>
+    <string name="Delete">Löschen</string>
+    <string name="Edit">Bearbeiten</string>
+    <string name="x_selected">%d ausgewählt</string>
+    <string name="EditTransaction">Buchung bearbeiten</string>
+    <string name="AddAccount">Konto hinzufügen</string>
+    <string name="Name">Name</string>
+    <string name="NewAccount">Konto erstellen</string>
+    <string name="EditAccount">Konto bearbeiten</string>
+    <string name="EmptyAccountName">Bitte geben Sie einen Kontonamen ein.</string>
+    <string name="DeleteAccount">Konto löschen</string>
+    <string name="DeleteAccounts">Konten löschen</string>
+    <string name="aldm_DeleteAccount">Möchen Sie das Konto \"%s\" inkl. aller Buchungen wirklich löschen?</string>
+    <string name="aldm_DeleteAccounts">Möchten Sie die Konten \"%s\" inkl. aller Buchungen wirklich löschen?</string>
+    <string name="Cancel">Abbrechen</string>
+    <string name="NoDues">Es sind keine ausständigen Rechnungen vorhanden.</string>
+    <string name="NoTransactions">In diesem Konto sind keine Buchungen vorhanden.</string>
+    <string name="ContactsPermission">Kontaktzugriff</string>
+    <string name="ContactsPermissionNeeded">Der Zugriff auf Kontakte wird benötigt, um Nachrichten als Erinnerungen senden zu können.</string>
+    <string name="ContactsPermissionNeededMigration">Der Zugriff auf Kontakte wird benötigt, um die Daten inkl. der zugehörigen Kontakte migrieren zu können und um Nachrichten als Erinnerungen senden zu können.</string>
+    <string name="Due_x">Fällig am %s</string>
+    <string name="prefs_Information">MoneyBook ist eine Open-Source App, entwickelt von Daniel Guger.\n\nVersion: %1$s\nBuild: %2$d\n\nhttps://github.com/guger/MoneyBook</string>
+    <string name="Information">Information</string>
+    <string name="Permissions">Berechtigungen</string>
+    <string name="prefs_Permissions">Erläuterungen zu den angeforderten Berechtigungen.</string>
+    <string name="OK">OK</string>
+    <string name="ContactsPermissionDenied">Kontakte hinzufügen funktioniert aufgrund des verweigerten Kontaktzugriffs nur eingeschränkt.</string>
+    <string name="Retry">Wiederholen</string>
+    <string name="Left">übrig</string>
+    <string name="ChooseColor">Farbe auswählen</string>
+    <string name="EditBudget">Budget bearbeiten</string>
+    <string name="NewBudget">Budget erstellen</string>
+    <string name="AddBudget">Budget hinzufügen</string>
+    <string name="Reports">Fehlerberichte</string>
+    <string name="Other">Sonstiges</string>
+    <string name="PreferencesRestartRequired">Zur Anwendung der Änderungen ist ein Neustart der App erforderlich.</string>
+    <string name="Restart">Neu starten</string>
+    <string name="CrashReports">Absturzberichte senden (empfohlen)</string>
+    <string name="prefs_CrashReports">Anonymisierte Absturzberichte an den Entwickler senden.</string>
+    <string name="UsageStatistics">Nutzungsstatistiken senden</string>
+    <string name="prefs_UsageStatistics">Anonyme Nutzungsstatistiken und Daten wie Performance, Nutzung und Hardwaredetails an den Entwickler senden.</string>
+    <string name="x_Mio">%s Mio.</string>
+    <string name="General">Allgemein</string>
+    <string name="Currency">Währung</string>
+    <string name="prefs_Currency">Wählen Sie Ihre Währung aus.</string>
+    <string name="Default">Standard</string>
+    <string name="Dollar">Dollar</string>
+    <string name="Euro">Euro</string>
+    <string name="Pound">Pfund</string>
+    <string name="Yen">Yen</string>
+    <string name="Close">Schließen</string>
+    <string name="DueDate">Fälligkeitsdatum</string>
+    <string name="ChooseDueDate">Fälligkeitsdatum auswählen</string>
+    <string name="ReminderNotificationTitleClaim">Ausstehende Forderung</string>
+    <string name="ReminderNotificationTitleDebt">Fällige Schuld</string>
+    <string name="ReminderNotificationTextClaimNoContact">Sie haben eine offene Forderung über %s.</string>
+    <string name="ReminderNotificationTextDebtNoContact">Sie haben eine fällige Schuld über %s.</string>
+    <string name="ReminderNotificationTextClaimOneContact">%s schuldet Ihnen %s.</string>
+    <string name="ReminderNotificationTextDebtOneContact">Sie schulden %s %s.</string>
+    <string name="ReminderNotificationTextClaimMultipleContacts">%d Kontakte schulden Ihnen %s.</string>
+    <string name="ReminderNotificationTextDebtMultipleContacts">Sie schulden %d Kontakten %s.</string>
+    <string name="TransactionDueDateBeforeDate">Das Fälligkeitsdatum muss nach dem Buchungsdatum liegen.</string>
+    <string name="Snooze">Schlummern</string>
+    <string name="Message">Nachricht</string>
+    <string name="Paid">Bezahlt</string>
+    <string name="ChooseDelay">Schlummerzeit auswählen</string>
+    <string name="FiveHours">5 Stunden</string>
+    <string name="OneDay">1 Tag</string>
+    <string name="ThreeDays">3 Tage</string>
+    <string name="FiveDays">5 Tage</string>
+    <string name="OneWeek">1 Woche</string>
+    <string name="ReminderDelayed">Erinnerung verschoben um %s.</string>
+    <string name="ScreenOverlayNotPermitted">Der Dialog kann aufgrund der fehlenden \"Über Apps anzeigen\"-Berechtigung nicht geöffnet werden. Öffnen Sie dazu die Einstellungen.</string>
+    <string name="ReminderMessage">Ich habe dir %s geborgt.\n\nErinnerung via MoneyBook.</string>
+    <string name="NoSMSAppFound">Es konnte keine SMS-App gefunden werden.</string>
+    <string name="MarkAsPaid">Als bezahlt markieren</string>
+    <string name="Next">Weiter</string>
+    <string name="Skip">Überspringen</string>
+    <string name="GetStarted">Los geht\'s</string>
+    <string name="StartMigrating">Migration starten</string>
+    <string name="Welcome">Willkommen bei MoneyBook</string>
+    <string name="YourPersonalFinanceManager">Ihr persönlicher Finanzmanager</string>
+    <string name="StayOnTopOfYourFinances">Behalten Sie die Übersicht über Ihre Finanzen.</string>
+    <string name="TrackSpendingsWithAccounts">Verfolgen Sie die Ausgaben in Ihren Konten</string>
+    <string name="CreateAccountsOrganiseTransactions">Erstellen Sie Konten zum Organisieren Ihrer Buchungen.</string>
+    <string name="KeepEyeOfDues">Haben Sie ein Auge auf Ihre Rechnungen</string>
+    <string name="NeverForgetAnyDue">Erhalten Sie Erinnerungen über Forderungen und Schulden</string>
+    <string name="OrganizeBudget">Organisieren Sie Ihr Budget</string>
+    <string name="OrganizeInBudgets">Immer wissen, was noch übrig ist.</string>
+    <string name="GetStartedNow">Behalten Sie den Überblick über Ihren Finanzen. Mit Ihrem persönlichen und sicheren Finanzmanager.</string>
+    <string name="FeatureInDevelopment">Diese Funktion ist noch in Entwicklung. Bleiben Sie gespannt!</string>
+    <string name="LetsGetStarted">Los geht\'s</string>
+    <string name="MigrationCompletedSuccessfully">Migration erfolgreich.</string>
+    <string name="notification_channel_reminder">Erinnerungen</string>
+    <string name="notification_channel_reminder_description">Benachrichtigungen über Forderungen und Schulden.</string>
+    <string name="InvalidValue">Ungültiger Wert.</string>
+    <string name="InitialBalance">Ausgangssaldo</string>
+    <string name="PermissionDetails">Wir legen Wert auf Ihre Privatsphäre. Daher fragen wir nur um Berechtigungen, die absolut notwendig für die Funktion sind:\n\n<b>Kontaktzugriff:</b>\nUm bei ausständigen Forderungen eine Nachricht an Ihre Kontakte senden zu können, benötigt die App Zugriff auf Ihr Addressbuch, damit Personen zur jeweiligen Forderung/Schuld hinzugefügt werden können.\n\n<b>Internet:</b>\nUm Ihre Nutzererfahrung so angenehm wie möglich zu gestalten, sendet MoneyBook, mit Ihrer Zustimmung, detaillierte Absturzberichte an den Entwickler. Diese detaillierten Berichte enthalten ausschließlich technische, App-relevante Daten (Logs) und keinesfalls Buchungen oder persönliche Daten.\n\nFür weitere Informationen können Sie uns gerne kontaktieren.</string>
+</resources>
