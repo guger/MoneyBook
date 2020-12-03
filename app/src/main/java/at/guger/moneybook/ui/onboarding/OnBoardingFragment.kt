@@ -107,8 +107,8 @@ class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() 
             }
             categories.isNotEmpty() -> {
                 MaterialDialog(requireContext()).show {
-                    title(text = "Which categories do you want to migrate?")
-                    message(text = "Categories will be converted to budgets. Book Entries, whose categories are not migrated, will be copied uncategorized.")
+                    title(res = R.string.OnBoardingMigrationCategoriesTitle)
+                    message(res = R.string.OnBoardingMigrationCategories)
                     listItemsMultiChoice(items = categories.map { it.name }, allowEmptySelection = true) { _, _, items ->
                         migrationHelper.categories = categories.filter { items.contains(it.name) }
                     }

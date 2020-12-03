@@ -24,7 +24,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
 import at.guger.moneybook.databinding.ViewOnboardingBinding
@@ -58,8 +57,6 @@ class OnBoardingView @JvmOverloads constructor(context: Context, attrs: Attribut
         with(binding.mOnBoardingViewSlider) {
             adapter = OnBoardingPagerAdapter(OnBoardingPage.values())
 
-            setPageTransformer { page, position -> setParallaxTransformation(page, position) }
-
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                     if (numberOfPages > 1) {
@@ -80,16 +77,6 @@ class OnBoardingView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
         binding.btnOnBoardingViewSkip.setOnClickListener { skipButtonCallback?.invoke() }
         binding.btnOnBoardingViewStartMigrate.setOnClickListener { startMigrateButtonCallback?.invoke() }
-    }
-
-    private fun setParallaxTransformation(page: View, position: Float) {
-        page.apply {
-            when {
-                position < -1 -> alpha = 1.0f // (-Inf, -1) -> way off screen to the left
-                position <= 1 -> binding.root.findViewById<ImageView>(R.id.imvOnBoardingItem).translationX = -position * (width / 2) // [-1, 1] -> half the normal speed
-                else -> alpha = 1.0f // (1, Inf) -> way off screen to the right
-            }
-        }
     }
 
     //endregion

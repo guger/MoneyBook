@@ -29,6 +29,6 @@ enum class OnBoardingPage(
     START(R.string.Welcome, R.string.YourPersonalFinanceManager, R.string.StayOnTopOfYourFinances, R.drawable.ic_launcher_foreground),
     ACCOUNTS(R.string.Accounts, R.string.TrackSpendingsWithAccounts, R.string.CreateAccountsOrganiseTransactions, R.drawable.ic_onboarding_accounts),
     DUES(R.string.Dues, R.string.KeepEyeOfDues, R.string.NeverForgetAnyDue, R.drawable.ic_onboarding_dues),
-    BUDGETS(R.string.Budget, R.string.OrganizeBudget, R.string.OrganizeInBudgets, R.drawable.ic_onboarding_budgets),
+    BUDGETS(R.string.Budgets, R.string.OrganizeBudget, R.string.OrganizeInBudgets, R.drawable.ic_onboarding_budgets),
     GETSTARTED(R.string.GetStarted, R.string.StayOnTopOfYourFinances, R.string.GetStartedNow, R.drawable.ic_launcher_foreground)
 }

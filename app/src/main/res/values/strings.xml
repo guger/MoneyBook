@@ -149,4 +149,6 @@
     <string name="InvalidValue">Invalid value.</string>
     <string name="notification_channel_reminder">Reminders</string>
     <string name="notification_channel_reminder_description">Reminds you of your claims and debts.</string>
+    <string name="OnBoardingMigrationCategoriesTitle">Which categories do you want to migrate?</string>
+    <string name="OnBoardingMigrationCategories">Categories will be converted to budgets. Book entries, whose categories are not migrated, will be copied uncategorized.</string>
 </resources>
