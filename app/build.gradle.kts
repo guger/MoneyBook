@@ -121,7 +121,6 @@ dependencies {
 
     implementation(Libs.AssentCore)
     implementation(Libs.AssentRationales)
-    implementation(Libs.Charts)
     implementation(Libs.ViewPagerDots)
     implementation(Libs.MaterialCab)
     implementation(Libs.MaterialDialogsCore)

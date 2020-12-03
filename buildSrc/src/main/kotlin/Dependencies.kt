@@ -106,8 +106,6 @@ object Dependencies {
         const val MaterialDialogsCore = "com.afollestad.material-dialogs:core:${Versions.Libraries.MaterialDialogs}"
         const val MaterialDialogsColor = "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"
 
-        const val Charts = "com.github.PhilJay:MPAndroidChart:${Versions.Libraries.Charts}"
-
         const val ViewPagerDots = "com.tbuonomo.andrui:viewpagerdotsindicator:${Versions.Libraries.ViewPagerDots}"
 
         const val CalcDialog = "com.maltaisn:calcdialog:${Versions.Libraries.CalcDialog}"
