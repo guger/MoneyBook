@@ -13,7 +13,7 @@ import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.NOTES
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.PREFIX_CATEGORY
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.TITLE
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.VALUE
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
 /**

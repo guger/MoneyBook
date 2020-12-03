@@ -21,7 +21,7 @@ import androidx.annotation.Keep
 import androidx.room.*
 import at.guger.moneybook.data.Database
 import at.guger.moneybook.data.model.base.Model
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
 /**

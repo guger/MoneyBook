@@ -20,7 +20,7 @@ import androidx.annotation.IntDef
 import androidx.room.*
 import at.guger.moneybook.data.Database
 import at.guger.moneybook.data.model.base.Model
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * AppDatabase entry for contacts being part of a [Transaction].

@@ -23,7 +23,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import at.guger.moneybook.data.Database
 import at.guger.moneybook.data.model.base.Model
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * AppDatabase entity for accounts being part of a [Transaction].

@@ -11,7 +11,7 @@ import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.COLOR
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.ICON_ID
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.ID
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.NAME
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Model class for [Categories][Category].

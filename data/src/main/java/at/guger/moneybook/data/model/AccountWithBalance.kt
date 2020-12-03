@@ -18,7 +18,7 @@ package at.guger.moneybook.data.model
 
 import androidx.room.ColumnInfo
 import at.guger.moneybook.data.Database
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * AppDatabase entity for accounts being part of a [Transaction].

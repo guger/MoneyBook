@@ -7,7 +7,7 @@ import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.BOOKENTRY_I
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.CONTACT_ID
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.HAS_PAID
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.ID
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Contact model class for [BookEntries][BookEntry].
