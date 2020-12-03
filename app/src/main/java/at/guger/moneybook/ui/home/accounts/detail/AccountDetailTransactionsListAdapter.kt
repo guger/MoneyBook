@@ -51,13 +51,13 @@ class AccountDetailTransactionsListAdapter : CheckableListAdapter<Transaction, A
 
     //region Methods
 
-    public override fun toggleChecked(pos: Int) {
+    override fun toggleChecked(pos: Int) {
         super.toggleChecked(pos)
 
         notifyItemChanged(pos)
     }
 
-    public override fun clearChecked() {
+    override fun clearChecked() {
         super.clearChecked()
 
         notifyDataSetChanged()

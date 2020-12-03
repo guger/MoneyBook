@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,27 +23,36 @@ import android.view.ViewGroup
 import androidx.annotation.MenuRes
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
-import at.guger.moneybook.core.R
+import at.guger.moneybook.core.databinding.DialogBottomNavigationViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.dialog_bottom_navigation_view.*
 
 /**
  * [BottomSheetDialogFragment] to be used as a [bottom navigation view][NavigationView].
  */
 class BottomNavigationViewDialog(@MenuRes private val menuRes: Int, private val navController: NavController) : BottomSheetDialogFragment() {
 
+    //region Variables
+
+    private lateinit var binding: DialogBottomNavigationViewBinding
+
+    //endregion
+
     //region BottomSheetDialogFragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_bottom_navigation_view, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DialogBottomNavigationViewBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mBottomNavigationView.inflateMenu(menuRes)
-        mBottomNavigationView.setupWithNavController(navController)
+        binding.mBottomNavigationView.apply {
+            inflateMenu(menuRes)
+            setupWithNavController(navController)
+        }
     }
 
     //endregion

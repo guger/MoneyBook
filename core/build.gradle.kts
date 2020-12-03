@@ -23,8 +23,8 @@ import Dependencies.Test
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -45,6 +45,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true

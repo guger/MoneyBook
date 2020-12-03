@@ -16,12 +16,6 @@
 
 package at.guger.moneybook.core.util.ext
 
-/**
- * Extension functions for [Any] class.
- */
-
-inline fun <T, R> T.doIf(assertion: (T) -> Boolean, block: T.() -> R): R? = doIf(assertion.invoke(this), block)
-
 inline fun <T, R> T.doIf(assertion: Boolean, block: T.() -> R): R? = if (assertion) block() else null
 
 inline fun <T> T?.ifNull(block: () -> Unit): Unit? = if (this == null) block() else null

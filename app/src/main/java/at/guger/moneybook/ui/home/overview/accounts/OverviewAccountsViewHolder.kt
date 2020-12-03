@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
 import at.guger.moneybook.databinding.ItemOverviewAccountsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.item_overview_accounts.*
 
 /**
  * [RecyclerView.ViewHolder] for the accounts overview item.
@@ -34,17 +33,15 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
         binding.executePendingBindings()
 
         viewModel.accounts.observe(binding.lifecycleOwner!!, { coloredAccounts ->
-            mOverviewAccountsDivider.setDistributions(
+            binding.mOverviewAccountsDivider.setDistributions(
                 distributions = coloredAccounts.map { (it.balance + it.startBalance).toFloat() },
                 colors = coloredAccounts.map { it.color }
             )
         })
 
-        with(mOverviewAccountsRecyclerView) {
+        binding.mOverviewAccountsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.accounts.observe(binding.lifecycleOwner!!, Observer(::submitList)) }
         }
     }
-
-    override fun clear() {}
 }

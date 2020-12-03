@@ -18,10 +18,6 @@
 <resources>
     <string name="app_name">MoneyBook</string>
     <string name="Overview">Übersicht</string>
-    <string name="Earnings">Einnahmen</string>
-    <string name="Expenses">Ausgaben</string>
-    <string name="Claims">Forderungen</string>
-    <string name="Debts">Schulden</string>
     <string name="Accounts">Konten</string>
     <string name="SeeAll">Alle Anzeigen</string>
     <string name="Home">Startseite</string>
@@ -134,7 +130,6 @@
     <string name="Next">Weiter</string>
     <string name="Skip">Überspringen</string>
     <string name="GetStarted">Los geht\'s</string>
-    <string name="StartMigrating">Migration starten</string>
     <string name="Welcome">Willkommen bei MoneyBook</string>
     <string name="YourPersonalFinanceManager">Ihr persönlicher Finanzmanager</string>
     <string name="StayOnTopOfYourFinances">Behalten Sie die Übersicht über Ihre Finanzen.</string>

@@ -32,6 +32,4 @@ class OverviewAccountsAccountViewHolder(binding: ItemOverviewAccountBinding, pri
         binding.account = model
         binding.executePendingBindings()
     }
-
-    override fun clear() {}
 }

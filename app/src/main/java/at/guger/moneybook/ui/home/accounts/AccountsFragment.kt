@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
@@ -38,41 +38,38 @@ import at.guger.moneybook.util.menu.AccountMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.fragment_accounts.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * Fragment for [home view pager's][ViewPager2] accounts content.
  */
-class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
+class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeViewModel>(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
     private lateinit var adapter: AccountsAdapter
 
-    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), mAccountsRecyclerView, this) }
+    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), binding.mAccountsRecyclerView, this) }
 
-    private val viewModel: HomeViewModel by sharedViewModel()
+    override val fragmentViewModel: HomeViewModel by sharedViewModel()
 
     //endregion
 
     //region Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentAccountsBinding.inflate(inflater, container, false)
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): FragmentAccountsBinding {
+        return FragmentAccountsBinding.inflate(inflater, root, attachToParent).apply {
+            viewModel = fragmentViewModel
+            lifecycleOwner = this@AccountsFragment
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = AccountsAdapter(viewModel).apply { viewModel.accounts.observe(viewLifecycleOwner, Observer(::submitList)) }
+        adapter = AccountsAdapter(fragmentViewModel).apply { fragmentViewModel.accounts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
+        binding.mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(onItemTouchListener)
         }
     }
@@ -88,7 +85,7 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
     private fun deleteAccount(vararg account: Account) {
         MaterialAlertDialogBuilder(requireContext()).setTitle(if (account.size == 1) R.string.DeleteAccount else R.string.DeleteAccounts)
             .setMessage(getString(if (account.size == 1) R.string.aldm_DeleteAccount else R.string.aldm_DeleteAccounts, account.joinToString { it.name }))
-            .setPositiveButton(R.string.Delete) { _, _ -> viewModel.deleteAccount(*account) }
+            .setPositiveButton(R.string.Delete) { _, _ -> fragmentViewModel.deleteAccount(*account) }
             .setNegativeButton(R.string.Cancel, null)
             .show()
     }
@@ -111,7 +108,7 @@ class AccountsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                 getAppCompatActivity<MainActivity>()?.destroyCab()
             }
         } else {
-            viewModel.showAccount(adapter.currentList[pos])
+            fragmentViewModel.showAccount(adapter.currentList[pos])
         }
     }
 

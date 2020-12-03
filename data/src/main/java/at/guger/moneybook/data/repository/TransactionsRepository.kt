@@ -23,9 +23,6 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.ContactsDao
 import at.guger.moneybook.data.provider.local.dao.TransactionsDao
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 /**
@@ -99,9 +96,7 @@ class TransactionsRepository(database: AppDatabase) {
                 Transaction.TransactionType.EARNING, Transaction.TransactionType.EXPENSE -> throw IllegalArgumentException("Earnings and expenses must not be marked as paid.")
                 else -> Transaction(
                     entity = transaction.entity.copy(isPaid = true),
-                    contacts = transaction.contacts?.also { contacts ->
-                        contacts.forEach { it.copy(paidState = Contact.PaidState.STATE_PAID) }
-                    })
+                    contacts = transaction.contacts?.onEach { it.copy(paidState = Contact.PaidState.STATE_PAID) })
             }
         )
     }

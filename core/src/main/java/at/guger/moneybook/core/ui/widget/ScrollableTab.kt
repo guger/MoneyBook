@@ -22,6 +22,7 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -29,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.core.R
 import at.guger.moneybook.core.util.Utils
-import kotlinx.android.synthetic.main.item_scrollable_tab.view.*
 
 /**
  * Custom TabLayout implemented with a [RecyclerView].
@@ -171,7 +171,7 @@ class ScrollableTab : RecyclerView {
     private fun colorView(child: View, scaleValue: Float) {
         val percent = (scaleValue - 1) / 1f
         val color = ArgbEvaluator().evaluate(percent, unSelectedColor, selectedColor) as Int
-        child.txvScrollableTabTitle.setTextColor(color)
+        child.findViewById<TextView>(R.id.txvScrollableTabTitle).setTextColor(color)
     }
 
     override fun onDetachedFromWindow() {

@@ -47,7 +47,7 @@ internal interface AccountsDao {
             GROUP BY accounts.id
         """
     )
-    fun getAccountsWithBalance(): LiveData<List<AccountWithBalance>>
+    fun getObservableAccountsWithBalance(): LiveData<List<AccountWithBalance>>
 
     @Query("SELECT COUNT(*) FROM accounts")
     suspend fun countAccounts(): Int

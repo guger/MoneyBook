@@ -30,6 +30,4 @@ class AccountDetailTransactionViewHolder(binding: ItemTransactionBinding) : Mode
         binding.transaction = model
         binding.executePendingBindings()
     }
-
-    override fun clear() {}
 }

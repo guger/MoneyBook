@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,54 +22,50 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
+import at.guger.moneybook.core.ui.fragment.BaseDataBindingBottomSheetDialogFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
-import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.databinding.DialogFragmentAddEditBudgetBinding
 import at.guger.moneybook.util.DataUtils
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.dialog_fragment_add_edit_budget.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
- * Dialog fragment for creating a new [accounts][Account].
+ * Dialog fragment for creating a new [budget][Budget].
  */
-class AddEditBudgetBottomSheetDialogFragment : BottomSheetDialogFragment() {
+class AddEditBudgetBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogFragment<DialogFragmentAddEditBudgetBinding, AddEditBudgetDialogFragmentViewModel>() {
 
     //region Variables
 
     private val args: AddEditBudgetBottomSheetDialogFragmentArgs by navArgs()
 
-    private val viewModel: AddEditBudgetDialogFragmentViewModel by viewModel()
+    override val fragmentViewModel: AddEditBudgetDialogFragmentViewModel by viewModel()
 
     //endregion
 
     //region DialogFragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DialogFragmentAddEditBudgetBinding.inflate(inflater, container, false)
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): DialogFragmentAddEditBudgetBinding {
+        return DialogFragmentAddEditBudgetBinding.inflate(inflater, root, false).apply {
+            viewModel = fragmentViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        args.budget?.let { viewModel.setupBudget(it) }
+        args.budget?.let { fragmentViewModel.setupBudget(it) }
 
         setupEvents()
 
-        edtAddEditBudgetName.requestFocus()
+        binding.edtAddEditBudgetName.requestFocus()
 
-        if (args.budget != null) Handler(Looper.getMainLooper()).postDelayed({ edtAddEditBudgetName.setSelection(edtAddEditBudgetName.text?.length ?: 0) }, 200)
+        if (args.budget != null) Handler(Looper.getMainLooper()).postDelayed({ binding.edtAddEditBudgetName.setSelection(binding.edtAddEditBudgetName.text?.length ?: 0) }, 200)
     }
 
     //endregion
@@ -77,16 +73,16 @@ class AddEditBudgetBottomSheetDialogFragment : BottomSheetDialogFragment() {
     //region Methods
 
     private fun setupEvents() {
-        viewModel.budgetName.observe(viewLifecycleOwner, Observer { viewModel.onTextFieldChanged() })
-        viewModel.budgetBudget.observe(viewLifecycleOwner, Observer { viewModel.onTextFieldChanged() })
-        viewModel.isValidForm.observe(viewLifecycleOwner, Observer { btnAddEditBudgetSave.isEnabled = it })
+        fragmentViewModel.budgetName.observe(viewLifecycleOwner, { fragmentViewModel.onTextFieldChanged() })
+        fragmentViewModel.budgetBudget.observe(viewLifecycleOwner, { fragmentViewModel.onTextFieldChanged() })
+        fragmentViewModel.isValidForm.observe(viewLifecycleOwner, { binding.btnAddEditBudgetSave.isEnabled = it })
 
-        viewModel.showColorChooser.observe(viewLifecycleOwner, EventObserver {
+        fragmentViewModel.showColorChooser.observe(viewLifecycleOwner, EventObserver {
             MaterialDialog(requireActivity()).show {
                 title(res = R.string.ChooseColor)
 
-                colorChooser(colors = DataUtils.getBudgetColors(requireContext()), initialSelection = viewModel.budgetColor.value) { _, color ->
-                    viewModel.budgetColor.value = color
+                colorChooser(colors = DataUtils.getBudgetColors(requireContext()), initialSelection = fragmentViewModel.budgetColor.value) { _, color ->
+                    fragmentViewModel.budgetColor.value = color
                 }
 
                 negativeButton(res = R.string.Cancel)
@@ -94,7 +90,7 @@ class AddEditBudgetBottomSheetDialogFragment : BottomSheetDialogFragment() {
             }
         })
 
-        viewModel.budgetSaved.observe(viewLifecycleOwner, EventObserver { findNavController().navigateUp() })
+        fragmentViewModel.budgetSaved.observe(viewLifecycleOwner, EventObserver { findNavController().navigateUp() })
     }
 
     //endregion

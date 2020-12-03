@@ -24,11 +24,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
+import at.guger.moneybook.databinding.ViewOnboardingBinding
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-import kotlinx.android.synthetic.main.item_onboarding_page.view.*
-import kotlinx.android.synthetic.main.view_onboarding.view.*
 
 /**
  * [FrameLayout] containing the OnBoarding View.
@@ -36,21 +36,26 @@ import kotlinx.android.synthetic.main.view_onboarding.view.*
 class OnBoardingView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
     FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
+    //region Variables
+
+    private val binding: ViewOnboardingBinding = ViewOnboardingBinding.inflate(LayoutInflater.from(context), this, true)
+
     private val numberOfPages by lazy { OnBoardingPage.values().size }
 
     var skipButtonCallback: (() -> Unit)? = null
     var startMigrateButtonCallback: (() -> Unit)? = null
 
+    //endregion
+
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.view_onboarding, this, true)
-        setupSlider(view)
+        setupSlider(binding.root)
         addButtonClickListeners()
     }
 
     //region Methods
 
     private fun setupSlider(view: View) {
-        with(mOnBoardingViewSlider) {
+        with(binding.mOnBoardingViewSlider) {
             adapter = OnBoardingPagerAdapter(OnBoardingPage.values())
 
             setPageTransformer { page, position -> setParallaxTransformation(page, position) }
@@ -58,7 +63,7 @@ class OnBoardingView @JvmOverloads constructor(context: Context, attrs: Attribut
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                     if (numberOfPages > 1) {
-                        this@OnBoardingView.mOnBoardingViewRoot.progress = (position + positionOffset) / (numberOfPages - 1)
+                        binding.mOnBoardingViewRoot.progress = (position + positionOffset) / (numberOfPages - 1)
                     }
                 }
             })
@@ -69,19 +74,19 @@ class OnBoardingView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun addButtonClickListeners() {
-        btnOnBoardingViewNext.setOnClickListener {
-            val nextSlide = mOnBoardingViewSlider.currentItem.plus(1)
-            mOnBoardingViewSlider.setCurrentItem(nextSlide, true)
+        binding.btnOnBoardingViewNext.setOnClickListener {
+            val nextSlide = binding.mOnBoardingViewSlider.currentItem.plus(1)
+            binding.mOnBoardingViewSlider.setCurrentItem(nextSlide, true)
         }
-        btnOnBoardingViewSkip.setOnClickListener { skipButtonCallback?.invoke() }
-        btnOnBoardingViewStartMigrate.setOnClickListener { startMigrateButtonCallback?.invoke() }
+        binding.btnOnBoardingViewSkip.setOnClickListener { skipButtonCallback?.invoke() }
+        binding.btnOnBoardingViewStartMigrate.setOnClickListener { startMigrateButtonCallback?.invoke() }
     }
 
     private fun setParallaxTransformation(page: View, position: Float) {
         page.apply {
             when {
                 position < -1 -> alpha = 1.0f // (-Inf, -1) -> way off screen to the left
-                position <= 1 -> imvOnBoardingItem.translationX = -position * (width / 2) // [-1, 1] -> half the normal speed
+                position <= 1 -> binding.root.findViewById<ImageView>(R.id.imvOnBoardingItem).translationX = -position * (width / 2) // [-1, 1] -> half the normal speed
                 else -> alpha = 1.0f // (1, Inf) -> way off screen to the right
             }
         }

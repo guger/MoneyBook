@@ -26,8 +26,8 @@ import Dependencies.Material
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
+    id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.firebase.crashlytics")
 }
@@ -64,6 +64,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
@@ -73,9 +74,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    androidExtensions {
-        isExperimental = true
     }
 }
 

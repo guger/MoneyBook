@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import at.guger.moneybook.data.Database.Reminders.COL_DATE
 import at.guger.moneybook.data.Database.Reminders.COL_ID
 import at.guger.moneybook.data.Database.Reminders.COL_TRANSACTION_ID
 import at.guger.moneybook.data.provider.local.AppDatabase
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**

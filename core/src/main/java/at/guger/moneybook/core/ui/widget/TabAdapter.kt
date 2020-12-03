@@ -17,29 +17,33 @@
 package at.guger.moneybook.core.ui.widget
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.StyleRes
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
-import at.guger.moneybook.core.R
-import kotlinx.android.synthetic.main.item_scrollable_tab.view.*
+import at.guger.moneybook.core.databinding.ItemScrollableTabBinding
 
 /**
  * Adapter for tabs of [ScrollableTab].
  */
 class TabAdapter(private val tabs: MutableList<String> = mutableListOf(), @StyleRes private val tabTextStyle: Int) : RecyclerView.Adapter<TabAdapter.TabViewHolder>() {
 
+    //region Variables
+
+    private lateinit var binding: ItemScrollableTabBinding
+
     private var listener: ((position: Int) -> Unit)? = null
+
+    //endregion
 
     //region Methods
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TabViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_scrollable_tab, parent, false)
+        binding = ItemScrollableTabBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        TextViewCompat.setTextAppearance(view.txvScrollableTabTitle, tabTextStyle)
-        return TabViewHolder(view, listener)
+        TextViewCompat.setTextAppearance(binding.txvScrollableTabTitle, tabTextStyle)
+
+        return TabViewHolder(binding, listener)
     }
 
     override fun getItemCount(): Int {
@@ -62,18 +66,16 @@ class TabAdapter(private val tabs: MutableList<String> = mutableListOf(), @Style
 
     //endregion
 
-    class TabViewHolder(view: View, private val listener: ((position: Int) -> Unit)?) : RecyclerView.ViewHolder(view) {
-
-        private val txvTab: TextView = view.txvScrollableTabTitle
+    class TabViewHolder(private val binding: ItemScrollableTabBinding, private val listener: ((position: Int) -> Unit)?) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 listener?.invoke(adapterPosition)
             }
         }
 
         fun bind(model: String) {
-            txvTab.text = model
+            binding.txvScrollableTabTitle.text = model
         }
     }
 }

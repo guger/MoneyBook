@@ -24,18 +24,18 @@ import android.view.animation.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
 import at.guger.moneybook.core.ui.recyclerview.decoration.SpacesItemDecoration
 import at.guger.moneybook.core.util.ext.dimen
 import at.guger.moneybook.core.util.ext.setup
+import at.guger.moneybook.databinding.FragmentOverviewBinding
 import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_overview.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * Fragment for [home view pager's][ViewPager2] overview content.
  */
-class OverviewFragment : BaseFragment() {
+class OverviewFragment : BaseViewBindingFragment<FragmentOverviewBinding>() {
 
     //region Variables
 
@@ -45,8 +45,8 @@ class OverviewFragment : BaseFragment() {
 
     //region Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_overview, container, false)
+    override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): FragmentOverviewBinding {
+        return FragmentOverviewBinding.inflate(inflater, parent, attachToParent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +69,7 @@ class OverviewFragment : BaseFragment() {
             )
         }
 
-        mOverviewRecyclerView.setup(LinearLayoutManager(requireContext()), OverviewAdapter(viewModel, viewLifecycleOwner)) {
+        binding.mOverviewRecyclerView.setup(LinearLayoutManager(requireContext()), OverviewAdapter(viewModel, viewLifecycleOwner)) {
             addItemDecoration(SpacesItemDecoration(context.dimen(res = R.dimen.recyclerview_item_spacing).toInt()))
 
             layoutAnimation = LayoutAnimationController(animSet, 0.4f)

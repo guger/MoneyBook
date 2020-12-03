@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Budget
@@ -37,41 +37,38 @@ import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.BudgetMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
-import kotlinx.android.synthetic.main.fragment_budgets.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * Fragment for [home view pager's][ViewPager2] budgets content.
  */
-class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
+class BudgetsFragment : BaseDataBindingFragment<FragmentBudgetsBinding, HomeViewModel>(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
     private lateinit var adapter: BudgetsAdapter
 
-    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), mBudgetsRecyclerView, this) }
+    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), binding.mBudgetsRecyclerView, this) }
 
-    private val viewModel: HomeViewModel by sharedViewModel()
+    override val fragmentViewModel: HomeViewModel by sharedViewModel()
 
     //endregion
 
     //region Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentBudgetsBinding.inflate(inflater, container, false)
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): FragmentBudgetsBinding {
+        return FragmentBudgetsBinding.inflate(inflater, root, false).apply {
+            viewModel = fragmentViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = BudgetsAdapter().apply { viewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
+        adapter = BudgetsAdapter().apply { fragmentViewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false) {
+        binding.mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false) {
             addOnItemTouchListener(onItemTouchListener)
         }
     }
@@ -120,7 +117,7 @@ class BudgetsFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
                     }
 
                     onSelection { menuItem ->
-                        BudgetMenuUtils.onItemSelected(menuItem, adapter, ::editBudget, viewModel::deleteBudget)
+                        BudgetMenuUtils.onItemSelected(menuItem, adapter, ::editBudget, fragmentViewModel::deleteBudget)
                         destroy()
                     }
                 }

@@ -30,9 +30,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
-import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
+import at.guger.moneybook.databinding.FragmentHomeBinding
 import at.guger.moneybook.ui.home.accounts.AccountsFragment
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.home.budgets.BudgetsFragment
@@ -44,14 +45,13 @@ import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * Fragment containing all home fragments.
  */
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
 
     //region Variables
 
@@ -74,8 +74,8 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(inflater, parent, attachToParent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,8 +95,8 @@ class HomeFragment : BaseFragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
-        viewModel.accounts.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddAccount)?.isVisible = mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
-        viewModel.budgetsWithBalance.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddBudget)?.isVisible = mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
+        viewModel.accounts.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddAccount)?.isVisible = binding.mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
+        viewModel.budgetsWithBalance.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddBudget)?.isVisible = binding.mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
     }
 
     //endregion
@@ -104,9 +104,9 @@ class HomeFragment : BaseFragment() {
     //region Methods
 
     private fun setupLayout() {
-        TooltipCompat.setTooltipText(fabHomeAddTransaction, getString(R.string.NewTransaction))
+        TooltipCompat.setTooltipText(binding.fabHomeAddTransaction, getString(R.string.NewTransaction))
 
-        mHomeViewPager.adapter = object : FragmentStateAdapter(requireActivity()) {
+        binding.mHomeViewPager.adapter = object : FragmentStateAdapter(requireActivity()) {
 
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
@@ -120,7 +120,7 @@ class HomeFragment : BaseFragment() {
             override fun getItemCount(): Int = destinations.size
         }
 
-        mHomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.mHomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
@@ -137,7 +137,7 @@ class HomeFragment : BaseFragment() {
             }
         })
 
-        TabLayoutMediator(mHomeTabs, mHomeViewPager) { tab, position ->
+        TabLayoutMediator(binding.mHomeTabs, binding.mHomeViewPager) { tab, position ->
             val destination = destinations[position]
             tab.apply {
                 setText(destination.title)
@@ -145,7 +145,7 @@ class HomeFragment : BaseFragment() {
             }
         }.attach()
 
-        fabHomeAddTransaction.setOnClickListener { findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transitionViewResId = R.id.fabHomeAddTransaction)) }
+        binding.fabHomeAddTransaction.setOnClickListener { findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transitionViewResId = R.id.fabHomeAddTransaction)) }
     }
 
     private fun setupEventListeners() {
@@ -157,7 +157,7 @@ class HomeFragment : BaseFragment() {
                 Destination.BUDGETS -> 3
             }
 
-            mHomeViewPager.setCurrentItem(destinationIndex, true)
+            binding.mHomeViewPager.setCurrentItem(destinationIndex, true)
         })
 
         viewModel.showAccount.observe(viewLifecycleOwner, EventObserver { accountId ->
@@ -173,7 +173,7 @@ class HomeFragment : BaseFragment() {
             }
         ) {
             if (!it.isAllGranted()) {
-                Snackbar.make(fabHomeAddTransaction, R.string.ContactsPermissionDenied, Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.fabHomeAddTransaction, R.string.ContactsPermissionDenied, Snackbar.LENGTH_LONG)
                     .setAction(R.string.Retry) { requestPermissions() }
                     .show()
             }

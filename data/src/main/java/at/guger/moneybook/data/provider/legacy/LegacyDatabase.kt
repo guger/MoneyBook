@@ -25,7 +25,6 @@ object LegacyDatabase {
         const val IS_PAID = "is_paid"
         const val NOTES = "notes"
         const val ENTRYTYPE = "entrytype"
-        const val REPEATINGENTRY = "repeatingentry"
 
         const val CONTACTS_COUNT = "contacts_count"
 

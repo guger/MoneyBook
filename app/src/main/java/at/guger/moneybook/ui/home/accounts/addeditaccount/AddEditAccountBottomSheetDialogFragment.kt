@@ -26,47 +26,44 @@ import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
+import at.guger.moneybook.core.ui.fragment.BaseDataBindingBottomSheetDialogFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.databinding.DialogFragmentAddEditAccountBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.dialog_fragment_add_edit_account.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Dialog fragment for creating a new [accounts][Account].
  */
-class AddEditAccountBottomSheetDialogFragment : BottomSheetDialogFragment() {
+class AddEditAccountBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogFragment<DialogFragmentAddEditAccountBinding, AddEditAccountDialogFragmentViewModel>() {
 
     //region Variables
 
     private val args: AddEditAccountBottomSheetDialogFragmentArgs by navArgs()
 
-    private val viewModel: AddEditAccountDialogFragmentViewModel by viewModel()
+    override val fragmentViewModel: AddEditAccountDialogFragmentViewModel by viewModel()
 
     //endregion
 
     //region DialogFragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DialogFragmentAddEditAccountBinding.inflate(inflater, container, false)
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): DialogFragmentAddEditAccountBinding {
+        return DialogFragmentAddEditAccountBinding.inflate(inflater, root, false).apply {
+            viewModel = fragmentViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        args.account?.let { viewModel.setupAccount(it) }
+        args.account?.let { fragmentViewModel.setupAccount(it) }
 
         setupEvents()
 
-        edtAddEditAccountName.requestFocus()
+        binding.edtAddEditAccountName.requestFocus()
 
-        if (args.account != null) Handler(Looper.getMainLooper()).postDelayed({ edtAddEditAccountName.setSelection(edtAddEditAccountName.text?.length ?: 0) }, 200)
+        if (args.account != null) Handler(Looper.getMainLooper()).postDelayed({ binding.edtAddEditAccountName.setSelection(binding.edtAddEditAccountName.text?.length ?: 0) }, 200)
     }
 
     //endregion
@@ -74,17 +71,17 @@ class AddEditAccountBottomSheetDialogFragment : BottomSheetDialogFragment() {
     //region Methods
 
     private fun setupEvents() {
-        viewModel.accountName.observe(viewLifecycleOwner, {
-            btnAddEditAccountSave.isEnabled = it.isNotBlank()
+        fragmentViewModel.accountName.observe(viewLifecycleOwner, {
+            binding.btnAddEditAccountSave.isEnabled = it.isNotBlank()
         })
 
-        viewModel.accountStartBalanceError.observe(viewLifecycleOwner, EventObserver {
-            tilAddEditAccountStartBalance.error = getString(R.string.InvalidValue)
+        fragmentViewModel.accountStartBalanceError.observe(viewLifecycleOwner, EventObserver {
+            binding.tilAddEditAccountStartBalance.error = getString(R.string.InvalidValue)
         })
 
-        edtAddEditAccountStartBalance.doOnTextChanged { _, _, _, _ -> tilAddEditAccountStartBalance.error = null }
+        binding.edtAddEditAccountStartBalance.doOnTextChanged { _, _, _, _ -> binding.tilAddEditAccountStartBalance.error = null }
 
-        viewModel.accountSaved.observe(viewLifecycleOwner, EventObserver {
+        fragmentViewModel.accountSaved.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigateUp()
         })
     }

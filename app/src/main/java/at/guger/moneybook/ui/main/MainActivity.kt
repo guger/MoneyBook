@@ -30,6 +30,7 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.activity.BaseActivity
 import at.guger.moneybook.core.ui.dialog.BottomNavigationViewDialog
 import at.guger.moneybook.core.util.ext.colorAttr
+import at.guger.moneybook.databinding.ActivityMainBinding
 import at.guger.moneybook.util.NavUtils
 import com.afollestad.materialcab.CabApply
 import com.afollestad.materialcab.attached.AttachedCab
@@ -38,7 +39,6 @@ import com.afollestad.materialcab.attached.isActive
 import com.afollestad.materialcab.createCab
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Main activity class for all content fragments.
@@ -46,6 +46,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavController.OnDestinationChangedListener {
 
     //region Variables
+
+    private lateinit var binding: ActivityMainBinding
 
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
@@ -66,20 +68,24 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        setSupportActionBar(mBottomAppBar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.mBottomAppBar)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        mBottomAppBar.setOnMenuItemClickListener(this)
-        mBottomAppBar.setNavigationOnClickListener {
-            if (NavUtils.matchDestinations(navController.currentDestination!!, topLevelDestinations)) {
-                BottomNavigationViewDialog(R.menu.menu_nav, navController).show(supportFragmentManager, null)
-            } else {
-                navController.navigateUp()
+        binding.mBottomAppBar.apply {
+            setOnMenuItemClickListener(this@MainActivity)
+            setNavigationOnClickListener {
+                if (NavUtils.matchDestinations(navController.currentDestination!!, topLevelDestinations)) {
+                    BottomNavigationViewDialog(R.menu.menu_nav, navController).show(supportFragmentManager, null)
+                } else {
+                    navController.navigateUp()
+                }
             }
         }
 
@@ -91,7 +97,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     //region Menu
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        prepareMenu(mBottomAppBar)
+        prepareMenu(binding.mBottomAppBar)
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -122,22 +128,24 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
      * Workaround for using a [BottomNavigationViewDialog], since navigation component suppresses the hamburger icon when there's no drawer layout.
      */
     private fun prepareAppBar(destination: NavDestination) {
-        when (destination.id) {
-            R.id.onBoardingFragment -> {
-                mBottomAppBar.visibility = View.GONE
-            }
-            R.id.addEditTransactionFragment -> {
-                mBottomAppBar.performHide()
-                mBottomAppBar.visibility = View.GONE
-            }
-            else -> {
-                mBottomAppBar.visibility = View.VISIBLE
-                mBottomAppBar.performShow()
+        with(binding) {
+            when (destination.id) {
+                R.id.onBoardingFragment -> {
+                    mBottomAppBar.visibility = View.GONE
+                }
+                R.id.addEditTransactionFragment -> {
+                    mBottomAppBar.performHide()
+                    mBottomAppBar.visibility = View.GONE
+                }
+                else -> {
+                    mBottomAppBar.visibility = View.VISIBLE
+                    mBottomAppBar.performShow()
 
-                if (NavUtils.matchDestinations(destination, topLevelDestinations)) {
-                    mBottomAppBar.setNavigationIcon(R.drawable.ic_menu)
-                } else {
-                    mBottomAppBar.setNavigationIcon(R.drawable.ic_back)
+                    if (NavUtils.matchDestinations(destination, topLevelDestinations)) {
+                        mBottomAppBar.setNavigationIcon(R.drawable.ic_menu)
+                    } else {
+                        mBottomAppBar.setNavigationIcon(R.drawable.ic_back)
+                    }
                 }
             }
         }
@@ -165,7 +173,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         prepareAppBar(destination)
-        prepareMenu(mBottomAppBar)
+        prepareMenu(binding.mBottomAppBar)
 
         invalidateOptionsMenu()
     }
@@ -181,7 +189,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
                 true
             }
             R.id.actionSearch -> {
-                Snackbar.make(nav_host_fragment, R.string.FeatureInDevelopment, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.navHostFragment, R.string.FeatureInDevelopment, Snackbar.LENGTH_LONG).show()
                 true
             }
             else -> false

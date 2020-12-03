@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,12 +17,13 @@
 package at.guger.moneybook.core.ui.recyclerview.viewholder
 
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.data.model.base.Model
 
 /**
  * Base view holder for items using data binding and a model.
  */
-abstract class ModelViewHolder<T : ViewDataBinding, M : Model>(protected val binding: T) : ContainerViewHolder(binding.root) {
+abstract class ModelViewHolder<T : ViewDataBinding, M : Model>(protected val binding: T) : RecyclerView.ViewHolder(binding.root) {
 
     abstract fun bind(model: M)
 }

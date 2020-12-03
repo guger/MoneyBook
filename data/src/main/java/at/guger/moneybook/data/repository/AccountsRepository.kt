@@ -48,7 +48,7 @@ class AccountsRepository(database: AppDatabase) {
     }
 
     fun getObservableAccountsWithBalance(): LiveData<List<AccountWithBalance>> {
-        return accountsDao.getAccountsWithBalance()
+        return accountsDao.getObservableAccountsWithBalance()
     }
 
     suspend fun countAccounts(): Int {

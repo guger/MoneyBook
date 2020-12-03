@@ -1,6 +1,5 @@
 package at.guger.moneybook.data.provider.legacy.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.BOOKENTRY_ID
 import at.guger.moneybook.data.provider.legacy.LegacyDatabase.Column.CATEGORY_ID
@@ -54,9 +53,7 @@ interface BookEntryDao {
     @Transaction
     suspend fun insert(bookEntry: BookEntry): Long {
         val id = insert(bookEntry.entity)
-        bookEntry.embeddedContacts?.apply {
-            forEach { it.bookEntryId = id }
-        }?.let {
+        bookEntry.embeddedContacts?.onEach { it.bookEntryId = id }?.let {
             insert(it)
         }
 
@@ -68,9 +65,7 @@ interface BookEntryDao {
         update(bookEntry.entity)
 
         deleteBookEntryContacts(bookEntry.id)
-        bookEntry.embeddedContacts?.apply {
-            forEach { it.bookEntryId = bookEntry.id }
-        }?.let {
+        bookEntry.embeddedContacts?.onEach { it.bookEntryId = bookEntry.id }?.let {
             insert(it)
         }
     }
@@ -81,9 +76,5 @@ interface BookEntryDao {
     }
 
     companion object {
-        private const val EARNING = BookEntry.Type.Earning
-        private const val EXPENSE = BookEntry.Type.Expense
-        private const val CLAIM = BookEntry.Type.Claim
-        private const val DEBT = BookEntry.Type.Debt
     }
 }

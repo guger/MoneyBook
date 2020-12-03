@@ -17,13 +17,11 @@
 package at.guger.moneybook.ui.home.overview.budgets
 
 import android.graphics.Color
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
 import at.guger.moneybook.databinding.ItemOverviewBudgetsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.item_overview_budgets.*
 import kotlin.math.min
 
 /**
@@ -35,28 +33,26 @@ class OverviewBudgetsViewHolder(binding: ItemOverviewBudgetsBinding) : BindingVi
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, Observer { budgets ->
+        viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, { budgets ->
             val leftValue: Float = budgets.sumByDouble { it.budget - it.balance }.toFloat()
 
             val distributions = mutableListOf(*budgets.map { it.balance.toFloat() }.toTypedArray(), leftValue)
 
             val colors = mutableListOf(*budgets.map { it.color }.toTypedArray(), Color.BLACK)
 
-            mOverviewBudgetsDivider.setDistributions(
+            binding.mOverviewBudgetsDivider.setDistributions(
                 distributions = distributions,
                 colors = colors
             )
         })
 
-        with(mOverviewBudgetsRecyclerView) {
+        binding.mOverviewBudgetsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewBudgetsListAdapter().apply {
-                viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, Observer { budgets ->
+                viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, { budgets ->
                     submitList(budgets.sortedBy { if (it.balance > 0) it.budget - it.balance else Double.MAX_VALUE }.subList(0, min(budgets.size, 3)))
                 })
             }
         }
     }
-
-    override fun clear() {}
 }

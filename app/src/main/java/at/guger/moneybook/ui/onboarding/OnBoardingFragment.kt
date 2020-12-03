@@ -27,18 +27,16 @@ import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
-import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
 import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.data.repository.AccountsRepository
+import at.guger.moneybook.databinding.FragmentOnboardingBinding
 import at.guger.moneybook.util.migration.MigrationHelper
 import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_onboarding.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -48,7 +46,7 @@ import org.koin.android.ext.android.inject
 /**
  * OnBoarding fragment class.
  */
-class OnBoardingFragment : BaseFragment() {
+class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() {
 
     //region Variables
 
@@ -62,8 +60,8 @@ class OnBoardingFragment : BaseFragment() {
 
     //region Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_onboarding, container, false)
+    override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): FragmentOnboardingBinding {
+        return FragmentOnboardingBinding.inflate(inflater, parent, attachToParent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +69,7 @@ class OnBoardingFragment : BaseFragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {}
 
-        with(mOnBoardingView) {
+        binding.mOnBoardingView.apply {
             skipButtonCallback = { navigateToHomeOrMigrate() }
             startMigrateButtonCallback = {
                 navigateToHomeOrMigrate()
@@ -82,21 +80,6 @@ class OnBoardingFragment : BaseFragment() {
     //endregion
 
     //region Methods
-
-    private fun requestPermissions() {
-        askForPermissions(
-            Permission.READ_CONTACTS,
-            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
-                onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
-            }
-        ) {
-            if (!it.isAllGranted()) {
-                Snackbar.make(fabHomeAddTransaction, R.string.ContactsPermissionDenied, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.Retry) { requestPermissions() }
-                    .show()
-            }
-        }
-    }
 
     private fun navigateToHomeOrMigrate() {
         val migrate = MigrationHelper.needMigration(requireContext())

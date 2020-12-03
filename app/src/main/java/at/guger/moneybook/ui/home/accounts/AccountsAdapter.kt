@@ -52,13 +52,13 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapt
 
     //region Methods
 
-    public override fun toggleChecked(pos: Int) {
+    override fun toggleChecked(pos: Int) {
         super.toggleChecked(pos)
 
         notifyItemChanged(pos)
     }
 
-    public override fun clearChecked() {
+    override fun clearChecked() {
         super.clearChecked()
 
         notifyDataSetChanged()

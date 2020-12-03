@@ -16,7 +16,6 @@
 
 package at.guger.moneybook.ui.home.overview.dues
 
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
@@ -24,7 +23,6 @@ import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemOverviewDuesBinding
 import at.guger.moneybook.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.item_overview_dues.*
 import kotlin.math.min
 
 /**
@@ -36,8 +34,8 @@ class OverviewDuesViewHolder(binding: ItemOverviewDuesBinding) : BindingViewHold
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, Observer { transactions ->
-            mOverviewDuesDivider.setDistributions(
+        viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, { transactions ->
+            binding.mOverviewDuesDivider.setDistributions(
                 listOf(
                     transactions.filter { !it.isPaid && it.type == Transaction.TransactionType.CLAIM }.sumByDouble { it.value }.toFloat(),
                     transactions.filter { !it.isPaid && it.type == Transaction.TransactionType.DEBT }.sumByDouble { it.value }.toFloat()
@@ -49,16 +47,14 @@ class OverviewDuesViewHolder(binding: ItemOverviewDuesBinding) : BindingViewHold
             )
         })
 
-        with(mOverviewDuesRecyclerView) {
+        binding.mOverviewDuesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewDuesListAdapter().apply {
-                viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, Observer { transactions ->
+                viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, { transactions ->
                     val unpaidDues = transactions.filterNot { it.isPaid }
                     submitList(unpaidDues.subList(0, min(unpaidDues.size, 3)))
                 })
             }
         }
     }
-
-    override fun clear() {}
 }

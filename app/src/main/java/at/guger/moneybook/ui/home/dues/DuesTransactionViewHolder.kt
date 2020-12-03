@@ -22,7 +22,7 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemDueBinding
 
 /**
- * [RecyclerView.ViewHolder] for a earningsAndExpenses item.
+ * [RecyclerView.ViewHolder] for a dues item.
  */
 class DuesTransactionViewHolder(binding: ItemDueBinding) : ModelViewHolder<ItemDueBinding, Transaction>(binding) {
 
@@ -30,6 +30,4 @@ class DuesTransactionViewHolder(binding: ItemDueBinding) : ModelViewHolder<ItemD
         binding.transaction = model
         binding.executePendingBindings()
     }
-
-    override fun clear() {}
 }

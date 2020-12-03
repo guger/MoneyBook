@@ -26,7 +26,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.LineGraphChart
 import at.guger.moneybook.data.model.Account
@@ -34,7 +34,6 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAccountDetailBinding
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.util.DateFormatUtils
-import kotlinx.android.synthetic.main.fragment_account_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
@@ -44,7 +43,7 @@ import java.util.*
 /**
  * Fragment displaying the [transactions][Transaction] of an [account][Account].
  */
-class AccountDetailFragment : BaseFragment() {
+class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBinding, AccountDetailViewModel>() {
 
     //region Variables
 
@@ -54,25 +53,23 @@ class AccountDetailFragment : BaseFragment() {
 
     private val monthYearDateFormatter = DateTimeFormatter.ofPattern(DateFormatUtils.MMM_YYYY_DATE_FORMAT, Locale.getDefault())
 
-    private val viewModel by viewModel<AccountDetailViewModel> { parametersOf(args.accountId) }
+    override val fragmentViewModel: AccountDetailViewModel by viewModel { parametersOf(args.accountId) }
 
     //endregion
 
     //region Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = FragmentAccountDetailBinding.inflate(inflater, container, false)
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): FragmentAccountDetailBinding {
+        return FragmentAccountDetailBinding.inflate(inflater, root, false).apply {
+            viewModel = fragmentViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        TooltipCompat.setTooltipText(fabAccountDetailAddTransaction, getString(R.string.NewTransaction))
+        TooltipCompat.setTooltipText(binding.fabAccountDetailAddTransaction, getString(R.string.NewTransaction))
 
         setupLayout()
         setupEvents()
@@ -83,10 +80,10 @@ class AccountDetailFragment : BaseFragment() {
     //region Methods
 
     private fun setupLayout() {
-        viewModel.transactionMonths.observe(viewLifecycleOwner) {
+        fragmentViewModel.transactionMonths.observe(viewLifecycleOwner) {
             months = it
 
-            mAccountDetailViewPager.adapter = object : FragmentStateAdapter(this) {
+            binding.mAccountDetailViewPager.adapter = object : FragmentStateAdapter(this) {
                 override fun createFragment(position: Int): Fragment {
                     return AccountDetailMonthlyFragment.instantiate(args.accountId, it[position])
                 }
@@ -94,12 +91,12 @@ class AccountDetailFragment : BaseFragment() {
                 override fun getItemCount(): Int = it.size
             }
 
-            mAccountDetailTabs.addTabs(it.map { date -> monthYearDateFormatter.format(date) })
+            binding.mAccountDetailTabs.addTabs(it.map { date -> monthYearDateFormatter.format(date) })
         }
 
-        mAccountDetailTabs.setUpWithViewPager(mAccountDetailViewPager)
+        binding.mAccountDetailTabs.setUpWithViewPager(binding.mAccountDetailViewPager)
 
-        mAccountDetailTabs.addOnPageChangeListener {
+        binding.mAccountDetailTabs.addOnPageChangeListener {
             setupChart(months[it])
         }
     }
@@ -107,7 +104,7 @@ class AccountDetailFragment : BaseFragment() {
     private fun setupChart(month: LocalDate) {
         val days = Array<LocalDate>(month.lengthOfMonth()) { i -> month.plusDays(i.toLong()) }
 
-        viewModel.transactionsByMonth(month).observe(viewLifecycleOwner) { transactions ->
+        fragmentViewModel.transactionsByMonth(month).observe(viewLifecycleOwner) { transactions ->
             val values = transactions.groupBy { it.date }.mapValues { map ->
                 map.value.sumByDouble { if (it.type == Transaction.TransactionType.EARNING) it.value else -it.value }
             }
@@ -122,12 +119,12 @@ class AccountDetailFragment : BaseFragment() {
                 dataPoints.add(LineGraphChart.DataPoint(date, value))
             }
 
-            mAccountDetailChart.addDataPoints(dataPoints)
+            binding.mAccountDetailChart.addDataPoints(dataPoints)
         }
     }
 
     private fun setupEvents() {
-        viewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->
+        fragmentViewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->
             findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(account = account, transitionViewResId = R.id.fabAccountDetailAddTransaction))
         })
     }

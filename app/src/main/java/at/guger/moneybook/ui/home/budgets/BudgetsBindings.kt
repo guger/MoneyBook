@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ package at.guger.moneybook.ui.home.budgets
 
 import android.graphics.Color
 import androidx.databinding.BindingAdapter
-import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.core.ui.widget.VerticalProgressBar
 import at.guger.moneybook.data.model.BudgetWithBalance
+import at.guger.moneybook.util.CurrencyFormat
 import at.guger.strokepiechart.Entry
 import at.guger.strokepiechart.StrokePieChart
 
@@ -29,9 +29,7 @@ import at.guger.strokepiechart.StrokePieChart
  */
 
 @BindingAdapter("budgets", requireAll = true)
-fun StrokePieChart.setBudgets(budgets: List<BudgetWithBalance>?) {
-    if (budgets == null) return
-
+fun StrokePieChart.setBudgets(budgets: List<BudgetWithBalance>) {
     val entries = ArrayList<Entry>()
 
     val leftSum = budgets.sumByDouble { it.budget - it.balance }

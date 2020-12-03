@@ -32,8 +32,8 @@ fun StrokePieChart.setAccounts(accounts: List<AccountWithBalance>) {
 
     val balanceSum = accounts.sumByDouble { it.balance + it.startBalance }
 
-    for (account in accounts) {
-        entries.add(Entry(if (balanceSum > 0.0) (account.balance + account.startBalance).toFloat() else 1.0f, account.color))
+    accounts.forEach {
+        entries.add(Entry(if (balanceSum > 0.0) (it.balance + it.startBalance).toFloat() else 1.0f, it.color))
     }
 
     setEntries(entries)

@@ -24,10 +24,6 @@ import androidx.fragment.app.Fragment
  */
 abstract class BaseFragment : Fragment() {
 
-    //region Fragment
-
-    //endregion
-
     //region Methods
 
     inline fun <reified T : AppCompatActivity> getAppCompatActivity(): T? {

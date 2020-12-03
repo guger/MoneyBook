@@ -28,10 +28,8 @@ import at.guger.moneybook.ui.home.accounts.AccountsAdapter
 object AccountMenuUtils {
 
     fun prepareMenu(menu: Menu, adapter: AccountsAdapter) {
-        with(adapter) {
-            menu.findItem(R.id.actionAccountEdit).isVisible = checkedCount == 1
-            menu.findItem(R.id.actionAccountDelete).isVisible = isDefaultAccount(adapter)
-        }
+        menu.findItem(R.id.actionAccountEdit).isVisible = adapter.checkedCount == 1
+        menu.findItem(R.id.actionAccountDelete).isVisible = isDefaultAccount(adapter)
     }
 
     fun onItemSelected(item: MenuItem, adapter: AccountsAdapter, editAction: (Account) -> Unit, deleteAction: (Array<Account>) -> Unit): Boolean {

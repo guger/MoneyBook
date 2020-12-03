@@ -25,17 +25,17 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import at.guger.moneybook.R
-import at.guger.moneybook.core.ui.fragment.BaseFragment
+import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.databinding.LayoutRecyclerviewBinding
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
-import kotlinx.android.synthetic.main.layout_recyclerview.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
@@ -43,7 +43,7 @@ import java.time.LocalDate
 /**
  * Fragment displaying the monthly [transactions][Transaction] of an [account][Account].
  */
-class AccountDetailMonthlyFragment : BaseFragment(), OnItemTouchListener.ItemTouchListener {
+class AccountDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerviewBinding>(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
@@ -57,8 +57,8 @@ class AccountDetailMonthlyFragment : BaseFragment(), OnItemTouchListener.ItemTou
 
     //region Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_recyclerview, container, false)
+    override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): LayoutRecyclerviewBinding {
+        return LayoutRecyclerviewBinding.inflate(inflater, parent, attachToParent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +72,7 @@ class AccountDetailMonthlyFragment : BaseFragment(), OnItemTouchListener.ItemTou
     //region Methods
 
     private fun setupLayout() {
-        mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
+        binding.mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(OnItemTouchListener(requireContext(), this, this@AccountDetailMonthlyFragment))
         }
 

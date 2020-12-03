@@ -32,6 +32,4 @@ class AccountViewHolder(binding: ItemAccountBinding, private val viewModel: Home
         binding.account = model
         binding.executePendingBindings()
     }
-
-    override fun clear() {}
 }

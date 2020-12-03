@@ -19,7 +19,6 @@ package at.guger.moneybook.data.provider.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import at.guger.moneybook.data.model.Transaction
-import kotlinx.coroutines.flow.Flow
 
 /**
  * [Dao] method for querying [transactions][Transaction].
