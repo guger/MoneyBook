@@ -1,5 +1,7 @@
 # Builds
 /build
+*.aab
+*.apk
 
 # Google Services
 google-services.json
