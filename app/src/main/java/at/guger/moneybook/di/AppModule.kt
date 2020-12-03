@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Daniel Guger
+ * Copyright 2020 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ val appModule = module {
 
     viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { (accountId: Long) -> AccountDetailViewModel(get(), get(), accountId) }
-    viewModel { AddEditTransactionViewModel(get(), get(), get(), get()) }
+    viewModel { AddEditTransactionViewModel(get(), get(), get(), get(), get()) }
     viewModel { AddEditAccountDialogFragmentViewModel(get()) }
     viewModel { AddEditBudgetDialogFragmentViewModel(get()) }
 }

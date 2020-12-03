@@ -37,8 +37,6 @@ import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.scheduler.reminder.ReminderScheduler
 import at.guger.moneybook.util.DateFormatUtils.SHORT_DATE_FORMAT
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
@@ -49,8 +47,9 @@ class AddEditTransactionViewModel(
     private val transactionsRepository: TransactionsRepository,
     accountsRepository: AccountsRepository,
     budgetsRepository: BudgetsRepository,
-    private val addressBookRepository: AddressBookRepository
-) : ViewModel(), KoinComponent {
+    private val addressBookRepository: AddressBookRepository,
+    private val reminderScheduler: ReminderScheduler
+) : ViewModel() {
 
     //region Variables
 
@@ -105,8 +104,6 @@ class AddEditTransactionViewModel(
     private val _addressBook = MutableLiveData<Map<Long, String>>()
     val addressBook: LiveData<Map<Long, String>> = _addressBook
 
-    private val reminderScheduler: ReminderScheduler by inject()
-
     //endregion
 
     //region Methods
@@ -136,7 +133,7 @@ class AddEditTransactionViewModel(
     }
 
     fun setupAccount(account: Account) {
-        transactionAccount.postValue(account.name)
+        transactionAccount.value = account.name
     }
 
     fun onTransactionTypeChanged(@IdRes viewId: Int) {
