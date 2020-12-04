@@ -15,7 +15,7 @@ MoneyBook is an open-source finance manager, inspired by Google's Material Desig
 
 ## Screenshots
 
-![Screenshots of Overview, Accounts, Dues & Budgets Screen](https://github.com/guger/MoneyBook/art/screenshots.png "Overview, Accounts, Dues & Budgets Screen")
+![Screenshots of Overview, Accounts, Dues & Budgets Screen](art/Screenshots.png "Overview, Accounts, Dues & Budgets Screen")
 
 ## Contribute
 
