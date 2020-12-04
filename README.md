@@ -5,6 +5,10 @@
 
 MoneyBook is an open-source finance manager, inspired by Google's Material Design Study [Rally](https://material.io/design/material-studies/rally.html).
 
+#### Download available on Google Play:
+
+<a href='https://play.google.com/store/apps/details?id=at.guger.moneybook&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' width='200em' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+
 ## Features
 
 - Create transactions and assign them to accounts, to always have an eye on your current balance.
