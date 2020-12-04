@@ -83,6 +83,7 @@ class AddEditAccountDialogFragmentViewModel(private val accountsRepository: Acco
                     Account(
                         id = account!!.id,
                         name = accountName.value!!.trim(),
+                        color = account!!.color,
                         startBalance = startBalance
                     )
                 )
