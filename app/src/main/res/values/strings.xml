@@ -150,5 +150,6 @@
     <string name="notification_channel_reminder">Reminders</string>
     <string name="notification_channel_reminder_description">Reminds you of your claims and debts.</string>
     <string name="OnBoardingMigrationCategoriesTitle">Which categories do you want to migrate?</string>
-    <string name="OnBoardingMigrationCategories">Categories will be converted to budgets. Book entries, whose categories are not migrated, will be copied uncategorized.</string>
+    <string name="OnBoardingMigrationTo20">Migration to 2.0</string>
+    <string name="OnBoardingMigratingBookEntries">There are a few things to do before you can start. You will now be asked to choose the categories, which you want to convert to budgets. Afterwards, all your entries will be converted for MoneyBook 2.0. If you have no used categories, migration will start immediately.</string>
 </resources>

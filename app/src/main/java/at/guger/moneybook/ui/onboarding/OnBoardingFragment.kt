@@ -24,19 +24,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
 import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
-import at.guger.moneybook.data.repository.AccountsRepository
+import at.guger.moneybook.data.provider.legacy.model.Category
 import at.guger.moneybook.databinding.FragmentOnboardingBinding
 import at.guger.moneybook.util.migration.MigrationHelper
 import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItemsMultiChoice
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -51,8 +50,6 @@ class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() 
     //region Variables
 
     private val preferences: Preferences by inject()
-
-    private val accountsRepository: AccountsRepository by inject()
 
     private val migrationHelper by lazy { MigrationHelper(requireContext(), get(), get(), get(), get()) }
 
@@ -97,7 +94,18 @@ class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() 
         }
     }
 
-    private fun startMigration() = GlobalScope.launch(Dispatchers.Main) {
+    private fun startMigration() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.OnBoardingMigrationTo20)
+            .setMessage(R.string.OnBoardingMigratingBookEntries)
+            .setPositiveButton(R.string.Next) { _, _ ->
+                chooseCategories()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun chooseCategories() = GlobalScope.launch(Dispatchers.Main) {
         val categories = migrationHelper.getUsedCategories()
 
         when {
@@ -106,34 +114,30 @@ class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() 
                 close()
             }
             categories.isNotEmpty() -> {
-                MaterialDialog(requireContext()).show {
-                    title(res = R.string.OnBoardingMigrationCategoriesTitle)
-                    message(res = R.string.OnBoardingMigrationCategories)
-                    listItemsMultiChoice(items = categories.map { it.name }, allowEmptySelection = true) { _, _, items ->
-                        migrationHelper.categories = categories.filter { items.contains(it.name) }
-                    }
-                    positiveButton(res = R.string.Next) {
-                        chooseAccount()
-                    }
-                    cancelOnTouchOutside(false)
-                }
-            }
-            else -> chooseAccount()
-        }
-    }
+                val categoriesArray = categories.map { it.name }.toTypedArray()
 
-    private fun chooseAccount() = GlobalScope.launch(Dispatchers.Main) {
-        val accounts = accountsRepository.getAccounts()
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.OnBoardingMigrationCategoriesTitle)
+                    .setMultiChoiceItems(categoriesArray, null, null)
+                    .setPositiveButton(R.string.Next) { dialog, _ ->
+                        val checkedItemPositions = (dialog as AlertDialog).listView.checkedItemPositions
 
-        MaterialDialog(requireContext()).show {
-            title(text = "Choose an account")
-            listItemsSingleChoice(items = accounts.map { it.name }, initialSelection = 0, waitForPositiveButton = true) { _, _, text ->
-                migrationHelper.account = accounts.find { it.name == text }!!
+                        val checkedCategories = mutableListOf<Category>()
+
+                        for (i in 0..categories.size) {
+                            if (checkedItemPositions[i]) {
+                                checkedCategories.add(categories[i])
+                            }
+                        }
+
+                        migrationHelper.categories = checkedCategories
+
+                        runMigration()
+                    }
+                    .setCancelable(false)
+                    .show()
             }
-            positiveButton(res = R.string.Next) {
-                runMigration()
-            }
-            cancelOnTouchOutside(false)
+            else -> runMigration()
         }
     }
 
@@ -143,12 +147,12 @@ class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() 
 
             close()
 
-            MaterialDialog(requireContext()).show {
-                icon(R.drawable.ic_launcher_foreground)
-                title(res = R.string.LetsGetStarted)
-                message(res = R.string.MigrationCompletedSuccessfully)
-                positiveButton(R.string.OK)
-            }
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.LetsGetStarted)
+                .setMessage(R.string.MigrationCompletedSuccessfully)
+                .setIcon(R.drawable.ic_launcher_foreground)
+                .setPositiveButton(R.string.OK, null)
+                .show()
         }
     }
 

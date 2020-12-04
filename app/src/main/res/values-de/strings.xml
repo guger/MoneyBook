@@ -149,5 +149,6 @@
     <string name="InitialBalance">Ausgangssaldo</string>
     <string name="PermissionDetails">Wir legen Wert auf Ihre Privatsphäre. Daher fragen wir nur um Berechtigungen, die absolut notwendig für die Funktion sind:\n\n<b>Kontaktzugriff:</b>\nUm bei ausständigen Forderungen eine Nachricht an Ihre Kontakte senden zu können, benötigt die App Zugriff auf Ihr Addressbuch, damit Personen zur jeweiligen Forderung/Schuld hinzugefügt werden können.\n\n<b>Internet:</b>\nUm Ihre Nutzererfahrung so angenehm wie möglich zu gestalten, sendet MoneyBook, mit Ihrer Zustimmung, detaillierte Absturzberichte an den Entwickler. Diese detaillierten Berichte enthalten ausschließlich technische, App-relevante Daten (Logs) und keinesfalls Buchungen oder persönliche Daten.\n\nFür weitere Informationen können Sie uns gerne kontaktieren.</string>
     <string name="OnBoardingMigrationCategoriesTitle">Welche Kategorien sollen migriert werden?</string>
-    <string name="OnBoardingMigrationCategories">Kategorien werden zu Budgets konvertiert. Einträge, deren Kategorien nicht migriert werden, werden unkategorisiert übernommen.</string>
+    <string name="OnBoardingMigrationTo20">Migration zu 2.0</string>
+    <string name="OnBoardingMigratingBookEntries">Bitte wählen Sie nun, welche Kategorien zu Budgets konvertiert werden sollen. Danach werden alle bisherigen Einträge für MoneyBook 2.0 konvertiert. Falls Sie aktuell keine Kategorien benutzen, startet der Migrationsvorgang sofort.</string>
 </resources>

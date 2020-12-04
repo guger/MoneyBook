@@ -55,7 +55,6 @@ class MigrationHelper(
     private var entries: List<BookEntry>? = null
 
     var categories = emptyList<Category>()
-    lateinit var account: Account
 
     //endregion
 
@@ -102,7 +101,7 @@ class MigrationHelper(
                 due = reminder?.toLocalDate(),
                 notes = entry.notes,
                 type = entry.entryType,
-                accountId = account.id.takeIf { entry.entryType == Transaction.TransactionType.EARNING || entry.entryType == Transaction.TransactionType.EXPENSE },
+                accountId = Account.DEFAULT_ACCOUNT_ID.takeIf { entry.entryType == Transaction.TransactionType.EARNING || entry.entryType == Transaction.TransactionType.EXPENSE },
                 budgetId = budgets[entry.category?.id ?: -1]?.id?.takeIf { entry.entryType == Transaction.TransactionType.EXPENSE }
             )
 
@@ -148,16 +147,18 @@ class MigrationHelper(
 
         val months: Double = (lastDate - firstDate) / 30.0
 
-        return roundUpTo(sum / max(months, 1.0), 25)
+        return roundUpTo(sum / max(months, 1.0), ROUND_TO_NUM)
     }
 
-    fun roundUpTo(x: Double, n: Int): Double {
+    private fun roundUpTo(x: Double, n: Int): Double {
         return (((x + if (x % n > 0.001) n.toDouble() else n / 2.0) / n).toLong() * n).toDouble()
     }
 
     //endregion
 
     companion object {
+        const val ROUND_TO_NUM: Int = 25
+
         fun needMigration(context: Context) = context.databaseList().contains(LegacyDatabase.DATABASE_NAME)
     }
 }
