@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <at.guger.strokepiechart.StrokePieChart
+                <at.guger.moneybook.core.ui.widget.StrokePieChart
                     android:id="@+id/mAccountsPieChart"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_chart_height"

@@ -23,6 +23,18 @@
         <attr name="curveTopMargin" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="StrokePieChart">
+        <attr name="defaultColor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="roundedEdges" format="boolean" />
+        <attr name="distance" format="float" />
+        <attr name="text" format="string" />
+        <attr name="fontResId" format="integer" />
+        <attr name="bold" format="boolean" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+
     <declare-styleable name="ScrollableTab">
         <attr name="selectedColor" format="color"/>
         <attr name="unSelectedColor" format="color"/>

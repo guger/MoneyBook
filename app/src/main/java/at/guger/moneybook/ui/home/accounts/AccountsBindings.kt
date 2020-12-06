@@ -17,10 +17,9 @@
 package at.guger.moneybook.ui.home.accounts
 
 import androidx.databinding.BindingAdapter
+import at.guger.moneybook.core.ui.widget.StrokePieChart
 import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.util.CurrencyFormat
-import at.guger.strokepiechart.Entry
-import at.guger.strokepiechart.StrokePieChart
 
 /**
  * Binding adapters for the accounts screen.
@@ -28,12 +27,12 @@ import at.guger.strokepiechart.StrokePieChart
 
 @BindingAdapter("accounts", requireAll = true)
 fun StrokePieChart.setAccounts(accounts: List<AccountWithBalance>) {
-    val entries = ArrayList<Entry>()
+    val entries = ArrayList<StrokePieChart.Entry>()
 
     val balanceSum = accounts.sumByDouble { it.balance + it.startBalance }
 
     accounts.forEach {
-        entries.add(Entry(if (balanceSum > 0.0) (it.balance + it.startBalance).toFloat() else 1.0f, it.color))
+        entries.add(StrokePieChart.Entry(if (balanceSum > 0.0) (it.balance + it.startBalance).toFloat() else 1.0f, it.color))
     }
 
     setEntries(entries)

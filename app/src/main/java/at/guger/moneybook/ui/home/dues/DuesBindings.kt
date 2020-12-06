@@ -19,11 +19,10 @@ package at.guger.moneybook.ui.home.dues
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import at.guger.moneybook.R
+import at.guger.moneybook.core.ui.widget.StrokePieChart
 import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.util.CurrencyFormat
-import at.guger.strokepiechart.Entry
-import at.guger.strokepiechart.StrokePieChart
 import kotlin.math.max
 
 /**
@@ -37,8 +36,8 @@ fun StrokePieChart.setDues(dues: List<Transaction>?) {
 
     setEntries(
         arrayListOf(
-            Entry(if (claimsSum + debtsSum > 0.0) claimsSum.toFloat() else 1.0f, ContextCompat.getColor(context, R.color.color_claim)),
-            Entry(if (claimsSum + debtsSum > 0.0) debtsSum.toFloat() else 1.0f, ContextCompat.getColor(context, R.color.color_debt))
+            StrokePieChart.Entry(if (claimsSum + debtsSum > 0.0) claimsSum.toFloat() else 1.0f, ContextCompat.getColor(context, R.color.color_claim)),
+            StrokePieChart.Entry(if (claimsSum + debtsSum > 0.0) debtsSum.toFloat() else 1.0f, ContextCompat.getColor(context, R.color.color_debt))
         )
     )
 
