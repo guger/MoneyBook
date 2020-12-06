@@ -7,7 +7,7 @@ references:
 jobs:
   build:
     docker:
-      - image: circleci/android:api-29
+      - image: circleci/android:api-30
     environment:
       JAVA_TOOL_OPTIONS: "-Xmx3200m"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
