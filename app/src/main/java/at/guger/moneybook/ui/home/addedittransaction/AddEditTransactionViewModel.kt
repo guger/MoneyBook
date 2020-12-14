@@ -16,6 +16,8 @@
 
 package at.guger.moneybook.ui.home.addedittransaction
 
+import android.content.Context
+import android.provider.Settings
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.lifecycle.LiveData
@@ -26,6 +28,7 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.core.ui.viewmodel.MessageEvent
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
+import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
@@ -92,8 +95,14 @@ class AddEditTransactionViewModel(
     private val _showCalculator = MutableLiveData<Event<Unit>>()
     val showCalculator: LiveData<Event<Unit>> = _showCalculator
 
+    private val _showOverlayPermissionDialog = MutableLiveData<Event<List<String>>>()
+    val showOverlayPermissionDialog: LiveData<Event<List<String>>> = _showOverlayPermissionDialog
+
     private val _snackBarMessage = MutableLiveData<MessageEvent>()
     val snackBarMessage: LiveData<MessageEvent> = _snackBarMessage
+
+    private val _snoozeDisabledMessage = MutableLiveData<MessageEvent>()
+    val snoozeDisabledMessage: LiveData<MessageEvent> = _snoozeDisabledMessage
 
     private val _transactionSaved = MutableLiveData<Event<Unit>>()
     val transactionSaved: LiveData<Event<Unit>> = _transactionSaved
@@ -193,7 +202,7 @@ class AddEditTransactionViewModel(
         _showCalculator.value = Event(Unit)
     }
 
-    fun saveTransaction(chippedContacts: List<String>) {
+    fun saveTransaction(context: Context, chippedContacts: List<String>, ignoreOverlayPermission: Boolean = false) {
         val title = transactionTitle.value?.trim()
         val date = transactionDate.value
         val value = transactionValue.value
@@ -202,6 +211,12 @@ class AddEditTransactionViewModel(
         val account = accounts.value?.find { it.name == transactionAccount.value }?.takeIf { type == Transaction.TransactionType.EARNING || type == Transaction.TransactionType.EXPENSE }
         val budget = budgets.value?.find { it.name == transactionBudget.value }?.takeIf { type == Transaction.TransactionType.EXPENSE }
         val notes = transactionNotes.value?.trim() ?: ""
+
+        if (dueDate != null && Utils.isMarshmallow() && !Settings.canDrawOverlays(context) && !ignoreOverlayPermission) {
+            _showOverlayPermissionDialog.value = Event(chippedContacts)
+
+            return
+        }
 
         val transactionEntity = parseTransactionForm(title, date, value, type, dueDate, account, budget, notes)
 
@@ -251,6 +266,7 @@ class AddEditTransactionViewModel(
 
                 transactionEntity.due?.let { date -> reminderScheduler.scheduleReminder(id, date) }
             }.invokeOnCompletion {
+                if (ignoreOverlayPermission) _snoozeDisabledMessage.value = MessageEvent(R.string.SnoozeDisabled)
                 _transactionSaved.value = Event(Unit)
             }
         }

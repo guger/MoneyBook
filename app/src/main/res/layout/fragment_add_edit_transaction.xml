@@ -321,7 +321,7 @@
             android:clickable="true"
             android:contentDescription="@string/Save"
             android:focusable="true"
-            android:onClick="@{() -> viewModel.saveTransaction(edtAddEditTransactionContacts.getChipValues())}"
+            android:onClick="@{(view) -> viewModel.saveTransaction(view.context, edtAddEditTransactionContacts.getChipValues(), false)}"
             android:src="@drawable/ic_save"
             app:layout_anchor="@id/mBottomAppBar"
             app:layout_anchorGravity="bottom|right"

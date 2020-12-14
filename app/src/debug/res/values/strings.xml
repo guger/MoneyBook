@@ -16,5 +16,5 @@
   -->
 
 <resources>
-    <string name="app_name">MoneyBook Dev</string>
+    <string name="app_name" translatable="false">MoneyBook Dev</string>
 </resources>

@@ -151,4 +151,9 @@
     <string name="OnBoardingMigrationCategoriesTitle">Welche Kategorien sollen migriert werden?</string>
     <string name="OnBoardingMigrationTo20">Migration zu 2.0</string>
     <string name="OnBoardingMigratingBookEntries">Bitte wählen Sie nun, welche Kategorien zu Budgets konvertiert werden sollen. Danach werden alle bisherigen Einträge für MoneyBook 2.0 konvertiert. Falls Sie aktuell keine Kategorien benutzen, startet der Migrationsvorgang sofort.</string>
+    <string name="Ignore">Ignorieren</string>
+    <string name="OpenSettings">Einstellungen öffnen</string>
+    <string name="OverlayRequired">Über anderen Apps einblenden</string>
+    <string name="OverlayRequiredMessage">\"Über anderen Apps einblenden\" wird benötigt, um die Schlummeroptionen einzublenden.\nÖffnen Sie die Einstellungen, um MoneyBook diese Berechtigung zu erteilen.</string>
+    <string name="SnoozeDisabled">Schlummern ist aufgrund der fehlenden Berechtigung nicht verfügbar.</string>
 </resources>

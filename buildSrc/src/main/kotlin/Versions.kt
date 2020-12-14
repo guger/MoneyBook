@@ -49,9 +49,9 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "4.2.0-beta01"
+    const val Gradle = "4.1.1"
 
-    const val Koin = "2.1.6"
+    const val KOIN = "2.1.6"
 
     object D8 {
         const val CoreLibraryDesugaring = "1.0.9"
@@ -70,7 +70,7 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.4.20"
+        const val Common = "1.4.21"
         const val Coroutines = "1.4.1"
     }
 

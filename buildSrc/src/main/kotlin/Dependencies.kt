@@ -57,9 +57,9 @@ object Dependencies {
     }
 
     object Koin {
-        const val Android = "org.koin:koin-android:${Versions.Koin}"
-        const val Scope = "org.koin:koin-androidx-scope:${Versions.Koin}"
-        const val ViewModel = "org.koin:koin-androidx-viewmodel:${Versions.Koin}"
+        const val Android = "org.koin:koin-android:${Versions.KOIN}"
+        const val Scope = "org.koin:koin-androidx-scope:${Versions.KOIN}"
+        const val ViewModel = "org.koin:koin-androidx-viewmodel:${Versions.KOIN}"
     }
 
     object Firebase {

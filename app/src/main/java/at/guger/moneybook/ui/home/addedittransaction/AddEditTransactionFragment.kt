@@ -16,11 +16,12 @@
 
 package at.guger.moneybook.ui.home.addedittransaction
 
-import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.text.InputType
 import android.transition.Slide
 import android.view.LayoutInflater
@@ -29,6 +30,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.postDelayed
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -40,13 +42,17 @@ import at.guger.moneybook.core.ui.shape.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.core.ui.transition.MaterialContainerTransition
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
-import at.guger.moneybook.core.util.ext.hasPermission
+import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.core.util.ext.toLocalDate
 import at.guger.moneybook.core.util.ext.utcMillis
+import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
 import at.guger.moneybook.util.DateFormatUtils
+import com.afollestad.assent.Permission
+import com.afollestad.assent.askForPermissions
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
@@ -88,8 +94,14 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
         check(args.transaction == null || args.account == null) { "Cannot setup with account and transaction!" }
 
-        // TODO: Request if permission isn't granted
-        if (requireContext().hasPermission(Manifest.permission.READ_CONTACTS)) fragmentViewModel.loadContacts()
+        askForPermissions(
+            Permission.READ_CONTACTS,
+            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
+                onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
+            }
+        ) {
+            if (it.isAllGranted(Permission.READ_CONTACTS)) fragmentViewModel.loadContacts()
+        }
 
         setupLayout()
         setupEvents()
@@ -132,9 +144,9 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
             edtAddEditTransactionContacts.apply {
                 addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN)
             }
-            fragmentViewModel.addressBook.observe(viewLifecycleOwner, { contacts ->
+            fragmentViewModel.addressBook.observe(viewLifecycleOwner) { contacts ->
                 edtAddEditTransactionContacts.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, contacts.values.toList()))
-            })
+            }
 
             val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable
             bottomAppBarBackground.shapeAppearanceModel = bottomAppBarBackground.shapeAppearanceModel.toBuilder().setTopEdge(
@@ -145,27 +157,41 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
     }
 
     private fun setupEvents() {
-        fragmentViewModel.accounts.observe(viewLifecycleOwner, { accounts ->
+        fragmentViewModel.accounts.observe(viewLifecycleOwner) { accounts ->
             binding.edtAddEditTransactionAccount.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
             if (args.transaction == null && args.account == null) binding.edtAddEditTransactionAccount.setText(accounts.first().name, false)
-        })
-        fragmentViewModel.budgets.observe(viewLifecycleOwner, { budgets ->
+        }
+        fragmentViewModel.budgets.observe(viewLifecycleOwner) { budgets ->
             val budgetEntries = budgets.map { it.name }.toMutableList().apply { add(0, "") }
             binding.edtAddEditTransactionBudget.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, budgetEntries))
-        })
+        }
 
         fragmentViewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDatePicker(selectedDate) })
         fragmentViewModel.showDueDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDueDatePicker(selectedDate) })
         fragmentViewModel.showCalculator.observe(viewLifecycleOwner, EventObserver { showCalculator() })
 
+        fragmentViewModel.showOverlayPermissionDialog.observe(viewLifecycleOwner, EventObserver { chippedContacts ->
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.OverlayRequired)
+                .setMessage(R.string.OverlayRequiredMessage)
+                .setPositiveButton(R.string.OpenSettings) { _, _ ->
+                    if (Utils.isMarshmallow()) startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK })
+                }
+                .setNegativeButton(R.string.Ignore) { _, _ -> fragmentViewModel.saveTransaction(requireContext(), chippedContacts, ignoreOverlayPermission = true) }
+                .show()
+        })
+
         fragmentViewModel.snackBarMessage.observe(viewLifecycleOwner, EventObserver {
-            val text = requireContext().getString(it.stringRes, it.text)
-            Snackbar.make(binding.mBottomAppBar, text, Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.mBottomAppBar, getString(it.stringRes, it.text), Snackbar.LENGTH_LONG)
                 .setAnchorView(binding.fabAddEditTransactionSave)
                 .show()
         })
 
-        fragmentViewModel.transactionSaved.observe(viewLifecycleOwner, { findNavController().navigateUp() })
+        fragmentViewModel.snoozeDisabledMessage.observe(viewLifecycleOwner, EventObserver {
+            Toast.makeText(requireContext(), getString(it.stringRes, it.text), Toast.LENGTH_LONG).show()
+        })
+
+        fragmentViewModel.transactionSaved.observe(viewLifecycleOwner) { findNavController().navigateUp() }
     }
 
     private fun startTransition() {
@@ -245,5 +271,5 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         binding.edtAddEditTransactionValue.postDelayed(25) { binding.edtAddEditTransactionValue.apply { setSelection(text?.length ?: 0) } }
     }
 
-    //endregion
+//endregion
 }

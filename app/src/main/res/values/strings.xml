@@ -152,4 +152,9 @@
     <string name="OnBoardingMigrationCategoriesTitle">Which categories do you want to migrate?</string>
     <string name="OnBoardingMigrationTo20">Migration to 2.0</string>
     <string name="OnBoardingMigratingBookEntries">There are a few things to do before you can start. You will now be asked to choose the categories, which you want to convert to budgets. Afterwards, all your entries will be converted for MoneyBook 2.0. If you have no used categories, migration will start immediately.</string>
+    <string name="OverlayRequired">Overlay Permission Required</string>
+    <string name="OpenSettings">Open Settings</string>
+    <string name="OverlayRequiredMessage">Drawing an overlay is required to display the snooze options.\nOpen the settings and permit MoneyBook to draw overlays.</string>
+    <string name="Ignore">Ignore</string>
+    <string name="SnoozeDisabled">Snooze functionality is disabled due to denied overlay permission.</string>
 </resources>

@@ -23,6 +23,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
@@ -159,13 +160,15 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
             putExtra(ReminderScheduler.EXTRA_TRANSACTION_ID, transaction.id)
         }
 
-        val snoozePendingIntent = PendingIntent.getBroadcast(
-            context,
-            transaction.id.toInt(),
-            actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_SNOOZE },
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_snooze, context.getString(R.string.Snooze), snoozePendingIntent))
+        if (Utils.isMarshmallow() && Settings.canDrawOverlays(context)) {
+            val snoozePendingIntent = PendingIntent.getBroadcast(
+                context,
+                transaction.id.toInt(),
+                actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_SNOOZE },
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_snooze, context.getString(R.string.Snooze), snoozePendingIntent))
+        }
 
         if (transaction.type == Transaction.TransactionType.CLAIM && contacts.size() > 0) {
             val messagePendingIntent = PendingIntent.getBroadcast(
