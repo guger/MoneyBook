@@ -19,18 +19,24 @@ package at.guger.moneybook.util.menu
 import android.view.Menu
 import android.view.MenuItem
 import at.guger.moneybook.R
+import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.data.model.Transaction
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 /**
  * Util class for [transactions][Transaction] menu.
  */
-object TransactionMenuUtils {
+object TransactionMenuUtils : KoinComponent {
+
+    private val preferences: Preferences by inject()
 
     fun prepareMenu(menu: Menu, adapter: CheckableListAdapter<Transaction, *>, markAsPaid: Boolean = false) {
         with(adapter) {
             menu.findItem(R.id.actionTransactionEdit).isVisible = checkedCount == 1
             menu.findItem(R.id.actionTransactionMarkAsPaid).isVisible = markAsPaid && checkedCount == 1 && !currentList[checkedItems.first()].isPaid
+            menu.findItem(R.id.actionTransactionMarkAsPaidToAccount).isVisible = preferences.experimental && markAsPaid && checkedCount == 1 && !currentList[checkedItems.first()].isPaid
         }
     }
 
@@ -38,7 +44,7 @@ object TransactionMenuUtils {
         item: MenuItem,
         adapter: CheckableListAdapter<Transaction, *>,
         editAction: (Transaction) -> Unit,
-        markAsPaidAction: ((Array<Transaction>) -> Unit)? = null,
+        markAsPaidAction: ((Array<Transaction>, Boolean) -> Unit)? = null,
         deleteAction: (Array<Transaction>) -> Unit
     ): Boolean {
         return when (item.itemId) {
@@ -47,7 +53,11 @@ object TransactionMenuUtils {
                 true
             }
             R.id.actionTransactionMarkAsPaid -> {
-                markAsPaidAction!!.invoke(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.toTypedArray())
+                markAsPaidAction!!.invoke(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.toTypedArray(), false)
+                true
+            }
+            R.id.actionTransactionMarkAsPaidToAccount -> {
+                markAsPaidAction!!.invoke(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.toTypedArray(), true)
                 true
             }
             R.id.actionTransactionDelete -> {

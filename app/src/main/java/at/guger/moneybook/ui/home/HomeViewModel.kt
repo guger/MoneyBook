@@ -52,6 +52,9 @@ class HomeViewModel(
     private val _navigateToPage = MutableLiveData<Event<HomeFragment.Destination>>()
     val navigateToPage: LiveData<Event<HomeFragment.Destination>> = _navigateToPage
 
+    private val _moveToAccount = MutableLiveData<Event<Pair<Array<out Transaction>, List<AccountWithBalance>>>>()
+    val moveToAccount: LiveData<Event<Pair<Array<out Transaction>, List<AccountWithBalance>>>> = _moveToAccount
+
     private val _showAccount = MutableLiveData<Event<Long>>()
     val showAccount: LiveData<Event<Long>> = _showAccount
 
@@ -67,10 +70,24 @@ class HomeViewModel(
         _showAccount.value = Event(account.id)
     }
 
-    fun markAsPaid(vararg transaction: Transaction) {
+    fun markAsPaid(vararg transaction: Transaction, moveToAccount: Boolean = false) {
+        viewModelScope.launch {
+            if (moveToAccount) {
+                _moveToAccount.value = Event(Pair(transaction, accounts.value!!))
+            } else {
+                transaction.forEach {
+                    transactionsRepository.markAsPaid(it)
+
+                    if (it.due != null) scheduler.cancelReminder(it.id)
+                }
+            }
+        }
+    }
+
+    fun moveToAccount(account: Account, vararg transaction: Transaction) {
         viewModelScope.launch {
             transaction.forEach {
-                transactionsRepository.markAsPaid(it)
+                transactionsRepository.moveToAccount(it, account.id)
 
                 if (it.due != null) scheduler.cancelReminder(it.id)
             }

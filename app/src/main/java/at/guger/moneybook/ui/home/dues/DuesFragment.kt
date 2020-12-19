@@ -28,6 +28,7 @@ import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
+import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentDuesBinding
@@ -37,6 +38,7 @@ import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -71,14 +73,31 @@ class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>
         binding.mDuesRecyclerView.setup(LinearLayoutManager(context), adapter, hasFixedSize = false) {
             addOnItemTouchListener(onItemTouchListener)
         }
+
+        setupEvents()
     }
 
     //endregion
 
     //region Methods
 
+    private fun setupEvents() {
+        fragmentViewModel.moveToAccount.observe(viewLifecycleOwner, EventObserver { (transactions, accounts) ->
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.ChooseAccount)
+                .setItems(accounts.map { it.name }.toTypedArray()) { _, which ->
+                    fragmentViewModel.moveToAccount(accounts[which], *transactions)
+                }
+                .show()
+        })
+    }
+
     private fun editTransaction(transaction: Transaction) {
         findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
+    }
+
+    private fun markAsPaid(vararg transaction: Transaction, moveToAccount: Boolean) {
+        fragmentViewModel.markAsPaid(*transaction, moveToAccount = moveToAccount)
     }
 
     //endregion
@@ -117,7 +136,7 @@ class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>
                     }
 
                     onSelection { menuItem ->
-                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, fragmentViewModel::markAsPaid, fragmentViewModel::deleteTransaction)
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, ::editTransaction, ::markAsPaid, fragmentViewModel::deleteTransaction)
                         destroy()
                     }
                 }

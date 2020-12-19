@@ -42,6 +42,10 @@ class Preferences(context: Context) {
         get() = preferences.getBoolean(CRASHLYTICS, !BuildConfig.DEBUG)
         set(value) = preferences.edit { putBoolean(CRASHLYTICS, value) }
 
+    var experimental: Boolean
+        get() = preferences.getBoolean(EXPERIMENTAL, BuildConfig.DEBUG)
+        set(value) = preferences.edit { putBoolean(EXPERIMENTAL, value) }
+
     var currency: Currency
         get() = preferences.getString(CURRENCY, null)?.takeIf { it != "Default" }?.let(Currency::getInstance) ?: Currency.getInstance(Locale.getDefault())
         set(value) = preferences.edit { putString(CURRENCY, value.currencyCode) }
@@ -51,6 +55,7 @@ class Preferences(context: Context) {
         const val CURRENCY = "pref_currency"
         const val ANALYTICS = "pref_analytics"
         const val CRASHLYTICS = "pref_crashlytics"
+        const val EXPERIMENTAL = "pref_experimental"
 
         const val PERMISSIONS = "pref_permissions"
         const val INFORMATION = "pref_information"

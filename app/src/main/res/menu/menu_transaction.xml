@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2019 Daniel Guger
+  ~ Copyright 2020 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -27,6 +27,11 @@
         android:id="@+id/actionTransactionMarkAsPaid"
         android:icon="@drawable/ic_mark_as_paid"
         android:title="@string/MarkAsPaid"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/actionTransactionMarkAsPaidToAccount"
+        android:icon="@drawable/ic_mark_as_paid_to_account"
+        android:title="@string/MarkAsPaidToAccount"
         app:showAsAction="always" />
     <item
         android:id="@+id/actionTransactionDelete"

@@ -157,4 +157,6 @@
     <string name="OverlayRequiredMessage">Drawing an overlay is required to display the snooze options.\nOpen the settings and permit MoneyBook to draw overlays.</string>
     <string name="Ignore">Ignore</string>
     <string name="SnoozeDisabled">Snooze functionality is disabled due to denied overlay permission.</string>
+    <string name="MarkAsPaidToAccount">Move To Account</string>
+    <string name="ChooseAccount">Choose Account</string>
 </resources>
