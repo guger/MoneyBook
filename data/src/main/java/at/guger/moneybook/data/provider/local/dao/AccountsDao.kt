@@ -41,7 +41,7 @@ internal interface AccountsDao {
         """
             SELECT accounts.*, 
             (SELECT SUM(CASE WHEN transactions.type = ${Transaction.TransactionType.EARNING} THEN transactions.value 
-            ELSE -transactions.value END) FROM transactions WHERE transactions.account_id = accounts.id) AS balance
+            ELSE -transactions.value END) FROM transactions WHERE transactions.account_id = accounts.id AND strftime('%Y-%m-%d', transactions.date / 1000, 'unixepoch') <= DATE('now')) AS balance
             FROM accounts
             LEFT JOIN transactions ON transactions.account_id = accounts.id
             GROUP BY accounts.id
