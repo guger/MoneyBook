@@ -140,11 +140,11 @@ class ScrollableTab : RecyclerView {
         setPadding(padding, 0, padding, 0)
     }
 
-    fun addTabs(list: List<String>) {
+    fun addTabs(list: List<String>, scrollToPos: Int = list.size - 1) {
         tabAdapter.addAll(list)
 
         post {
-            viewPager?.setCurrentItem(list.size - 1, false)
+            viewPager?.setCurrentItem(scrollToPos, false)
         }
     }
 

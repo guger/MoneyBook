@@ -91,7 +91,7 @@ class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBindi
                 override fun getItemCount(): Int = it.size
             }
 
-            binding.mAccountDetailTabs.addTabs(it.map { date -> monthYearDateFormatter.format(date) })
+            binding.mAccountDetailTabs.addTabs(it.map { date -> monthYearDateFormatter.format(date) }, it.indexOf(it.findLast { date -> date.isBefore(LocalDate.now()) }))
         }
 
         binding.mAccountDetailTabs.setUpWithViewPager(binding.mAccountDetailViewPager)

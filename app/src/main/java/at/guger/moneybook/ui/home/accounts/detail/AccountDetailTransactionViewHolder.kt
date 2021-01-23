@@ -22,7 +22,7 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemTransactionBinding
 
 /**
- * [RecyclerView.ViewHolder] for a earningsAndExpenses item.
+ * [RecyclerView.ViewHolder] for a transaction item.
  */
 class AccountDetailTransactionViewHolder(binding: ItemTransactionBinding) : ModelViewHolder<ItemTransactionBinding, Transaction>(binding) {
 
