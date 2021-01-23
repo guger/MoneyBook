@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Daniel Guger
+ * Copyright 2021 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,7 +32,12 @@ fun StrokePieChart.setAccounts(accounts: List<AccountWithBalance>) {
     val balanceSum = accounts.sumByDouble { it.balance + it.startBalance }
 
     accounts.forEach {
-        entries.add(StrokePieChart.Entry(if (balanceSum > 0.0) (it.balance + it.startBalance).toFloat() else 1.0f, it.color))
+        entries.add(
+            StrokePieChart.Entry(
+                if (balanceSum > 0.0) (it.balance + it.startBalance).toFloat() else 1.0f,
+                it.color
+            )
+        )
     }
 
     setEntries(entries)
