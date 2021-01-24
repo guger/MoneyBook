@@ -30,12 +30,12 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/actionTransactionMarkAsPaidToAccount"
-        android:icon="@drawable/ic_mark_as_paid_to_account"
+        android:icon="@drawable/ic_move_to_account"
         android:title="@string/MarkAsPaidToAccount"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionTransactionDelete"
         android:icon="@drawable/ic_delete"
         android:title="@string/Delete"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

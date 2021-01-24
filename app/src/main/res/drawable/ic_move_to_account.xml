@@ -1,0 +1,20 @@
+<!--
+  ~ Copyright 2021 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<vector android:height="24dp" android:viewportHeight="28.35"
+    android:viewportWidth="28.35" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FFFFFFFF" android:pathData="M24.67,5.18h-18a2,2 0,0 0,-2 2v4h2v-4h18v14h-18v-4h-2v4a2,2 0,0 0,2 2h18a2,2 0,0 0,2 -2v-14A2,2 0,0 0,24.67 5.18ZM10.67,18.18 L14.67,14.18 10.67,10.18v3L0.67,13.18v2h10ZM20.13,13.49c-1.43,-0.37 -1.89,-0.76 -1.89,-1.35S18.87,11 19.94,11s1.53,0.54 1.57,1.32L22.9,12.32a2.5,2.5 0,0 0,-2 -2.4L20.9,8.5L19,8.5L19,9.86a2.46,2.46 0,0 0,-2.2 2.28c0,1.45 1.2,2.18 3,2.6 1.57,0.38 1.89,0.93 1.89,1.52 0,0.43 -0.31,1.13 -1.7,1.13s-1.81,-0.58 -1.88,-1.33L16.67,16.06A2.65,2.65 0,0 0,19 18.48v1.36h1.89L20.89,18.49c1.23,-0.23 2.21,-0.95 2.21,-2.24C23.09,14.46 21.56,13.85 20.13,13.48Z"/>
+</vector>
