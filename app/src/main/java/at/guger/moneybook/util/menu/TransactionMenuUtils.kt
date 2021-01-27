@@ -30,13 +30,11 @@ import org.koin.core.inject
  */
 object TransactionMenuUtils : KoinComponent {
 
-    private val preferences: Preferences by inject()
-
     fun prepareMenu(menu: Menu, adapter: CheckableListAdapter<Transaction, *>, markAsPaid: Boolean = false) {
         with(adapter) {
             menu.findItem(R.id.actionTransactionEdit).isVisible = checkedCount == 1
             menu.findItem(R.id.actionTransactionMarkAsPaid).isVisible = markAsPaid && checkedCount == 1 && !currentList[checkedItems.first()].isPaid
-            menu.findItem(R.id.actionTransactionMarkAsPaidToAccount).isVisible = preferences.experimental && markAsPaid && checkedCount == 1 && !currentList[checkedItems.first()].isPaid
+            menu.findItem(R.id.actionTransactionMoveToAccount).isVisible = markAsPaid && checkedCount == 1
         }
     }
 
@@ -56,7 +54,7 @@ object TransactionMenuUtils : KoinComponent {
                 markAsPaidAction!!.invoke(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.toTypedArray(), false)
                 true
             }
-            R.id.actionTransactionMarkAsPaidToAccount -> {
+            R.id.actionTransactionMoveToAccount -> {
                 markAsPaidAction!!.invoke(adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.toTypedArray(), true)
                 true
             }

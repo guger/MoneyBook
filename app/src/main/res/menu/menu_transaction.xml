@@ -29,7 +29,7 @@
         android:title="@string/MarkAsPaid"
         app:showAsAction="always" />
     <item
-        android:id="@+id/actionTransactionMarkAsPaidToAccount"
+        android:id="@+id/actionTransactionMoveToAccount"
         android:icon="@drawable/ic_move_to_account"
         android:title="@string/MarkAsPaidToAccount"
         app:showAsAction="ifRoom" />
