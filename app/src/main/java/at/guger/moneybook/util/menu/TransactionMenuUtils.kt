@@ -19,16 +19,13 @@ package at.guger.moneybook.util.menu
 import android.view.Menu
 import android.view.MenuItem
 import at.guger.moneybook.R
-import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.data.model.Transaction
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 /**
  * Util class for [transactions][Transaction] menu.
  */
-object TransactionMenuUtils : KoinComponent {
+object TransactionMenuUtils {
 
     fun prepareMenu(menu: Menu, adapter: CheckableListAdapter<Transaction, *>, markAsPaid: Boolean = false) {
         with(adapter) {

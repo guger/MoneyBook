@@ -60,6 +60,7 @@ object Dependencies {
         const val Android = "org.koin:koin-android:${Versions.KOIN}"
         const val Scope = "org.koin:koin-androidx-scope:${Versions.KOIN}"
         const val ViewModel = "org.koin:koin-androidx-viewmodel:${Versions.KOIN}"
+        const val WorkManager = "org.koin:koin-androidx-workmanager:${Versions.KOIN}"
     }
 
     object Firebase {
@@ -118,6 +119,7 @@ fun DependencyHandler.koin() {
     implementation(Dependencies.Koin.Android)
     implementation(Dependencies.Koin.Scope)
     implementation(Dependencies.Koin.ViewModel)
+    implementation(Dependencies.Koin.WorkManager)
 }
 
 fun DependencyHandler.lifecycle() {

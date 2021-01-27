@@ -24,18 +24,18 @@ import at.guger.moneybook.core.util.ext.hasPermission
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.repository.AddressBookRepository
 import at.guger.moneybook.data.repository.ContactsRepository
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 /**
  * [CoroutineWorker] for syncing contacts with the address book.
  */
-class ContactsSyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params), KoinComponent {
+class ContactsSyncWorker(
+    context: Context,
+    params: WorkerParameters,
+    private val contactsRepository: ContactsRepository,
+    private val addressBookRepository: AddressBookRepository
+) : CoroutineWorker(context, params) {
 
     //region Methods
-
-    private val contactsRepository: ContactsRepository by inject()
-    private val addressBookRepository: AddressBookRepository by inject()
 
     //endregion
 
