@@ -15,7 +15,7 @@ MoneyBook is an open-source finance manager, inspired by Google's Material Desig
 - Get reminded about claims and debts using the reminder feature when entering a due.
 - Assign contacts to dues, and send them a reminder message directly within the app.
 - Create monthly budgets and organize your expenses. Always have an overview on what's left.
-- Stay safe and private. MoneyBook does not touch or collect any of your personal data or transactions.
+- Stay safe and private. MoneyBook does not touch or transmit any of your personal data or transactions.
 
 ## Screenshots
 
