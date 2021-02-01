@@ -91,7 +91,14 @@ class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBindi
                 override fun getItemCount(): Int = it.size
             }
 
-            binding.mAccountDetailTabs.addTabs(it.map { date -> monthYearDateFormatter.format(date) }, it.indexOf(it.findLast { date -> date.isBefore(LocalDate.now()) }))
+            binding.mAccountDetailTabs.addTabs(
+                it.map { date -> monthYearDateFormatter.format(date) },
+                it.indexOf(it.findLast { date ->
+                    val now = LocalDate.now()
+
+                    return@findLast date.isBefore(now) || date.isEqual(now)
+                })
+            )
         }
 
         binding.mAccountDetailTabs.setUpWithViewPager(binding.mAccountDetailViewPager)
@@ -125,7 +132,12 @@ class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBindi
 
     private fun setupEvents() {
         fragmentViewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->
-            findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(account = account, transitionViewResId = R.id.fabAccountDetailAddTransaction))
+            findNavController().navigate(
+                AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(
+                    account = account,
+                    transitionViewResId = R.id.fabAccountDetailAddTransaction
+                )
+            )
         })
     }
 
