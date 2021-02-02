@@ -21,6 +21,14 @@
         <item name="calcDialogButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
     </style>
 
+    <style name="AppTheme.MaterialButtonOutlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="OverlayDialogTheme" parent="Theme.MaterialComponents.Dialog">
         <!--Material color attributes -->
         <item name="colorPrimary">@color/colorPrimary</item>

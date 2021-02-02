@@ -96,11 +96,12 @@
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/mAddEditTransactionTypeToggleButtonGroup"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionTitle"
@@ -110,28 +111,28 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeEarning"
-                        style="?attr/materialButtonOutlinedStyle"
+                        style="@style/AppTheme.MaterialButtonOutlined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Earning" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeExpense"
-                        style="?attr/materialButtonOutlinedStyle"
+                        style="@style/AppTheme.MaterialButtonOutlined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Expense" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeClaim"
-                        style="?attr/materialButtonOutlinedStyle"
+                        style="@style/AppTheme.MaterialButtonOutlined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Claim" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeDebt"
-                        style="?attr/materialButtonOutlinedStyle"
+                        style="@style/AppTheme.MaterialButtonOutlined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Debt" />
