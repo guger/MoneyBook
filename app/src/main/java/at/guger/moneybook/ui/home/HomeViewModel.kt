@@ -58,6 +58,12 @@ class HomeViewModel(
     private val _showAccount = MutableLiveData<Event<Long>>()
     val showAccount: LiveData<Event<Long>> = _showAccount
 
+    private val _onItemClick = MutableLiveData<Event<Int>>()
+    val onItemClick: LiveData<Event<Int>> = _onItemClick
+
+    private val _onItemLongClick = MutableLiveData<Event<Int>>()
+    val onItemLongClick: LiveData<Event<Int>> = _onItemLongClick
+
     //endregion
 
     //region Methods
@@ -104,6 +110,14 @@ class HomeViewModel(
 
     fun deleteBudget(vararg budget: Budget) {
         viewModelScope.launch { budgetsRepository.delete(*budget) }
+    }
+
+    fun onItemClick(position: Int) {
+        _onItemClick.value = Event(position)
+    }
+
+    fun onLongClick(position: Int) {
+        _onItemLongClick.value = Event(position)
     }
 
     //endregion

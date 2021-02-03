@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.ui.home.accounts
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.AccountWithBalance
@@ -25,11 +26,26 @@ import at.guger.moneybook.ui.home.HomeViewModel
 /**
  * [RecyclerView.ViewHolder] for an account item.
  */
-class AccountViewHolder(binding: ItemAccountBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemAccountBinding, AccountWithBalance>(binding) {
+class AccountViewHolder(binding: ItemAccountBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemAccountBinding, AccountWithBalance>(binding),
+    View.OnClickListener, View.OnLongClickListener {
 
     override fun bind(model: AccountWithBalance) {
         binding.viewModel = viewModel
         binding.account = model
+        binding.root.setOnClickListener(this)
+        binding.root.setOnLongClickListener(this)
+        binding.btnAccountShowAccount.setOnClickListener(this)
+        binding.btnAccountShowAccount.setOnLongClickListener(this)
         binding.executePendingBindings()
+    }
+
+    override fun onClick(v: View?) {
+        viewModel.onItemClick(adapterPosition)
+    }
+
+    override fun onLongClick(v: View?): Boolean {
+        viewModel.onLongClick(adapterPosition)
+
+        return true
     }
 }

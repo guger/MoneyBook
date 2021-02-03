@@ -23,11 +23,12 @@ import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.databinding.ItemBudgetBinding
+import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.Adapter] showing all budgets.
  */
-class BudgetsAdapter : CheckableListAdapter<BudgetWithBalance, BudgetViewHolder>(BudgetsDiffCallback()) {
+class BudgetsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapter<BudgetWithBalance, BudgetViewHolder>(BudgetsDiffCallback()) {
 
     //region Variables
 
@@ -38,7 +39,7 @@ class BudgetsAdapter : CheckableListAdapter<BudgetWithBalance, BudgetViewHolder>
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetViewHolder {
-        return BudgetViewHolder(ItemBudgetBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return BudgetViewHolder(ItemBudgetBinding.inflate(LayoutInflater.from(parent.context), parent, false), viewModel)
     }
 
     override fun onBindViewHolder(holder: BudgetViewHolder, position: Int) {

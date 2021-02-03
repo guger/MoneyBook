@@ -16,18 +16,32 @@
 
 package at.guger.moneybook.ui.home.dues
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemDueBinding
+import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.ViewHolder] for a dues item.
  */
-class DuesTransactionViewHolder(binding: ItemDueBinding) : ModelViewHolder<ItemDueBinding, Transaction>(binding) {
+class DuesTransactionViewHolder(binding: ItemDueBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemDueBinding, Transaction>(binding), View.OnClickListener, View.OnLongClickListener {
 
     override fun bind(model: Transaction) {
         binding.transaction = model
+        binding.root.setOnClickListener(this)
+        binding.root.setOnLongClickListener(this)
         binding.executePendingBindings()
+    }
+
+    override fun onClick(v: View?) {
+        viewModel.onItemClick(adapterPosition)
+    }
+
+    override fun onLongClick(v: View?): Boolean {
+        viewModel.onLongClick(adapterPosition)
+
+        return true
     }
 }

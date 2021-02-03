@@ -23,11 +23,12 @@ import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.adapter.CheckableListAdapter
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.ItemDueBinding
+import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.Adapter] showing all accounts and details.
  */
-class DuesAdapter : CheckableListAdapter<Transaction, DuesTransactionViewHolder>(TransactionsDiffCallback()) {
+class DuesAdapter(private val viewModel: HomeViewModel) : CheckableListAdapter<Transaction, DuesTransactionViewHolder>(TransactionsDiffCallback()) {
 
     //region Variables
 
@@ -38,7 +39,7 @@ class DuesAdapter : CheckableListAdapter<Transaction, DuesTransactionViewHolder>
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DuesTransactionViewHolder {
-        return DuesTransactionViewHolder(ItemDueBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return DuesTransactionViewHolder(ItemDueBinding.inflate(LayoutInflater.from(parent.context), parent, false), viewModel)
     }
 
     override fun onBindViewHolder(holder: DuesTransactionViewHolder, position: Int) {

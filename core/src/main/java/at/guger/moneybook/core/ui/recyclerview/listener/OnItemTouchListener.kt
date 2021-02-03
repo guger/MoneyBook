@@ -33,42 +33,38 @@ class OnItemTouchListener(context: Context, recyclerView: RecyclerView, private 
 
     //region Variables
 
-    private val gestureDetector: GestureDetectorCompat
+    private val gestureDetector: GestureDetectorCompat = GestureDetectorCompat(context, object : GestureDetector.SimpleOnGestureListener() {
+        private val MIN_SWIPE_DISTANCE: Int = 50
+        private lateinit var downMotionEvent: MotionEvent
+
+        override fun onDown(e: MotionEvent?): Boolean {
+            e?.let { downMotionEvent = it }
+
+            return super.onDown(e)
+        }
+
+        override fun onSingleTapUp(e: MotionEvent?): Boolean {
+            return true
+        }
+
+        override fun onLongPress(e: MotionEvent?) {
+            e?.let {
+                val child: View? = recyclerView.findChildViewUnder(it.x, it.y)
+
+                if (child != null && !isGestureSwipe(it)) {
+                    onTouchCallback.onItemLongClick(child, recyclerView.getChildLayoutPosition(child), it)
+                }
+            }
+
+            super.onLongPress(e)
+        }
+
+        fun isGestureSwipe(e: MotionEvent): Boolean {
+            return downMotionEvent.x - e.x >= MIN_SWIPE_DISTANCE
+        }
+    })
 
     //endregion
-
-    init {
-        gestureDetector = GestureDetectorCompat(context, object : GestureDetector.SimpleOnGestureListener() {
-            private val MIN_SWIPE_DISTANCE: Int = 50
-            private lateinit var downMotionEvent: MotionEvent
-
-            override fun onDown(e: MotionEvent?): Boolean {
-                e?.let { downMotionEvent = it }
-
-                return super.onDown(e)
-            }
-
-            override fun onSingleTapUp(e: MotionEvent?): Boolean {
-                return true
-            }
-
-            override fun onLongPress(e: MotionEvent?) {
-                e?.let {
-                    val child: View? = recyclerView.findChildViewUnder(it.x, it.y)
-
-                    if (child != null && !isGestureSwipe(it)) {
-                        onTouchCallback.onItemLongClick(child, recyclerView.getChildLayoutPosition(child), it)
-                    }
-                }
-
-                super.onLongPress(e)
-            }
-
-            fun isGestureSwipe(e: MotionEvent): Boolean {
-                return downMotionEvent.x - e.x >= MIN_SWIPE_DISTANCE
-            }
-        })
-    }
 
     //region TouchHandler
 

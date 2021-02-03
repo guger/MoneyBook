@@ -18,7 +18,6 @@ package at.guger.moneybook.ui.home.dues
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
@@ -27,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
-import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Transaction
@@ -44,13 +42,11 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 /**
  * Fragment for [home view pager's][ViewPager2] dues content.
  */
-class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>(), OnItemTouchListener.ItemTouchListener {
+class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>() {
 
     //region Variables
 
     private lateinit var adapter: DuesAdapter
-
-    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), binding.mDuesRecyclerView, this) }
 
     override val fragmentViewModel: HomeViewModel by sharedViewModel()
 
@@ -68,13 +64,25 @@ class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DuesAdapter().apply { fragmentViewModel.claimsAndDebts.observe(viewLifecycleOwner, Observer(::submitList)) }
+        adapter = DuesAdapter(fragmentViewModel).apply { fragmentViewModel.claimsAndDebts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        binding.mDuesRecyclerView.setup(LinearLayoutManager(context), adapter, hasFixedSize = false) {
-            addOnItemTouchListener(onItemTouchListener)
-        }
+        binding.mDuesRecyclerView.setup(LinearLayoutManager(context), adapter, hasFixedSize = false)
 
         setupEvents()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        fragmentViewModel.onItemClick.observe(viewLifecycleOwner, EventObserver(::onItemClick))
+        fragmentViewModel.onItemLongClick.observe(viewLifecycleOwner, EventObserver(::onItemLongClick))
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        fragmentViewModel.onItemClick.removeObservers(viewLifecycleOwner)
+        fragmentViewModel.onItemLongClick.removeObservers(viewLifecycleOwner)
     }
 
     //endregion
@@ -104,7 +112,7 @@ class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>
 
     //region Callback
 
-    override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
+    private fun onItemClick(pos: Int) {
         if (getAppCompatActivity<MainActivity>()?.mCab.isActive()) {
             adapter.toggleChecked(pos)
 
@@ -120,7 +128,7 @@ class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>
         }
     }
 
-    override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
+    private fun onItemLongClick(pos: Int) {
         adapter.toggleChecked(pos)
 
         if (adapter.checkedCount > 0) {

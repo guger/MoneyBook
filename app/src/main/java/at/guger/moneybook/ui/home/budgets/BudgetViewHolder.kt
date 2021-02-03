@@ -16,18 +16,32 @@
 
 package at.guger.moneybook.ui.home.budgets
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.databinding.ItemBudgetBinding
+import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.ViewHolder] for a budget item.
  */
-class BudgetViewHolder(binding: ItemBudgetBinding) : ModelViewHolder<ItemBudgetBinding, BudgetWithBalance>(binding) {
+class BudgetViewHolder(binding: ItemBudgetBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemBudgetBinding, BudgetWithBalance>(binding), View.OnClickListener, View.OnLongClickListener {
 
     override fun bind(model: BudgetWithBalance) {
         binding.budget = model
+        binding.root.setOnClickListener(this)
+        binding.root.setOnLongClickListener(this)
         binding.executePendingBindings()
+    }
+
+    override fun onClick(v: View?) {
+        viewModel.onItemClick(adapterPosition)
+    }
+
+    override fun onLongClick(v: View?): Boolean {
+        viewModel.onLongClick(adapterPosition)
+
+        return true
     }
 }

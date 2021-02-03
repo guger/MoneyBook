@@ -18,7 +18,6 @@ package at.guger.moneybook.ui.home.accounts
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
@@ -28,7 +27,7 @@ import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
-import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
+import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.databinding.FragmentAccountsBinding
@@ -43,13 +42,11 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 /**
  * Fragment for [home view pager's][ViewPager2] accounts content.
  */
-class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeViewModel>(), OnItemTouchListener.ItemTouchListener {
+class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeViewModel>() {
 
     //region Variables
 
     private lateinit var adapter: AccountsAdapter
-
-    private val onItemTouchListener by lazy { OnItemTouchListener(requireContext(), binding.mAccountsRecyclerView, this) }
 
     override val fragmentViewModel: HomeViewModel by sharedViewModel()
 
@@ -69,9 +66,21 @@ class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeVi
 
         adapter = AccountsAdapter(fragmentViewModel).apply { fragmentViewModel.accounts.observe(viewLifecycleOwner, Observer(::submitList)) }
 
-        binding.mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
-            addOnItemTouchListener(onItemTouchListener)
-        }
+        binding.mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        fragmentViewModel.onItemClick.observe(viewLifecycleOwner, EventObserver(::onItemClick))
+        fragmentViewModel.onItemLongClick.observe(viewLifecycleOwner, EventObserver(::onItemLongClick))
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        fragmentViewModel.onItemClick.removeObservers(viewLifecycleOwner)
+        fragmentViewModel.onItemLongClick.removeObservers(viewLifecycleOwner)
     }
 
     //endregion
@@ -94,7 +103,7 @@ class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeVi
 
     //region Callback
 
-    override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
+    private fun onItemClick(pos: Int) {
         if (getAppCompatActivity<MainActivity>()?.mCab.isActive()) {
             adapter.toggleChecked(pos)
 
@@ -112,7 +121,7 @@ class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeVi
         }
     }
 
-    override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
+    private fun onItemLongClick(pos: Int) {
         adapter.toggleChecked(pos)
 
         if (adapter.checkedCount > 0) {
