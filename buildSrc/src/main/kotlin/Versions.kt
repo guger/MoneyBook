@@ -99,7 +99,7 @@ object Versions {
     }
 
     object Material {
-        const val Material = "1.3.0-rc01"
+        const val Material = "1.3.0"
     }
 
     object Arch {
