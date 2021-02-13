@@ -30,7 +30,7 @@ import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.databinding.LayoutRecyclerviewBinding
+import at.guger.moneybook.databinding.LayoutRecyclerViewBinding
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.TransactionMenuUtils
@@ -43,7 +43,7 @@ import java.time.LocalDate
 /**
  * Fragment displaying the monthly [transactions][Transaction] of an [account][Account].
  */
-class AccountDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerviewBinding>(), OnItemTouchListener.ItemTouchListener {
+class AccountDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBinding>(), OnItemTouchListener.ItemTouchListener {
 
     //region Variables
 
@@ -57,8 +57,8 @@ class AccountDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerviewB
 
     //region Fragment
 
-    override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): LayoutRecyclerviewBinding {
-        return LayoutRecyclerviewBinding.inflate(inflater, parent, attachToParent)
+    override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): LayoutRecyclerViewBinding {
+        return LayoutRecyclerViewBinding.inflate(inflater, parent, attachToParent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +72,7 @@ class AccountDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerviewB
     //region Methods
 
     private fun setupLayout() {
-        binding.mAccountDetailRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
+        binding.mLayoutRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
             addOnItemTouchListener(OnItemTouchListener(requireContext(), this, this@AccountDetailMonthlyFragment))
         }
 

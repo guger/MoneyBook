@@ -37,6 +37,8 @@ class BudgetsRepository(database: AppDatabase) {
 
     //region Methods
 
+    fun get(budgetId: Long): LiveData<Budget> = budgetsDao.get(budgetId)
+
     fun getBudgets(): LiveData<List<Budget>> = budgetsDao.getBudgets()
 
     fun getBudgetsWithBalance(): LiveData<List<BudgetWithBalance>> = budgetsDao.getObservableBudgetsWithBalance(getCurrentMonthStart(), getCurrentMonthEnd())

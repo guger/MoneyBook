@@ -95,8 +95,12 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
-        viewModel.accounts.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddAccount)?.isVisible = binding.mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
-        viewModel.budgetsWithBalance.observe(viewLifecycleOwner, { menu.findItem(R.id.actionAddBudget)?.isVisible = binding.mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
+        viewModel.accounts.observe(
+            viewLifecycleOwner,
+            { menu.findItem(R.id.actionAddAccount)?.isVisible = binding.mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
+        viewModel.budgetsWithBalance.observe(
+            viewLifecycleOwner,
+            { menu.findItem(R.id.actionAddBudget)?.isVisible = binding.mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
     }
 
     //endregion
@@ -145,7 +149,13 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
             }
         }.attach()
 
-        binding.fabHomeAddTransaction.setOnClickListener { findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transitionViewResId = R.id.fabHomeAddTransaction)) }
+        binding.fabHomeAddTransaction.setOnClickListener {
+            findNavController().navigate(
+                AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(
+                    transitionViewResId = R.id.fabHomeAddTransaction
+                )
+            )
+        }
     }
 
     private fun setupEventListeners() {
@@ -162,6 +172,10 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
 
         viewModel.showAccount.observe(viewLifecycleOwner, EventObserver { accountId ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAccountDetailFragment(accountId))
+        })
+
+        viewModel.showBudget.observe(viewLifecycleOwner, EventObserver { budgetId ->
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBudgetDetailBottomSheetFragment(budgetId))
         })
     }
 

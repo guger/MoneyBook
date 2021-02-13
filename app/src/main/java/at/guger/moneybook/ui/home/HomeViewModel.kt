@@ -58,6 +58,9 @@ class HomeViewModel(
     private val _showAccount = MutableLiveData<Event<Long>>()
     val showAccount: LiveData<Event<Long>> = _showAccount
 
+    private val _showBudget = MutableLiveData<Event<Long>>()
+    val showBudget: LiveData<Event<Long>> = _showBudget
+
     private val _onItemClick = MutableLiveData<Event<Int>>()
     val onItemClick: LiveData<Event<Int>> = _onItemClick
 
@@ -74,6 +77,10 @@ class HomeViewModel(
 
     fun showAccount(account: AccountWithBalance) {
         _showAccount.value = Event(account.id)
+    }
+
+    fun showBudget(budget: Budget) {
+        _showBudget.value = Event(budget.id)
     }
 
     fun markAsPaid(vararg transaction: Transaction, moveToAccount: Boolean = false) {

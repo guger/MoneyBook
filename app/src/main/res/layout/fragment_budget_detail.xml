@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2021 Daniel Guger
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/mBudgetDetailContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorSurface"
+        android:orientation="vertical">
+
+        <at.guger.moneybook.core.ui.widget.LineGraphChart
+            android:id="@+id/mBudgetDetailChart"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_chart_height"
+            android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
+            app:barColor="?attr/colorOnSurface"
+            app:curveBorderColor="@{viewModel.budget.color}"
+            app:curveTopMargin="@dimen/curveTopMargin" />
+
+        <at.guger.moneybook.core.ui.widget.ScrollableTab
+            android:id="@+id/mBudgetDetailTabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
+            app:selectedColor="?attr/colorOnSurface"
+            app:tabTextAppearance="?attr/textAppearanceButton"
+            app:unSelectedColor="@color/colorOnSurface" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/mBudgetDetailViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="at.guger.moneybook.ui.home.budgets.detail.BudgetDetailViewModel" />
+    </data>
+</layout>

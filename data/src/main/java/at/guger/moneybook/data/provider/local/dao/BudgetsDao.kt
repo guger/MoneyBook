@@ -27,6 +27,9 @@ import at.guger.moneybook.data.model.BudgetWithBalance
 @Dao
 internal interface BudgetsDao {
 
+    @Query("SELECT * FROM budgets WHERE budgets.id = :id")
+    fun get(id: Long): LiveData<Budget>
+
     @Query("SELECT * FROM budgets ORDER BY name ASC")
     fun getBudgets(): LiveData<List<Budget>>
 

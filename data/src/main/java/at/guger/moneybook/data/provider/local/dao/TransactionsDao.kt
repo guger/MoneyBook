@@ -38,7 +38,17 @@ internal interface TransactionsDao {
         ORDER BY date DESC, title ASC
         """
     )
-    fun byAccount(accountId: Long): LiveData<List<Transaction>>
+    fun getByAccount(accountId: Long): LiveData<List<Transaction>>
+
+    @androidx.room.Transaction
+    @Query(
+        """
+        SELECT transactions.* FROM transactions 
+        WHERE budget_id = :budgetId AND type IN (${Transaction.TransactionType.EARNING}, ${Transaction.TransactionType.EXPENSE})
+        ORDER BY date DESC, title ASC
+        """
+    )
+    fun getByBudget(budgetId: Long): LiveData<List<Transaction>>
 
     @androidx.room.Transaction
     @Query(

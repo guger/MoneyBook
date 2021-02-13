@@ -77,19 +77,19 @@ object Versions {
     object Firebase {
 
         object Plugins {
-            const val GoogleServices = "4.3.4"
+            const val GoogleServices = "4.3.5"
             const val CrashlyticsGradle = "2.4.1"
         }
 
-        const val Analytics = "18.0.0"
-        const val Crashlytics = "17.3.0"
+        const val Analytics = "18.0.2"
+        const val Crashlytics = "17.3.1"
     }
 
     object AndroidX {
         const val Core = "1.5.0-beta01"
         const val AppCompat = "1.2.0"
         const val Annotation = "1.2.0-beta01"
-        const val Fragment = "1.3.0-rc01"
+        const val Fragment = "1.3.0"
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha02"
         const val ViewPager2 = "1.0.0"
@@ -103,7 +103,7 @@ object Versions {
     }
 
     object Arch {
-        const val Lifecycle = "2.2.0"
+        const val Lifecycle = "2.3.0"
         const val Navigation = "2.3.3"
         const val Room = "2.3.0-beta01"
         const val Work = "2.5.0"

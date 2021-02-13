@@ -55,13 +55,13 @@ class AccountDetailViewModel(
             _account.value = accountsRepository.get(accountId)
         }
 
-        transactions = transactionsRepository.byAccount(accountId)
-        transactionMonths = transactionsRepository.listMonths(accountId)
+        transactions = transactionsRepository.getByAccount(accountId)
+        transactionMonths = transactionsRepository.getByAccountMonthly(accountId)
     }
 
     //region Methods
 
-    fun transactionsByMonth(month: LocalDate): LiveData<List<Transaction>> = transactionsRepository.byMonth(accountId, month)
+    fun transactionsByMonth(month: LocalDate): LiveData<List<Transaction>> = transactionsRepository.getByAccountMonth(accountId, month)
 
     fun showAddEditTransactionDialogFragment() {
         _showAddEditTransactionDialogFragment.value = Event(account.value!!)

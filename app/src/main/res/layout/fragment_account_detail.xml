@@ -63,7 +63,7 @@
                 app:unSelectedColor="@color/colorOnSurface" />
 
             <TextView
-                android:id="@+id/txvTransactionsEmpty"
+                android:id="@+id/txvAccountDetailTransactionsEmpty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/NoTransactions"
