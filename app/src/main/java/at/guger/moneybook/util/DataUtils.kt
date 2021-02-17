@@ -21,20 +21,19 @@ import android.graphics.Color
 import androidx.core.content.ContextCompat
 import at.guger.moneybook.R
 import at.guger.moneybook.data.model.Account
-import at.guger.moneybook.data.model.Account.Companion.DEFAULT_ACCOUNT_ID
 import at.guger.moneybook.data.model.Budget
 
 /**
- * Provider for default value items.
+ * Provider for default items.
  */
 object DataUtils {
 
-    fun getDefaultAccount(context: Context) = Account(DEFAULT_ACCOUNT_ID, context.getString(R.string.Checking), Color.parseColor("#007d51"))
+    fun getDefaultAccount(context: Context) = Account(name = context.getString(R.string.Checking), color = Color.parseColor("#007d51"))
 
     fun getDefaultBudgets(context: Context): Array<Budget> = arrayOf(
-        Budget(id = -100, name = context.getString(R.string.Housekeeping), budget = 400.0, color = Color.parseColor("#BBDEFB")),
-        Budget(id = -99, name = context.getString(R.string.Leisure), budget = 200.0, color = Color.parseColor("#B39DDB")),
-        Budget(id = -98, name = context.getString(R.string.Shopping), budget = 100.0, color = Color.parseColor("#1976D2"))
+        Budget(name = context.getString(R.string.Housekeeping), budget = 400.0, color = Color.parseColor("#BBDEFB")),
+        Budget(name = context.getString(R.string.Leisure), budget = 200.0, color = Color.parseColor("#B39DDB")),
+        Budget(name = context.getString(R.string.Shopping), budget = 100.0, color = Color.parseColor("#1976D2"))
     )
 
     const val MAX_ACCOUNTS = 4

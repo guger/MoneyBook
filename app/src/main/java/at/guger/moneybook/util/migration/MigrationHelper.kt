@@ -28,6 +28,7 @@ import at.guger.moneybook.data.provider.legacy.LegacyDatabase
 import at.guger.moneybook.data.provider.legacy.model.BookEntry
 import at.guger.moneybook.data.provider.legacy.model.Category
 import at.guger.moneybook.data.provider.legacy.reminder.ReminderManager
+import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.AddressBookRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
@@ -43,6 +44,7 @@ import kotlin.math.max
 class MigrationHelper(
     private val context: Context,
     private val transactionsRepository: TransactionsRepository,
+    private val accountsRepository: AccountsRepository,
     private val budgetsRepository: BudgetsRepository,
     private val addressBookRepository: AddressBookRepository,
     private val reminderScheduler: ReminderScheduler
@@ -77,6 +79,7 @@ class MigrationHelper(
         checkNotNull(entries) { "Call #getUsedCategories before migration." }
 
         val legacyReminders: Map<Long, LocalDateTime> = legacyDatabase.reminderDao().getReminders().map { Pair(it.bookEntryId, it.fireDate) }.toMap()
+        val account = accountsRepository.getAccounts().first()
         val budgets = mutableMapOf<Long, Budget>()
 
         categories.forEach {
@@ -101,7 +104,7 @@ class MigrationHelper(
                 due = reminder?.toLocalDate(),
                 notes = entry.notes,
                 type = entry.entryType,
-                accountId = Account.DEFAULT_ACCOUNT_ID.takeIf { entry.entryType == Transaction.TransactionType.EARNING || entry.entryType == Transaction.TransactionType.EXPENSE },
+                accountId = account.id.takeIf { entry.entryType == Transaction.TransactionType.EARNING || entry.entryType == Transaction.TransactionType.EXPENSE },
                 budgetId = budgets[entry.category?.id ?: -1]?.id?.takeIf { entry.entryType == Transaction.TransactionType.EXPENSE }
             )
 

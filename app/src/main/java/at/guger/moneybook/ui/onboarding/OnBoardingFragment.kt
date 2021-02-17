@@ -51,7 +51,7 @@ class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() 
 
     private val preferences: Preferences by inject()
 
-    private val migrationHelper by lazy { MigrationHelper(requireContext(), get(), get(), get(), get()) }
+    private val migrationHelper by lazy { MigrationHelper(requireContext(), get(), get(), get(), get(), get()) }
 
     //endregion
 

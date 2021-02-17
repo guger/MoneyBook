@@ -30,7 +30,7 @@ object BudgetMenuUtils {
     fun prepareMenu(menu: Menu, adapter: BudgetsAdapter) {
         with(adapter) {
             menu.findItem(R.id.actionBudgetEdit).isVisible = checkedCount == 1
-            menu.findItem(R.id.actionBudgetDelete).isVisible = isDefaultBudget(adapter)
+            menu.findItem(R.id.actionBudgetDelete).isVisible = adapter.itemCount > 1
         }
     }
 
@@ -47,6 +47,4 @@ object BudgetMenuUtils {
             else -> false
         }
     }
-
-    private fun isDefaultBudget(adapter: BudgetsAdapter) = adapter.currentList.filterIndexed { index, _ -> adapter.checkedItems.contains(index) }.none { it.id <= 0 }
 }

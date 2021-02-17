@@ -36,9 +36,4 @@ open class Account(
     @JvmField @ColumnInfo(name = Database.Accounts.COL_NAME) var name: String = "",
     @JvmField @ColumnInfo(name = Database.Accounts.COL_COLOR) @ColorInt var color: Int = -1,
     @JvmField @ColumnInfo(name = Database.Accounts.COL_START_BALANCE) var startBalance: Double = 0.0
-) : Model {
-
-    companion object {
-        const val DEFAULT_ACCOUNT_ID = -100L
-    }
-}
+) : Model
