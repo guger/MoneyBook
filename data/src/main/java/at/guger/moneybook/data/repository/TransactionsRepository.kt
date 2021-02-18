@@ -51,13 +51,13 @@ class TransactionsRepository(database: AppDatabase) {
         it.filter { transaction -> transaction.date.withDayOfMonth(1).isEqual(month) }
     }
 
-    fun getByBudget(accountId: Long): LiveData<List<Transaction>> = transactionsDao.getByBudget(accountId)
+    fun getByBudget(budgetId: Long): LiveData<List<Transaction>> = transactionsDao.getByBudget(budgetId)
 
-    fun getByBudgetMonthly(accountId: Long): LiveData<List<LocalDate>> = getByAccount(accountId).map {
+    fun getByBudgetMonthly(budgetId: Long): LiveData<List<LocalDate>> = getByBudget(budgetId).map {
         it.map { transaction -> transaction.date }.groupBy { date -> date.withDayOfMonth(1) }.keys.reversed()
     }
 
-    fun getByBudgetMonth(accountId: Long, month: LocalDate): LiveData<List<Transaction>> = getByAccount(accountId).map {
+    fun getByBudgetMonth(budgetId: Long, month: LocalDate): LiveData<List<Transaction>> = getByBudget(budgetId).map {
         it.filter { transaction -> transaction.date.withDayOfMonth(1).isEqual(month) }
     }
 

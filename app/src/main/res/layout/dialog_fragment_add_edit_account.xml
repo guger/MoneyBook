@@ -41,8 +41,6 @@
                 android:gravity="start|center_vertical"
                 android:text="@{viewModel.titleRes}"
                 android:textAppearance="?textAppearanceHeadline1"
-                tools:layout_editor_absoluteX="206dp"
-                tools:layout_editor_absoluteY="14dp"
                 tools:text="Add / Edit Account" />
 
             <com.google.android.material.button.MaterialButton

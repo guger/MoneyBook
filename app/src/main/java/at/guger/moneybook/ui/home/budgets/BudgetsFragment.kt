@@ -107,7 +107,7 @@ class BudgetsFragment : BaseDataBindingFragment<FragmentBudgetsBinding, HomeView
             } else {
                 getAppCompatActivity<MainActivity>()?.destroyCab()
             }
-        } else {
+        } else if (adapter.currentList[pos].balance > 0) {
             fragmentViewModel.showBudget(adapter.currentList[pos])
         }
     }

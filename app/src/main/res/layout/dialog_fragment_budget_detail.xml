@@ -21,14 +21,17 @@
     <LinearLayout
         android:id="@+id/mBudgetDetailContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorBackground"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/item_padding">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mBudgetDetailTitleToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,11 +43,27 @@
                 style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:gravity="start|center_vertical"
                 android:text="@{viewModel.budget.name}"
                 android:textAppearance="?textAppearanceHeadline1"
                 tools:text="Budget Name" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBudgetDetailOpenDetails"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{() -> viewModel.openDetailFragment()}"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/OpenDetails"
+                android:textColor="@{viewModel.budget.color}"
+                app:icon="@drawable/ic_open_details"
+                app:iconTint="@{viewModel.budget.color}"
+                app:rippleColor="@{viewModel.budget.color}" />
         </androidx.appcompat.widget.Toolbar>
 
         <at.guger.moneybook.core.ui.widget.LineGraphChart
@@ -56,22 +75,6 @@
             app:curveBorderColor="@{viewModel.budget.color}"
             app:curveTopMargin="@dimen/curveTopMargin" />
 
-        <at.guger.moneybook.core.ui.widget.ScrollableTab
-            android:id="@+id/mBudgetDetailTabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorSurface"
-            android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:selectedColor="?attr/colorOnSurface"
-            app:tabTextAppearance="?attr/textAppearanceButton"
-            app:unSelectedColor="@color/colorOnSurface" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/mBudgetDetailViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
-
     </LinearLayout>
 
     <data>
@@ -80,6 +83,6 @@
 
         <variable
             name="viewModel"
-            type="at.guger.moneybook.ui.home.budgets.detail.BudgetDetailViewModel" />
+            type="at.guger.moneybook.ui.home.budgets.detail.BudgetDetailBottomSheetViewModel" />
     </data>
 </layout>

@@ -95,12 +95,12 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
-        viewModel.accounts.observe(
-            viewLifecycleOwner,
-            { menu.findItem(R.id.actionAddAccount)?.isVisible = binding.mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS })
-        viewModel.budgetsWithBalance.observe(
-            viewLifecycleOwner,
-            { menu.findItem(R.id.actionAddBudget)?.isVisible = binding.mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS })
+        viewModel.accounts.observe(viewLifecycleOwner) {
+            menu.findItem(R.id.actionAddAccount)?.isVisible = binding.mHomeViewPager.currentItem == 1 && it.size < DataUtils.MAX_ACCOUNTS
+        }
+        viewModel.budgetsWithBalance.observe(viewLifecycleOwner) {
+            menu.findItem(R.id.actionAddBudget)?.isVisible = binding.mHomeViewPager.currentItem == 3 && it.size < DataUtils.MAX_BUDGETS
+        }
     }
 
     //endregion
@@ -111,7 +111,6 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
         TooltipCompat.setTooltipText(binding.fabHomeAddTransaction, getString(R.string.NewTransaction))
 
         binding.mHomeViewPager.adapter = object : FragmentStateAdapter(requireActivity()) {
-
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> OverviewFragment.instantiate()
@@ -129,15 +128,6 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
                 super.onPageSelected(position)
 
                 getAppCompatActivity<MainActivity>()?.invalidateOptionsMenu()
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-
-                requireView().post {
-                    getAppCompatActivity<MainActivity>()?.destroyCab() // TODO looks like it doesn't solve the problem
-                    // TODO Fixes appearing CAB when dragging ViewPager for now, but needs to be done better.
-                }
             }
         })
 

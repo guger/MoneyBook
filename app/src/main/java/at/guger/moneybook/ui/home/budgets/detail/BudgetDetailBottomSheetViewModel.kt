@@ -17,8 +17,10 @@
 package at.guger.moneybook.ui.home.budgets.detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.BudgetsRepository
@@ -27,9 +29,9 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 /**
- * [ViewModel] for the [BudgetDetailFragment].
+ * [ViewModel] for the [BudgetDetailBottomSheetFragment].
  */
-class BudgetDetailViewModel(
+class BudgetDetailBottomSheetViewModel(
     private val transactionsRepository: TransactionsRepository,
     budgetsRepository: BudgetsRepository,
     private val budgetId: Long
@@ -40,11 +42,17 @@ class BudgetDetailViewModel(
     val budget: LiveData<Budget> = budgetsRepository.get(budgetId)
 
     val transactions: LiveData<List<Transaction>> = transactionsRepository.getByBudget(budgetId)
-    val transactionMonths: LiveData<List<LocalDate>> = transactionsRepository.getByBudgetMonthly(budgetId)
+
+    private val _openDetailFragment = MutableLiveData<Event<Unit>>()
+    val openDetailFragment: LiveData<Event<Unit>> = _openDetailFragment
 
     //endregion
 
     //region Methods
+
+    fun openDetailFragment() {
+        _openDetailFragment.value = Event(Unit)
+    }
 
     fun transactionsByMonth(month: LocalDate): LiveData<List<Transaction>> = transactionsRepository.getByBudgetMonth(budgetId, month)
 

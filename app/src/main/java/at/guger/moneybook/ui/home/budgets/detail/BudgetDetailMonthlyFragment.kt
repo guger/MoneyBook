@@ -18,24 +18,15 @@ package at.guger.moneybook.ui.home.budgets.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
-import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.LayoutRecyclerViewBinding
-import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
-import at.guger.moneybook.ui.main.MainActivity
-import at.guger.moneybook.util.menu.TransactionMenuUtils
-import com.afollestad.materialcab.attached.destroy
-import com.afollestad.materialcab.attached.isActive
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
@@ -67,16 +58,21 @@ class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBi
         setupLayout()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        binding.mLayoutRecyclerView.requestFocus()
+    }
+
     //endregion
 
     //region Methods
 
     private fun setupLayout() {
-        binding.mLayoutRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false)
+        binding.mLayoutRecyclerView.setup(LinearLayoutManager(requireContext()), adapter)
 
         viewModel.transactionsByMonth(month).observe(viewLifecycleOwner) {
             adapter.submitList(it)
-            binding.mLayoutRecyclerView.requestFocus()
         }
     }
 

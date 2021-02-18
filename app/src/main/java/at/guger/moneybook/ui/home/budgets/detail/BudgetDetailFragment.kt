@@ -20,35 +20,42 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import at.guger.moneybook.core.ui.fragment.BaseDataBindingBottomSheetDialogFragment
-import at.guger.moneybook.core.ui.viewmodel.EventObserver
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.widget.LineGraphChart
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.databinding.DialogFragmentBudgetDetailBinding
+import at.guger.moneybook.databinding.FragmentBudgetDetailBinding
+import at.guger.moneybook.util.DateFormatUtils
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 /**
  * Fragment displaying the [transactions][Transaction] of an [account][Budget].
  */
-class BudgetDetailBottomSheetFragment : BaseDataBindingBottomSheetDialogFragment<DialogFragmentBudgetDetailBinding, BudgetDetailBottomSheetViewModel>() {
+class BudgetDetailFragment : BaseDataBindingFragment<FragmentBudgetDetailBinding, BudgetDetailViewModel>() {
 
     //region Variables
 
     private val args: BudgetDetailBottomSheetFragmentArgs by navArgs()
 
-    override val fragmentViewModel: BudgetDetailBottomSheetViewModel by viewModel { parametersOf(args.budgetId) }
+    private lateinit var months: List<LocalDate>
+
+    private val monthYearDateFormatter = DateTimeFormatter.ofPattern(DateFormatUtils.MMM_YYYY_DATE_FORMAT, Locale.getDefault())
+
+    override val fragmentViewModel: BudgetDetailViewModel by viewModel { parametersOf(args.budgetId) }
 
     //endregion
 
     //region Fragment
 
-    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): DialogFragmentBudgetDetailBinding {
-        return DialogFragmentBudgetDetailBinding.inflate(inflater, root, false).apply {
+    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): FragmentBudgetDetailBinding {
+        return FragmentBudgetDetailBinding.inflate(inflater, root, false).apply {
             viewModel = fragmentViewModel
             lifecycleOwner = viewLifecycleOwner
         }
@@ -57,16 +64,41 @@ class BudgetDetailBottomSheetFragment : BaseDataBindingBottomSheetDialogFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentViewModel.openDetailFragment.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(BudgetDetailBottomSheetFragmentDirections.actionBudgetDetailBottomSheetFragmentToBudgetDetailFragment(args.budgetId))
-        })
-
-        setupChart(LocalDate.now().withDayOfMonth(1))
+        setupLayout()
     }
 
     //endregion
 
     //region Methods
+
+    private fun setupLayout() {
+        fragmentViewModel.transactionMonths.observe(viewLifecycleOwner) {
+            months = it
+
+            binding.mBudgetDetailViewPager.adapter = object : FragmentStateAdapter(this) {
+                override fun createFragment(position: Int): Fragment {
+                    return BudgetDetailMonthlyFragment.instantiate(args.budgetId, it[position])
+                }
+
+                override fun getItemCount(): Int = it.size
+            }
+
+            binding.mBudgetDetailTabs.addTabs(
+                it.map { date -> monthYearDateFormatter.format(date) },
+                it.indexOf(it.findLast { date ->
+                    val now = LocalDate.now()
+
+                    return@findLast date.isBefore(now) || date.isEqual(now)
+                })
+            )
+        }
+
+        binding.mBudgetDetailTabs.setUpWithViewPager(binding.mBudgetDetailViewPager)
+
+        binding.mBudgetDetailTabs.addOnPageChangeListener {
+            setupChart(months[it])
+        }
+    }
 
     private fun setupChart(month: LocalDate) {
         val days = Array<LocalDate>(month.lengthOfMonth()) { i -> month.plusDays(i.toLong()) }

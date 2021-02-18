@@ -159,4 +159,5 @@
     <string name="SnoozeDisabled">Snooze functionality is disabled due to denied overlay permission.</string>
     <string name="MarkAsPaidToAccount">Move To Account</string>
     <string name="ChooseAccount">Choose Account</string>
+    <string name="OpenDetails">Open Details</string>
 </resources>
