@@ -33,8 +33,8 @@ import androidx.core.content.ContextCompat
  *
  * @return The given value converted to pixels.
  */
-fun Context.dp(value: Int): Float {
-    return TypedValue.applyDimension(COMPLEX_UNIT_DIP, value.toFloat(), resources.displayMetrics)
+fun Context.dp(value: Float): Float {
+    return TypedValue.applyDimension(COMPLEX_UNIT_DIP, value, resources.displayMetrics)
 }
 
 /**

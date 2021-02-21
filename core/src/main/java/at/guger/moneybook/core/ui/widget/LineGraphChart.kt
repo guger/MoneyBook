@@ -87,13 +87,13 @@ class LineGraphChart : View {
     }
 
     private fun init(set: AttributeSet?) {
-        val ta = context.obtainStyledAttributes(set, R.styleable.LineGraphChart)
-        val barColor = ta.getColor(R.styleable.LineGraphChart_barColor, Color.GRAY)
-        val borderColor = ta.getColor(R.styleable.LineGraphChart_curveBorderColor, Color.parseColor("#ff21AF6C"))
-        val fillColor = ta.getColor(R.styleable.LineGraphChart_curveFillColor, ColorUtils.setAlphaComponent(borderColor, 25))
+        val ta = context.obtainStyledAttributes(set, R.styleable.MonthlyTrendChart)
+        val barColor = ta.getColor(R.styleable.MonthlyTrendChart_barColor, Color.GRAY)
+        val borderColor = ta.getColor(R.styleable.MonthlyTrendChart_curveBorderColor, Color.parseColor("#ff21AF6C"))
+        val fillColor = ta.getColor(R.styleable.MonthlyTrendChart_curveFillColor, ColorUtils.setAlphaComponent(borderColor, 25))
 
 
-        curveTopMargin = ta.getDimensionPixelSize(R.styleable.LineGraphChart_curveTopMargin, 0)
+        curveTopMargin = 0
         ta.recycle()
 
         barPaint.apply {

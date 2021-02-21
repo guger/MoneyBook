@@ -37,14 +37,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mAccountDetailTabs" />
 
-            <at.guger.moneybook.core.ui.widget.LineGraphChart
+            <at.guger.moneybook.core.ui.widget.chart.MonthlyTrendChart
                 android:id="@+id/mAccountDetailChart"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/default_chart_height"
+                android:background="?colorSurface"
                 android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
-                app:barColor="?attr/colorOnSurface"
                 app:curveBorderColor="@{viewModel.account.color}"
-                app:curveTopMargin="@dimen/curveTopMargin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

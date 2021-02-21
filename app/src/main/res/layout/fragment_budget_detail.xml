@@ -29,6 +29,7 @@
             android:id="@+id/mBudgetDetailTitleToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?colorSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,14 +48,13 @@
                 tools:text="Budget Name" />
         </androidx.appcompat.widget.Toolbar>
 
-        <at.guger.moneybook.core.ui.widget.LineGraphChart
+        <at.guger.moneybook.core.ui.widget.chart.MonthlyTrendChart
             android:id="@+id/mBudgetDetailChart"
             android:layout_width="match_parent"
             android:layout_height="@dimen/default_chart_height"
+            android:background="?colorSurface"
             android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:barColor="?attr/colorOnSurface"
-            app:curveBorderColor="@{viewModel.budget.color}"
-            app:curveTopMargin="@dimen/curveTopMargin" />
+            app:curveBorderColor="@{viewModel.budget.color}" />
 
         <at.guger.moneybook.core.ui.widget.ScrollableTab
             android:id="@+id/mBudgetDetailTabs"

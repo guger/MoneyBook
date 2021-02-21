@@ -20,11 +20,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnAttach
+import androidx.core.view.doOnLayout
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingBottomSheetDialogFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
-import at.guger.moneybook.core.ui.widget.LineGraphChart
+import at.guger.moneybook.core.ui.widget.chart.DateDataPoint
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.DialogFragmentBudgetDetailBinding
@@ -76,17 +78,17 @@ class BudgetDetailBottomSheetFragment : BaseDataBindingBottomSheetDialogFragment
                 map.value.sumByDouble { it.value }
             }
 
-            val dataPoints = mutableListOf<LineGraphChart.DataPoint>()
+            val dataPoints = mutableListOf<DateDataPoint>()
 
             days.forEach { date ->
                 var value = values[date]?.toFloat() ?: 0f
 
                 if (dataPoints.isNotEmpty()) value += dataPoints.last().value
 
-                dataPoints.add(LineGraphChart.DataPoint(date, value))
+                dataPoints.add(DateDataPoint(date, value))
             }
 
-            binding.mBudgetDetailChart.addDataPoints(dataPoints)
+            binding.mBudgetDetailChart.setDataPoints(dataPoints)
         }
     }
 
