@@ -22,8 +22,7 @@
         android:id="@+id/mBudgetDetailContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorSurface"
-        android:paddingBottom="@dimen/item_padding">
+        android:background="?colorSurface">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mBudgetDetailTitleToolbar"
