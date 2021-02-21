@@ -30,7 +30,7 @@ object BudgetMenuUtils {
     fun prepareMenu(menu: Menu, adapter: BudgetsAdapter) {
         with(adapter) {
             menu.findItem(R.id.actionBudgetEdit).isVisible = checkedCount == 1
-            menu.findItem(R.id.actionBudgetDelete).isVisible = adapter.itemCount > 1
+            menu.findItem(R.id.actionBudgetDelete).isVisible = itemCount - checkedCount >= 1
         }
     }
 
