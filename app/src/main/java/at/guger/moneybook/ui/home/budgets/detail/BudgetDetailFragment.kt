@@ -24,7 +24,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
-import at.guger.moneybook.core.ui.widget.LineGraphChart
 import at.guger.moneybook.core.ui.widget.chart.DateDataPoint
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
