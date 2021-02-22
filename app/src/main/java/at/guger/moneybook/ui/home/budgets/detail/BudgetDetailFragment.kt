@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
-import at.guger.moneybook.core.ui.widget.LineGraphChart
+import at.guger.moneybook.core.ui.widget.chart.DateDataPoint
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentBudgetDetailBinding
@@ -108,17 +108,17 @@ class BudgetDetailFragment : BaseDataBindingFragment<FragmentBudgetDetailBinding
                 map.value.sumByDouble { it.value }
             }
 
-            val dataPoints = mutableListOf<LineGraphChart.DataPoint>()
+            val dataPoints = mutableListOf<DateDataPoint>()
 
             days.forEach { date ->
                 var value = values[date]?.toFloat() ?: 0f
 
                 if (dataPoints.isNotEmpty()) value += dataPoints.last().value
 
-                dataPoints.add(LineGraphChart.DataPoint(date, value))
+                dataPoints.add(DateDataPoint(date, value))
             }
 
-            binding.mBudgetDetailChart.addDataPoints(dataPoints)
+            binding.mBudgetDetailChart.setDataPoints(dataPoints)
         }
     }
 

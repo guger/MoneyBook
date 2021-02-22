@@ -28,7 +28,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
-import at.guger.moneybook.core.ui.widget.LineGraphChart
+import at.guger.moneybook.core.ui.widget.chart.DateDataPoint
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAccountDetailBinding
@@ -116,17 +116,17 @@ class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBindi
                 map.value.sumByDouble { if (it.type == Transaction.TransactionType.EARNING) it.value else -it.value }
             }
 
-            val dataPoints = mutableListOf<LineGraphChart.DataPoint>()
+            val dataPoints = mutableListOf<DateDataPoint>()
 
             days.forEach { date ->
                 var value = values[date]?.toFloat() ?: 0f
 
                 if (dataPoints.isNotEmpty()) value += dataPoints.last().value
 
-                dataPoints.add(LineGraphChart.DataPoint(date, value))
+                dataPoints.add(DateDataPoint(date, value))
             }
 
-            binding.mAccountDetailChart.addDataPoints(dataPoints)
+            binding.mAccountDetailChart.setDataPoints(dataPoints)
         }
     }
 
