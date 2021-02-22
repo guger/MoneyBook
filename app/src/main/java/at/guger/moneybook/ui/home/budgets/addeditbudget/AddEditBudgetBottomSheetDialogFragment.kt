@@ -65,7 +65,9 @@ class AddEditBudgetBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogF
 
         binding.edtAddEditBudgetName.requestFocus()
 
-        if (args.budget != null) Handler(Looper.getMainLooper()).postDelayed({ binding.edtAddEditBudgetName.setSelection(binding.edtAddEditBudgetName.text?.length ?: 0) }, 200)
+        if (args.budget != null) Handler(Looper.getMainLooper()).postDelayed({
+            binding.edtAddEditBudgetName.setSelection(binding.edtAddEditBudgetName.text?.length ?: 0)
+        }, 200)
     }
 
     //endregion

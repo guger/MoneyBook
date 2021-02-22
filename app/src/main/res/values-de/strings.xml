@@ -156,4 +156,7 @@
     <string name="OverlayRequired">Über anderen Apps einblenden</string>
     <string name="OverlayRequiredMessage">\"Über anderen Apps einblenden\" wird benötigt, um die Schlummeroptionen einzublenden.\nÖffnen Sie die Einstellungen, um MoneyBook diese Berechtigung zu erteilen.</string>
     <string name="SnoozeDisabled">Schlummern ist aufgrund der fehlenden Berechtigung nicht verfügbar.</string>
+    <string name="MarkAsPaidToAccount">In Konto verschieben</string>
+    <string name="ChooseAccount">Konto auswählen</string>
+    <string name="OpenDetails">Details öffnen</string>
 </resources>

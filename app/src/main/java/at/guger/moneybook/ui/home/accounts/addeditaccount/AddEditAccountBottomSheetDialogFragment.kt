@@ -63,7 +63,9 @@ class AddEditAccountBottomSheetDialogFragment : BaseDataBindingBottomSheetDialog
 
         binding.edtAddEditAccountName.requestFocus()
 
-        if (args.account != null) Handler(Looper.getMainLooper()).postDelayed({ binding.edtAddEditAccountName.setSelection(binding.edtAddEditAccountName.text?.length ?: 0) }, 200)
+        if (args.account != null) Handler(Looper.getMainLooper()).postDelayed({
+            binding.edtAddEditAccountName.setSelection(binding.edtAddEditAccountName.text?.length ?: 0)
+        }, 200)
     }
 
     //endregion

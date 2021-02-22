@@ -112,7 +112,9 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         startTransition()
 
         binding.edtAddEditTransactionTitle.requestFocus()
-        if (args.transaction != null) Handler(Looper.getMainLooper()).postDelayed({ binding.edtAddEditTransactionTitle.setSelection(binding.edtAddEditTransactionTitle.text?.length ?: 0) }, 200)
+        if (args.transaction != null) Handler(Looper.getMainLooper()).postDelayed({
+            binding.edtAddEditTransactionTitle.setSelection(binding.edtAddEditTransactionTitle.text?.length ?: 0)
+        }, 200)
     }
 
     override fun onPause() {

@@ -106,7 +106,7 @@ class TransactionsRepository(database: AppDatabase) {
                 Transaction.TransactionType.EARNING, Transaction.TransactionType.EXPENSE -> throw IllegalArgumentException("Earnings and expenses must not be marked as paid.")
                 else -> Transaction(
                     entity = transaction.entity.copy(isPaid = true),
-                    contacts = transaction.contacts?.onEach { it.copy(paidState = Contact.PaidState.STATE_PAID) }
+                    contacts = transaction.contacts?.onEach { it.paidState = Contact.PaidState.STATE_PAID }
                 )
             }
         )
@@ -123,7 +123,7 @@ class TransactionsRepository(database: AppDatabase) {
                         accountId = targetAccountId,
                         type = if (transaction.type == Transaction.TransactionType.CLAIM) Transaction.TransactionType.EARNING else Transaction.TransactionType.EXPENSE
                     ),
-                    contacts = transaction.contacts?.onEach { it.copy(paidState = Contact.PaidState.STATE_PAID) }
+                    contacts = transaction.contacts?.onEach { it.paidState = Contact.PaidState.STATE_PAID }
                 )
             }
         )

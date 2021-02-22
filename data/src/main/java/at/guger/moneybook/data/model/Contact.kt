@@ -41,7 +41,7 @@ data class Contact(
     @ColumnInfo(name = Database.Contacts.COL_CONTACT_ID) val contactId: Long = -1,
     @ColumnInfo(name = Database.Contacts.COL_CONTACT_NAME) val contactName: String = "",
     @ColumnInfo(name = Database.Contacts.COL_TRANSACTION_ID) var transactionId: Long = -1,
-    @ColumnInfo(name = Database.Contacts.COL_PAID_STATE) @PaidState val paidState: Int = PaidState.STATE_NOT_PAID
+    @ColumnInfo(name = Database.Contacts.COL_PAID_STATE) @PaidState var paidState: Int = PaidState.STATE_NOT_PAID
 ) : Model {
 
     override fun equals(other: Any?): Boolean {

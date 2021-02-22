@@ -74,7 +74,4 @@ interface BookEntryDao {
     suspend fun delete(bookEntry: BookEntry) {
         delete(bookEntry.entity)
     }
-
-    companion object {
-    }
 }

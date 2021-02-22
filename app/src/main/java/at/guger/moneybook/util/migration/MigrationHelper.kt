@@ -19,7 +19,6 @@ package at.guger.moneybook.util.migration
 import android.Manifest
 import android.content.Context
 import at.guger.moneybook.core.util.ext.hasPermission
-import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
