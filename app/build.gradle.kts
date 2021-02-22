@@ -126,6 +126,7 @@ dependencies {
     implementation(Libs.MaterialCab)
     implementation(Libs.MaterialDialogsCore)
     implementation(Libs.MaterialDialogsColor)
+
     implementation(Libs.CalcDialog)
     implementation(Libs.IconDialog)
     implementation(Libs.RecurPicker)

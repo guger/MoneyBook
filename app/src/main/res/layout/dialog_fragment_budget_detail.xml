@@ -18,13 +18,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mBudgetDetailContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/item_padding">
+        android:background="?colorSurface">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mBudgetDetailTitleToolbar"
@@ -66,16 +64,18 @@
                 app:rippleColor="@{viewModel.budget.color}" />
         </androidx.appcompat.widget.Toolbar>
 
-        <at.guger.moneybook.core.ui.widget.LineGraphChart
+        <at.guger.moneybook.core.ui.widget.chart.MonthlyTrendChart
             android:id="@+id/mBudgetDetailChart"
             android:layout_width="match_parent"
             android:layout_height="@dimen/default_chart_height"
+            android:background="?colorSurface"
             android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:barColor="?attr/colorOnSurface"
             app:curveBorderColor="@{viewModel.budget.color}"
-            app:curveTopMargin="@dimen/curveTopMargin" />
-
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mBudgetDetailTitleToolbar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
 

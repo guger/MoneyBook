@@ -29,7 +29,7 @@ object AccountMenuUtils {
 
     fun prepareMenu(menu: Menu, adapter: AccountsAdapter) {
         menu.findItem(R.id.actionAccountEdit).isVisible = adapter.checkedCount == 1
-        menu.findItem(R.id.actionAccountDelete).isVisible = adapter.itemCount > 1
+        menu.findItem(R.id.actionAccountDelete).isVisible = adapter.itemCount - adapter.checkedCount >= 1
     }
 
     fun onItemSelected(item: MenuItem, adapter: AccountsAdapter, editAction: (Account) -> Unit, deleteAction: (Array<Account>) -> Unit): Boolean {

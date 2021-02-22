@@ -16,11 +16,10 @@
 
 <resources>
 
-    <declare-styleable name="LineGraphChart">
-        <attr name="barColor" format="color"/>
-        <attr name="curveBorderColor" format="color"/>
-        <attr name="curveFillColor" format="color"/>
-        <attr name="curveTopMargin" format="dimension"/>
+    <declare-styleable name="MonthlyTrendChart">
+        <attr name="barColor" format="color" />
+        <attr name="curveBorderColor" format="color" />
+        <attr name="curveFillColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="StrokePieChart">
@@ -36,9 +35,9 @@
     </declare-styleable>
 
     <declare-styleable name="ScrollableTab">
-        <attr name="selectedColor" format="color"/>
-        <attr name="unSelectedColor" format="color"/>
-        <attr name="tabTextAppearance" format="reference"/>
+        <attr name="selectedColor" format="color" />
+        <attr name="unSelectedColor" format="color" />
+        <attr name="tabTextAppearance" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="VerticalProgressBar">
