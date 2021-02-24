@@ -25,8 +25,8 @@ object Versions {
         const val Major = 2
         const val Minor = 0
         const val Patch = 0
-        const val Release = 0
-        const val Beta = 20
+        const val Release = 1
+        const val Beta = 0
         const val Dev = 0
 
         fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev()
