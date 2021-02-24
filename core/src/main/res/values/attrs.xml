@@ -20,6 +20,8 @@
         <attr name="barColor" format="color" />
         <attr name="curveBorderColor" format="color" />
         <attr name="curveFillColor" format="color" />
+        <attr name="limit" format="float" />
+        <attr name="limitText" format="string" />
     </declare-styleable>
 
     <declare-styleable name="StrokePieChart">

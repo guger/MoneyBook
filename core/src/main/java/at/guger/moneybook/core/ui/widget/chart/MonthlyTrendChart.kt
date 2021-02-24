@@ -18,14 +18,17 @@ package at.guger.moneybook.core.ui.widget.chart
 
 import android.content.Context
 import android.graphics.*
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import at.guger.moneybook.core.R
 import at.guger.moneybook.core.util.ext.dp
+import at.guger.moneybook.core.util.ext.sp
 import kotlinx.coroutines.Job
 import java.time.DayOfWeek
+import kotlin.math.max
 
 class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 
@@ -38,15 +41,26 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
     private val conPoints1 = mutableListOf<PointF>()
     private val conPoints2 = mutableListOf<PointF>()
 
+    private var limit: Float
+    private var limitText: String
+    private var scaledLimit: Float = 0.0f
+
     private val barWidth = context.dp(BAR_WIDTH)
-    private val topMargin = CURVE_TOP_MARGIN
-    private val bottomMargin = CURVE_BOTTOM_MARGIN
+    private val topMargin = context.dp(CURVE_TOP_MARGIN)
+    private val bottomMargin = context.dp(CURVE_BOTTOM_MARGIN)
+
+    private val strokeLength = context.dp(STROKE_LENGTH)
+    private val spaceLength = context.dp(SPACE_LENGTH)
+    private val limitTextSize = context.sp(LIMIT_TEXT_SIZE)
 
     private val curvePath = Path()
+    private val limitPath = Path()
     private val fillPath = Path()
 
     private val barPaint: Paint
     private val curvePaint: Paint
+    private val limitPaint: Paint
+    private val limitTextPaint: Paint
     private val fillPaint: Paint
 
     private var job: Job? = null
@@ -62,6 +76,8 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
 
         val barColor = ta.getColor(R.styleable.MonthlyTrendChart_barColor, Color.WHITE)
         val borderColor = ta.getColor(R.styleable.MonthlyTrendChart_curveBorderColor, Color.BLACK)
+        limit = ta.getFloat(R.styleable.MonthlyTrendChart_limit, 0.0f)
+        limitText = ta.getString(R.styleable.MonthlyTrendChart_limitText) ?: limit.toString()
 
         ta.recycle()
 
@@ -74,9 +90,22 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
 
         curvePaint = Paint().apply {
             isAntiAlias = true
-            color = borderColor
+            color = ColorUtils.setAlphaComponent(borderColor, LIMIT_ALPHA)
             strokeWidth = context.dp(CURVE_BORDER_WIDTH)
             style = Paint.Style.STROKE
+        }
+
+        limitPaint = Paint().apply {
+            isAntiAlias = true
+            color = ColorUtils.setAlphaComponent(borderColor, LIMIT_ALPHA)
+            strokeWidth = context.dp(LIMIT_BORDER_WIDTH)
+            style = Paint.Style.STROKE
+        }
+
+        limitTextPaint = TextPaint().apply {
+            isAntiAlias = true
+            color = ColorUtils.setAlphaComponent(borderColor, LIMIT_ALPHA)
+            textSize = limitTextSize
         }
 
         fillPaint = Paint().apply {
@@ -111,6 +140,11 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
 
         canvas?.drawPath(curvePath, curvePaint)
         canvas?.drawPath(fillPath, fillPaint)
+
+        if (limit > 0.0f) {
+            canvas?.drawPath(limitPath, limitPaint)
+            canvas?.drawText(limitText, limitTextSize / 2, scaledLimit - limitTextSize / 2, limitTextPaint)
+        }
     }
 
     //endregion
@@ -118,7 +152,7 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
     //region Methods
 
     fun setDataPoints(dataPoints: List<DateDataPoint>) {
-        val min = dataPoints.minByOrNull { it.value }?.value.takeIf { it != dataPoints.maxByOrNull { it.value }?.value }
+        val min = dataPoints.minByOrNull { it.value }?.value.takeIf { value -> value != dataPoints.maxByOrNull { it.value }?.value }
 
         val positiveDataPoints: List<DateDataPoint> = if (min != null) {
             List(dataPoints.size) { i -> DateDataPoint(dataPoints[i].date, dataPoints[i].value - min) }
@@ -139,7 +173,17 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
 
     fun setCurveBorderColor(@ColorInt color: Int) {
         curvePaint.color = color
+        limitPaint.color = ColorUtils.setAlphaComponent(color, LIMIT_ALPHA)
+        limitTextPaint.color = ColorUtils.setAlphaComponent(color, LIMIT_ALPHA)
         fillPaint.color = ColorUtils.setAlphaComponent(color, FILL_ALPHA)
+    }
+
+    fun setLimit(limit: Double) {
+        this.limit = limit.toFloat()
+    }
+
+    fun setLimitText(limitText: String) {
+        this.limitText = limitText
     }
 
     private fun computePoints(): Boolean {
@@ -151,7 +195,7 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
 
         val graphHeight = largeBarHeight - (topMargin + bottomMargin)
 
-        val maxValue: Float = data.maxByOrNull { it.value }!!.value
+        val maxValue: Float = max(data.maxByOrNull { it.value }!!.value, limit)
 
         val tempData = data.toMutableList()
 
@@ -178,6 +222,8 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
                 conPoints2.add(PointF((points[i - 1].x + points[i].x) / 2, points[i].y))
             }
         }
+
+        scaledLimit = graphHeight + topMargin - limit / maxValue * graphHeight
 
         return true
     }
@@ -220,17 +266,40 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
             lineTo(width.toFloat(), height.toFloat())
             lineTo(0.0f, height.toFloat())
         }
+
+        if (limit > 0.0f) {
+            val sequenceLength = strokeLength + spaceLength
+
+            with(limitPath) {
+                reset()
+
+                moveTo(0.0f, scaledLimit)
+
+                for (i in 0 until (width / sequenceLength + 1).toInt()) {
+
+                    lineTo(i * sequenceLength + strokeLength, scaledLimit)
+                    moveTo((i + 1) * sequenceLength, scaledLimit)
+                }
+            }
+        }
     }
 
     //endregion
 
     companion object {
-        const val FILL_ALPHA = 25
+        const val FILL_ALPHA = 35
+        const val LIMIT_ALPHA = 175
 
         const val BAR_WIDTH = 0.5f
         const val CURVE_BORDER_WIDTH = 3.5f
+        const val LIMIT_BORDER_WIDTH = 0.75f
 
-        private const val CURVE_TOP_MARGIN = 36.0f
-        private const val CURVE_BOTTOM_MARGIN = 48.0f
+        const val LIMIT_TEXT_SIZE = 12.0f
+
+        const val STROKE_LENGTH = 7.5f
+        const val SPACE_LENGTH = 2.0f
+
+        private const val CURVE_TOP_MARGIN = 18.0f
+        private const val CURVE_BOTTOM_MARGIN = 24.0f
     }
 }

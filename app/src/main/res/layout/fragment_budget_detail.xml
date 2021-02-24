@@ -54,7 +54,10 @@
             android:layout_height="@dimen/default_chart_height"
             android:background="?colorSurface"
             android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:curveBorderColor="@{viewModel.budget.color}" />
+            app:curveBorderColor="@{viewModel.budget.color}"
+            app:limit="@{viewModel.budget.budget}"
+            app:limitText="@{CurrencyFormat.format(viewModel.budget.budget)}" />
+
 
         <at.guger.moneybook.core.ui.widget.ScrollableTab
             android:id="@+id/mBudgetDetailTabs"
@@ -77,6 +80,8 @@
     <data>
 
         <import type="android.view.View" />
+
+        <import type="at.guger.moneybook.util.CurrencyFormat" />
 
         <variable
             name="viewModel"

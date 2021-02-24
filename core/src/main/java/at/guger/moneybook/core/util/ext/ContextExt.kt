@@ -21,6 +21,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_DIP
+import android.util.TypedValue.COMPLEX_UNIT_SP
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
@@ -35,6 +36,17 @@ import androidx.core.content.ContextCompat
  */
 fun Context.dp(value: Float): Float {
     return TypedValue.applyDimension(COMPLEX_UNIT_DIP, value, resources.displayMetrics)
+}
+
+/**
+ * Converts the given (sp) value to pixels.
+ *
+ * @param value The value in sp.
+ *
+ * @return The given value converted to pixels.
+ */
+fun Context.sp(value: Float): Float {
+    return TypedValue.applyDimension(COMPLEX_UNIT_SP, value, resources.displayMetrics)
 }
 
 /**

@@ -74,12 +74,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mBudgetDetailTitleToolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/mBudgetDetailTitleToolbar"
+            app:limit="@{viewModel.budget.budget}"
+            app:limitText="@{CurrencyFormat.format(viewModel.budget.budget)}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
 
         <import type="android.view.View" />
+
+        <import type="at.guger.moneybook.util.CurrencyFormat" />
 
         <variable
             name="viewModel"
