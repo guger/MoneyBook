@@ -127,7 +127,10 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-                getAppCompatActivity<MainActivity>()?.invalidateOptionsMenu()
+                getAppCompatActivity<MainActivity>()?.apply {
+                    invalidateOptionsMenu()
+                    destroyCab()
+                }
             }
         })
 
