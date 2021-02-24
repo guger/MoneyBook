@@ -118,7 +118,7 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
     //region Methods
 
     fun setDataPoints(dataPoints: List<DateDataPoint>) {
-        val min = dataPoints.minByOrNull { it.value }?.value
+        val min = dataPoints.minByOrNull { it.value }?.value.takeIf { it != dataPoints.maxByOrNull { it.value }?.value }
 
         val positiveDataPoints: List<DateDataPoint> = if (min != null) {
             List(dataPoints.size) { i -> DateDataPoint(dataPoints[i].date, dataPoints[i].value - min) }
@@ -153,15 +153,20 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
 
         val maxValue: Float = data.maxByOrNull { it.value }!!.value
 
-        val xStep: Float = width.toFloat() / (data.size - 1)
+        val tempData = data.toMutableList()
 
-        for (i in 0 until data.size) {
+        tempData.add(0, data.first())
+        tempData.add(data.last())
+
+        val xStep: Float = width.toFloat() / (tempData.size - 1)
+
+        for (i in 0 until tempData.size) {
             val xVal = i * xStep
-            val yVal = graphHeight + topMargin - data[i].value / maxValue * graphHeight
+            val yVal = graphHeight + topMargin - tempData[i].value / maxValue * graphHeight
 
             points.add(PointF(xVal, yVal))
 
-            if (i == 0 || i == data.size - 1) points.add(PointF(xVal, yVal))
+            if (i == 0 || i == tempData.size - 1) points.add(PointF(xVal, yVal))
         }
 
         for (i in 0 until points.size) {
