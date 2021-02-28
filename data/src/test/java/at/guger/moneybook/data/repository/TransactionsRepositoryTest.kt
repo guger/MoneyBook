@@ -39,7 +39,7 @@ import java.time.LocalDate
  * Test class for [TransactionsRepository].
  */
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.P])
+@Config(sdk = [Build.VERSION_CODES.R])
 class TransactionsRepositoryTest : DatabaseTest() {
 
     @get:Rule

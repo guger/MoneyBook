@@ -18,6 +18,7 @@ package at.guger.moneybook.data.repository
 
 import android.graphics.Color
 import android.os.Build
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Budget
@@ -25,6 +26,7 @@ import at.guger.moneybook.data.util.observeOnce
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -33,8 +35,11 @@ import org.robolectric.annotation.Config
  * Test class for [BudgetsRepository].
  */
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.P])
+@Config(sdk = [Build.VERSION_CODES.R])
 class BudgetsRepositoryTest : DatabaseTest() {
+
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var repository: BudgetsRepository
 
@@ -49,7 +54,7 @@ class BudgetsRepositoryTest : DatabaseTest() {
 
         repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(BUDGET)
+            assertThat(it.first() == BUDGET)
         }
     }
 
@@ -59,14 +64,14 @@ class BudgetsRepositoryTest : DatabaseTest() {
 
         repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(BUDGET)
+            assertThat(it.first() == BUDGET)
         }
 
         repository.update(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, Color.RED))
 
         repository.getBudgets().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, Color.RED))
+            assertThat(it.first() == Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, Color.RED))
         }
     }
 
@@ -74,15 +79,10 @@ class BudgetsRepositoryTest : DatabaseTest() {
     fun testDeleteAccount() = runBlocking {
         repository.insert(BUDGET)
 
-        repository.getBudgets().observeOnce {
-            assertThat(it).hasSize(1)
-            assertThat(it).contains(BUDGET)
-        }
+        repository.getBudgets().observeOnce { assertThat(it).isNotEmpty() }
         repository.delete(BUDGET)
 
-        repository.getBudgets().observeOnce {
-            assertThat(it).isEmpty()
-        }
+        repository.getBudgets().observeOnce { assertThat(it).isEmpty() }
     }
 
     companion object {

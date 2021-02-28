@@ -17,6 +17,7 @@
 package at.guger.moneybook.data.repository
 
 import android.os.Build
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Account
@@ -24,6 +25,7 @@ import at.guger.moneybook.data.util.observeOnce
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -32,8 +34,11 @@ import org.robolectric.annotation.Config
  * Test class for [AccountsRepository].
  */
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.P])
+@Config(sdk = [Build.VERSION_CODES.R])
 class AccountsRepositoryTest : DatabaseTest() {
+
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var repository: AccountsRepository
 
@@ -48,7 +53,7 @@ class AccountsRepositoryTest : DatabaseTest() {
 
         repository.getObservableAccounts().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(ACCOUNT)
+            assertThat(it.first() == ACCOUNT)
         }
     }
 
@@ -56,13 +61,13 @@ class AccountsRepositoryTest : DatabaseTest() {
     fun testUpdateAccount() = runBlocking {
         repository.insert(ACCOUNT)
 
-        repository.getObservableAccounts().observeOnce { assertThat(it).contains(ACCOUNT) }
+        repository.getObservableAccounts().observeOnce { assertThat(it).hasSize(1) }
 
         repository.update(Account(id = ACCOUNT.id, name = UPDATED_ACCOUNT_NAME))
 
         repository.getObservableAccounts().observeOnce {
             assertThat(it).hasSize(1)
-            assertThat(it).contains(Account(id = ACCOUNT.id, name = UPDATED_ACCOUNT_NAME))
+            assertThat(it.first() == Account(id = ACCOUNT.id, name = UPDATED_ACCOUNT_NAME))
         }
     }
 

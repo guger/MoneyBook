@@ -59,7 +59,7 @@ object Versions {
 
     object Test {
         const val JUnit = "4.13.1"
-        const val Robolectric = "4.4"
+        const val Robolectric = "4.5.1"
         const val Truth = "1.0"
 
         object AndroidX {
@@ -70,7 +70,7 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.4.21"
+        const val Common = "1.4.31"
         const val Coroutines = "1.4.1"
     }
 
@@ -86,15 +86,15 @@ object Versions {
     }
 
     object AndroidX {
-        const val Core = "1.5.0-beta01"
+        const val Core = "1.5.0-beta02"
         const val AppCompat = "1.2.0"
-        const val Annotation = "1.2.0-beta01"
+        const val Annotation = "1.2.0-rc01"
         const val Fragment = "1.3.0"
         const val Preference = "1.1.1"
-        const val Biometric = "1.2.0-alpha02"
+        const val Biometric = "1.2.0-alpha03"
         const val ViewPager2 = "1.0.0"
         const val ConstraintLayout = "2.0.4"
-        const val RecyclerView = "1.2.0-beta01"
+        const val RecyclerView = "1.2.0-beta02"
         const val CardView = "1.0.0"
     }
 
@@ -105,7 +105,7 @@ object Versions {
     object Arch {
         const val Lifecycle = "2.3.0"
         const val Navigation = "2.3.3"
-        const val Room = "2.3.0-beta01"
+        const val Room = "2.3.0-beta02"
         const val Work = "2.5.0"
     }
 
