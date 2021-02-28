@@ -110,7 +110,6 @@ object Versions {
     }
 
     object Libraries {
-        const val Assent = "3.0.0-RC4"
         const val MaterialCab = "2.0.1"
         const val MaterialDialogs = "3.3.0"
 

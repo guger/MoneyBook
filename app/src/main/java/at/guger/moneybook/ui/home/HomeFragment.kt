@@ -32,7 +32,6 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
-import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.databinding.FragmentHomeBinding
 import at.guger.moneybook.ui.home.accounts.AccountsFragment
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
@@ -41,9 +40,6 @@ import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.DataUtils
-import com.afollestad.assent.Permission
-import com.afollestad.assent.askForPermissions
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -84,8 +80,6 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
         setupLayout()
 
         setupEventListeners()
-
-        requestPermissions()
     }
 
     //endregion
@@ -170,21 +164,6 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
         viewModel.showBudget.observe(viewLifecycleOwner, EventObserver { budgetId ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBudgetDetailBottomSheetFragment(budgetId))
         })
-    }
-
-    private fun requestPermissions() {
-        askForPermissions(
-            Permission.READ_CONTACTS,
-            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
-                onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
-            }
-        ) {
-            if (!it.isAllGranted()) {
-                Snackbar.make(binding.fabHomeAddTransaction, R.string.ContactsPermissionDenied, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.Retry) { requestPermissions() }
-                    .show()
-            }
-        }
     }
 
     //endregion

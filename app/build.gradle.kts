@@ -120,8 +120,6 @@ dependencies {
 
     work()
 
-    implementation(Libs.AssentCore)
-    implementation(Libs.AssentRationales)
     implementation(Libs.ViewPagerDots)
     implementation(Libs.MaterialCab)
     implementation(Libs.MaterialDialogsCore)

@@ -27,14 +27,14 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import at.guger.moneybook.R
+import at.guger.moneybook.core.permission.Permission
+import at.guger.moneybook.core.permission.PermissionManager
+import at.guger.moneybook.core.permission.RationaleInfo
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
-import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.data.provider.legacy.model.Category
 import at.guger.moneybook.databinding.FragmentOnboardingBinding
 import at.guger.moneybook.util.migration.MigrationHelper
-import com.afollestad.assent.Permission
-import com.afollestad.assent.askForPermissions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -48,6 +48,8 @@ import org.koin.android.ext.android.inject
 class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() {
 
     //region Variables
+
+    private val permissionManager = PermissionManager.from(this)
 
     private val preferences: Preferences by inject()
 
@@ -81,17 +83,19 @@ class OnBoardingFragment : BaseViewBindingFragment<FragmentOnboardingBinding>() 
     private fun navigateToHomeOrMigrate() {
         val migrate = MigrationHelper.needMigration(requireContext())
 
-        askForPermissions(Permission.READ_CONTACTS,
-            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
-                onPermission(Permission.READ_CONTACTS, if (migrate) R.string.ContactsPermissionNeededMigration else R.string.ContactsPermissionNeeded)
+        permissionManager.requestPermission(Permission.CONTACTS,
+            info = RationaleInfo(
+                titleRes = R.string.ContactsPermission,
+                messageRes = if (migrate) R.string.ContactsPermissionNeededMigration else R.string.ContactsPermissionNeeded
+            ),
+            callback = { _, _ ->
+                if (migrate) {
+                    startMigration()
+                } else {
+                    close()
+                }
             }
-        ) {
-            if (migrate) {
-                startMigration()
-            } else {
-                close()
-            }
-        }
+        )
     }
 
     private fun startMigration() {
