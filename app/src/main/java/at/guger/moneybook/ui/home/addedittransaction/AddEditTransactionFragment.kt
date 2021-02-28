@@ -18,6 +18,7 @@ package at.guger.moneybook.ui.home.addedittransaction
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -37,6 +38,9 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
+import at.guger.moneybook.core.permission.Permission
+import at.guger.moneybook.core.permission.PermissionManager
+import at.guger.moneybook.core.permission.RationaleInfo
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.shape.BottomAppBarCutCornersTopEdge
 import at.guger.moneybook.core.ui.transition.MaterialContainerTransition
@@ -45,16 +49,15 @@ import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.core.util.ext.toLocalDate
 import at.guger.moneybook.core.util.ext.utcMillis
-import at.guger.moneybook.core.util.permissions.MaterialAlertDialogRationale
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
 import at.guger.moneybook.util.DateFormatUtils
-import com.afollestad.assent.Permission
-import com.afollestad.assent.askForPermissions
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM
+import com.google.android.material.textfield.TextInputLayout.END_ICON_DROPDOWN_MENU
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
 import com.maltaisn.calcdialog.CalcDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -72,6 +75,8 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
     private val args by navArgs<AddEditTransactionFragmentArgs>()
 
     override val fragmentViewModel: AddEditTransactionViewModel by viewModel()
+
+    private val permissionManager = PermissionManager.from(this)
 
     //endregion
 
@@ -94,14 +99,42 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
         check(args.transaction == null || args.account == null) { "Cannot setup with account and transaction!" }
 
-        askForPermissions(
-            Permission.READ_CONTACTS,
-            rationaleHandler = MaterialAlertDialogRationale(requireActivity(), R.string.ContactsPermission, ::askForPermissions) {
-                onPermission(Permission.READ_CONTACTS, R.string.ContactsPermissionNeeded)
+        permissionManager.checkPermission(Permission.CONTACTS, callback = { isAllGranted, _ ->
+            if (isAllGranted) {
+                fragmentViewModel.loadContacts()
+            } else {
+                binding.tilAddEditTransactionContacts.apply {
+                    setEndIconDrawable(R.drawable.ic_contacts_permission)
+                    endIconMode = END_ICON_CUSTOM
+
+                    setEndIconOnClickListener {
+                        permissionManager.requestPermission(Permission.CONTACTS,
+                            info = RationaleInfo(
+                                titleRes = R.string.ContactsPermission,
+                                messageRes = R.string.ContactsPermissionNeeded
+                            ),
+                            callback = { isAllGranted, permissions ->
+                                if (isAllGranted) {
+                                    fragmentViewModel.loadContacts()
+                                } else if (permissions.any { !it.value && !it.key.requiresRationale(this@AddEditTransactionFragment) }) {
+                                    MaterialAlertDialogBuilder(requireContext())
+                                        .setTitle(R.string.ContactsPermissionPermanentlyDenied)
+                                        .setMessage(R.string.ContactsPermissionPermanentlyDeniedMessage)
+                                        .setPositiveButton(R.string.OpenSettings) { _, _ ->
+                                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                                data = Uri.fromParts("package", requireActivity().packageName, null)
+                                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                            })
+                                        }
+                                        .setNegativeButton(R.string.Close, null)
+                                        .show()
+                                }
+                            }
+                        )
+                    }
+                }
             }
-        ) {
-            if (it.isAllGranted(Permission.READ_CONTACTS)) fragmentViewModel.loadContacts()
-        }
+        })
 
         setupLayout()
         setupEvents()
@@ -148,6 +181,7 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
             }
             fragmentViewModel.addressBook.observe(viewLifecycleOwner) { contacts ->
                 edtAddEditTransactionContacts.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, contacts.values.toList()))
+                tilAddEditTransactionContacts.endIconMode = END_ICON_DROPDOWN_MENU
             }
 
             val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable
@@ -184,9 +218,9 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         })
 
         fragmentViewModel.snackBarMessage.observe(viewLifecycleOwner, EventObserver {
-            Snackbar.make(binding.mBottomAppBar, getString(it.stringRes, it.text), Snackbar.LENGTH_LONG)
-                .setAnchorView(binding.fabAddEditTransactionSave)
-                .show()
+            Snackbar.make(binding.mBottomAppBar, getString(it.stringRes, it.text), Snackbar.LENGTH_LONG).apply {
+                anchorView = binding.fabAddEditTransactionSave
+            }.show()
         })
 
         fragmentViewModel.snoozeDisabledMessage.observe(viewLifecycleOwner, EventObserver {

@@ -160,4 +160,6 @@
     <string name="MarkAsPaidToAccount">Move To Account</string>
     <string name="ChooseAccount">Choose Account</string>
     <string name="OpenDetails">Open Details</string>
+    <string name="ContactsPermissionPermanentlyDenied">Contacts Permission permanently denied</string>
+    <string name="ContactsPermissionPermanentlyDeniedMessage">The contacts permission is now permanently denied. To allow MoneyBook to read your contacts, please open the app settings.</string>
 </resources>

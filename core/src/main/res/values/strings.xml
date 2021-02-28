@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">core</string>
+    <string name="Request">Request</string>
+    <string name="Cancel">Cancel</string>
 </resources>

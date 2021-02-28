@@ -101,8 +101,6 @@ object Dependencies {
     }
 
     object Libs {
-        const val AssentCore = "com.afollestad.assent:core:${Versions.Libraries.Assent}"
-        const val AssentRationales = "com.afollestad.assent:rationales:${Versions.Libraries.Assent}"
         const val MaterialCab = "com.afollestad:material-cab:${Versions.Libraries.MaterialCab}"
         const val MaterialDialogsCore = "com.afollestad.material-dialogs:core:${Versions.Libraries.MaterialDialogs}"
         const val MaterialDialogsColor = "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"

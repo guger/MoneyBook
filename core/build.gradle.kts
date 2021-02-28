@@ -84,7 +84,4 @@ dependencies {
     navigation()
 
     work()
-
-    implementation(Libs.AssentCore)
-    implementation(Libs.AssentRationales)
 }
