@@ -24,17 +24,14 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.text.InputType
-import android.transition.Slide
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.postDelayed
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
@@ -43,7 +40,6 @@ import at.guger.moneybook.core.permission.PermissionManager
 import at.guger.moneybook.core.permission.RationaleInfo
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.shape.BottomAppBarCutCornersTopEdge
-import at.guger.moneybook.core.ui.transition.MaterialContainerTransition
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.Utils
@@ -58,6 +54,8 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM
 import com.google.android.material.textfield.TextInputLayout.END_ICON_DROPDOWN_MENU
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialContainerTransform
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
 import com.maltaisn.calcdialog.CalcDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -84,7 +82,11 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        postponeEnterTransition()
+
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            setPathMotion(MaterialArcMotion())
+            duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+        }
     }
 
     override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): FragmentAddEditTransactionBinding {
@@ -141,8 +143,6 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
         args.transaction?.let { fragmentViewModel.setupTransaction(it) }
         args.account?.let { fragmentViewModel.setupAccount(it) }
-
-        startTransition()
 
         binding.edtAddEditTransactionTitle.requestFocus()
         if (args.transaction != null) Handler(Looper.getMainLooper()).postDelayed({
@@ -228,32 +228,6 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         })
 
         fragmentViewModel.transactionSaved.observe(viewLifecycleOwner) { findNavController().navigateUp() }
-    }
-
-    private fun startTransition() {
-        enterTransition = if (args.transitionViewResId >= 0) {
-            MaterialContainerTransition(
-                correctForZOrdering = true
-            ).apply {
-                setSharedElementViews(
-                    requireActivity().findViewById(args.transitionViewResId),
-                    binding.mAddEditTransactionContainer
-                )
-                duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
-                interpolator = FastOutSlowInInterpolator()
-            }
-        } else {
-            Slide().apply {
-                duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
-                interpolator = FastOutSlowInInterpolator()
-            }
-        }
-
-        returnTransition = Slide().apply {
-            duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
-            interpolator = AccelerateInterpolator()
-        }
-        startPostponedEnterTransition()
     }
 
     private fun showDatePicker(selectedDate: LocalDate) {

@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?colorSurface"
+        android:transitionName="shared_element_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -147,11 +148,11 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="4dp"
-                    app:layout_goneMarginEnd="8dp"
                     android:visibility="@{viewModel.accountsInputVisibility}"
                     app:layout_constraintEnd_toStartOf="@+id/tilAddEditTransactionBudget"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mAddEditTransactionTypeToggleButtonGroup"
+                    app:layout_goneMarginEnd="8dp"
                     tools:visibility="visible">
 
                     <AutoCompleteTextView

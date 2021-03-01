@@ -50,11 +50,6 @@
             app:argType="at.guger.moneybook.data.model.Account"
             app:nullable="true" />
 
-        <argument
-            android:name="transitionViewResId"
-            android:defaultValue="-1"
-            app:argType="integer" />
-
         <deepLink
             android:id="@+id/deepLink"
             app:uri="moneybook://add_transaction" />

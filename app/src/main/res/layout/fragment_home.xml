@@ -54,7 +54,6 @@
             app:tabTextColor="@color/tab_highlight_selector" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabHomeAddTransaction"
         android:layout_width="wrap_content"
@@ -66,6 +65,7 @@
         android:contentDescription="@string/AddTransaction"
         android:focusable="true"
         android:src="@drawable/ic_add"
+        android:transitionName="shared_element_container"
         app:layout_anchor="@+id/mHomeConstraintLayout"
         app:layout_anchorGravity="bottom|end"
         app:tint="?colorOnPrimary" />

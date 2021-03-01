@@ -88,6 +88,7 @@
             android:focusable="true"
             android:onClick="@{() -> viewModel.showAddEditTransactionDialogFragment()}"
             android:src="@drawable/ic_add"
+            android:transitionName="shared_element_container"
             app:layout_anchor="@+id/mAccountDetailViewPager"
             app:layout_anchorGravity="bottom|end"
             app:layout_behavior="at.guger.moneybook.core.ui.behaviour.ScrollAwareFloatingActionButtonBehaviour"

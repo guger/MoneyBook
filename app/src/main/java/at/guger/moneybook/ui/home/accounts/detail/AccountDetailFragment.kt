@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -132,12 +133,8 @@ class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBindi
 
     private fun setupEvents() {
         fragmentViewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->
-            findNavController().navigate(
-                AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(
-                    account = account,
-                    transitionViewResId = R.id.fabAccountDetailAddTransaction
-                )
-            )
+            val extras = FragmentNavigatorExtras(binding.fabAccountDetailAddTransaction to "shared_element_container")
+            findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(account = account), extras)
         })
     }
 

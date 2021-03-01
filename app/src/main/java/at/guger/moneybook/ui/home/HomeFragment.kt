@@ -25,6 +25,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -34,7 +35,6 @@ import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
 import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.databinding.FragmentHomeBinding
 import at.guger.moneybook.ui.home.accounts.AccountsFragment
-import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
 import at.guger.moneybook.ui.home.budgets.BudgetsFragment
 import at.guger.moneybook.ui.home.dues.DuesFragment
 import at.guger.moneybook.ui.home.overview.OverviewFragment
@@ -137,11 +137,8 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
         }.attach()
 
         binding.fabHomeAddTransaction.setOnClickListener {
-            findNavController().navigate(
-                AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(
-                    transitionViewResId = R.id.fabHomeAddTransaction
-                )
-            )
+            val extras = FragmentNavigatorExtras(binding.fabHomeAddTransaction to "shared_element_container")
+            findNavController().navigate(R.id.addEditTransactionFragment, null, null, extras)
         }
     }
 
