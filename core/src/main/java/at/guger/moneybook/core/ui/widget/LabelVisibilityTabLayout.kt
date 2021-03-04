@@ -25,6 +25,12 @@ import com.google.android.material.tabs.TabLayout
  */
 class LabelVisibilityTabLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : TabLayout(context, attrs, defStyleAttr) {
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+
+        updateLabelVisibility()
+    }
+
     override fun selectTab(tab: Tab?, updateIndicator: Boolean) {
         super.selectTab(tab, updateIndicator)
 

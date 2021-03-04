@@ -51,6 +51,7 @@
                     android:id="@+id/mAccountsPieChart"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_chart_height"
+                    android:layout_marginTop="@dimen/recyclerview_item_spacing"
                     app:accounts="@{viewModel.accounts}"
                     app:bold="true"
                     app:fontResId="@font/eczar_regular"

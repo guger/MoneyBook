@@ -128,6 +128,8 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
             setDataPoints(data)
 
             waitingForSizeConfirmation = false
+        } else if (points.isNotEmpty()) {
+            computePoints()
         }
     }
 

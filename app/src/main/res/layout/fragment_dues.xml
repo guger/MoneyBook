@@ -52,6 +52,7 @@
                     android:id="@+id/mDuesPieChart"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_chart_height"
+                    android:layout_marginTop="@dimen/recyclerview_item_spacing"
                     app:bold="true"
                     app:dues="@{viewModel.claimsAndDebts}"
                     app:fontResId="@font/eczar_regular"
