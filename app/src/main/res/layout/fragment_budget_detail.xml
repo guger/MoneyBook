@@ -18,12 +18,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mBudgetDetailContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:orientation="vertical">
+        android:background="@color/colorBackground">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mBudgetDetailTitleToolbar"
@@ -53,29 +52,36 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/default_chart_height"
             android:background="?colorSurface"
-            android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
             app:curveBorderColor="@{viewModel.budget.color}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mBudgetDetailTitleToolbar"
             app:limit="@{viewModel.budget.budget}"
             app:limitText="@{CurrencyFormat.format(viewModel.budget.budget)}" />
-
 
         <at.guger.moneybook.core.ui.widget.ScrollableTab
             android:id="@+id/mBudgetDetailTabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorSurface"
-            android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mBudgetDetailChart"
             app:selectedColor="?attr/colorOnSurface"
             app:tabTextAppearance="?attr/textAppearanceButton"
             app:unSelectedColor="@color/colorOnSurface" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mBudgetDetailViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mBudgetDetailTabs" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
 

@@ -72,20 +72,20 @@ class BudgetDetailFragment : BaseDataBindingFragment<FragmentBudgetDetailBinding
     //region Methods
 
     private fun setupLayout() {
-        fragmentViewModel.transactionMonths.observe(viewLifecycleOwner) {
-            months = it
+        fragmentViewModel.transactionMonths.observe(viewLifecycleOwner) { dates ->
+            months = dates.takeIf { it.isNotEmpty() } ?: listOf(LocalDate.now().withDayOfMonth(1))
 
             binding.mBudgetDetailViewPager.adapter = object : FragmentStateAdapter(this) {
                 override fun createFragment(position: Int): Fragment {
-                    return BudgetDetailMonthlyFragment.instantiate(args.budgetId, it[position])
+                    return BudgetDetailMonthlyFragment.instantiate(args.budgetId, months[position])
                 }
 
-                override fun getItemCount(): Int = it.size
+                override fun getItemCount(): Int = months.size
             }
 
             binding.mBudgetDetailTabs.addTabs(
-                it.map { date -> monthYearDateFormatter.format(date) },
-                it.indexOf(it.findLast { date ->
+                months.map { date -> monthYearDateFormatter.format(date) },
+                months.indexOf(months.findLast { date ->
                     val now = LocalDate.now()
 
                     return@findLast date.isBefore(now) || date.isEqual(now)

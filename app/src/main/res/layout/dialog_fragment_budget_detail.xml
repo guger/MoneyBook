@@ -59,9 +59,11 @@
                 android:paddingEnd="6dp"
                 android:text="@string/OpenDetails"
                 android:textColor="@{viewModel.budget.color}"
+                android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:icon="@drawable/ic_open_details"
                 app:iconTint="@{viewModel.budget.color}"
-                app:rippleColor="@{viewModel.budget.color}" />
+                app:rippleColor="@{viewModel.budget.color}"
+                tools:visibility="visible" />
         </androidx.appcompat.widget.Toolbar>
 
         <at.guger.moneybook.core.ui.widget.chart.MonthlyTrendChart
@@ -69,7 +71,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/default_chart_height"
             android:background="?colorSurface"
-            android:visibility="@{viewModel.transactions.size() > 0 ? View.VISIBLE : View.GONE}"
             app:curveBorderColor="@{viewModel.budget.color}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
