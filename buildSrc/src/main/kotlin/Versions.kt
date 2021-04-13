@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "4.2.0-beta05"
+    const val Gradle = "7.0.0-alpha14"
 
     const val KOIN = "2.2.2"
 
