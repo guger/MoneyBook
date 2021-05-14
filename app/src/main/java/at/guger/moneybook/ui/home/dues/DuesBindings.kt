@@ -31,8 +31,8 @@ import kotlin.math.max
 
 @BindingAdapter("dues")
 fun StrokePieChart.setDues(dues: List<Transaction>?) {
-    val claimsSum = dues?.filter { !it.isPaid && it.type == Transaction.TransactionType.CLAIM }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
-    val debtsSum = dues?.filter { !it.isPaid && it.type == Transaction.TransactionType.DEBT }?.sumByDouble { it.value * max(it.contacts.size(), 1) } ?: 0.0
+    val claimsSum = dues?.filter { !it.isPaid && it.type == Transaction.TransactionType.CLAIM }?.sumOf { it.value * max(it.contacts.size(), 1) } ?: 0.0
+    val debtsSum = dues?.filter { !it.isPaid && it.type == Transaction.TransactionType.DEBT }?.sumOf { it.value * max(it.contacts.size(), 1) } ?: 0.0
 
     setEntries(
         arrayListOf(

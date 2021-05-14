@@ -19,7 +19,6 @@ package at.guger.moneybook.util
 import android.content.Context
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import java.text.NumberFormat
@@ -27,7 +26,6 @@ import java.text.NumberFormat
 /**
  * Formatter for currency instances.
  */
-@KoinApiExtension
 object CurrencyFormat : KoinComponent {
 
     private val currencyFormatShort = NumberFormat.getCurrencyInstance().apply {

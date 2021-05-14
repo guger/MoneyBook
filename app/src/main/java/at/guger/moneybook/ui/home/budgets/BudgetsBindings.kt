@@ -31,8 +31,8 @@ import at.guger.moneybook.util.CurrencyFormat
 fun StrokePieChart.setBudgets(budgets: List<BudgetWithBalance>) {
     val entries = ArrayList<StrokePieChart.Entry>()
 
-    val leftSum = budgets.sumByDouble { it.budget - it.balance }
-    val budgetSum = budgets.sumByDouble { it.budget }
+    val leftSum = budgets.sumOf { it.budget - it.balance }
+    val budgetSum = budgets.sumOf { it.budget }
 
     budgets.forEach { budget ->
         if (budget.balance > 0.0) entries.add(StrokePieChart.Entry(budget.balance.toFloat(), budget.color))
