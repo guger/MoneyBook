@@ -29,7 +29,7 @@ import at.guger.moneybook.util.CurrencyFormat
 fun StrokePieChart.setAccounts(accounts: List<AccountWithBalance>) {
     val entries = ArrayList<StrokePieChart.Entry>()
 
-    val balanceSum = accounts.sumByDouble { it.balance + it.startBalance }
+    val balanceSum = accounts.sumOf { it.balance + it.startBalance }
 
     accounts.forEach {
         entries.add(

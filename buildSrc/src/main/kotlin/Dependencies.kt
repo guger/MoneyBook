@@ -57,10 +57,8 @@ object Dependencies {
     }
 
     object Koin {
-        const val Android = "org.koin:koin-android:${Versions.KOIN}"
-        const val Scope = "org.koin:koin-androidx-scope:${Versions.KOIN}"
-        const val ViewModel = "org.koin:koin-androidx-viewmodel:${Versions.KOIN}"
-        const val WorkManager = "org.koin:koin-androidx-workmanager:${Versions.KOIN}"
+        const val Android = "io.insert-koin:koin-android:${Versions.KOIN}"
+        const val WorkManager = "io.insert-koin:koin-androidx-workmanager:${Versions.KOIN}"
     }
 
     object Firebase {
@@ -105,7 +103,7 @@ object Dependencies {
         const val MaterialDialogsCore = "com.afollestad.material-dialogs:core:${Versions.Libraries.MaterialDialogs}"
         const val MaterialDialogsColor = "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"
 
-        const val ViewPagerDots = "com.tbuonomo.andrui:viewpagerdotsindicator:${Versions.Libraries.ViewPagerDots}"
+        const val ViewPagerDots = "com.tbuonomo:dotsindicator:${Versions.Libraries.ViewPagerDots}"
 
         const val CalcDialog = "com.maltaisn:calcdialog:${Versions.Libraries.CalcDialog}"
         const val IconDialog = "com.maltaisn:icondialog:${Versions.Libraries.IconDialog}"
@@ -115,8 +113,6 @@ object Dependencies {
 
 fun DependencyHandler.koin() {
     implementation(Dependencies.Koin.Android)
-    implementation(Dependencies.Koin.Scope)
-    implementation(Dependencies.Koin.ViewModel)
     implementation(Dependencies.Koin.WorkManager)
 }
 

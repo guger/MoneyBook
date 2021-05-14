@@ -24,7 +24,7 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 0
-        const val Patch = 2
+        const val Patch = 3
         const val Release = 1
         const val Beta = 0
         const val Dev = 0
@@ -49,9 +49,9 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "4.2.0-beta05"
+    const val Gradle = "7.0.0-alpha15"
 
-    const val KOIN = "2.2.2"
+    const val KOIN = "3.0.1"
 
     object D8 {
         const val CoreLibraryDesugaring = "1.0.9"
@@ -113,7 +113,7 @@ object Versions {
         const val MaterialCab = "2.0.1"
         const val MaterialDialogs = "3.3.0"
 
-        const val ViewPagerDots = "4.1.2"
+        const val ViewPagerDots = "4.2"
 
         const val CalcDialog = "2.2.1"
         const val IconDialog = "3.3.0"

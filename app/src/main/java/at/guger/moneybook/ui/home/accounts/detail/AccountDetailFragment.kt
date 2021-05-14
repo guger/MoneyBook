@@ -114,7 +114,7 @@ class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBindi
 
         fragmentViewModel.transactionsByMonth(month).observe(viewLifecycleOwner) { transactions ->
             val values = transactions.groupBy { it.date }.mapValues { map ->
-                map.value.sumByDouble { if (it.type == Transaction.TransactionType.EARNING) it.value else -it.value }
+                map.value.sumOf { if (it.type == Transaction.TransactionType.EARNING) it.value else -it.value }
             }
 
             val dataPoints = mutableListOf<DateDataPoint>()

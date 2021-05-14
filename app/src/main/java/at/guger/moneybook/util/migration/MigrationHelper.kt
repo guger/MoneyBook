@@ -142,7 +142,7 @@ class MigrationHelper(
 
     private fun computeBudget(category: Category, entries: List<BookEntry>): Double {
         val relevantEntries = entries.filter { it.category?.id == category.id }
-        val sum: Double = relevantEntries.sumByDouble { it.value }
+        val sum: Double = relevantEntries.sumOf { it.value }
 
         val firstDate = relevantEntries.minByOrNull { it.date }!!.date.toEpochDay()
         val lastDate = relevantEntries.maxByOrNull { it.date }!!.date.toEpochDay()

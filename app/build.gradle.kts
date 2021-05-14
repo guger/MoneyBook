@@ -33,12 +33,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.SDK.TARGET)
+    compileSdk = Versions.SDK.TARGET
 
     defaultConfig {
         applicationId = Versions.App.ID
-        minSdkVersion(Versions.SDK.MIN)
-        targetSdkVersion(Versions.SDK.TARGET)
+        minSdk = Versions.SDK.MIN
+        targetSdk = Versions.SDK.TARGET
 
         versionCode = Versions.App.versionCode()
         versionName = Versions.App.versionName()
@@ -54,13 +54,10 @@ android {
             if (Versions.App.isBeta()) versionNameSuffix = "-beta-" + Versions.App.Beta
 
             isMinifyEnabled = true
-            isShrinkResources = true
+            // isShrinkResources = true TODO Enable property in next AS Build again.
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
     }
     buildFeatures {
         dataBinding = true
@@ -72,7 +69,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    lintOptions {
+    lint {
         isAbortOnError = false
     }
     kotlinOptions {

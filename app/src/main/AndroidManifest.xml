@@ -37,7 +37,8 @@
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:configChanges="orientation|screenSize|screenLayout">
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -53,7 +54,8 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
-        <receiver android:name=".scheduler.reminder.ReminderReceiver">
+        <receiver android:name=".scheduler.reminder.ReminderReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIME_SET" />

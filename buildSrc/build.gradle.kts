@@ -20,7 +20,7 @@ plugins {
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 sourceSets.getByName("main") {

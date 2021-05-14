@@ -32,14 +32,14 @@ import kotlin.math.max
 @BindingAdapter("accounts", requireAll = true)
 fun TextView.setAccounts(accounts: List<AccountWithBalance>?) {
     accounts?.let { account ->
-        setCurrency(account.sumByDouble { it.balance + it.startBalance })
+        setCurrency(account.sumOf { it.balance + it.startBalance })
     }
 }
 
 @BindingAdapter("dues", requireAll = true)
 fun TextView.setDues(transactions: List<Transaction>?) {
     transactions?.let { dues ->
-        setCurrency(dues.filterNot { it.isPaid }.sumByDouble { transaction ->
+        setCurrency(dues.filterNot { it.isPaid }.sumOf { transaction ->
             when (transaction.type) {
                 Transaction.TransactionType.CLAIM -> transaction.value * max(transaction.contacts.size(), 1)
                 Transaction.TransactionType.DEBT -> -transaction.value * max(transaction.contacts.size(), 1)
@@ -52,7 +52,7 @@ fun TextView.setDues(transactions: List<Transaction>?) {
 @BindingAdapter("budgets")
 fun TextView.setBudgets(budgets: List<BudgetWithBalance>?) {
     budgets?.let { budgetsList ->
-        setCurrency(budgetsList.sumByDouble { it.budget - it.balance })
+        setCurrency(budgetsList.sumOf { it.budget - it.balance })
     }
 }
 
