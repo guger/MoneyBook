@@ -105,7 +105,7 @@ class BudgetDetailFragment : BaseDataBindingFragment<FragmentBudgetDetailBinding
 
         fragmentViewModel.transactionsByMonth(month).observe(viewLifecycleOwner) { transactions ->
             val values = transactions.groupBy { it.date }.mapValues { map ->
-                map.value.sumByDouble { it.value }
+                map.value.sumOf { it.value }
             }
 
             val dataPoints = mutableListOf<DateDataPoint>()

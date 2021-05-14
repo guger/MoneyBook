@@ -39,14 +39,12 @@ import at.guger.moneybook.util.CurrencyFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 /**
  * [BroadcastReceiver] handling reminder notifications.
  */
-@KoinApiExtension
 class ReminderReceiver : BroadcastReceiver(), KoinComponent {
 
     //region Variables

@@ -17,6 +17,7 @@
 package at.guger.moneybook.core.util
 
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import kotlin.math.pow
 
 /**
@@ -24,8 +25,10 @@ import kotlin.math.pow
  */
 object Utils {
 
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O)
     fun isOreo() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.M)
     fun isMarshmallow() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
     fun getGaussianScale(

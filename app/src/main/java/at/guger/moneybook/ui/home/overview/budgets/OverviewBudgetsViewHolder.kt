@@ -34,7 +34,7 @@ class OverviewBudgetsViewHolder(binding: ItemOverviewBudgetsBinding) : BindingVi
         binding.executePendingBindings()
 
         viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, { budgets ->
-            val leftValue: Float = budgets.sumByDouble { it.budget - it.balance }.toFloat()
+            val leftValue: Float = budgets.sumOf { it.budget - it.balance }.toFloat()
 
             val distributions = mutableListOf(*budgets.map { it.balance.toFloat() }.toTypedArray(), leftValue)
 

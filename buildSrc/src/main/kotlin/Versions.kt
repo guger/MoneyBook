@@ -24,7 +24,7 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 0
-        const val Patch = 2
+        const val Patch = 3
         const val Release = 1
         const val Beta = 0
         const val Dev = 0
@@ -49,9 +49,9 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "4.2.0-beta05"
+    const val Gradle = "7.0.0-alpha15"
 
-    const val KOIN = "2.2.2"
+    const val KOIN = "3.0.1"
 
     object D8 {
         const val CoreLibraryDesugaring = "1.0.9"
@@ -70,42 +70,42 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.4.31"
-        const val Coroutines = "1.4.1"
+        const val Common = "1.5.0"
+        const val Coroutines = "1.5.0-RC"
     }
 
     object Firebase {
 
         object Plugins {
             const val GoogleServices = "4.3.5"
-            const val CrashlyticsGradle = "2.4.1"
+            const val CrashlyticsGradle = "2.5.2"
         }
 
-        const val Analytics = "18.0.2"
-        const val Crashlytics = "17.3.1"
+        const val Analytics = "18.0.3"
+        const val Crashlytics = "17.4.1"
     }
 
     object AndroidX {
-        const val Core = "1.5.0-beta02"
-        const val AppCompat = "1.2.0"
-        const val Annotation = "1.2.0-rc01"
-        const val Fragment = "1.3.0"
+        const val Core = "1.5.0-rc02"
+        const val AppCompat = "1.3.0-rc01"
+        const val Annotation = "1.2.0"
+        const val Fragment = "1.3.3"
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha03"
         const val ViewPager2 = "1.0.0"
-        const val ConstraintLayout = "2.0.4"
-        const val RecyclerView = "1.2.0-beta02"
+        const val ConstraintLayout = "2.1.0-beta02"
+        const val RecyclerView = "1.2.0"
         const val CardView = "1.0.0"
     }
 
     object Material {
-        const val Material = "1.3.0"
+        const val Material = "1.4.0-beta01"
     }
 
     object Arch {
         const val Lifecycle = "2.3.0"
-        const val Navigation = "2.3.3"
-        const val Room = "2.3.0-beta02"
+        const val Navigation = "2.3.5"
+        const val Room = "2.3.0"
         const val Work = "2.5.0"
     }
 
@@ -113,10 +113,10 @@ object Versions {
         const val MaterialCab = "2.0.1"
         const val MaterialDialogs = "3.3.0"
 
-        const val ViewPagerDots = "4.1.2"
+        const val ViewPagerDots = "4.2"
 
         const val CalcDialog = "2.2.1"
         const val IconDialog = "3.3.0"
-        const val RecurPicker = "2.1.3"
+        const val RecurPicker = "2.1.4"
     }
 }
