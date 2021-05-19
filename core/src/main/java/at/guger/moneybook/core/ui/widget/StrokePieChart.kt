@@ -187,7 +187,7 @@ class StrokePieChart @JvmOverloads constructor(context: Context, attrs: Attribut
     fun setEntries(entriesList: List<Entry>) {
         val sortedEntries = entriesList.filter { it.value > 0 }.sortedBy { it.value }
 
-        entriesSum = sortedEntries.sumByDouble { it.value.toDouble() }.toFloat()
+        entriesSum = sortedEntries.sumOf { it.value.toDouble() }.toFloat()
 
         animator?.cancel()
 

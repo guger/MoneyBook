@@ -54,7 +54,7 @@ android {
             if (Versions.App.isBeta()) versionNameSuffix = "-beta-" + Versions.App.Beta
 
             isMinifyEnabled = true
-            // isShrinkResources = true TODO Enable property in next AS Build again.
+            isShrinkResources = true
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }

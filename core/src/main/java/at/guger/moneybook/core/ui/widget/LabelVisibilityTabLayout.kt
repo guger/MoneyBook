@@ -28,7 +28,7 @@ class LabelVisibilityTabLayout @JvmOverloads constructor(context: Context, attrs
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        updateLabelVisibility()
+        post(::updateLabelVisibility)
     }
 
     override fun selectTab(tab: Tab?, updateIndicator: Boolean) {

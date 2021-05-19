@@ -49,9 +49,9 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "7.0.0-alpha15"
+    const val Gradle = "7.0.0-beta01"
 
-    const val KOIN = "3.0.1"
+    const val KOIN = "3.0.2"
 
     object D8 {
         const val CoreLibraryDesugaring = "1.0.9"
@@ -71,7 +71,7 @@ object Versions {
 
     object Kotlin {
         const val Common = "1.5.0"
-        const val Coroutines = "1.5.0-RC"
+        const val Coroutines = "1.5.0"
     }
 
     object Firebase {
@@ -86,10 +86,10 @@ object Versions {
     }
 
     object AndroidX {
-        const val Core = "1.5.0-rc02"
-        const val AppCompat = "1.3.0-rc01"
+        const val Core = "1.5.0"
+        const val AppCompat = "1.3.0"
         const val Annotation = "1.2.0"
-        const val Fragment = "1.3.3"
+        const val Fragment = "1.3.4"
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha03"
         const val ViewPager2 = "1.0.0"
