@@ -183,6 +183,13 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
 
     fun setLimit(limit: Double) {
         this.limit = limit.toFloat()
+
+        if (points.isNotEmpty() && !computePoints()) {
+            waitingForSizeConfirmation = true
+            return
+        }
+
+        postInvalidate()
     }
 
     fun setLimitText(limitText: String) {
