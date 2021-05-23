@@ -92,7 +92,9 @@ class AddEditBudgetBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogF
             }
         })
 
-        fragmentViewModel.budgetSaved.observe(viewLifecycleOwner, EventObserver { findNavController().navigateUp() })
+        fragmentViewModel.budgetSaved.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigateUp()
+        })
     }
 
     //endregion

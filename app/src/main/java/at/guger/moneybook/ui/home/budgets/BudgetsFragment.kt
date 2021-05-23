@@ -63,7 +63,9 @@ class BudgetsFragment : BaseDataBindingFragment<FragmentBudgetsBinding, HomeView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = BudgetsAdapter(fragmentViewModel).apply { fragmentViewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer(::submitList)) }
+        adapter = BudgetsAdapter(fragmentViewModel).apply {
+            fragmentViewModel.budgetsWithBalance.observe(viewLifecycleOwner, Observer(::submitList))
+        }
 
         binding.mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false)
     }

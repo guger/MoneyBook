@@ -16,12 +16,12 @@
 
 package at.guger.moneybook.ui.home.overview.accounts
 
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.BindingViewHolder
 import at.guger.moneybook.databinding.ItemOverviewAccountsBinding
 import at.guger.moneybook.ui.home.HomeViewModel
+import kotlin.math.min
 
 /**
  * [RecyclerView.ViewHolder] for the accounts overview item.
@@ -41,7 +41,11 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
 
         binding.mOverviewAccountsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = OverviewAccountsListAdapter(viewModel).apply { viewModel.accounts.observe(binding.lifecycleOwner!!, Observer(::submitList)) }
+            adapter = OverviewAccountsListAdapter(viewModel).apply {
+                viewModel.accounts.observe(binding.lifecycleOwner!!) { accounts ->
+                    submitList(accounts.subList(0, min(accounts.size, 4)))
+                }
+            }
         }
     }
 }

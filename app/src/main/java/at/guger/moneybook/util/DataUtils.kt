@@ -36,28 +36,38 @@ object DataUtils {
         Budget(name = context.getString(R.string.Shopping), budget = 100.0, color = Color.parseColor("#1976D2"))
     )
 
-    const val MAX_ACCOUNTS = 4
+    const val MAX_ACCOUNTS = 8
 
-    val ACCOUNT_COLORS: Array<Int> = arrayOf(
+    val ACCOUNT_COLORS: IntArray = intArrayOf(
         Color.parseColor("#007d51"),
         Color.parseColor("#37efba"),
         Color.parseColor("#1eb980"),
-        Color.parseColor("#005d57")
+        Color.parseColor("#005d57"),
+        Color.parseColor("#bae6d1"),
+        Color.parseColor("#58c596"),
+        Color.parseColor("#009d5f"),
+        Color.parseColor("#005b30")
     )
 
-    const val MAX_BUDGETS = 9
+    const val MAX_BUDGETS = 15
 
     fun getBudgetColors(context: Context): IntArray {
         return intArrayOf(
-            ContextCompat.getColor(context, R.color.budget1),
-            ContextCompat.getColor(context, R.color.budget2),
-            ContextCompat.getColor(context, R.color.budget3),
-            ContextCompat.getColor(context, R.color.budget4),
-            ContextCompat.getColor(context, R.color.budget5),
-            ContextCompat.getColor(context, R.color.budget6),
-            ContextCompat.getColor(context, R.color.budget7),
-            ContextCompat.getColor(context, R.color.budget8),
-            ContextCompat.getColor(context, R.color.budget9)
+            ContextCompat.getColor(context, R.color.colorBudget1),
+            ContextCompat.getColor(context, R.color.colorBudget2),
+            ContextCompat.getColor(context, R.color.colorBudget3),
+            ContextCompat.getColor(context, R.color.colorBudget4),
+            ContextCompat.getColor(context, R.color.colorBudget5),
+            ContextCompat.getColor(context, R.color.colorBudget6),
+            ContextCompat.getColor(context, R.color.colorBudget7),
+            ContextCompat.getColor(context, R.color.colorBudget8),
+            ContextCompat.getColor(context, R.color.colorBudget9),
+            ContextCompat.getColor(context, R.color.colorBudget10),
+            ContextCompat.getColor(context, R.color.colorBudget11),
+            ContextCompat.getColor(context, R.color.colorBudget12),
+            ContextCompat.getColor(context, R.color.colorBudget13),
+            ContextCompat.getColor(context, R.color.colorBudget14),
+            ContextCompat.getColor(context, R.color.colorBudget15)
         )
     }
 }

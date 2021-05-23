@@ -24,23 +24,33 @@
     <color name="colorSecondary">#03dac6</color>
     <color name="colorSecondaryVariant">#018786</color>
 
-    <color name="color1">#37efba</color>
-    <color name="color2">#1eb980</color>
-    <color name="color3">#007d51</color>
-    <color name="color4">#005d57</color>
+    <color name="colorAccount1">#37efba</color>
+    <color name="colorAccount2">#1eb980</color>
+    <color name="colorAccount3">#007d51</color>
+    <color name="colorAccount4">#005d57</color>
+    <color name="colorAccount5">#bae6d1</color>
+    <color name="colorAccount6">#58c596</color>
+    <color name="colorAccount7">#009d5f</color>
+    <color name="colorAccount8">#005b30</color>
 
     <color name="color_claim">#FFCF44</color>
     <color name="color_debt">#FF6859</color>
 
-    <color name="budget1">#BBDEFB</color>
-    <color name="budget2">#90CAF9</color>
-    <color name="budget3">#1976D2</color>
-    <color name="budget4">#EDE7F6</color>
-    <color name="budget5">#B39DDB</color>
-    <color name="budget6">#9575CD</color>
-    <color name="budget7">#FFE082</color>
-    <color name="budget8">#FFD54F</color>
-    <color name="budget9">#FFEBEE</color>
+    <color name="colorBudget1">#BBDEFB</color>
+    <color name="colorBudget2">#90CAF9</color>
+    <color name="colorBudget3">#1976D2</color>
+    <color name="colorBudget4">#EDE7F6</color>
+    <color name="colorBudget5">#B39DDB</color>
+    <color name="colorBudget6">#9575CD</color>
+    <color name="colorBudget7">#fff8e1</color>
+    <color name="colorBudget8">#FFE082</color>
+    <color name="colorBudget9">#FFD54F</color>
+    <color name="colorBudget10">#FFEBEE</color>
+    <color name="colorBudget11">#FFCDD2</color>
+    <color name="colorBudget12">#EF9A9A</color>
+    <color name="colorBudget13">#b0e1d3</color>
+    <color name="colorBudget14">#43ba9a</color>
+    <color name="colorBudget15">#009b72</color>
 
     <!--colorBackground appears behind scrollable content and is used for the default window-->
     <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->

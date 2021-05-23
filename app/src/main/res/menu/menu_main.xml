@@ -35,5 +35,6 @@
         android:id="@+id/actionSearch"
         android:icon="@drawable/ic_search"
         android:title="@string/Search"
+        android:visible="false"
         app:showAsAction="always" />
 </menu>

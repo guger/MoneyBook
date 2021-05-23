@@ -55,18 +55,20 @@ class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeVi
     //region Fragment
 
     override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): FragmentAccountsBinding {
-        return FragmentAccountsBinding.inflate(inflater, root, attachToParent).apply {
+        return FragmentAccountsBinding.inflate(inflater, root, false).apply {
             viewModel = fragmentViewModel
-            lifecycleOwner = this@AccountsFragment
+            lifecycleOwner = viewLifecycleOwner
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = AccountsAdapter(fragmentViewModel).apply { fragmentViewModel.accounts.observe(viewLifecycleOwner, Observer(::submitList)) }
+        adapter = AccountsAdapter(fragmentViewModel).apply {
+            fragmentViewModel.accounts.observe(viewLifecycleOwner, Observer(::submitList))
+        }
 
-        binding.mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter)
+        binding.mAccountsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false)
     }
 
     override fun onResume() {
