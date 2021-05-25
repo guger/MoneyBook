@@ -20,10 +20,7 @@ import android.content.Context
 import android.provider.Settings
 import android.view.View
 import androidx.annotation.IdRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.core.ui.viewmodel.MessageEvent
@@ -86,6 +83,9 @@ class AddEditTransactionViewModel(
     private val _dueDateInputVisibility = MutableLiveData(View.GONE)
     val dueDateInputVisibility: LiveData<Int> = _dueDateInputVisibility
 
+    private val _transferTransactionVisibility = MutableLiveData(false)
+    val transferTransactionVisibility: LiveData<Boolean> = _transferTransactionVisibility
+
     private val _showDatePicker = MutableLiveData<Event<LocalDate>>()
     val showDatePicker: LiveData<Event<LocalDate>> = _showDatePicker
 
@@ -109,6 +109,9 @@ class AddEditTransactionViewModel(
 
     val accounts: LiveData<List<Account>> = accountsRepository.getObservableAccounts()
     val budgets: LiveData<List<Budget>> = budgetsRepository.getBudgets()
+    val transferAccounts: LiveData<Pair<List<Account>, Account>> = Transformations.map(accounts) {
+        Pair(it, accounts.value?.find { it.name == transactionAccount.value }!!)
+    }
 
     private val _addressBook = MutableLiveData<Map<Long, String>>()
     val addressBook: LiveData<Map<Long, String>> = _addressBook
@@ -172,6 +175,11 @@ class AddEditTransactionViewModel(
             Transaction.TransactionType.CLAIM, Transaction.TransactionType.DEBT -> View.VISIBLE
             else -> View.GONE
         }
+
+        _transferTransactionVisibility.value = when (transactionType.value) {
+            Transaction.TransactionType.EXPENSE -> true
+            else -> false
+        }
     }
 
     fun showDatePicker() {
@@ -202,20 +210,34 @@ class AddEditTransactionViewModel(
         _showCalculator.value = Event(Unit)
     }
 
-    fun saveTransaction(context: Context, chippedContacts: List<String>, ignoreOverlayPermission: Boolean = false) {
+    fun transferTransaction(context: Context, chippedContacts: List<String>, targetAccount: Account) {
+        saveTransaction(context, chippedContacts, broadcastFinished = false)
+
+        saveTransaction(context, chippedContacts, targetAccount = targetAccount)
+    }
+
+    @JvmOverloads
+    fun saveTransaction(
+        context: Context,
+        chippedContacts: List<String>,
+        ignoreOverlayPermission: Boolean = false,
+        broadcastFinished: Boolean = true,
+        targetAccount: Account? = null
+    ): Pair<Transaction.TransactionEntity, List<Contact>?>? {
         val title = transactionTitle.value?.trim()
         val date = transactionDate.value
         val value = transactionValue.value
-        val type = transactionType.value
+        val type = if (targetAccount == null) transactionType.value else Transaction.TransactionType.EARNING
         val dueDate = transactionDueDate.value?.takeIf { it.isNotBlank() }
-        val account = accounts.value?.find { it.name == transactionAccount.value }?.takeIf { type == Transaction.TransactionType.EARNING || type == Transaction.TransactionType.EXPENSE }
+        val account = targetAccount ?: accounts.value?.find { it.name == transactionAccount.value }
+            ?.takeIf { type == Transaction.TransactionType.EARNING || type == Transaction.TransactionType.EXPENSE }
         val budget = budgets.value?.find { it.name == transactionBudget.value }?.takeIf { type == Transaction.TransactionType.EXPENSE }
         val notes = transactionNotes.value?.trim() ?: ""
 
         if (dueDate != null && Utils.isMarshmallow() && !Settings.canDrawOverlays(context) && !ignoreOverlayPermission) {
             _showOverlayPermissionDialog.value = Event(chippedContacts)
 
-            return
+            return null
         }
 
         val transactionEntity = parseTransactionForm(title, date, value, type, dueDate, account, budget, notes)
@@ -264,15 +286,44 @@ class AddEditTransactionViewModel(
                     transaction!!.id
                 }
 
-                transactionEntity.due?.let { date -> reminderScheduler.scheduleReminder(id, date) }
+                if (type == Transaction.TransactionType.CLAIM || type == Transaction.TransactionType.DEBT) {
+                    transactionEntity.due?.let { date -> reminderScheduler.scheduleReminder(id, date) }
+                }
             }.invokeOnCompletion {
                 if (ignoreOverlayPermission) _snoozeDisabledMessage.value = MessageEvent(R.string.SnoozeDisabled)
-                _transactionSaved.value = Event(Unit)
+                if (broadcastFinished) _transactionSaved.value = Event(Unit)
             }
+
+            return Pair(transactionEntity, contacts)
         }
+
+        return null
     }
 
-    private fun parseTransactionForm(title: String?, date: String?, value: String?, type: Int?, dueDate: String?, account: Account?, budget: Budget?, notes: String): Transaction.TransactionEntity? {
+    fun checkTransactionForm(): Boolean {
+        val title = transactionTitle.value?.trim()
+        val date = transactionDate.value
+        val value = transactionValue.value
+        val type = transactionType.value
+        val dueDate = transactionDueDate.value?.takeIf { it.isNotBlank() }
+        val account =
+            accounts.value?.find { it.name == transactionAccount.value }?.takeIf { type == Transaction.TransactionType.EARNING || type == Transaction.TransactionType.EXPENSE }
+        val budget = budgets.value?.find { it.name == transactionBudget.value }?.takeIf { type == Transaction.TransactionType.EXPENSE }
+        val notes = transactionNotes.value?.trim() ?: ""
+
+        return parseTransactionForm(title, date, value, type, dueDate, account, budget, notes) != null
+    }
+
+    private fun parseTransactionForm(
+        title: String?,
+        date: String?,
+        value: String?,
+        type: Int?,
+        dueDate: String?,
+        account: Account?,
+        budget: Budget?,
+        notes: String
+    ): Transaction.TransactionEntity? {
         if (title.isNullOrBlank()) {
             _snackBarMessage.value = MessageEvent(R.string.EmptyTransactionTitle)
 
@@ -307,7 +358,7 @@ class AddEditTransactionViewModel(
             return null
         }
 
-        if (parsedDueDate != null && parsedDueDate.minusDays(1).isBefore(parsedDate)) {
+        if ((type == Transaction.TransactionType.CLAIM || type == Transaction.TransactionType.DEBT) && parsedDueDate != null && parsedDueDate.minusDays(1).isBefore(parsedDate)) {
             _snackBarMessage.value = MessageEvent(R.string.TransactionDueDateBeforeDate)
 
             return null

@@ -25,6 +25,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.InputType
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -45,6 +46,7 @@ import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.core.util.ext.toLocalDate
 import at.guger.moneybook.core.util.ext.utcMillis
+import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
 import at.guger.moneybook.util.DateFormatUtils
@@ -188,7 +190,31 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
             bottomAppBarBackground.shapeAppearanceModel = bottomAppBarBackground.shapeAppearanceModel.toBuilder().setTopEdge(
                 BottomAppBarCutCornersTopEdge(mBottomAppBar.fabCradleMargin, mBottomAppBar.fabCradleRoundedCornerRadius, mBottomAppBar.cradleVerticalOffset)
             ).build()
-            mBottomAppBar.setNavigationOnClickListener { findNavController().navigateUp() }
+
+            mBottomAppBar.apply {
+                setOnMenuItemClickListener { item: MenuItem ->
+                    return@setOnMenuItemClickListener when (item.itemId) {
+                        R.id.actionTransferToAccount -> {
+                            if (fragmentViewModel.checkTransactionForm()) {
+                                fragmentViewModel.transferAccounts.observe(viewLifecycleOwner) { (accounts, selectedAccount) ->
+                                    val targetAccounts: List<Account> = accounts.toMutableList().apply { remove(selectedAccount) }
+
+                                    MaterialAlertDialogBuilder(requireContext())
+                                        .setTitle(R.string.ChooseAccount)
+                                        .setItems(targetAccounts.map { it.name }.toTypedArray()) { _, which ->
+                                            fragmentViewModel.transferTransaction(requireContext(), edtAddEditTransactionContacts.chipValues, targetAccounts[which])
+                                        }
+                                        .show()
+                                }
+                            }
+                            true
+                        }
+                        else -> false
+                    }
+                }
+
+                setNavigationOnClickListener { findNavController().navigateUp() }
+            }
         }
     }
 
@@ -200,6 +226,10 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         fragmentViewModel.budgets.observe(viewLifecycleOwner) { budgets ->
             val budgetEntries = budgets.map { it.name }.toMutableList().apply { add(0, "") }
             binding.edtAddEditTransactionBudget.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, budgetEntries))
+        }
+
+        fragmentViewModel.transferTransactionVisibility.observe(viewLifecycleOwner) { state ->
+            binding.mBottomAppBar.menu.findItem(R.id.actionTransferToAccount).isVisible = state
         }
 
         fragmentViewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDatePicker(selectedDate) })

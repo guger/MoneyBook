@@ -315,6 +315,7 @@
             app:fabAlignmentMode="end"
             app:fabAnimationMode="scale"
             app:hideOnScroll="true"
+            app:menu="@menu/menu_add_transaction"
             app:navigationIcon="@drawable/ic_close" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -325,7 +326,7 @@
             android:clickable="true"
             android:contentDescription="@string/Save"
             android:focusable="true"
-            android:onClick="@{(view) -> viewModel.saveTransaction(view.context, edtAddEditTransactionContacts.getChipValues(), false)}"
+            android:onClick="@{(view) -> viewModel.saveTransaction(view.context, edtAddEditTransactionContacts.getChipValues(), false, true)}"
             android:src="@drawable/ic_save"
             app:layout_anchor="@id/mBottomAppBar"
             app:layout_anchorGravity="bottom|right"
