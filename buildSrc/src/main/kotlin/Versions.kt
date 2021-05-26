@@ -24,7 +24,7 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 0
-        const val Patch = 4
+        const val Patch = 6
         const val Release = 1
         const val Beta = 0
         const val Dev = 0
@@ -70,7 +70,7 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.5.0"
+        const val Common = "1.5.10"
         const val Coroutines = "1.5.0"
     }
 
