@@ -24,7 +24,7 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 0
-        const val Patch = 3
+        const val Patch = 4
         const val Release = 1
         const val Beta = 0
         const val Dev = 0
@@ -77,12 +77,12 @@ object Versions {
     object Firebase {
 
         object Plugins {
-            const val GoogleServices = "4.3.5"
-            const val CrashlyticsGradle = "2.5.2"
+            const val GoogleServices = "4.3.8"
+            const val CrashlyticsGradle = "2.6.1"
         }
 
-        const val Analytics = "18.0.3"
-        const val Crashlytics = "17.4.1"
+        const val Analytics = "19.0.0"
+        const val Crashlytics = "18.0.0"
     }
 
     object AndroidX {
