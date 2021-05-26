@@ -81,8 +81,7 @@ object Versions {
             const val CrashlyticsGradle = "2.6.1"
         }
 
-        const val Analytics = "19.0.0"
-        const val Crashlytics = "18.0.0"
+        const val BoM = "28.0.1"
     }
 
     object AndroidX {

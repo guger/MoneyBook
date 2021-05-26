@@ -94,6 +94,7 @@ dependencies {
 
     koin()
 
+    implementation(platform(Firebase.BoM))
     implementation(Firebase.Analytics)
     implementation(Firebase.Crashlytics)
 

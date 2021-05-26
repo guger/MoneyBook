@@ -62,8 +62,9 @@ object Dependencies {
     }
 
     object Firebase {
-        const val Analytics = "com.google.firebase:firebase-analytics-ktx:${Versions.Firebase.Analytics}"
-        const val Crashlytics = "com.google.firebase:firebase-crashlytics-ktx:${Versions.Firebase.Crashlytics}"
+        const val BoM = "com.google.firebase:firebase-bom:${Versions.Firebase.BoM}"
+        const val Analytics = "com.google.firebase:firebase-analytics-ktx"
+        const val Crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     }
 
     object AndroidX {
