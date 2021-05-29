@@ -19,11 +19,15 @@ package at.guger.moneybook.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import at.guger.moneybook.BuildConfig
 import at.guger.moneybook.R
+import at.guger.moneybook.core.permission.Permission
+import at.guger.moneybook.core.permission.PermissionManager
+import at.guger.moneybook.core.permission.RationaleInfo
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -44,7 +48,10 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     private var requireRestart: Boolean = false
 
     private lateinit var prefCurrency: ListPreference
+    private lateinit var prefExportImport: Preference
     private lateinit var prefInformation: Preference
+
+    private val permissionManager = PermissionManager.from(this)
 
     private var restartSnackbar: Snackbar? = null
 
@@ -64,6 +71,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         prefCurrency = findPreference(Preferences.CURRENCY)!!
+        prefInformation = findPreference(Preferences.EXPORT_IMPORT)!!
         prefInformation = findPreference(Preferences.INFORMATION)!!
 
         prefCurrency.setOnPreferenceChangeListener { _, _ ->
@@ -90,6 +98,37 @@ class MainPreferenceFragment : BasePreferenceFragment() {
 
     //region Methods
 
+    private fun exportOrImportData() {
+        permissionManager.requestPermission(
+            Permission.STORAGE,
+            info = RationaleInfo(R.string.StoragePermission, R.string.StoragePermissionNeeded)
+        ) { isAllGranted, _ ->
+            if (isAllGranted) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.ExportImport)
+                    .setItems(R.array.ExportImport) { _, which ->
+                        when (which) {
+                            0 -> exportData()
+                            1 -> importData()
+                        }
+                    }
+                    .show()
+            } else {
+                Snackbar.make(requireView(), R.string.StoragePermissionDeniedExportImportNotPossible, Snackbar.LENGTH_LONG)
+                    .setAnchorView(R.id.mBottomAppBar)
+                    .show()
+            }
+        }
+    }
+
+    private fun exportData() {
+        Toast.makeText(requireContext(), "Export Data", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun importData() {
+        Toast.makeText(requireContext(), "Import Data", Toast.LENGTH_SHORT).show()
+    }
+
     private fun showRestartSnackBar() {
         restartSnackbar = Snackbar.make(
             requireView(),
@@ -104,9 +143,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     }
 
     private fun restartApplication() {
-        val restartIntent: Intent? =
-            requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)
-                ?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
+        val restartIntent: Intent? = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
 
         startActivity(restartIntent)
         exitProcess(0)
@@ -130,6 +167,9 @@ class MainPreferenceFragment : BasePreferenceFragment() {
                     .setMessage(R.string.PermissionDetails)
                     .setPositiveButton(R.string.Close, null)
                     .show()
+            }
+            Preferences.EXPORT_IMPORT -> {
+                exportOrImportData()
             }
             Preferences.INFORMATION -> startActivity(
                 Intent.parseUri(

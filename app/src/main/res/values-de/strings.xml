@@ -159,4 +159,15 @@
     <string name="MarkAsPaidToAccount">In Konto verschieben</string>
     <string name="ChooseAccount">Konto auswählen</string>
     <string name="OpenDetails">Details öffnen</string>
+    <string name="ContactsPermissionPermanentlyDenied">Zugriff auf Kontakte verweigert.</string>
+    <string name="ContactsPermissionPermanentlyDeniedMessage">Der Kontaktzugriff wurde verweigert. Um MoneyBook Zugriff auf die Kontakte zu geben, bitte die App-Systemeinstellungen öffnen.</string>
+    <string name="TransferToAccount">Auf Konto umbuchen</string>
+    <string name="ExportImport">Exportieren &amp; Importieren</string>
+    <string name="ExportImportData">Export/Import von Buchungen, Konten, usw.</string>
+    <string name="prefs_ExportImportData">Exportieren oder importieren Sie Ihre Daten verschlüsselt, z.B. für einen Gerätewechsel.</string>
+    <string name="Export">Exportieren</string>
+    <string name="Import">Importieren</string>
+    <string name="StoragePermission">Zugriff auf Speicher</string>
+    <string name="StoragePermissionNeeded">Speicherzugriff wird zum exportieren oder importieren von Daten benötigt.</string>
+    <string name="StoragePermissionDeniedExportImportNotPossible">Der Export oder Import ist nicht möglich, da der Speicherzugriff verweigert wurde.</string>
 </resources>

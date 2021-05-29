@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_analytics.xml" value="0.3828125" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_backup.xml" value="0.3828125" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_export_import.xml" value="0.3828125" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_move_to_account.xml" value="0.3828125" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/fragment_add_edit_transaction.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_account.xml" value="0.36666666666666664" />
@@ -10,6 +13,7 @@
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_nav.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_transaction.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/xml/preferences_main.xml" value="0.17831813576494426" />
       </map>
     </option>
   </component>

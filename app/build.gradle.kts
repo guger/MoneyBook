@@ -122,6 +122,7 @@ dependencies {
     implementation(Libs.MaterialCab)
     implementation(Libs.MaterialDialogsCore)
     implementation(Libs.MaterialDialogsColor)
+    implementation(Libs.MaterialDialogsFiles)
 
     implementation(Libs.CalcDialog)
     implementation(Libs.IconDialog)

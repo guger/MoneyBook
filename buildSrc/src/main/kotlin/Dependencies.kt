@@ -103,6 +103,7 @@ object Dependencies {
         const val MaterialCab = "com.afollestad:material-cab:${Versions.Libraries.MaterialCab}"
         const val MaterialDialogsCore = "com.afollestad.material-dialogs:core:${Versions.Libraries.MaterialDialogs}"
         const val MaterialDialogsColor = "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"
+        const val MaterialDialogsFiles = "com.afollestad.material-dialogs:files:${Versions.Libraries.MaterialDialogs}"
 
         const val ViewPagerDots = "com.tbuonomo:dotsindicator:${Versions.Libraries.ViewPagerDots}"
 
