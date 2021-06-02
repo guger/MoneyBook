@@ -54,7 +54,7 @@ object Versions {
     const val KOIN = "3.0.2"
 
     object D8 {
-        const val CoreLibraryDesugaring = "1.0.9"
+        const val CoreLibraryDesugaring = "1.1.5"
     }
 
     object Test {
