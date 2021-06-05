@@ -17,24 +17,28 @@
 package at.guger.moneybook.ui.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import at.guger.moneybook.BuildConfig
 import at.guger.moneybook.R
-import at.guger.moneybook.core.permission.Permission
-import at.guger.moneybook.core.permission.PermissionManager
-import at.guger.moneybook.core.permission.RationaleInfo
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
+import at.guger.moneybook.work.ExportImportWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import kotlin.system.exitProcess
 
 
@@ -48,12 +52,30 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     private var requireRestart: Boolean = false
 
     private lateinit var prefCurrency: ListPreference
-    private lateinit var prefExportImport: Preference
     private lateinit var prefInformation: Preference
 
-    private val permissionManager = PermissionManager.from(this)
 
     private var restartSnackbar: Snackbar? = null
+
+    private val createDocument = registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+        if (uri != null) {
+            exportData(uri)
+        } else {
+            Snackbar.make(requireView(), R.string.NoBackupFileLocationSelected, Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.mBottomAppBar)
+                .show()
+        }
+    }
+
+    private val openDocument = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) {
+            importData(uri)
+        } else {
+            Snackbar.make(requireView(), R.string.NoBackupFileLocationSelected, Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.mBottomAppBar)
+                .show()
+        }
+    }
 
     //endregion
 
@@ -99,34 +121,60 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     //region Methods
 
     private fun exportOrImportData() {
-        permissionManager.requestPermission(
-            Permission.STORAGE,
-            info = RationaleInfo(R.string.StoragePermission, R.string.StoragePermissionNeeded)
-        ) { isAllGranted, _ ->
-            if (isAllGranted) {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(R.string.ExportImport)
-                    .setItems(R.array.ExportImport) { _, which ->
-                        when (which) {
-                            0 -> exportData()
-                            1 -> importData()
-                        }
-                    }
-                    .show()
-            } else {
-                Snackbar.make(requireView(), R.string.StoragePermissionDeniedExportImportNotPossible, Snackbar.LENGTH_LONG)
-                    .setAnchorView(R.id.mBottomAppBar)
-                    .show()
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.ExportImport)
+            .setMessage(R.string.ExportImportMessage)
+            .setNegativeButton(R.string.Export) { _, _ ->
+                val today = LocalDate.now()
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+                createDocument.launch("${formatter.format(today)}.${ExportImportWorker.BACKUP_FILE_EXTENSION}")
             }
+            .setPositiveButton(R.string.Import) { _, _ ->
+                openDocument.launch(arrayOf("*/*"))
+            }
+            .show()
+    }
+
+    private fun exportData(uri: Uri) {
+        WorkManager.getInstance(requireContext())
+            .enqueue(
+                OneTimeWorkRequestBuilder<ExportImportWorker>()
+                    .setInputData(
+                        workDataOf(
+                            ExportImportWorker.OPERATION to ExportImportWorker.EXPORT,
+                            ExportImportWorker.FILE_URI to uri.toString()
+                        )
+                    )
+                    .build()
+            )
+    }
+
+    private fun importData(uri: Uri) {
+        if (ExportImportWorker.checkValidBackupFile(uri)) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.ImportData)
+                .setMessage(R.string.ImportDataOverwriteAll)
+                .setPositiveButton(R.string.Import) { _, _ ->
+                    WorkManager.getInstance(requireContext())
+                        .enqueue(
+                            OneTimeWorkRequestBuilder<ExportImportWorker>()
+                                .setInputData(
+                                    workDataOf(
+                                        ExportImportWorker.OPERATION to ExportImportWorker.IMPORT,
+                                        ExportImportWorker.FILE_URI to uri.toString()
+                                    )
+                                )
+                                .build()
+                        )
+                }
+                .setNegativeButton(R.string.Cancel, null)
+                .show()
+        } else {
+            Snackbar.make(requireView(), getString(R.string.NoValidBackupFileSelected, ExportImportWorker.BACKUP_FILE_EXTENSION), Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.mBottomAppBar)
+                .show()
         }
-    }
-
-    private fun exportData() {
-        Toast.makeText(requireContext(), "Export Data", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun importData() {
-        Toast.makeText(requireContext(), "Import Data", Toast.LENGTH_SHORT).show()
     }
 
     private fun showRestartSnackBar() {
@@ -149,9 +197,9 @@ class MainPreferenceFragment : BasePreferenceFragment() {
         exitProcess(0)
     }
 
-    //endregion
+//endregion
 
-    //region Callback
+//region Callback
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
@@ -182,5 +230,5 @@ class MainPreferenceFragment : BasePreferenceFragment() {
         return super.onPreferenceTreeClick(preference)
     }
 
-    //endregion
+//endregion
 }

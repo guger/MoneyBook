@@ -171,4 +171,13 @@
     <string name="StoragePermission">Access storage</string>
     <string name="StoragePermissionNeeded">The permission to access the storage is needed once you export or import the data.</string>
     <string name="StoragePermissionDeniedExportImportNotPossible">Export or import is not possible, since the storage permission was denied.</string>
+    <string name="ExportImportMessage">Export or import your MoneyBook data as an encrypted backup.\n Please select the location to save or open a \'*.MoneyBookBackup\' file.</string>
+    <string name="ImportData">Import Backup Data</string>
+    <string name="ImportDataOverwriteAll">Importing backup data will mean, that you overwrite ALL data currently stored in the app. This cannot be undone!</string>
+    <string name="notification_channel_export_import">Export/Import</string>
+    <string name="notification_channel_export_import_description">Shows up during the export or import.</string>
+    <string name="OngoingImport">Import running …</string>
+    <string name="OngoingExport">Export running …</string>
+    <string name="NoBackupFileLocationSelected">No backup file location selected.</string>
+    <string name="NoValidBackupFileSelected">No valid backup file selected, please check the \'*.%s\' file extension.</string>
 </resources>
