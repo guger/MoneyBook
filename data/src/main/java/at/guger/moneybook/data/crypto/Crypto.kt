@@ -16,6 +16,36 @@
 
 package at.guger.moneybook.data.crypto
 
+import javax.crypto.Cipher
+import javax.crypto.SecretKey
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
+
 object Crypto {
-    // TODO
+
+    const val BYTEARRAY_LENGTH = 16
+    const val ALGORITHM = "AES"
+    const val TRANSFORMATION = "AES/CBC/PKCS5PADDING"
+
+    fun getKeyFromPassword(password: String): SecretKey {
+        val keyBytes = password.toByteArray()
+
+        if (keyBytes.size != BYTEARRAY_LENGTH) throw IllegalArgumentException("Length of password must be $BYTEARRAY_LENGTH bytes.")
+
+        return SecretKeySpec(keyBytes, ALGORITHM)
+    }
+
+    fun encrypt(key: SecretKey, dataToEncrypt: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance(TRANSFORMATION)
+        cipher.init(Cipher.ENCRYPT_MODE, key, IvParameterSpec(ByteArray(BYTEARRAY_LENGTH)))
+
+        return cipher.doFinal(dataToEncrypt)
+    }
+
+    fun decrypt(key: SecretKey, dataToDecrypt: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance(TRANSFORMATION)
+        cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(ByteArray(BYTEARRAY_LENGTH)))
+
+        return cipher.doFinal(dataToDecrypt)
+    }
 }
