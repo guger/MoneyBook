@@ -114,6 +114,8 @@ object Versions {
 
         const val ViewPagerDots = "4.2"
 
+        const val Moshi = "1.12.0"
+
         const val CalcDialog = "2.2.1"
         const val IconDialog = "3.3.0"
         const val RecurPicker = "2.1.4"

@@ -22,46 +22,139 @@ import android.app.NotificationManager
 import android.content.Context
 import android.net.Uri
 import androidx.core.app.NotificationCompat
-import androidx.core.net.toFile
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
-import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import at.guger.moneybook.R
 import at.guger.moneybook.core.util.Utils
-import kotlinx.coroutines.delay
+import at.guger.moneybook.data.crypto.Crypto
+import at.guger.moneybook.data.json.ExportImportConverter
+import at.guger.moneybook.data.repository.*
+import at.guger.moneybook.scheduler.reminder.ReminderScheduler
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import java.io.*
+import javax.crypto.SecretKey
 
 /**
  * [CoroutineWorker] for exporting or importing data.
  */
-class ExportImportWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+class ExportImportWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params), KoinComponent {
+
+    //region Variables
+
+    private val exportImportRepository: ExportImportRepository by inject()
+
+    private val exportImportConverter = ExportImportConverter()
 
     private val fileUri = Uri.parse(inputData.getString(FILE_URI))
 
     private val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    private val reminderScheduler: ReminderScheduler by inject()
+
+    //endregion
+
+    //region Methods
 
     override suspend fun doWork(): Result {
         val operation = inputData.getString(OPERATION)!!
 
         setForeground(createForegroundInfo(operation))
 
+        val key = Crypto.getKeyFromPassword(inputData.getString(PASSWORD)!!)
+
         return when (operation) {
-            EXPORT -> export()
-            IMPORT -> import()
+            EXPORT -> export(key)
+            IMPORT -> import(key)
             else -> Result.failure()
         }
     }
 
-    private suspend fun export(): Result {
-        // TODO
-        delay(5000)
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun export(key: SecretKey): Result {
+        val transactionEntities = exportImportRepository.getTransactionEntities()
+        val accounts = exportImportRepository.getAccounts()
+        val contacts = exportImportRepository.getContacts()
+        val reminders = exportImportRepository.getReminders()
+        val budgets = exportImportRepository.getBudgets()
+
+        val export = exportImportConverter.convertExport(ExportImportConverter.ExportImportModel(transactionEntities, accounts, contacts, reminders, budgets))
+        val encryptedExport = Crypto.encrypt(key, export.toByteArray())
+
+        try {
+            withContext(Dispatchers.IO) {
+                applicationContext.contentResolver.openFileDescriptor(fileUri, "w")?.use {
+                    FileOutputStream(it.fileDescriptor).use { stream ->
+                        stream.write(encryptedExport)
+                    }
+                }
+            }
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            return Result.failure()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return Result.failure()
+        }
+
         return Result.success()
     }
 
-    private suspend fun import(): Result {
-        //TODO
-        delay(7000)
+    private suspend fun import(key: SecretKey): Result {
+        val importModel = try {
+            val decryptedImport = Crypto.decrypt(key, readTextFromUri(fileUri).toByteArray())
+            exportImportConverter.convertImport(String(decryptedImport))
+        } catch (e: javax.crypto.IllegalBlockSizeException) {
+            Firebase.crashlytics.run {
+                recordException(e)
+            }
+
+            notifyImportFailed()
+
+            return Result.failure()
+        } catch (e: Exception) {
+            Firebase.crashlytics.run {
+                log("Invalid file content: $fileUri")
+                recordException(e)
+            }
+
+            notifyImportFailed()
+
+            return Result.failure()
+        }
+
+        exportImportRepository.deleteAll()
+
+        exportImportRepository.insertAccounts(importModel.accounts)
+        exportImportRepository.insertBudgets(importModel.budgets)
+        exportImportRepository.insertTransactions(importModel.transactionEntities)
+        exportImportRepository.insertContacts(importModel.contacts)
+
+        importModel.reminders.forEach {
+            reminderScheduler.scheduleReminder(it.transactionId, it.date)
+        }
+
         return Result.success()
+    }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun readTextFromUri(uri: Uri): String = withContext(Dispatchers.IO) {
+        val stringBuilder = StringBuilder()
+        applicationContext.contentResolver.openInputStream(uri)?.use { inputStream ->
+            BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                var line: String? = reader.readLine()
+                while (line != null) {
+                    stringBuilder.append(line)
+                    line = reader.readLine()
+                }
+            }
+        }
+        return@withContext stringBuilder.toString()
     }
 
     private fun createForegroundInfo(operation: String): ForegroundInfo {
@@ -83,8 +176,6 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
 
         val notificationBuilder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_EXPORT_IMPORT)
 
-        val cancelIntent = WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
-
         val title = applicationContext.getString(
             when (operation) {
                 EXPORT -> R.string.OngoingExport
@@ -97,15 +188,31 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
             setContentTitle(title)
             setSmallIcon(R.drawable.ic_export_import)
             setProgress(0, 0, true)
-            addAction(R.drawable.ic_close, applicationContext.getString(R.string.Cancel), cancelIntent)
         }
 
         return notificationBuilder.build()
     }
 
+    private fun notifyImportFailed() {
+        val notificationBuilder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_EXPORT_IMPORT)
+
+        with(notificationBuilder) {
+            setContentTitle(applicationContext.getString(R.string.ImportFailed))
+            setContentText(applicationContext.getString(R.string.ImportFailedMessage, BACKUP_FILE_EXTENSION))
+            setStyle(NotificationCompat.BigTextStyle().bigText(applicationContext.getString(R.string.ImportFailedMessage, BACKUP_FILE_EXTENSION)))
+            setSmallIcon(R.drawable.ic_export_import)
+            setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        }
+
+        notificationManager.notify(EXPORT_IMPORT_FAILED_NOTIFICATION_ID, notificationBuilder.build())
+    }
+
+    //endregion
+
     companion object {
         const val OPERATION = "export_import_operation"
         const val FILE_URI = "export_import_file_uri"
+        const val PASSWORD = "export_import_password"
         const val EXPORT = "operation_export"
         const val IMPORT = "operation_import"
 
@@ -114,9 +221,6 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
         private const val NOTIFICATION_CHANNEL_EXPORT_IMPORT = "at.guger.moneybook.notification.EXPORT_IMPORT"
 
         private const val EXPORT_IMPORT_NOTIFICATION_ID = 2001
-
-        fun checkValidBackupFile(backupFileUri: Uri): Boolean {
-            return backupFileUri.toString().endsWith(BACKUP_FILE_EXTENSION)
-        }
+        private const val EXPORT_IMPORT_FAILED_NOTIFICATION_ID = 2002
     }
 }

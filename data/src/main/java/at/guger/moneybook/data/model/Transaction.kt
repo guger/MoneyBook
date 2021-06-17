@@ -78,7 +78,12 @@ class Transaction(
     @Parcelize
     @Entity(
         tableName = Database.Transactions.TABLE_NAME,
-        foreignKeys = [ForeignKey(entity = Account::class, parentColumns = [Database.Accounts.COL_ID], childColumns = [Database.Transactions.COL_ACCOUNT_ID], onDelete = ForeignKey.CASCADE)],
+        foreignKeys = [ForeignKey(
+            entity = Account::class,
+            parentColumns = [Database.Accounts.COL_ID],
+            childColumns = [Database.Transactions.COL_ACCOUNT_ID],
+            onDelete = ForeignKey.CASCADE
+        )],
         indices = [Index(value = [Database.Transactions.COL_ACCOUNT_ID])]
     )
     data class TransactionEntity(

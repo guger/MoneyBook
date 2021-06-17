@@ -55,8 +55,8 @@ class AccountsRepository(database: AppDatabase) {
         return accountsDao.countAccounts()
     }
 
-    suspend fun insert(account: Account) {
-        accountsDao.insert(account)
+    suspend fun insert(vararg account: Account) {
+        accountsDao.insert(*account)
     }
 
     suspend fun update(account: Account) {

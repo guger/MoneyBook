@@ -31,7 +31,10 @@ internal interface BudgetsDao {
     fun get(id: Long): LiveData<Budget>
 
     @Query("SELECT * FROM budgets ORDER BY name ASC")
-    fun getBudgets(): LiveData<List<Budget>>
+    suspend fun getBudgets(): List<Budget>
+
+    @Query("SELECT * FROM budgets ORDER BY name ASC")
+    fun getObservableBudgets(): LiveData<List<Budget>>
 
     @Query(
         """
@@ -55,4 +58,7 @@ internal interface BudgetsDao {
 
     @Delete
     suspend fun delete(vararg budget: Budget)
+
+    @Query("DELETE FROM budgets")
+    suspend fun deleteAll()
 }

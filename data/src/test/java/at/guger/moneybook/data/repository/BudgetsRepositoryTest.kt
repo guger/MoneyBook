@@ -52,7 +52,7 @@ class BudgetsRepositoryTest : DatabaseTest() {
     fun testInsertContact() = runBlocking {
         repository.insert(BUDGET)
 
-        repository.getBudgets().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it.first() == BUDGET)
         }
@@ -62,14 +62,14 @@ class BudgetsRepositoryTest : DatabaseTest() {
     fun testUpdateAccount() = runBlocking {
         repository.insert(BUDGET)
 
-        repository.getBudgets().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it.first() == BUDGET)
         }
 
         repository.update(Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, Color.RED))
 
-        repository.getBudgets().observeOnce {
+        repository.getObservableBudgets().observeOnce {
             assertThat(it).hasSize(1)
             assertThat(it.first() == Budget(BUDGET_ID, BUDGET_NAME, BUDGET_BUDGET, Color.RED))
         }
@@ -79,10 +79,10 @@ class BudgetsRepositoryTest : DatabaseTest() {
     fun testDeleteAccount() = runBlocking {
         repository.insert(BUDGET)
 
-        repository.getBudgets().observeOnce { assertThat(it).isNotEmpty() }
+        repository.getObservableBudgets().observeOnce { assertThat(it).isNotEmpty() }
         repository.delete(BUDGET)
 
-        repository.getBudgets().observeOnce { assertThat(it).isEmpty() }
+        repository.getObservableBudgets().observeOnce { assertThat(it).isEmpty() }
     }
 
     companion object {

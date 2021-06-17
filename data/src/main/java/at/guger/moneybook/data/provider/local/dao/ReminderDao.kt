@@ -32,7 +32,7 @@ internal interface ReminderDao {
     suspend fun getReminderForTransaction(transactionId: Long): Reminder?
 
     @Insert
-    suspend fun insert(reminder: Reminder): Long
+    suspend fun insert(vararg reminder: Reminder)
 
     @Update
     suspend fun update(reminder: Reminder)
@@ -42,4 +42,7 @@ internal interface ReminderDao {
 
     @Query("DELETE FROM reminders WHERE transaction_id = :transactionId")
     suspend fun deleteByTransactionId(transactionId: Long)
+
+    @Query("DELETE FROM reminders")
+    suspend fun deleteAll()
 }

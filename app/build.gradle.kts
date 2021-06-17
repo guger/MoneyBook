@@ -118,6 +118,8 @@ dependencies {
 
     work()
 
+    moshi()
+
     implementation(Libs.ViewPagerDots)
     implementation(Libs.MaterialCab)
     implementation(Libs.MaterialDialogsCore)
