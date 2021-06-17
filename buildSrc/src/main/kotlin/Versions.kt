@@ -49,9 +49,9 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "7.0.0-beta03"
+    const val Gradle = "7.0.0-beta04"
 
-    const val KOIN = "3.0.2"
+    const val KOIN = "3.1.0"
 
     object D8 {
         const val CoreLibraryDesugaring = "1.1.5"
@@ -85,15 +85,15 @@ object Versions {
     }
 
     object AndroidX {
-        const val Core = "1.5.0-rc02"
-        const val AppCompat = "1.3.0-rc01"
+        const val Core = "1.6.0-rc01"
+        const val AppCompat = "1.3.0"
         const val Annotation = "1.2.0"
-        const val Fragment = "1.3.3"
+        const val Fragment = "1.3.5"
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha03"
         const val ViewPager2 = "1.0.0"
         const val ConstraintLayout = "2.1.0-beta02"
-        const val RecyclerView = "1.2.0"
+        const val RecyclerView = "1.2.1"
         const val CardView = "1.0.0"
     }
 
@@ -103,7 +103,7 @@ object Versions {
 
     object Arch {
         const val Lifecycle = "2.3.0"
-        const val Navigation = "2.3.5"
+        const val Navigation = "2.4.0-alpha03"
         const val Room = "2.3.0"
         const val Work = "2.5.0"
     }
