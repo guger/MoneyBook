@@ -50,8 +50,4 @@ val dataModule = module {
     single { ContactsRepository(get()) }
     single { RemindersRepository(get()) }
     single { ExportImportRepository(get()) }
-
-    worker { ContactsSyncWorker(get(), get(), get(), get()) }
-    worker { DefaultAccountWorker(get(), get(), get()) }
-    worker { DefaultBudgetsWorker(get(), get(), get()) }
 }

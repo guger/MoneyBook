@@ -39,13 +39,11 @@ class MoneyBook : Application() {
 
     private val preferences: Preferences by inject()
 
-    @KoinExperimentalAPI
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
             androidContext(this@MoneyBook.applicationContext)
-            workManagerFactory()
             modules(listOf(mainModule, dataModule, appModule))
         }
 

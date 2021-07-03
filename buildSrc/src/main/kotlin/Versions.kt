@@ -51,7 +51,7 @@ object Versions {
 
     const val Gradle = "7.0.0-beta05"
 
-    const val KOIN = "3.1.0"
+    const val KOIN = "3.1.2"
 
     object D8 {
         const val CoreLibraryDesugaring = "1.1.5"

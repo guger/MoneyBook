@@ -46,6 +46,4 @@ val appModule = module {
     viewModel { AddEditTransactionViewModel(get(), get(), get(), get(), get()) }
     viewModel { AddEditAccountDialogFragmentViewModel(get()) }
     viewModel { AddEditBudgetDialogFragmentViewModel(get()) }
-
-    worker { ForceStopWorker(get(), get(), get(), get()) }
 }
