@@ -44,7 +44,7 @@ object Dependencies {
         const val Truth = "com.google.truth:truth:${Versions.Test.Truth}"
 
         object AndroidX {
-            const val Extensions = "androidx.test.ext:junit:${Versions.Test.AndroidX.Extensions}"
+            const val Extensions = "androidx.test.ext:junit:${Versions.Test.AndroidX.JUnit}"
             const val ArchCoreTesting = "androidx.arch.core:core-testing:${Versions.Test.AndroidX.ArchCoreTesting}"
             const val EspressoCore = "androidx.test.espresso:espresso-core:${Versions.Test.AndroidX.Espresso}"
             const val EspressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.Test.AndroidX.Espresso}"

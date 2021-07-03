@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "7.0.0-beta04"
+    const val Gradle = "7.0.0-beta05"
 
     const val KOIN = "3.1.0"
 
@@ -60,17 +60,18 @@ object Versions {
     object Test {
         const val JUnit = "4.13.1"
         const val Robolectric = "4.5.1"
-        const val Truth = "1.0"
+        const val Truth = "1.1.3"
 
         object AndroidX {
-            const val Extensions = "1.1.1"
+            const val Core = "1.4.0"
+            const val Espresso = "3.4.0"
+            const val JUnit = "1.1.3"
             const val ArchCoreTesting = "2.1.0"
-            const val Espresso = "3.3.0"
         }
     }
 
     object Kotlin {
-        const val Common = "1.5.10"
+        const val Common = "1.5.20"
         const val Coroutines = "1.5.0"
     }
 
@@ -85,7 +86,7 @@ object Versions {
     }
 
     object AndroidX {
-        const val Core = "1.6.0-rc01"
+        const val Core = "1.6.0"
         const val AppCompat = "1.3.0"
         const val Annotation = "1.2.0"
         const val Fragment = "1.3.5"
@@ -98,12 +99,12 @@ object Versions {
     }
 
     object Material {
-        const val Material = "1.4.0-beta01"
+        const val Material = "1.4.0"
     }
 
     object Arch {
         const val Lifecycle = "2.3.0"
-        const val Navigation = "2.4.0-alpha03"
+        const val Navigation = "2.4.0-alpha04"
         const val Room = "2.3.0"
         const val Work = "2.5.0"
     }
