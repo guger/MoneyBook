@@ -29,7 +29,12 @@ import java.time.LocalDateTime
  */
 @Entity(
     tableName = Database.Reminders.TABLE_NAME,
-    foreignKeys = [ForeignKey(entity = Transaction.TransactionEntity::class, parentColumns = [Database.Transactions.COL_ID], childColumns = [COL_TRANSACTION_ID], onDelete = ForeignKey.CASCADE)],
+    foreignKeys = [ForeignKey(
+        entity = Transaction.TransactionEntity::class,
+        parentColumns = [Database.Transactions.COL_ID],
+        childColumns = [COL_TRANSACTION_ID],
+        onDelete = ForeignKey.CASCADE
+    )],
     indices = [Index(value = [COL_TRANSACTION_ID], unique = true)]
 )
 data class Reminder(

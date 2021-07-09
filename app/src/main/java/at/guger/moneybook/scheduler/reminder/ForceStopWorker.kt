@@ -27,17 +27,18 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.data.repository.RemindersRepository
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.time.LocalDateTime
 
 class ForceStopWorker(
     context: Context,
-    params: WorkerParameters,
-    private val remindersRepository: RemindersRepository,
-    private val scheduler: ReminderScheduler
-) : CoroutineWorker(context, params) {
+    params: WorkerParameters
+) : CoroutineWorker(context, params), KoinComponent {
 
     //region Variables
-
+    private val remindersRepository: RemindersRepository by inject()
+    private val scheduler: ReminderScheduler by inject()
     //endregion
 
     override suspend fun doWork(): Result {

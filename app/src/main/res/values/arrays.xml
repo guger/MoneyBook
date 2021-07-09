@@ -48,4 +48,8 @@ s
         <item>432000000</item>
         <item>604800000</item>
     </string-array>
+    <string-array name="ExportImport">
+        <item>@string/Export</item>
+        <item>@string/Import</item>
+    </string-array>
 </resources>

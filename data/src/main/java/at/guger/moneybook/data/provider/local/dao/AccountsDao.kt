@@ -53,11 +53,14 @@ internal interface AccountsDao {
     suspend fun countAccounts(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(account: Account)
+    suspend fun insert(vararg account: Account)
 
     @Update
     suspend fun update(account: Account)
 
     @Delete
     suspend fun delete(vararg account: Account)
+
+    @Query("DELETE FROM accounts")
+    suspend fun deleteAll()
 }

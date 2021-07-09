@@ -41,8 +41,8 @@ class RemindersRepository(database: AppDatabase) {
         return reminderDao.getReminderForTransaction(transactionId)
     }
 
-    suspend fun insert(reminder: Reminder) {
-        reminderDao.insert(reminder)
+    suspend fun insert(vararg reminder: Reminder) {
+        reminderDao.insert(*reminder)
     }
 
     suspend fun update(reminder: Reminder) {

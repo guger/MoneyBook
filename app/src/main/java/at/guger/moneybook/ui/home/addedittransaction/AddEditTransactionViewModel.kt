@@ -108,9 +108,9 @@ class AddEditTransactionViewModel(
     val transactionSaved: LiveData<Event<Unit>> = _transactionSaved
 
     val accounts: LiveData<List<Account>> = accountsRepository.getObservableAccounts()
-    val budgets: LiveData<List<Budget>> = budgetsRepository.getBudgets()
-    val transferAccounts: LiveData<Pair<List<Account>, Account>> = Transformations.map(accounts) {
-        Pair(it, accounts.value?.find { it.name == transactionAccount.value }!!)
+    val budgets: LiveData<List<Budget>> = budgetsRepository.getObservableBudgets()
+    val transferAccounts: LiveData<Pair<List<Account>, Account>> = Transformations.map(accounts) { list ->
+        Pair(list, accounts.value?.find { it.name == transactionAccount.value }!!)
     }
 
     private val _addressBook = MutableLiveData<Map<Long, String>>()

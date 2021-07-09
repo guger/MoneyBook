@@ -82,11 +82,9 @@ class AddEditBudgetBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogF
         fragmentViewModel.showColorChooser.observe(viewLifecycleOwner, EventObserver {
             MaterialDialog(requireActivity()).show {
                 title(res = R.string.ChooseColor)
-
                 colorChooser(colors = DataUtils.getBudgetColors(requireContext()), initialSelection = fragmentViewModel.budgetColor.value) { _, color ->
                     fragmentViewModel.budgetColor.value = color
                 }
-
                 negativeButton(res = R.string.Cancel)
                 positiveButton(res = R.string.ChooseColor)
             }

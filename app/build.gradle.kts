@@ -118,10 +118,13 @@ dependencies {
 
     work()
 
+    moshi()
+
     implementation(Libs.ViewPagerDots)
     implementation(Libs.MaterialCab)
     implementation(Libs.MaterialDialogsCore)
     implementation(Libs.MaterialDialogsColor)
+    implementation(Libs.MaterialDialogsFiles)
 
     implementation(Libs.CalcDialog)
     implementation(Libs.IconDialog)

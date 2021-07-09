@@ -17,6 +17,7 @@
 package at.guger.moneybook.core.permission
 
 import android.Manifest.permission.READ_CONTACTS
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import androidx.fragment.app.Fragment
 
 /**
@@ -28,9 +29,12 @@ sealed class Permission(vararg val permissions: String) {
 
     object CONTACTS : Permission(READ_CONTACTS)
 
+    object STORAGE : Permission(WRITE_EXTERNAL_STORAGE)
+
     companion object {
         fun from(permission: String) = when (permission) {
             READ_CONTACTS -> CONTACTS
+            WRITE_EXTERNAL_STORAGE -> STORAGE
             else -> throw IllegalArgumentException("Unknown permission: $permission.")
         }
     }

@@ -39,4 +39,7 @@ internal interface ContactsDao {
 
     @Delete
     suspend fun delete(contacts: List<Contact>)
+
+    @Query("DELETE FROM contacts")
+    suspend fun deleteAll()
 }

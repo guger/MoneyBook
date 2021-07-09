@@ -58,6 +58,7 @@ class Preferences(context: Context) {
         const val EXPERIMENTAL = "pref_experimental"
 
         const val PERMISSIONS = "pref_permissions"
+        const val EXPORT_IMPORT = "pref_export_import"
         const val INFORMATION = "pref_information"
     }
 }

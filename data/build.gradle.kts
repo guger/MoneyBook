@@ -95,5 +95,7 @@ dependencies {
 
     work()
 
+    moshi()
+
     implementation(Libs.RecurPicker)
 }
