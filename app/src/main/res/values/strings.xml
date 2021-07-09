@@ -182,9 +182,9 @@
     <string name="NoValidBackupFileSelected">No valid backup file selected, please check the \'*.%s\' file extension.</string>
     <string name="ExportAborted">Export aborted.</string>
     <string name="ImportAborted">Import aborted.</string>
-    <string name="EnterPassword">Enter password</string>
     <string name="EnterPasswordMessage">Enter a 16 char long password, which is used for encryption and decryption of your backup.</string>
     <string name="Password">Password</string>
     <string name="ImportFailed">Import failed …</string>
     <string name="ImportFailedMessage">Your import has failed. Please check the file extension (\'*.%s\') and the password.</string>
+    <string name="WhitespaceNotAllowed">Please remove any whitespace from the password.</string>
 </resources>

@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.ui.settings
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -38,6 +39,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.getInputLayout
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -139,17 +141,24 @@ class MainPreferenceFragment : BasePreferenceFragment() {
             .show()
     }
 
+    @SuppressLint("CheckResult")
     private fun requestPassword(operation: String) {
         MaterialDialog(requireContext()).show {
-            title(res = R.string.EnterPassword)
+            title(res = R.string.Password)
             message(res = R.string.EnterPasswordMessage)
             input(
                 waitForPositiveButton = false,
                 hintRes = R.string.Password,
-                inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD,
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD,
                 maxLength = Crypto.BYTEARRAY_LENGTH
             ) { dialog, text ->
-                val isValid = text.trim().length == Crypto.BYTEARRAY_LENGTH
+                val isValid = text.length == Crypto.BYTEARRAY_LENGTH && !text.contains(" ")
+
+                if (text.contains(" ")) {
+                    dialog.getInputLayout().error = getString(R.string.WhitespaceNotAllowed)
+                } else {
+                    dialog.getInputLayout().error = null
+                }
 
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
             }

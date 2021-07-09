@@ -28,8 +28,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.workmanager.koin.workManagerFactory
-import org.koin.core.KoinExperimentalAPI
 import org.koin.core.context.startKoin
 
 /**

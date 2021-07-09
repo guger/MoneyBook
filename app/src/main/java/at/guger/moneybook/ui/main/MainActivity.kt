@@ -53,6 +53,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     private val topLevelDestinations = setOf(R.id.homeFragment, R.id.settingsFragment, R.id.addEditTransactionFragment, R.id.addEditAccountBottomSheetDialogFragment)
 
+    // TODO Check if needed
     var cabEnabled: Boolean = true
         set(value) {
             field = value

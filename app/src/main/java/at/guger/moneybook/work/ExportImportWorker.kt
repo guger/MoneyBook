@@ -29,15 +29,15 @@ import at.guger.moneybook.R
 import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.data.crypto.Crypto
 import at.guger.moneybook.data.json.ExportImportConverter
-import at.guger.moneybook.data.repository.*
+import at.guger.moneybook.data.repository.ExportImportRepository
 import at.guger.moneybook.scheduler.reminder.ReminderScheduler
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.*
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.crypto.SecretKey
 
 /**
@@ -57,13 +57,13 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
 
     private val reminderScheduler: ReminderScheduler by inject()
 
+    private val operation = inputData.getString(OPERATION)!!
+
     //endregion
 
     //region Methods
 
     override suspend fun doWork(): Result {
-        val operation = inputData.getString(OPERATION)!!
-
         setForeground(createForegroundInfo(operation))
 
         val key = Crypto.getKeyFromPassword(inputData.getString(PASSWORD)!!)
@@ -87,11 +87,9 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
         val encryptedExport = Crypto.encrypt(key, export.toByteArray())
 
         try {
-            withContext(Dispatchers.IO) {
-                applicationContext.contentResolver.openFileDescriptor(fileUri, "w")?.use {
-                    FileOutputStream(it.fileDescriptor).use { stream ->
-                        stream.write(encryptedExport)
-                    }
+            applicationContext.contentResolver.openFileDescriptor(fileUri, "w")?.use {
+                FileOutputStream(it.fileDescriptor).use { stream ->
+                    stream.write(encryptedExport)
                 }
             }
         } catch (e: FileNotFoundException) {
@@ -107,7 +105,7 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
 
     private suspend fun import(key: SecretKey): Result {
         val importModel = try {
-            val decryptedImport = Crypto.decrypt(key, readTextFromUri(fileUri).toByteArray())
+            val decryptedImport = Crypto.decrypt(key, readFile(fileUri))
             exportImportConverter.convertImport(String(decryptedImport))
         } catch (e: javax.crypto.IllegalBlockSizeException) {
             Firebase.crashlytics.run {
@@ -142,19 +140,10 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
         return Result.success()
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
-    private suspend fun readTextFromUri(uri: Uri): String = withContext(Dispatchers.IO) {
-        val stringBuilder = StringBuilder()
-        applicationContext.contentResolver.openInputStream(uri)?.use { inputStream ->
-            BufferedReader(InputStreamReader(inputStream)).use { reader ->
-                var line: String? = reader.readLine()
-                while (line != null) {
-                    stringBuilder.append(line)
-                    line = reader.readLine()
-                }
-            }
-        }
-        return@withContext stringBuilder.toString()
+    private fun readFile(uri: Uri): ByteArray {
+        return applicationContext.contentResolver.openInputStream(uri)?.use { inputStream ->
+            inputStream.readBytes()
+        } ?: throw IllegalArgumentException("$uri does not point to a valid file.")
     }
 
     private fun createForegroundInfo(operation: String): ForegroundInfo {
@@ -218,7 +207,7 @@ class ExportImportWorker(context: Context, params: WorkerParameters) : Coroutine
 
         const val BACKUP_FILE_EXTENSION = "MoneyBookBackup"
 
-        private const val NOTIFICATION_CHANNEL_EXPORT_IMPORT = "at.guger.moneybook.notification.EXPORT_IMPORT"
+        const val NOTIFICATION_CHANNEL_EXPORT_IMPORT = "at.guger.moneybook.notification.EXPORT_IMPORT"
 
         private const val EXPORT_IMPORT_NOTIFICATION_ID = 2001
         private const val EXPORT_IMPORT_FAILED_NOTIFICATION_ID = 2002

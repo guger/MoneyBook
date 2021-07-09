@@ -22,7 +22,6 @@ import at.guger.moneybook.data.repository.*
 import at.guger.moneybook.work.ContactsSyncWorker
 import at.guger.moneybook.work.DefaultAccountWorker
 import at.guger.moneybook.work.DefaultBudgetsWorker
-import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
 
 /**

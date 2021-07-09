@@ -17,7 +17,6 @@
 package at.guger.moneybook.di
 
 import at.guger.moneybook.core.preferences.Preferences
-import at.guger.moneybook.scheduler.reminder.ForceStopWorker
 import at.guger.moneybook.scheduler.reminder.ReminderScheduler
 import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.home.accounts.addeditaccount.AddEditAccountDialogFragmentViewModel
@@ -27,7 +26,6 @@ import at.guger.moneybook.ui.home.budgets.addeditbudget.AddEditBudgetDialogFragm
 import at.guger.moneybook.ui.home.budgets.detail.BudgetDetailBottomSheetViewModel
 import at.guger.moneybook.ui.home.budgets.detail.BudgetDetailViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
 
 /**
