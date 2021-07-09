@@ -153,6 +153,7 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
             setSmallIcon(R.drawable.ic_notification)
             setAutoCancel(true)
             setContentIntent(pendingIntent)
+            setCategory(NotificationCompat.CATEGORY_REMINDER)
             color = ContextCompat.getColor(context, R.color.colorPrimary)
         }
 

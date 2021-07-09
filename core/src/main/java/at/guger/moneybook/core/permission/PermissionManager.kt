@@ -67,6 +67,13 @@ class PermissionManager private constructor(private val fragment: WeakReference<
         handlePermissionRequest()
     }
 
+    /**
+     * Requests the given permissions.
+     *
+     * @param permission A set of permissions
+     * @param info The [RationaleInfo] to show.
+     * @param callback A callback returning a boolean `isAllGranted` and the mapped request results.
+     */
     fun requestPermission(
         vararg permission: Permission,
         info: RationaleInfo,

@@ -30,6 +30,9 @@ internal interface TransactionsDao {
     @Query("SELECT transactions.* FROM transactions WHERE id = :id")
     suspend fun get(id: Long): Transaction
 
+    @Query("SELECT transactions.* FROM transactions")
+    suspend fun getEntities(): List<Transaction.TransactionEntity>
+
     @androidx.room.Transaction
     @Query(
         """
@@ -82,4 +85,7 @@ internal interface TransactionsDao {
 
     @Delete
     suspend fun delete(vararg transactionEntity: Transaction.TransactionEntity)
+
+    @Query("DELETE FROM transactions")
+    suspend fun deleteAll()
 }

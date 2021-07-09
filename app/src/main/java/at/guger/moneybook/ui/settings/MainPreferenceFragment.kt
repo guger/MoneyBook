@@ -16,23 +16,39 @@
 
 package at.guger.moneybook.ui.settings
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import at.guger.moneybook.BuildConfig
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
+import at.guger.moneybook.data.crypto.Crypto
+import at.guger.moneybook.work.ExportImportWorker
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.getInputLayout
+import com.afollestad.materialdialogs.input.input
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.system.exitProcess
-
 
 /**
  * Main settings fragment.
@@ -47,6 +63,27 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     private lateinit var prefInformation: Preference
 
     private var restartSnackbar: Snackbar? = null
+
+    private var password: String? = null
+    private val createDocument = registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+        if (uri != null) {
+            exportData(uri, password!!)
+        } else {
+            Snackbar.make(requireView(), R.string.NoBackupFileLocationSelected, Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.mBottomAppBar)
+                .show()
+        }
+    }
+
+    private val openDocument = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) {
+            importData(uri, password!!)
+        } else {
+            Snackbar.make(requireView(), R.string.NoBackupFileLocationSelected, Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.mBottomAppBar)
+                .show()
+        }
+    }
 
     //endregion
 
@@ -64,6 +101,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         prefCurrency = findPreference(Preferences.CURRENCY)!!
+        prefInformation = findPreference(Preferences.EXPORT_IMPORT)!!
         prefInformation = findPreference(Preferences.INFORMATION)!!
 
         prefCurrency.setOnPreferenceChangeListener { _, _ ->
@@ -90,6 +128,100 @@ class MainPreferenceFragment : BasePreferenceFragment() {
 
     //region Methods
 
+    private fun exportOrImportData() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.ExportImport)
+            .setMessage(R.string.ExportImportMessage)
+            .setNegativeButton(R.string.Export) { _, _ ->
+                requestPassword(ExportImportWorker.EXPORT)
+            }
+            .setPositiveButton(R.string.Import) { _, _ ->
+                requestPassword(ExportImportWorker.IMPORT)
+            }
+            .show()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun requestPassword(operation: String) {
+        MaterialDialog(requireContext()).show {
+            title(res = R.string.Password)
+            message(res = R.string.EnterPasswordMessage)
+            input(
+                waitForPositiveButton = false,
+                hintRes = R.string.Password,
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD,
+                maxLength = Crypto.BYTEARRAY_LENGTH
+            ) { dialog, text ->
+                val isValid = text.length == Crypto.BYTEARRAY_LENGTH && !text.contains(" ")
+
+                if (text.contains(" ")) {
+                    dialog.getInputLayout().error = getString(R.string.WhitespaceNotAllowed)
+                } else {
+                    dialog.getInputLayout().error = null
+                }
+
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+            }
+            positiveButton(res = R.string.OK) {
+                password = it.getInputField().text.toString()
+
+                when (operation) {
+                    ExportImportWorker.EXPORT -> {
+                        val today = LocalDateTime.now()
+                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")
+
+                        createDocument.launch("${formatter.format(today)}.${ExportImportWorker.BACKUP_FILE_EXTENSION}")
+                    }
+                    else -> {
+                        openDocument.launch(arrayOf("*/*"))
+                    }
+                }
+            }
+            negativeButton(res = R.string.Cancel) {
+                Snackbar.make(requireView(), if (operation == ExportImportWorker.EXPORT) R.string.ExportAborted else R.string.ImportAborted, Snackbar.LENGTH_LONG)
+                    .setAnchorView(R.id.mBottomAppBar)
+                    .show()
+            }
+        }
+    }
+
+    private fun exportData(uri: Uri, password: String) {
+        WorkManager.getInstance(requireContext())
+            .enqueue(
+                OneTimeWorkRequestBuilder<ExportImportWorker>()
+                    .setInputData(
+                        workDataOf(
+                            ExportImportWorker.OPERATION to ExportImportWorker.EXPORT,
+                            ExportImportWorker.FILE_URI to uri.toString(),
+                            ExportImportWorker.PASSWORD to password
+                        )
+                    )
+                    .build()
+            )
+    }
+
+    private fun importData(uri: Uri, password: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.ImportData)
+            .setMessage(R.string.ImportDataOverwriteAll)
+            .setPositiveButton(R.string.Import) { _, _ ->
+                WorkManager.getInstance(requireContext())
+                    .enqueue(
+                        OneTimeWorkRequestBuilder<ExportImportWorker>()
+                            .setInputData(
+                                workDataOf(
+                                    ExportImportWorker.OPERATION to ExportImportWorker.IMPORT,
+                                    ExportImportWorker.FILE_URI to uri.toString(),
+                                    ExportImportWorker.PASSWORD to password
+                                )
+                            )
+                            .build()
+                    )
+            }
+            .setNegativeButton(R.string.Cancel, null)
+            .show()
+    }
+
     private fun showRestartSnackBar() {
         restartSnackbar = Snackbar.make(
             requireView(),
@@ -104,9 +236,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     }
 
     private fun restartApplication() {
-        val restartIntent: Intent? =
-            requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)
-                ?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
+        val restartIntent: Intent? = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
 
         startActivity(restartIntent)
         exitProcess(0)
@@ -130,6 +260,9 @@ class MainPreferenceFragment : BasePreferenceFragment() {
                     .setMessage(R.string.PermissionDetails)
                     .setPositiveButton(R.string.Close, null)
                     .show()
+            }
+            Preferences.EXPORT_IMPORT -> {
+                exportOrImportData()
             }
             Preferences.INFORMATION -> startActivity(
                 Intent.parseUri(

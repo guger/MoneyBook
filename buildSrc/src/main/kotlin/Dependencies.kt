@@ -44,7 +44,7 @@ object Dependencies {
         const val Truth = "com.google.truth:truth:${Versions.Test.Truth}"
 
         object AndroidX {
-            const val Extensions = "androidx.test.ext:junit:${Versions.Test.AndroidX.Extensions}"
+            const val Extensions = "androidx.test.ext:junit:${Versions.Test.AndroidX.JUnit}"
             const val ArchCoreTesting = "androidx.arch.core:core-testing:${Versions.Test.AndroidX.ArchCoreTesting}"
             const val EspressoCore = "androidx.test.espresso:espresso-core:${Versions.Test.AndroidX.Espresso}"
             const val EspressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.Test.AndroidX.Espresso}"
@@ -92,7 +92,7 @@ object Dependencies {
         const val NavigationUI = "androidx.navigation:navigation-ui-ktx:${Versions.Arch.Navigation}"
 
         const val RoomRuntime = "androidx.room:room-runtime:${Versions.Arch.Room}"
-        const val RoomKTX = "androidx.room:room-ktx:${Versions.Arch.Room}"
+        const val RoomKtx = "androidx.room:room-ktx:${Versions.Arch.Room}"
         const val RoomCompiler = "androidx.room:room-compiler:${Versions.Arch.Room}"
         const val RoomTesting = "androidx.room:room-testing:${Versions.Arch.Room}"
 
@@ -103,8 +103,12 @@ object Dependencies {
         const val MaterialCab = "com.afollestad:material-cab:${Versions.Libraries.MaterialCab}"
         const val MaterialDialogsCore = "com.afollestad.material-dialogs:core:${Versions.Libraries.MaterialDialogs}"
         const val MaterialDialogsColor = "com.afollestad.material-dialogs:color:${Versions.Libraries.MaterialDialogs}"
+        const val MaterialDialogsFiles = "com.afollestad.material-dialogs:input:${Versions.Libraries.MaterialDialogs}"
 
         const val ViewPagerDots = "com.tbuonomo:dotsindicator:${Versions.Libraries.ViewPagerDots}"
+
+        const val Moshi = "com.squareup.moshi:moshi:${Versions.Libraries.Moshi}"
+        const val MoshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.Libraries.Moshi}"
 
         const val CalcDialog = "com.maltaisn:calcdialog:${Versions.Libraries.CalcDialog}"
         const val IconDialog = "com.maltaisn:icondialog:${Versions.Libraries.IconDialog}"
@@ -130,12 +134,17 @@ fun DependencyHandler.navigation() {
 
 fun DependencyHandler.room() {
     implementation(Dependencies.Arch.RoomRuntime)
-    implementation(Dependencies.Arch.RoomKTX)
+    implementation(Dependencies.Arch.RoomKtx)
     kapt(Dependencies.Arch.RoomCompiler)
 }
 
 fun DependencyHandler.work() {
     implementation(Dependencies.Arch.WorkManager)
+}
+
+fun DependencyHandler.moshi() {
+    implementation(Dependencies.Libs.Moshi)
+    implementation(Dependencies.Libs.MoshiKotlin)
 }
 
 fun DependencyHandler.implementation(dependency: String) {

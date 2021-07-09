@@ -46,6 +46,15 @@
             android:title="@string/CrashReports" />
     </androidx.preference.PreferenceCategory>
 
+    <androidx.preference.PreferenceCategory android:title="@string/ExportImport">
+
+        <androidx.preference.Preference
+            android:icon="@drawable/ic_export_import"
+            android:key="pref_export_import"
+            android:summary="@string/prefs_ExportImportData"
+            android:title="@string/ExportImportData" />
+    </androidx.preference.PreferenceCategory>
+
     <androidx.preference.PreferenceCategory android:title="@string/Other">
 
         <androidx.preference.Preference
