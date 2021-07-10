@@ -21,15 +21,18 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.util.DataUtils
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /**
  * [CoroutineWorker] for adding the default account
  */
 class DefaultAccountWorker(
     context: Context,
-    params: WorkerParameters,
-    private val repository: AccountsRepository
-) : CoroutineWorker(context, params) {
+    params: WorkerParameters
+) : CoroutineWorker(context, params), KoinComponent {
+
+    private val repository by inject<AccountsRepository>()
 
     override suspend fun doWork(): Result {
         repository.insert(DataUtils.getDefaultAccount(applicationContext))

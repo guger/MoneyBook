@@ -17,6 +17,7 @@
 package at.guger.moneybook
 
 import android.app.Application
+import androidx.work.Configuration
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import at.guger.moneybook.core.preferences.Preferences
@@ -33,7 +34,7 @@ import org.koin.core.context.startKoin
 /**
  * Main application class.
  */
-class MoneyBook : Application() {
+class MoneyBook : Application(), Configuration.Provider {
 
     private val preferences: Preferences by inject()
 
@@ -51,6 +52,8 @@ class MoneyBook : Application() {
 
         checkForceStopped()
     }
+
+    override fun getWorkManagerConfiguration(): Configuration = Configuration.Builder().build()
 
     private fun checkForceStopped() {
         if (ForceStopWorker.isForceStopped(applicationContext)) WorkManager.getInstance(applicationContext).enqueue(OneTimeWorkRequestBuilder<ForceStopWorker>().build())
