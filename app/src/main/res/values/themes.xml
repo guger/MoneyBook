@@ -54,9 +54,17 @@
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.AppTheme.MediumComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.AppTheme.LargeComponent</item>
 
-        <item name="alertDialogTheme">?materialAlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.AppTheme.MaterialDialog</item>
+
+        <!--Material Dialogs-->
+        <item name="md_font_title">@font/roboto_condensed_regular</item>
+        <item name="md_font_body">@font/roboto_condensed_light</item>
 
         <item name="calcDialogStyle">@style/AppTheme.CalcDialogStyle</item>
+    </style>
+
+    <style name="ThemeOverlay.AppTheme.MaterialDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="textAppearanceBody1">@style/TextAppearance.AppCompat.Body2</item>
     </style>
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.NoActionBar">

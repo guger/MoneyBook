@@ -26,6 +26,8 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.viewpager2.widget.ViewPager2
 import at.guger.moneybook.R
+import at.guger.moneybook.core.util.ext.hide
+import at.guger.moneybook.core.util.ext.show
 import at.guger.moneybook.databinding.ViewOnboardingBinding
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
@@ -59,8 +61,16 @@ class OnBoardingView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    if (numberOfPages > 1) {
-                        binding.mOnBoardingViewRoot.progress = (position + positionOffset) / (numberOfPages - 1)
+                    with(binding) {
+                        if (position == numberOfPages - 1) {
+                            btnOnBoardingViewSkip.hide()
+                            btnOnBoardingViewNext.hide()
+                            btnOnBoardingViewStartMigrate.show()
+                        } else {
+                            btnOnBoardingViewSkip.show()
+                            btnOnBoardingViewNext.show()
+                            btnOnBoardingViewStartMigrate.hide()
+                        }
                     }
                 }
             })

@@ -17,12 +17,12 @@
   ~
   -->
 
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mOnBoardingViewRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutDescription="@xml/view_onboarding_scene">
+    android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/mOnBoardingViewSlider"
@@ -78,10 +78,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+        android:scaleX="0.0"
+        android:scaleY="0.0"
         android:text="@string/GetStarted"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/mOnBoardingViewSlider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.motion.widget.MotionLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:scaleX="1.0"
+        tools:scaleY="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
