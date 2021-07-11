@@ -47,7 +47,13 @@ class Preferences(context: Context) {
         set(value) = preferences.edit { putBoolean(EXPERIMENTAL, value) }
 
     var currency: Currency
-        get() = preferences.getString(CURRENCY, null)?.takeIf { it != "Default" }?.let(Currency::getInstance) ?: Currency.getInstance(Locale.getDefault())
+        get() {
+            return try {
+                preferences.getString(CURRENCY, null)?.takeIf { it != "Default" }?.let(Currency::getInstance) ?: Currency.getInstance(Locale.getDefault())
+            } catch (e: IllegalArgumentException) {
+                Currency.getInstance(Locale.getDefault())
+            }
+        }
         set(value) = preferences.edit { putString(CURRENCY, value.currencyCode) }
 
     companion object {
