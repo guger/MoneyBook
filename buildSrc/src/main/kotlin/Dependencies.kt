@@ -67,6 +67,21 @@ object Dependencies {
         const val Crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     }
 
+    object Compose {
+        const val UI = "androidx.compose.ui:ui:${Versions.Compose}"
+
+        const val UITooling = "androidx.compose.ui:ui-tooling:${Versions.Compose}"
+
+        const val Foundation = "androidx.compose.foundation:foundation:${Versions.Compose}"
+
+        const val Material = "androidx.compose.material:material:${Versions.Compose}"
+
+        const val IconsCore = "androidx.compose.material:material-icons-core:${Versions.Compose}"
+        const val IconsExtended = "androidx.compose.material:material-icons-extended:${Versions.Compose}"
+
+        const val LiveData = "androidx.compose.runtime:runtime-livedata:${Versions.Compose}"
+    }
+
     object AndroidX {
         const val Core = "androidx.core:core-ktx:${Versions.AndroidX.Core}"
         const val AppCompat = "androidx.appcompat:appcompat:${Versions.AndroidX.AppCompat}"
@@ -119,6 +134,21 @@ object Dependencies {
 fun DependencyHandler.koin() {
     implementation(Dependencies.Koin.Android)
     implementation(Dependencies.Koin.WorkManager)
+}
+
+fun DependencyHandler.compose() {
+    implementation(Dependencies.Compose.UI)
+
+    implementation(Dependencies.Compose.UITooling)
+
+    implementation(Dependencies.Compose.Foundation)
+
+    implementation(Dependencies.Compose.Material)
+
+    implementation(Dependencies.Compose.IconsCore)
+    implementation(Dependencies.Compose.IconsExtended)
+
+    implementation(Dependencies.Compose.LiveData)
 }
 
 fun DependencyHandler.lifecycle() {

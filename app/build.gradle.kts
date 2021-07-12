@@ -60,8 +60,13 @@ android {
         }
     }
     buildFeatures {
+        compose = true
+
         dataBinding = true
         viewBinding = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
@@ -97,6 +102,8 @@ dependencies {
     implementation(platform(Firebase.BoM))
     implementation(Firebase.Analytics)
     implementation(Firebase.Crashlytics)
+
+    compose()
 
     implementation(AndroidX.Core)
     implementation(AndroidX.AppCompat)

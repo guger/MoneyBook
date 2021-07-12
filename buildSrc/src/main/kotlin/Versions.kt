@@ -85,6 +85,8 @@ object Versions {
         const val BoM = "28.0.1"
     }
 
+    const val Compose = "1.0.0-rc01"
+
     object AndroidX {
         const val Core = "1.6.0"
         const val AppCompat = "1.3.0"
