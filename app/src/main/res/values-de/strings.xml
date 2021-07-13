@@ -43,8 +43,8 @@
     <string name="ChooseDate">Datum auswählen</string>
     <string name="OpenCalculator">Taschenrechner öffnen</string>
     <string name="EmptyTransactionTitle">Bitte geben Sie einen Titel ein.</string>
-    <string name="InvalidTransactionDate">Bitte geben Sie ein Datum ein (%s).</string>
-    <string name="InvalidTransactionDueDate">Bitte geben Sie einen Betrag ein (%s).</string>
+    <string name="InvalidTransactionDate">Bitte geben Sie ein Datum ein (Format: %s).</string>
+    <string name="InvalidTransactionDueDate">Bitte geben Sie ein Fälligkeitsdatum ein (Format: %s).</string>
     <string name="InvalidTransactionValue_NotPositive">Bitte geben Sie einen Betrag größer null ein.</string>
     <string name="InvalidTransactionValue_TooHigh">Bitte geben Sie nur Beträge kleiner als 1 Mio. ein.</string>
     <string name="Account">Konto</string>
