@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "7.0.0-beta05"
+    const val Gradle = "7.0.0-rc01"
 
     const val KOIN = "3.1.2"
 
@@ -59,7 +59,7 @@ object Versions {
 
     object Test {
         const val JUnit = "4.13.1"
-        const val Robolectric = "4.5.1"
+        const val Robolectric = "4.6.1"
         const val Truth = "1.1.3"
 
         object AndroidX {
@@ -71,27 +71,27 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.5.20"
-        const val Coroutines = "1.5.0"
+        const val Common = "1.5.21"
+        const val Coroutines = "1.5.1"
     }
 
     object Firebase {
 
         object Plugins {
             const val GoogleServices = "4.3.8"
-            const val CrashlyticsGradle = "2.6.1"
+            const val CrashlyticsGradle = "2.7.1"
         }
 
-        const val BoM = "28.0.1"
+        const val BoM = "28.2.1"
     }
 
     const val Compose = "1.0.0-rc01"
 
     object AndroidX {
         const val Core = "1.6.0"
-        const val AppCompat = "1.3.0"
+        const val AppCompat = "1.3.1"
         const val Annotation = "1.2.0"
-        const val Fragment = "1.3.5"
+        const val Fragment = "1.3.6"
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha03"
         const val ViewPager2 = "1.0.0"
@@ -106,7 +106,7 @@ object Versions {
 
     object Arch {
         const val Lifecycle = "2.3.0"
-        const val Navigation = "2.4.0-alpha04"
+        const val Navigation = "2.4.0-alpha05"
         const val Room = "2.3.0"
         const val Work = "2.5.0"
     }
