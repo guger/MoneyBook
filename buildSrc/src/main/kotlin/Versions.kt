@@ -95,7 +95,7 @@ object Versions {
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha03"
         const val ViewPager2 = "1.0.0"
-        const val ConstraintLayout = "2.1.0-beta02"
+        const val ConstraintLayout = "2.1.0-rc01"
         const val RecyclerView = "1.2.1"
         const val CardView = "1.0.0"
     }
