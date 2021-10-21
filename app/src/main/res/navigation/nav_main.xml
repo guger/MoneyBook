@@ -52,7 +52,7 @@
 
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="moneybook://add_transaction" />
+            app:uri="moneybook://add_transaction/?transaction={transaction}&amp;account={account}" />
     </fragment>
 
     <fragment

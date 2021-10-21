@@ -46,10 +46,10 @@ object Versions {
 
     object SDK {
         const val MIN = 21
-        const val TARGET = 30
+        const val TARGET = 31
     }
 
-    const val Gradle = "7.0.2"
+    const val Gradle = "7.0.3"
 
     const val KOIN = "3.1.2"
 
@@ -71,8 +71,8 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.5.21"
-        const val Coroutines = "1.5.1"
+        const val Common = "1.5.31"
+        const val Coroutines = "1.5.2"
     }
 
     object Firebase {
@@ -82,11 +82,11 @@ object Versions {
             const val CrashlyticsGradle = "2.7.1"
         }
 
-        const val BoM = "28.2.1"
+        const val BoM = "28.4.2"
     }
 
-    const val Compose = "1.0.1"
-    const val ComposeConstraintLayout = "1.0.0-beta01"
+    const val Compose = "1.0.4"
+    const val ComposeConstraintLayout = "1.0.0-rc01"
 
     object AndroidX {
         const val Core = "1.6.0"
@@ -96,7 +96,7 @@ object Versions {
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha03"
         const val ViewPager2 = "1.0.0"
-        const val ConstraintLayout = "2.1.0-rc01"
+        const val ConstraintLayout = "2.1.1"
         const val RecyclerView = "1.2.1"
         const val CardView = "1.0.0"
     }
@@ -107,7 +107,7 @@ object Versions {
 
     object Arch {
         const val Lifecycle = "2.3.0"
-        const val Navigation = "2.4.0-alpha05"
+        const val Navigation = "2.4.0-alpha10"
         const val Room = "2.3.0"
         const val Work = "2.5.0"
     }
@@ -122,6 +122,6 @@ object Versions {
 
         const val CalcDialog = "2.2.1"
         const val IconDialog = "3.3.0"
-        const val RecurPicker = "2.1.4"
+        const val RecurPicker = "2.1.6"
     }
 }
