@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,7 @@ import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.databinding.FragmentBudgetsBinding
+import at.guger.moneybook.ui.home.HomeFragmentDirections
 import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.BudgetMenuUtils
@@ -68,6 +70,12 @@ class BudgetsFragment : BaseDataBindingFragment<FragmentBudgetsBinding, HomeView
         }
 
         binding.mBudgetsRecyclerView.setup(LinearLayoutManager(requireContext()), adapter, hasFixedSize = false)
+
+        TooltipCompat.setTooltipText(binding.mBudgetsChartLayout.mInfoStrokePieChartButton, getString(R.string.BudgetInsights))
+
+        binding.mBudgetsChartLayout.mInfoStrokePieChartButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBudgetsInfoBottomSheetDialogFragment())
+        }
     }
 
     override fun onResume() {

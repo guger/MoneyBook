@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_homeFragment_to_budgetDetailBottomSheetFragment"
             app:destination="@id/budgetDetailBottomSheetFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_budgetsInfoBottomSheetDialogFragment"
+            app:destination="@id/budgetsInfoBottomSheetDialogFragment" />
     </fragment>
 
     <fragment
@@ -140,4 +143,10 @@
             android:name="budgetId"
             app:argType="long" />
     </fragment>
+
+    <dialog
+        android:id="@+id/budgetsInfoBottomSheetDialogFragment"
+        android:name="at.guger.moneybook.ui.home.budgets.BudgetsInfoBottomSheetDialogFragment"
+        android:label="BudgetsInfoBottomSheetDialogFragment"
+        tools:layout="@layout/fragment_budgets_info" />
 </navigation>

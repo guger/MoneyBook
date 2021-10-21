@@ -26,6 +26,7 @@ import at.guger.moneybook.data.repository.TransactionsRepository
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
+
 /**
  * [ViewModel] for the [BudgetDetailFragment].
  */

@@ -7,11 +7,17 @@
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_backup.xml" value="0.3828125" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_close.xml" value="0.38177083333333334" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_export_import.xml" value="0.3828125" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_info.xml" value="0.3828125" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/drawable/ic_move_to_account.xml" value="0.3828125" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/dialog_fragment_add_edit_account.xml" value="0.25092592592592594" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/fragment_account_detail.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/fragment_add_edit_transaction.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/fragment_budget_detail.xml" value="0.2564814814814815" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/fragment_budgets.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/fragment_budgets_info.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/item_budget.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/item_onboarding_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/layout_info_stroke_pie_chart.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/layout/view_onboarding.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_account.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_add_transaction.xml" value="0.36666666666666664" />
@@ -19,8 +25,9 @@
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_nav.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/menu/menu_transaction.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/app/src/main/res/xml/preferences_main.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Daniel/Entwicklung/Android/MoneyBook/core/src/main/res/layout/layout_info_stroke_pie_chart.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="Android Studio java home" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="Android Studio java home" project-jdk-type="JavaSDK" />
 </project>

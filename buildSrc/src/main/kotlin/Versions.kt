@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 30
     }
 
-    const val Gradle = "7.0.0-rc01"
+    const val Gradle = "7.0.2"
 
     const val KOIN = "3.1.2"
 
@@ -85,7 +85,8 @@ object Versions {
         const val BoM = "28.2.1"
     }
 
-    const val Compose = "1.0.0-rc01"
+    const val Compose = "1.0.1"
+    const val ComposeConstraintLayout = "1.0.0-beta01"
 
     object AndroidX {
         const val Core = "1.6.0"

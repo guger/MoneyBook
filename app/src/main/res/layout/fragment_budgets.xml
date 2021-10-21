@@ -48,16 +48,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <at.guger.moneybook.core.ui.widget.StrokePieChart
-                    android:id="@+id/mBudgetsPieChart"
+                <include
+                    android:id="@+id/mBudgetsChartLayout"
+                    layout="@layout/layout_info_stroke_pie_chart"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_chart_height"
-                    android:layout_marginTop="@dimen/recyclerview_item_spacing"
-                    app:bold="true"
-                    app:budgets="@{viewModel.budgetsWithBalance}"
-                    app:fontResId="@font/eczar_regular"
-                    app:textSize="42sp"
-                    tools:text="$ 1234,56 / $ 567,43" />
+                    app:budgets="@{viewModel.budgetsWithBalance}"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mBudgetsRecyclerView"

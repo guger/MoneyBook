@@ -27,6 +27,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/mAccountDetailTitleToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?colorSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:popupTheme="?android:toolbarStyle"
+                app:theme="?android:toolbarStyle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txvAccountDetailTitleBar"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@{viewModel.account.name}"
+                    android:textAppearance="?textAppearanceHeadline1"
+                    tools:text="Account Name" />
+            </androidx.appcompat.widget.Toolbar>
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/mAccountDetailViewPager"
                 android:layout_width="0dp"
@@ -46,7 +69,7 @@
                 app:curveBorderColor="@{viewModel.account.color}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/mAccountDetailTitleToolbar" />
 
             <at.guger.moneybook.core.ui.widget.ScrollableTab
                 android:id="@+id/mAccountDetailTabs"

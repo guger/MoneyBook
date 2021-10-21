@@ -187,4 +187,8 @@
     <string name="ImportFailed">Import failed …</string>
     <string name="ImportFailedMessage">Your import has failed. Please check the file extension (\'*.%s\') and the password.</string>
     <string name="WhitespaceNotAllowed">Please remove any whitespace from the password.</string>
+    <string name="BudgetInsights">Budget Insights</string>
+    <string name="ThisMonth">This Month</string>
+    <string name="LastMonth">Last Month</string>
+    <string name="LastYear">Last Year</string>
 </resources>

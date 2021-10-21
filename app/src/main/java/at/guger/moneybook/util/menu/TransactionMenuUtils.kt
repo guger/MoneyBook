@@ -27,11 +27,12 @@ import at.guger.moneybook.data.model.Transaction
  */
 object TransactionMenuUtils {
 
-    fun prepareMenu(menu: Menu, adapter: CheckableListAdapter<Transaction, *>, markAsPaid: Boolean = false) {
+    fun prepareMenu(menu: Menu, adapter: CheckableListAdapter<Transaction, *>, markAsPaid: Boolean = false, isBudgets: Boolean = false) {
         with(adapter) {
             menu.findItem(R.id.actionTransactionEdit).isVisible = checkedCount == 1
-            menu.findItem(R.id.actionTransactionMarkAsPaid).isVisible = markAsPaid && checkedCount == 1 && !currentList[checkedItems.first()].isPaid
-            menu.findItem(R.id.actionTransactionMoveToAccount).isVisible = markAsPaid && checkedCount == 1
+            menu.findItem(R.id.actionTransactionMarkAsPaid).isVisible = markAsPaid && checkedCount == 1 && !currentList[checkedItems.first()].isPaid && !isBudgets
+            menu.findItem(R.id.actionTransactionMoveToAccount).isVisible = markAsPaid && checkedCount == 1 && !isBudgets
+            menu.findItem(R.id.actionTransactionDelete).isVisible = !isBudgets
         }
     }
 

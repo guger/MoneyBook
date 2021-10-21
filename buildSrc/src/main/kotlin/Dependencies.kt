@@ -75,9 +75,12 @@ object Dependencies {
         const val Foundation = "androidx.compose.foundation:foundation:${Versions.Compose}"
 
         const val Material = "androidx.compose.material:material:${Versions.Compose}"
+        const val MaterialComposeThemeAdapter = "com.google.android.material:compose-theme-adapter:${Versions.Compose}"
 
         const val IconsCore = "androidx.compose.material:material-icons-core:${Versions.Compose}"
         const val IconsExtended = "androidx.compose.material:material-icons-extended:${Versions.Compose}"
+
+        const val ConstraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.ComposeConstraintLayout}"
 
         const val LiveData = "androidx.compose.runtime:runtime-livedata:${Versions.Compose}"
     }
@@ -144,6 +147,7 @@ fun DependencyHandler.compose() {
     implementation(Dependencies.Compose.Foundation)
 
     implementation(Dependencies.Compose.Material)
+    implementation(Dependencies.Compose.MaterialComposeThemeAdapter)
 
     implementation(Dependencies.Compose.IconsCore)
     implementation(Dependencies.Compose.IconsExtended)

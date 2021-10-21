@@ -43,6 +43,8 @@ class BudgetsRepository(database: AppDatabase) {
 
     fun getBudgetsWithBalance(): LiveData<List<BudgetWithBalance>> = budgetsDao.getObservableBudgetsWithBalance(getCurrentMonthStart(), getCurrentMonthEnd())
 
+    fun getBudgetsWithBalanceTimeSpan(start: Long, end: Long): LiveData<List<BudgetWithBalance>> = budgetsDao.getObservableBudgetsWithBalance(start, end)
+
     suspend fun insert(budget: Budget): Long {
         return budgetsDao.insert(budget)
     }
