@@ -104,7 +104,7 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         } else {
             val w = MeasureSpec.getSize(widthMeasureSpec)
-            val h = (barWidth * data.size + barSpaceWidth * (data.size - 1) + topMargin + bottomMargin).toInt()
+            val h = ((barWidth + 1.5 * limitTextSize) * data.size + barSpaceWidth * (data.size - 1) + topMargin + bottomMargin).toInt()
 
             setMeasuredDimension(w or MeasureSpec.EXACTLY, h or MeasureSpec.EXACTLY)
         }
@@ -179,20 +179,16 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
 
         barPaths.clear()
 
-        val maxTextWidth: Float = data.maxByOrNull { limitTextPaint.measureText(it.label) }?.let { limitTextPaint.measureText(it.label) } ?: 0.0f
-
-        val start = startMargin + maxTextWidth
-
         for (i in 0 until barHeights.size) {
-            val top = topMargin + i * (barWidth + barSpaceWidth)
+            val top = topMargin + limitTextSize + i * (barWidth + barSpaceWidth + 1.5f * limitTextSize)
             val path = Path().apply {
-                moveTo(start, top)
-                addRect(start, top, startMargin + barHeights[i], top + barWidth, Path.Direction.CW)
+                moveTo(startMargin, top)
+                addRect(startMargin, top, startMargin + barHeights[i], top + barWidth, Path.Direction.CW)
             }
 
             barPaths.add(path)
 
-            textPoints.add(PointF(startMargin, top))
+            textPoints.add(PointF(startMargin, top - limitTextSize / 2))
         }
 
         val sequenceLength = strokeLength + spaceLength

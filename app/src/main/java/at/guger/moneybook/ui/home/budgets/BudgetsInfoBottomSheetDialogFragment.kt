@@ -27,6 +27,7 @@ import at.guger.moneybook.databinding.FragmentBudgetsInfoBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.Period
+import kotlin.math.max
 
 class BudgetsInfoBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogFragment<FragmentBudgetsInfoBinding, BudgetsInfoViewModel>() {
 
@@ -75,7 +76,7 @@ class BudgetsInfoBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogFra
         fragmentViewModel.budgetsForTime(start, end).observe(viewLifecycleOwner) { budgets ->
             val data = mutableListOf<BudgetDataPoint>()
 
-            val months = Period.between(start, end).months
+            val months = max(Period.between(start, end).months, 1)
 
             budgets.forEach {
                 data.add(BudgetDataPoint(it.name, it.balance.toFloat() / months, it.budget.toFloat(), it.color))
