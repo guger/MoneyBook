@@ -37,6 +37,7 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
     private val data = mutableListOf<BudgetDataPoint>()
     private val barHeights = mutableListOf<Float>()
 
+    private var limitFactor: Int = 0
     private var limitPos: Float = 0.0f
     private var limitText: String
 
@@ -90,7 +91,7 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
             textSize = limitTextSize
         }
 
-        limitText = context.getString(R.string.HundredPercent)
+        limitText = PERCENT.format(100)
 
         setWillNotDraw(false)
     }
@@ -163,10 +164,16 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
 
         val maxRatio = data.maxByOrNull { it.balance / it.budget }?.let { it.balance / it.budget }
 
-        limitPos = if (maxRatio != null) graphWidth / maxRatio else graphWidth
+        limitFactor = 0
+        do {
+            limitFactor++
+            limitPos = if (maxRatio != null) limitFactor * graphWidth / maxRatio else graphWidth
+        } while (limitPos < width / 2)
+
+        limitText = PERCENT.format(limitFactor * 100)
 
         for (bar in data) {
-            val length = limitPos / bar.budget * bar.balance
+            val length = (limitPos / limitFactor) / bar.budget * bar.balance
 
             barHeights.add(max(length, minBarLength))
         }
@@ -228,5 +235,7 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
         private const val CURVE_START_MARGIN = 24.0f
         private const val CURVE_END_MARGIN = 24.0f
         private const val CURVE_BOTTOM_MARGIN = 36.0f
+
+        private const val PERCENT = "%d %%"
     }
 }
