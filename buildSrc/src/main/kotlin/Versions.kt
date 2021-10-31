@@ -25,7 +25,7 @@ object Versions {
         const val Major = 2
         const val Minor = 1
         const val Patch = 0
-        const val Release = 2
+        const val Release = 3
         const val Beta = 0
         const val Dev = 0
 

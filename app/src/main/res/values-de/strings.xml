@@ -186,4 +186,8 @@
     <string name="ImportFailed">Import fehlgeschlagen …</string>
     <string name="ImportFailedMessage">Ihr Backup konnte leider nicht importiert werden. Bitte überprüfen Sie die Dateiendung (\'*.%s\') und das Passwort.</string>
     <string name="WhitespaceNotAllowed">Bitte entfernen Sie alle Leerzeichen aus dem Passwort.</string>
+    <string name="BudgetInsights">Budget Insights</string>
+    <string name="ThisMonth">Dieser Monat</string>
+    <string name="LastMonth">Letztes Monat</string>
+    <string name="LastYear">Letztes Jahr</string>
 </resources>
