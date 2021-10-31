@@ -25,7 +25,7 @@ object Versions {
         const val Major = 2
         const val Minor = 1
         const val Patch = 0
-        const val Release = 1
+        const val Release = 2
         const val Beta = 0
         const val Dev = 0
 
@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 31
     }
 
-    const val Gradle = "7.0.3"
+    const val Gradle = "7.1.0-beta02"
 
     const val KOIN = "3.1.2"
 
@@ -78,11 +78,11 @@ object Versions {
     object Firebase {
 
         object Plugins {
-            const val GoogleServices = "4.3.8"
-            const val CrashlyticsGradle = "2.7.1"
+            const val GoogleServices = "4.3.10"
+            const val CrashlyticsGradle = "2.8.0"
         }
 
-        const val BoM = "28.4.2"
+        const val BoM = "29.0.0"
     }
 
     const val Compose = "1.0.4"

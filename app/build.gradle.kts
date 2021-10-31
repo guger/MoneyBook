@@ -29,6 +29,7 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
 
@@ -75,7 +76,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     lint {
-        isAbortOnError = false
+        abortOnError = false
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -139,5 +140,3 @@ dependencies {
 
     implementation(fileTree("libs"))
 }
-
-apply(plugin = Plugins.Name.GoogleServices)

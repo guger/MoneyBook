@@ -28,7 +28,6 @@ object Dependencies {
 
         object Name {
             const val KotlinGradle = "gradle-plugin"
-            const val GoogleServices = "com.google.gms.google-services"
         }
     }
 
