@@ -22,7 +22,6 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.graphics.ColorUtils
-import at.guger.moneybook.core.R
 import at.guger.moneybook.core.util.ext.dp
 import at.guger.moneybook.core.util.ext.sp
 import kotlinx.coroutines.Job
@@ -59,7 +58,6 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
     private val textPoints = mutableListOf<PointF>()
     private val limitPath = Path()
 
-
     private val barPaint: Paint
     private val limitPaint: Paint
     private val limitTextPaint: Paint
@@ -91,7 +89,7 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
             textSize = limitTextSize
         }
 
-        limitText = PERCENT.format(100)
+        limitText = formatPercent(100)
 
         setWillNotDraw(false)
     }
@@ -162,15 +160,15 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
 
         val graphWidth = width - (startMargin + endMargin)
 
-        val maxRatio = data.maxByOrNull { it.balance / it.budget }?.let { it.balance / it.budget }
+        val maxRatio = max(data.maxByOrNull { it.balance / it.budget }?.let { it.balance / it.budget } ?: 0.0f, 1.0f)
 
         limitFactor = 0
         do {
             limitFactor++
-            limitPos = if (maxRatio != null) limitFactor * graphWidth / maxRatio else graphWidth
+            limitPos = if (maxRatio > 0.0f) limitFactor * graphWidth / maxRatio else graphWidth
         } while (limitPos < width / 2)
 
-        limitText = PERCENT.format(limitFactor * 100)
+        limitText = formatPercent(limitFactor * 100)
 
         for (bar in data) {
             val length = (limitPos / limitFactor) / bar.budget * bar.balance
@@ -214,6 +212,10 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
         }
     }
 
+    private fun formatPercent(num: Int): String {
+        return String.format("%d %%", num)
+    }
+
     //endregion
 
     companion object {
@@ -235,7 +237,5 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
         private const val CURVE_START_MARGIN = 24.0f
         private const val CURVE_END_MARGIN = 24.0f
         private const val CURVE_BOTTOM_MARGIN = 36.0f
-
-        private const val PERCENT = "%d %%"
     }
 }

@@ -70,7 +70,7 @@ class TabAdapter(private val tabs: MutableList<String> = mutableListOf(), @Style
 
         init {
             binding.root.setOnClickListener {
-                listener?.invoke(adapterPosition)
+                listener?.invoke(absoluteAdapterPosition)
             }
         }
 

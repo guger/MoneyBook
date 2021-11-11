@@ -25,7 +25,7 @@
 
         <intent
             android:action="at.guger.moneybook.action.ADD_TRANSACTION"
-            android:data="moneybook://add_transaction"
+            android:data="moneybook://add_transaction?transaction=null&amp;account=null"
             android:targetClass="at.guger.moneybook.ui.main.MainActivity"
             android:targetPackage="at.guger.moneybook" />
     </shortcut>

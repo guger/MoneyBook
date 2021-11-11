@@ -46,15 +46,15 @@ class Preferences(context: Context) {
         get() = preferences.getBoolean(EXPERIMENTAL, BuildConfig.DEBUG)
         set(value) = preferences.edit { putBoolean(EXPERIMENTAL, value) }
 
-    var currency: Currency
+    var currency: Currency?
         get() {
             return try {
                 preferences.getString(CURRENCY, null)?.takeIf { it != "Default" }?.let(Currency::getInstance) ?: Currency.getInstance(Locale.getDefault())
             } catch (e: IllegalArgumentException) {
-                Currency.getInstance(Locale.getDefault())
+                null // This is for rare cases, where the default currency is not available.
             }
         }
-        set(value) = preferences.edit { putString(CURRENCY, value.currencyCode) }
+        set(value) = preferences.edit { putString(CURRENCY, value!!.currencyCode) }
 
     companion object {
         const val FIRST_START = "pref_firstStart"

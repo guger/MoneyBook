@@ -24,10 +24,10 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 1
-        const val Patch = 0
-        const val Release = 3
+        const val Patch = 1
+        const val Release = 0
         const val Beta = 0
-        const val Dev = 0
+        const val Dev = 1
 
         fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev()
         fun versionName() = "$Major.$Minor.$Patch"
@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 31
     }
 
-    const val Gradle = "7.1.0-beta02"
+    const val Gradle = "7.1.0-beta03"
 
     const val KOIN = "3.1.2"
 

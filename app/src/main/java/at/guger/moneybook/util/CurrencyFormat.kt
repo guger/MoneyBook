@@ -19,9 +19,12 @@ package at.guger.moneybook.util
 import android.content.Context
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import java.text.NumberFormat
+import java.util.*
 
 /**
  * Formatter for currency instances.
@@ -30,10 +33,10 @@ object CurrencyFormat : KoinComponent {
 
     private val currencyFormatShort = NumberFormat.getCurrencyInstance().apply {
         maximumFractionDigits = 0
-        currency = get<Preferences>().currency
+        get<Preferences>().currency?.let { currency = it } ?: Firebase.crashlytics.log("Default locale not available: ${Currency.getAvailableCurrencies().size} available")
     }
     private val currencyFormatLong = NumberFormat.getCurrencyInstance().apply {
-        currency = get<Preferences>().currency
+        get<Preferences>().currency?.let { currency = it } ?: Firebase.crashlytics.log("Default locale not available: ${Currency.getAvailableCurrencies().size} available")
     }
 
     @JvmStatic

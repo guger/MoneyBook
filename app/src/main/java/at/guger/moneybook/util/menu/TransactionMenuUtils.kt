@@ -32,7 +32,6 @@ object TransactionMenuUtils {
             menu.findItem(R.id.actionTransactionEdit).isVisible = checkedCount == 1
             menu.findItem(R.id.actionTransactionMarkAsPaid).isVisible = markAsPaid && checkedCount == 1 && !currentList[checkedItems.first()].isPaid && !isBudgets
             menu.findItem(R.id.actionTransactionMoveToAccount).isVisible = markAsPaid && checkedCount == 1 && !isBudgets
-            menu.findItem(R.id.actionTransactionDelete).isVisible = !isBudgets
         }
     }
 
