@@ -35,8 +35,16 @@ object CurrencyFormat : KoinComponent {
         maximumFractionDigits = 0
         get<Preferences>().currency?.let { currency = it } ?: Firebase.crashlytics.log("Default locale not available: ${Currency.getAvailableCurrencies().size} available")
     }
+
     private val currencyFormatLong = NumberFormat.getCurrencyInstance().apply {
-        get<Preferences>().currency?.let { currency = it } ?: Firebase.crashlytics.log("Default locale not available: ${Currency.getAvailableCurrencies().size} available")
+        get<Preferences>().currency?.let { currency = it } ?: logException()
+    }
+
+    private fun logException() {
+        Firebase.crashlytics.run {
+            setCustomKey(CrashlyticsKeys.KEY_AVAILABLE_CURRENCIES, Currency.getAvailableCurrencies().size)
+            log("Default locale not available.")
+        }
     }
 
     @JvmStatic

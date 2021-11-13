@@ -31,6 +31,7 @@ import at.guger.moneybook.core.ui.activity.BaseActivity
 import at.guger.moneybook.core.ui.dialog.BottomNavigationViewDialog
 import at.guger.moneybook.core.util.ext.colorAttr
 import at.guger.moneybook.databinding.ActivityMainBinding
+import at.guger.moneybook.util.CrashlyticsKeys
 import at.guger.moneybook.util.NavUtils
 import com.afollestad.materialcab.CabApply
 import com.afollestad.materialcab.attached.AttachedCab
@@ -39,6 +40,8 @@ import com.afollestad.materialcab.attached.isActive
 import com.afollestad.materialcab.createCab
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 
 /**
  * Main activity class for all content fragments.
@@ -173,6 +176,8 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     }
 
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        Firebase.crashlytics.setCustomKey(CrashlyticsKeys.KEY_CURRENT_FRAGMENT, destination.displayName)
+
         prepareAppBar(destination)
         prepareMenu(binding.mBottomAppBar)
 
