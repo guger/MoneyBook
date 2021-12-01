@@ -112,28 +112,28 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeEarning"
-                        style="@style/AppTheme.MaterialButtonOutlined.AddEditTransaction"
+                        style="@style/Theme.App.MaterialButtonOutlined.AddEditTransaction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Earning" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeExpense"
-                        style="@style/AppTheme.MaterialButtonOutlined.AddEditTransaction"
+                        style="@style/Theme.App.MaterialButtonOutlined.AddEditTransaction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Expense" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeClaim"
-                        style="@style/AppTheme.MaterialButtonOutlined.AddEditTransaction"
+                        style="@style/Theme.App.MaterialButtonOutlined.AddEditTransaction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Claim" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddEditTransactionTypeDebt"
-                        style="@style/AppTheme.MaterialButtonOutlined.AddEditTransaction"
+                        style="@style/Theme.App.MaterialButtonOutlined.AddEditTransaction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Debt" />

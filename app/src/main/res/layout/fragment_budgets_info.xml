@@ -61,20 +61,20 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBudgetsInfoThisMonth"
-                style="@style/AppTheme.MaterialButtonOutlined.BudgetsInfo"                android:layout_width="wrap_content"
+                style="@style/Theme.App.MaterialButtonOutlined.BudgetsInfo"                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ThisMonth" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBudgetsInfoLastMonth"
-                style="@style/AppTheme.MaterialButtonOutlined.BudgetsInfo"
+                style="@style/Theme.App.MaterialButtonOutlined.BudgetsInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/LastMonth" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBudgetsInfoLastYear"
-                style="@style/AppTheme.MaterialButtonOutlined.BudgetsInfo"
+                style="@style/Theme.App.MaterialButtonOutlined.BudgetsInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/LastYear" />

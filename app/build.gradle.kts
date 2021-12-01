@@ -61,7 +61,7 @@ android {
         }
     }
     buildFeatures {
-        compose = true
+        compose = false
 
         dataBinding = true
         viewBinding = true
@@ -104,9 +104,8 @@ dependencies {
     implementation(Firebase.Analytics)
     implementation(Firebase.Crashlytics)
 
-    compose()
-
     implementation(AndroidX.Core)
+    implementation(AndroidX.CoreSplashScreen)
     implementation(AndroidX.AppCompat)
     implementation(AndroidX.Annotation)
     implementation(AndroidX.Fragment)

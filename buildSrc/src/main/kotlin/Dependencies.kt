@@ -86,6 +86,7 @@ object Dependencies {
 
     object AndroidX {
         const val Core = "androidx.core:core-ktx:${Versions.AndroidX.Core}"
+        const val CoreSplashScreen = "androidx.core:core-splashscreen:${Versions.AndroidX.CoreSplashScreen}"
         const val AppCompat = "androidx.appcompat:appcompat:${Versions.AndroidX.AppCompat}"
         const val Annotation = "androidx.annotation:annotation:${Versions.AndroidX.Annotation}"
         const val Fragment = "androidx.fragment:fragment-ktx:${Versions.AndroidX.Fragment}"

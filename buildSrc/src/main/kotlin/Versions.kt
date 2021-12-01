@@ -24,10 +24,10 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 1
-        const val Patch = 2
-        const val Release = 1
+        const val Patch = 3
+        const val Release = 0
         const val Beta = 0
-        const val Dev = 0
+        const val Dev = 1
 
         fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev()
         fun versionName() = "$Major.$Minor.$Patch"
@@ -49,9 +49,9 @@ object Versions {
         const val TARGET = 31
     }
 
-    const val Gradle = "7.1.0-beta03"
+    const val Gradle = "7.1.0-beta04"
 
-    const val KOIN = "3.1.2"
+    const val KOIN = "3.1.3"
 
     object D8 {
         const val CoreLibraryDesugaring = "1.1.5"
@@ -59,7 +59,7 @@ object Versions {
 
     object Test {
         const val JUnit = "4.13.1"
-        const val Robolectric = "4.6.1"
+        const val Robolectric = "4.7.2"
         const val Truth = "1.1.3"
 
         object AndroidX {
@@ -71,7 +71,7 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.5.31"
+        const val Common = "1.6.0"
         const val Coroutines = "1.5.2"
     }
 
@@ -85,18 +85,19 @@ object Versions {
         const val BoM = "29.0.0"
     }
 
-    const val Compose = "1.0.4"
-    const val ComposeConstraintLayout = "1.0.0-rc01"
+    const val Compose = "1.1.0-beta04"
+    const val ComposeConstraintLayout = "1.0.0-rc02"
 
     object AndroidX {
         const val Core = "1.7.0"
+        const val CoreSplashScreen = "1.0.0-alpha02"
         const val AppCompat = "1.3.1"
         const val Annotation = "1.2.0"
-        const val Fragment = "1.3.6"
+        const val Fragment = "1.4.0"
         const val Preference = "1.1.1"
-        const val Biometric = "1.2.0-alpha03"
+        const val Biometric = "1.2.0-alpha04"
         const val ViewPager2 = "1.1.0-beta01"
-        const val ConstraintLayout = "2.1.1"
+        const val ConstraintLayout = "2.1.2"
         const val RecyclerView = "1.2.1"
         const val CardView = "1.0.0"
     }
@@ -107,9 +108,9 @@ object Versions {
 
     object Arch {
         const val Lifecycle = "2.4.0"
-        const val Navigation = "2.4.0-beta01"
-        const val Room = "2.3.0"
-        const val Work = "2.7.0"
+        const val Navigation = "2.4.0-beta02"
+        const val Room = "2.4.0-rc01"
+        const val Work = "2.7.1"
     }
 
     object Libraries {

@@ -16,7 +16,7 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Base.AppTheme">
+    <style name="Theme.App" parent="Theme.App.Base">
 
         <!--Material color attributes -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -35,39 +35,48 @@
         <item name="colorOnError">@color/colorOnError</item>
 
         <!--Material type attributes-->
-        <item name="textAppearanceHeadline1">@style/TextAppearance.AppTheme.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.AppTheme.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.AppTheme.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.AppTheme.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.AppTheme.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.AppTheme.Headline6</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.AppTheme.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.AppTheme.Subtitle2</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.AppTheme.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.AppTheme.Body2</item>
-        <item name="textAppearanceButton">@style/TextAppearance.AppTheme.Button</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.AppTheme.Caption</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.AppTheme.Overline</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.App.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.App.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.App.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.App.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.App.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.App.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.App.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.App.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.App.Overline</item>
 
         <!--Material shape attributes-->
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.AppTheme.SmallComponent</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.AppTheme.MediumComponent</item>
-        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.AppTheme.LargeComponent</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
 
-        <item name="alertDialogTheme">@style/ThemeOverlay.AppTheme.MaterialDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialDialog</item>
 
         <!--Material Dialogs-->
         <item name="md_font_title">@font/roboto_condensed_regular</item>
         <item name="md_font_body">@font/roboto_condensed_light</item>
 
-        <item name="calcDialogStyle">@style/AppTheme.CalcDialogStyle</item>
+        <item name="calcDialogStyle">@style/Theme.App.CalcDialogStyle</item>
     </style>
 
-    <style name="ThemeOverlay.AppTheme.MaterialDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorSurface</item>
+
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+
+        <item name="postSplashScreenTheme">@style/Theme.App</item>
+    </style>
+
+
+    <style name="ThemeOverlay.App.MaterialDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="textAppearanceBody1">@style/TextAppearance.AppCompat.Body2</item>
     </style>
 
-    <style name="Base.AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.App.Base" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:statusBarColor">?colorSurface</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
 

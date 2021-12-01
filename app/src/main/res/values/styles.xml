@@ -16,12 +16,12 @@
 
 <resources>
 
-    <style name="AppTheme.CalcDialogStyle" parent="CalcDialogStyle">
+    <style name="Theme.App.CalcDialogStyle" parent="CalcDialogStyle">
         <item name="calcOperationBtnColor">?colorSurface</item>
         <item name="calcDialogButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
     </style>
 
-    <style name="AppTheme.MaterialButtonOutlined.AddEditTransaction" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="Theme.App.MaterialButtonOutlined.AddEditTransaction" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
         <item name="android:paddingTop">0dp</item>
@@ -29,7 +29,7 @@
         <item name="android:textSize">13sp</item>
     </style>
 
-    <style name="AppTheme.MaterialButtonOutlined.BudgetsInfo" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="Theme.App.MaterialButtonOutlined.BudgetsInfo" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textSize">13sp</item>
     </style>
 
