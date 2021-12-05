@@ -89,6 +89,7 @@ object Dependencies {
         const val CoreSplashScreen = "androidx.core:core-splashscreen:${Versions.AndroidX.CoreSplashScreen}"
         const val AppCompat = "androidx.appcompat:appcompat:${Versions.AndroidX.AppCompat}"
         const val Annotation = "androidx.annotation:annotation:${Versions.AndroidX.Annotation}"
+        const val Biometric = "androidx.biometric:biometric-ktx:${Versions.AndroidX.Biometric}"
         const val Fragment = "androidx.fragment:fragment-ktx:${Versions.AndroidX.Fragment}"
         const val Preference = "androidx.preference:preference-ktx:${Versions.AndroidX.Preference}"
         const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.ConstraintLayout}"

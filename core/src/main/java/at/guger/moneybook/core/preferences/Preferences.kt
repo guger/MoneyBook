@@ -38,6 +38,10 @@ class Preferences(context: Context) {
         get() = preferences.getBoolean(ANALYTICS, true)
         set(value) = preferences.edit { putBoolean(ANALYTICS, value) }
 
+    var biometricAuth: Boolean
+        get() = preferences.getBoolean(BIOMETRIC_AUTH, false)
+        set(value) = preferences.edit { putBoolean(BIOMETRIC_AUTH, value) }
+
     var crashlytics: Boolean
         get() = preferences.getBoolean(CRASHLYTICS, !BuildConfig.DEBUG)
         set(value) = preferences.edit { putBoolean(CRASHLYTICS, value) }
@@ -60,6 +64,7 @@ class Preferences(context: Context) {
         const val FIRST_START = "pref_firstStart"
         const val CURRENCY = "pref_currency"
         const val ANALYTICS = "pref_analytics"
+        const val BIOMETRIC_AUTH = "pref_biometric_auth"
         const val CRASHLYTICS = "pref_crashlytics"
         const val EXPERIMENTAL = "pref_experimental"
 

@@ -191,4 +191,9 @@
     <string name="ThisMonth">This Month</string>
     <string name="LastMonth">Last Month</string>
     <string name="LastYear">Last Year</string>
+    <string name="prompt_info_title">MoneyBook - Login</string>
+    <string name="prompt_info_subtitle">Please enter your credentials to log in.</string>
+    <string name="Authentication">Authentication</string>
+    <string name="pref_BiometricAuth">Biometric Authentication</string>
+    <string name="prefs_BiometricAuth">Enable biometric authentication to securely log in to MoneyBook.</string>
 </resources>

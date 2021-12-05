@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.annotation.MenuRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -28,12 +29,15 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import at.guger.moneybook.MainNavDirections
 import at.guger.moneybook.R
+import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.activity.BaseActivity
 import at.guger.moneybook.core.ui.dialog.BottomNavigationViewDialog
+import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.core.util.ext.colorAttr
 import at.guger.moneybook.databinding.ActivityMainBinding
 import at.guger.moneybook.util.CrashlyticsKeys
 import at.guger.moneybook.util.NavUtils
+import at.guger.moneybook.util.biometric.BiometricPromptUtils
 import com.afollestad.materialcab.CabApply
 import com.afollestad.materialcab.attached.AttachedCab
 import com.afollestad.materialcab.attached.destroy
@@ -43,6 +47,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
+import org.koin.android.ext.android.inject
 
 /**
  * Main activity class for all content fragments.
@@ -57,6 +62,11 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     private val topLevelDestinations = setOf(R.id.homeFragment, R.id.settingsFragment, R.id.addEditTransactionFragment, R.id.addEditAccountBottomSheetDialogFragment)
 
+    private val preferences: Preferences by inject()
+
+    private var isAuthenticating = false
+    private var isAuthenticated = false
+
     var mCab: AttachedCab? = null
 
     //endregion
@@ -70,6 +80,36 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (Utils.isPie() && preferences.biometricAuth && !isAuthenticated) {
+                        if (!isAuthenticating) {
+                            val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(this@MainActivity) { success ->
+                                if (success != null) {
+                                    isAuthenticated = true
+                                    content.viewTreeObserver.removeOnPreDrawListener(this)
+                                } else {
+                                    isAuthenticating = false
+                                }
+                            }
+                            val promptInfo = BiometricPromptUtils.createPromptInfo(this@MainActivity)
+
+                            biometricPrompt.authenticate(promptInfo)
+                            isAuthenticating = true
+                        }
+
+                        false
+                    } else {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    }
+                }
+            }
+        )
+
 
         setSupportActionBar(binding.mBottomAppBar)
     }

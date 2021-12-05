@@ -29,6 +29,16 @@
             app:entryValues="@array/CurrencyValues" />
     </androidx.preference.PreferenceCategory>
 
+    <androidx.preference.PreferenceCategory android:title="@string/Authentication">
+
+        <androidx.preference.SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_analytics"
+            android:key="pref_biometric_auth"
+            android:summary="@string/prefs_BiometricAuth"
+            android:title="@string/pref_BiometricAuth" />
+    </androidx.preference.PreferenceCategory>
+
     <androidx.preference.PreferenceCategory android:title="@string/Reports">
 
         <androidx.preference.SwitchPreference

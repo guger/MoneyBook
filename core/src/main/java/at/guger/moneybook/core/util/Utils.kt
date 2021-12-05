@@ -25,6 +25,9 @@ import kotlin.math.pow
  */
 object Utils {
 
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.P)
+    fun isPie() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O)
     fun isOreo() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 

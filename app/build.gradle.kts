@@ -108,6 +108,7 @@ dependencies {
     implementation(AndroidX.CoreSplashScreen)
     implementation(AndroidX.AppCompat)
     implementation(AndroidX.Annotation)
+    implementation(AndroidX.Biometric)
     implementation(AndroidX.Fragment)
     implementation(AndroidX.Preference)
     implementation(AndroidX.ConstraintLayout)
