@@ -66,9 +66,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
+                    android:transitionGroup="true"
                     tools:itemCount="4"
                     tools:listitem="@layout/item_account" />
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

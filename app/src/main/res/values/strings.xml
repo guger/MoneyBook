@@ -15,6 +15,10 @@
   -->
 
 <resources>
+    <string name="AccountNumberDots" translatable="false">ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ</string>
+    <string name="fragment_item_transition_name" translatable="false">fragment_item_transition_name_%d</string>
+    <string name="fragment_detail_transition_name" translatable="false">fragment_detail_transition_name</string>
+
     <string name="app_name">MoneyBook</string>
     <string name="Overview">Overview</string>
     <string name="Accounts">Accounts</string>
@@ -27,7 +31,6 @@
     <string name="Add">Add</string>
     <string name="AddTransaction">Add Transaction</string>
     <string name="Checking">Checking</string>
-    <string name="AccountNumberDots" translatable="false">ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ</string>
     <string name="NewTransaction">New Transaction</string>
     <string name="Title">Title</string>
     <string name="Earning">Earning</string>

@@ -59,6 +59,7 @@
         android:id="@+id/homeFragment"
         android:name="at.guger.moneybook.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home">
+        
         <action
             android:id="@+id/action_homeFragment_to_accountDetailFragment"
             app:destination="@id/accountDetailFragment" />

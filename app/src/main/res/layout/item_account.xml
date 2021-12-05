@@ -21,6 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:transitionName="@{@string/fragment_item_transition_name(account.id)}"
         android:background="@drawable/rect_selector"
         android:clickable="true"
         android:focusable="true"

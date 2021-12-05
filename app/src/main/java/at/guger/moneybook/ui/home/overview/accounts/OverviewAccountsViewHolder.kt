@@ -32,12 +32,12 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        viewModel.accounts.observe(binding.lifecycleOwner!!, { coloredAccounts ->
+        viewModel.accounts.observe(binding.lifecycleOwner!!) { coloredAccounts ->
             binding.mOverviewAccountsDivider.setDistributions(
                 distributions = coloredAccounts.map { (it.balance + it.startBalance).toFloat() },
                 colors = coloredAccounts.map { it.color }
             )
-        })
+        }
 
         binding.mOverviewAccountsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)

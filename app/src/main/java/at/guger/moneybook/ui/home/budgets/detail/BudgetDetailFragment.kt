@@ -23,12 +23,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseDataBindingFragment
 import at.guger.moneybook.core.ui.widget.chart.DateDataPoint
+import at.guger.moneybook.core.util.ext.colorAttr
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentBudgetDetailBinding
 import at.guger.moneybook.util.DateFormatUtils
+import com.google.android.material.transition.MaterialContainerTransform
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
@@ -58,6 +61,16 @@ class BudgetDetailFragment : BaseDataBindingFragment<FragmentBudgetDetailBinding
         return FragmentBudgetDetailBinding.inflate(inflater, root, false).apply {
             viewModel = fragmentViewModel
             lifecycleOwner = viewLifecycleOwner
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+            scrimColor = requireContext().colorAttr(R.attr.colorPrimarySurface)
         }
     }
 

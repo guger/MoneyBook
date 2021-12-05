@@ -118,7 +118,7 @@ class BudgetsFragment : BaseDataBindingFragment<FragmentBudgetsBinding, HomeView
                 getAppCompatActivity<MainActivity>()?.destroyCab()
             }
         } else {
-            fragmentViewModel.showBudget(adapter.currentList[pos])
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBudgetDetailBottomSheetFragment(adapter.currentList[pos].id))
         }
     }
 

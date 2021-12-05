@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -31,6 +32,7 @@ import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.databinding.FragmentAccountsBinding
+import at.guger.moneybook.ui.home.HomeFragmentDirections
 import at.guger.moneybook.ui.home.HomeViewModel
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.AccountMenuUtils
@@ -119,7 +121,11 @@ class AccountsFragment : BaseDataBindingFragment<FragmentAccountsBinding, HomeVi
                 getAppCompatActivity<MainActivity>()?.destroyCab()
             }
         } else {
-            fragmentViewModel.showAccount(adapter.currentList[pos])
+            val itemView = binding.mAccountsRecyclerView.getChildAt(pos)
+            val accountDetailTransitionName = getString(R.string.fragment_detail_transition_name)
+            val extras = FragmentNavigatorExtras(itemView to accountDetailTransitionName)
+            val directions = HomeFragmentDirections.actionHomeFragmentToAccountDetailFragment(adapter.currentList[pos].id)
+            findNavController().navigate(directions, extras)
         }
     }
 
