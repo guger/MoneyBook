@@ -22,7 +22,8 @@
         android:id="@+id/mBudgetDetailContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground">
+        android:background="@color/colorBackground"
+        android:transitionName="@string/fragment_detail_transition_name">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mBudgetDetailTitleToolbar"

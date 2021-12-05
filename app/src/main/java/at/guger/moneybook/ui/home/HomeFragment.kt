@@ -163,7 +163,7 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
         })
 
         viewModel.showBudget.observe(viewLifecycleOwner, EventObserver { budgetId ->
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBudgetDetailBottomSheetFragment(budgetId))
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBudgetDetailFragment(budgetId))
         })
     }
 

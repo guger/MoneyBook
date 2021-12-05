@@ -18,7 +18,6 @@ package at.guger.moneybook.ui.home.budgets.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -26,9 +25,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import at.guger.moneybook.R
 import at.guger.moneybook.core.ui.fragment.BaseViewBindingFragment
-import at.guger.moneybook.core.ui.recyclerview.listener.OnItemTouchListener
+import at.guger.moneybook.core.ui.viewmodel.EventObserver
 import at.guger.moneybook.core.util.ext.setup
-import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.LayoutRecyclerViewBinding
 import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentDirections
@@ -36,22 +35,22 @@ import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
 
 /**
- * Fragment displaying the monthly [transactions][Transaction] of an [account][Account].
+ * Fragment displaying the monthly [transactions][Transaction] of an [budget][Budget].
  */
-class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBinding>(), OnItemTouchListener.ItemTouchListener {
+class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBinding>() {
 
     //region Variables
 
-    private val adapter: BudgetDetailTransactionsListAdapter = BudgetDetailTransactionsListAdapter()
+    private lateinit var adapter: BudgetDetailTransactionsListAdapter
 
     private val month: LocalDate by lazy { requireArguments()[KEY_MONTH] as LocalDate }
 
-    private val viewModel by viewModel<BudgetDetailViewModel> { parametersOf(requireArguments()[KEY_BUDGET_ID]) }
+    private val fragmentViewModel by sharedViewModel<BudgetDetailViewModel> { parametersOf(requireArguments()[KEY_BUDGET_ID]) }
 
     //endregion
 
@@ -70,7 +69,15 @@ class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBi
     override fun onResume() {
         super.onResume()
 
-        binding.mLayoutRecyclerView.requestFocus()
+        fragmentViewModel.onItemClick.observe(viewLifecycleOwner, EventObserver(::onItemClick))
+        fragmentViewModel.onItemLongClick.observe(viewLifecycleOwner, EventObserver(::onItemLongClick))
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        fragmentViewModel.onItemClick.removeObservers(viewLifecycleOwner)
+        fragmentViewModel.onItemLongClick.removeObservers(viewLifecycleOwner)
     }
 
     //endregion
@@ -78,11 +85,11 @@ class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBi
     //region Methods
 
     private fun setupLayout() {
-        binding.mLayoutRecyclerView.setup(LinearLayoutManager(requireContext()), adapter) {
-            addOnItemTouchListener(OnItemTouchListener(requireContext(), this, this@BudgetDetailMonthlyFragment))
-        }
+        adapter = BudgetDetailTransactionsListAdapter(fragmentViewModel)
 
-        viewModel.transactionsByMonth(month).observe(viewLifecycleOwner) {
+        binding.mLayoutRecyclerView.setup(LinearLayoutManager(requireContext()), adapter)
+
+        fragmentViewModel.transactionsByMonth(month).observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
@@ -95,7 +102,7 @@ class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBi
 
     //region Callback
 
-    override fun onItemClick(view: View, pos: Int, e: MotionEvent) {
+    private fun onItemClick(pos: Int) {
         if (getAppCompatActivity<MainActivity>()?.mCab.isActive()) {
             adapter.toggleChecked(pos)
 
@@ -111,7 +118,7 @@ class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBi
         }
     }
 
-    override fun onItemLongClick(view: View, pos: Int, e: MotionEvent) {
+    private fun onItemLongClick(pos: Int) {
         adapter.toggleChecked(pos)
 
         if (adapter.checkedCount > 0) {
@@ -127,7 +134,7 @@ class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBi
                     }
 
                     onSelection { menuItem ->
-                        TransactionMenuUtils.onItemSelected(menuItem, adapter, editAction = ::editTransaction, deleteAction = viewModel::delete)
+                        TransactionMenuUtils.onItemSelected(menuItem, adapter, editAction = ::editTransaction, deleteAction = fragmentViewModel::delete)
                         destroy()
                     }
                 }

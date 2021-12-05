@@ -17,8 +17,10 @@
 package at.guger.moneybook.ui.home.budgets.detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.BudgetsRepository
@@ -43,6 +45,12 @@ class BudgetDetailViewModel(
     val transactions: LiveData<List<Transaction>> = transactionsRepository.getByBudget(budgetId)
     val transactionMonths: LiveData<List<LocalDate>> = transactionsRepository.getByBudgetMonthly(budgetId)
 
+    private val _onItemClick = MutableLiveData<Event<Int>>()
+    val onItemClick: LiveData<Event<Int>> = _onItemClick
+
+    private val _onItemLongClick = MutableLiveData<Event<Int>>()
+    val onItemLongClick: LiveData<Event<Int>> = _onItemLongClick
+
     //endregion
 
     //region Methods
@@ -53,6 +61,14 @@ class BudgetDetailViewModel(
         viewModelScope.launch {
             transactionsRepository.delete(*transaction)
         }
+    }
+
+    fun onItemClick(position: Int) {
+        _onItemClick.value = Event(position)
+    }
+
+    fun onLongClick(position: Int) {
+        _onItemLongClick.value = Event(position)
     }
 
     //endregion

@@ -79,10 +79,6 @@ class HomeViewModel(
         _showAccount.value = Event(account.id)
     }
 
-    fun showBudget(budget: Budget) {
-        _showBudget.value = Event(budget.id)
-    }
-
     fun markAsPaid(vararg transaction: Transaction, moveToAccount: Boolean = false) {
         viewModelScope.launch {
             if (moveToAccount) {

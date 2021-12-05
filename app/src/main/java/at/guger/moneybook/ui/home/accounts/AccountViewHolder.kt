@@ -40,11 +40,11 @@ class AccountViewHolder(binding: ItemAccountBinding, private val viewModel: Home
     }
 
     override fun onClick(v: View?) {
-        viewModel.onItemClick(adapterPosition)
+        viewModel.onItemClick(absoluteAdapterPosition)
     }
 
     override fun onLongClick(v: View?): Boolean {
-        viewModel.onLongClick(adapterPosition)
+        viewModel.onLongClick(absoluteAdapterPosition)
 
         return true
     }

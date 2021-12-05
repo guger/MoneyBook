@@ -48,6 +48,12 @@ class AccountDetailViewModel(
     private val _showAddEditTransactionDialogFragment = MutableLiveData<Event<Account>>()
     val showAddEditTransactionDialogFragment: LiveData<Event<Account>> = _showAddEditTransactionDialogFragment
 
+    private val _onItemClick = MutableLiveData<Event<Int>>()
+    val onItemClick: LiveData<Event<Int>> = _onItemClick
+
+    private val _onItemLongClick = MutableLiveData<Event<Int>>()
+    val onItemLongClick: LiveData<Event<Int>> = _onItemLongClick
+
     //endregion
 
     init {
@@ -71,6 +77,14 @@ class AccountDetailViewModel(
         viewModelScope.launch {
             transactionsRepository.delete(*transaction)
         }
+    }
+
+    fun onItemClick(position: Int) {
+        _onItemClick.value = Event(position)
+    }
+
+    fun onLongClick(position: Int) {
+        _onItemLongClick.value = Event(position)
     }
 
     //endregion

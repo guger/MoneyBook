@@ -27,7 +27,8 @@ import at.guger.moneybook.databinding.ItemTransactionBinding
 /**
  * [RecyclerView.Adapter] for overview coloredAccounts card.
  */
-class AccountDetailTransactionsListAdapter : CheckableListAdapter<Transaction, AccountDetailTransactionViewHolder>(AccountsDetailsTransactionsDiffCallback()) {
+class AccountDetailTransactionsListAdapter(private val viewModel: AccountDetailViewModel) :
+    CheckableListAdapter<Transaction, AccountDetailTransactionViewHolder>(AccountsDetailsTransactionsDiffCallback()) {
 
     //region Variables
 
@@ -38,7 +39,7 @@ class AccountDetailTransactionsListAdapter : CheckableListAdapter<Transaction, A
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountDetailTransactionViewHolder {
-        return AccountDetailTransactionViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return AccountDetailTransactionViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false), viewModel)
     }
 
     override fun onBindViewHolder(holder: AccountDetailTransactionViewHolder, position: Int) {

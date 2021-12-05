@@ -40,7 +40,7 @@ class StrokePieChart @JvmOverloads constructor(context: Context, attrs: Attribut
     private var entriesSum: Float = 0.0f
     private var animator: ValueAnimator? = null
 
-    var animationDuration: Long = 300
+    var animationDuration: Long = 500
 
     /**
      * The distance between two entries in degrees.

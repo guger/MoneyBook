@@ -39,13 +39,13 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
- * Fragment displaying the [transactions][Transaction] of an [account][Budget].
+ * Fragment displaying the [transactions][Transaction] of a [budget][Budget].
  */
 class BudgetDetailFragment : BaseDataBindingFragment<FragmentBudgetDetailBinding, BudgetDetailViewModel>() {
 
     //region Variables
 
-    private val args: BudgetDetailBottomSheetFragmentArgs by navArgs()
+    private val args: BudgetDetailFragmentArgs by navArgs()
 
     private lateinit var months: List<LocalDate>
 

@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.ui.home.budgets.detail
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.Transaction
@@ -24,10 +25,24 @@ import at.guger.moneybook.databinding.ItemTransactionBinding
 /**
  * [RecyclerView.ViewHolder] for a transaction item.
  */
-class BudgetDetailTransactionViewHolder(binding: ItemTransactionBinding) : ModelViewHolder<ItemTransactionBinding, Transaction>(binding) {
+class BudgetDetailTransactionViewHolder(binding: ItemTransactionBinding, private val viewModel: BudgetDetailViewModel) :
+    ModelViewHolder<ItemTransactionBinding, Transaction>(binding),
+    View.OnClickListener, View.OnLongClickListener {
 
     override fun bind(model: Transaction) {
         binding.transaction = model
+        binding.root.setOnClickListener(this)
+        binding.root.setOnLongClickListener(this)
         binding.executePendingBindings()
+    }
+
+    override fun onClick(p0: View?) {
+        viewModel.onItemClick(absoluteAdapterPosition)
+    }
+
+    override fun onLongClick(p0: View?): Boolean {
+        viewModel.onLongClick(absoluteAdapterPosition)
+
+        return true
     }
 }

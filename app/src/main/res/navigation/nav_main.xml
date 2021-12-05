@@ -64,8 +64,8 @@
             android:id="@+id/action_homeFragment_to_accountDetailFragment"
             app:destination="@id/accountDetailFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_budgetDetailBottomSheetFragment"
-            app:destination="@id/budgetDetailBottomSheetFragment" />
+            android:id="@+id/action_homeFragment_to_budgetDetailFragment"
+            app:destination="@id/budgetDetailFragment" />
         <action
             android:id="@+id/action_homeFragment_to_budgetsInfoBottomSheetDialogFragment"
             app:destination="@id/budgetsInfoBottomSheetDialogFragment" />
@@ -119,20 +119,6 @@
         android:name="at.guger.moneybook.ui.onboarding.OnBoardingFragment"
         android:label="OnBoardingFragment"
         tools:layout="@layout/fragment_onboarding" />
-
-    <dialog
-        android:id="@+id/budgetDetailBottomSheetFragment"
-        android:name="at.guger.moneybook.ui.home.budgets.detail.BudgetDetailBottomSheetFragment"
-        android:label="BudgetDetailBottomSheetFragment"
-        tools:layout="@layout/dialog_fragment_budget_detail">
-
-        <argument
-            android:name="budgetId"
-            app:argType="long" />
-        <action
-            android:id="@+id/action_budgetDetailBottomSheetFragment_to_budgetDetailFragment"
-            app:destination="@id/budgetDetailFragment" />
-    </dialog>
 
     <fragment
         android:id="@+id/budgetDetailFragment"

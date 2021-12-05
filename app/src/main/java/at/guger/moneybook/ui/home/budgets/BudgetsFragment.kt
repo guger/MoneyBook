@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.TooltipCompat
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -118,7 +119,11 @@ class BudgetsFragment : BaseDataBindingFragment<FragmentBudgetsBinding, HomeView
                 getAppCompatActivity<MainActivity>()?.destroyCab()
             }
         } else {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBudgetDetailBottomSheetFragment(adapter.currentList[pos].id))
+            val itemView = binding.mBudgetsRecyclerView.getChildAt(pos)
+            val budgetDetailTransitionName = getString(R.string.fragment_detail_transition_name)
+            val extras = FragmentNavigatorExtras(itemView to budgetDetailTransitionName)
+            val directions = HomeFragmentDirections.actionHomeFragmentToBudgetDetailFragment(adapter.currentList[pos].id)
+            findNavController().navigate(directions, extras)
         }
     }
 

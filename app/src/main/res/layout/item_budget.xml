@@ -24,7 +24,8 @@
         android:background="@drawable/rect_selector"
         android:clickable="true"
         android:focusable="true"
-        android:padding="@dimen/item_padding">
+        android:padding="@dimen/item_padding"
+        android:transitionName="@{@string/fragment_item_transition_name(budget.id)}">
 
         <TextView
             android:id="@+id/txvBudgetName"
