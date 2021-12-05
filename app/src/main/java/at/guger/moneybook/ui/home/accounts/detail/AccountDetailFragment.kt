@@ -38,7 +38,6 @@ import at.guger.moneybook.ui.home.addedittransaction.AddEditTransactionFragmentD
 import at.guger.moneybook.util.DateFormatUtils
 import com.google.android.material.transition.MaterialContainerTransform
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

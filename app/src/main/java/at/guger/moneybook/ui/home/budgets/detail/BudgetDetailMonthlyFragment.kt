@@ -94,7 +94,7 @@ class BudgetDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewBi
         }
     }
 
-    private fun editTransaction(transaction: Transaction) {
+    private fun editTransaction(pos: Int, transaction: Transaction) {
         requireParentFragment().findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
     }
 

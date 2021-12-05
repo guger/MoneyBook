@@ -100,7 +100,7 @@ class DuesFragment : BaseDataBindingFragment<FragmentDuesBinding, HomeViewModel>
         })
     }
 
-    private fun editTransaction(transaction: Transaction) {
+    private fun editTransaction(pos: Int, transaction: Transaction) {
         findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
     }
 

@@ -86,8 +86,8 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         super.onCreate(savedInstanceState)
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-            setPathMotion(MaterialArcMotion())
             duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+            setPathMotion(MaterialArcMotion())
         }
     }
 

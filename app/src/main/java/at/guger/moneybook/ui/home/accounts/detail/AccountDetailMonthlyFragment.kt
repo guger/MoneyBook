@@ -94,8 +94,8 @@ class AccountDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewB
         }
     }
 
-    private fun editTransaction(transaction: Transaction) {
-        requireParentFragment().findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
+    private fun editTransaction(pos: Int, transaction: Transaction) {
+        findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(transaction))
     }
 
     //endregion

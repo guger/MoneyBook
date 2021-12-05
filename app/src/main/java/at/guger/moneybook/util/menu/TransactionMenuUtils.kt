@@ -38,13 +38,14 @@ object TransactionMenuUtils {
     fun onItemSelected(
         item: MenuItem,
         adapter: CheckableListAdapter<Transaction, *>,
-        editAction: (Transaction) -> Unit,
+        editAction: (Int, Transaction) -> Unit,
         markAsPaidAction: ((Array<Transaction>, Boolean) -> Unit)? = null,
         deleteAction: (Array<Transaction>) -> Unit
     ): Boolean {
         return when (item.itemId) {
             R.id.actionTransactionEdit -> {
-                editAction(adapter.currentList[adapter.checkedItems.first()])
+                val pos = adapter.checkedItems.first()
+                editAction(pos, adapter.currentList[pos])
                 true
             }
             R.id.actionTransactionMarkAsPaid -> {
