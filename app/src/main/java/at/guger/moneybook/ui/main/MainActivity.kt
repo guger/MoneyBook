@@ -76,40 +76,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val splashScreen = installSplashScreen()
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val content: View = findViewById(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (Utils.isPie() && preferences.biometricAuth && !isAuthenticated) {
-                        if (!isAuthenticating) {
-                            val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(this@MainActivity) { success ->
-                                if (success != null) {
-                                    isAuthenticated = true
-                                    content.viewTreeObserver.removeOnPreDrawListener(this)
-                                } else {
-                                    isAuthenticating = false
-                                }
-                            }
-                            val promptInfo = BiometricPromptUtils.createPromptInfo(this@MainActivity)
-
-                            biometricPrompt.authenticate(promptInfo)
-                            isAuthenticating = true
-                        }
-
-                        false
-                    } else {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    }
-                }
-            }
-        )
-
+        setupLayout()
 
         setSupportActionBar(binding.mBottomAppBar)
     }
@@ -144,6 +111,42 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
     //endregion
 
     //region Methods
+
+    private fun setupLayout() {
+        val splashScreen = installSplashScreen()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (Utils.isPie() && preferences.biometricAuth && !isAuthenticated) {
+                        if (!isAuthenticating) {
+                            val biometricPrompt = BiometricPromptUtils.createBiometricPrompt(this@MainActivity) { success ->
+                                if (success != null) {
+                                    isAuthenticated = true
+                                    content.viewTreeObserver.removeOnPreDrawListener(this)
+                                } else {
+                                    isAuthenticating = false
+                                }
+                            }
+                            val promptInfo = BiometricPromptUtils.createPromptInfo(this@MainActivity)
+
+                            biometricPrompt.authenticate(promptInfo)
+                            isAuthenticating = true
+                        }
+
+                        false
+                    } else {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    }
+                }
+            }
+        )
+    }
 
     fun attachCab(@MenuRes menuRes: Int, exec: CabApply) {
         mCab = createCab(R.id.mCabStub) {

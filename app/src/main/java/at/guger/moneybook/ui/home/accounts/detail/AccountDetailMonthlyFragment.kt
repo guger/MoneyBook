@@ -35,7 +35,7 @@ import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.menu.TransactionMenuUtils
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
 
@@ -50,7 +50,7 @@ class AccountDetailMonthlyFragment : BaseViewBindingFragment<LayoutRecyclerViewB
 
     private val month: LocalDate by lazy { requireArguments()[KEY_MONTH] as LocalDate }
 
-    private val fragmentViewModel by sharedViewModel<AccountDetailViewModel> { parametersOf(requireArguments()[KEY_ACCOUNT_ID]) }
+    private val fragmentViewModel by viewModel<AccountDetailViewModel> { parametersOf(requireArguments()[KEY_ACCOUNT_ID]) }
 
     //endregion
 
