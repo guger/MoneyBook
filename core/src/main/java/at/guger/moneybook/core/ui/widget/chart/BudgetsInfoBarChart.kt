@@ -16,6 +16,7 @@
 
 package at.guger.moneybook.core.ui.widget.chart
 
+import android.animation.Animator
 import android.content.Context
 import android.graphics.*
 import android.text.TextPaint
@@ -27,14 +28,14 @@ import at.guger.moneybook.core.util.ext.sp
 import kotlinx.coroutines.Job
 import kotlin.math.max
 
-class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs), MoneyBookBarChart {
 
     //region Variables
 
     private var waitingForSizeConfirmation: Boolean = false
 
     private val data = mutableListOf<BudgetDataPoint>()
-    private val barHeights = mutableListOf<Float>()
+    override val barHeights = mutableListOf<Float>()
 
     private var limitFactor: Int = 0
     private var limitPos: Float = 0.0f
@@ -61,6 +62,9 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
     private val barPaint: Paint
     private val limitPaint: Paint
     private val limitTextPaint: Paint
+
+    private val barAnimator = MorphBarAnimator()
+    private var pathAnimator: Animator? = null
 
     private var job: Job? = null
 
@@ -124,8 +128,6 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        computePath()
-
         for (i in 0 until barPaths.size) {
             canvas?.drawPath(barPaths[i], barPaint.apply { color = data[i].color })
             canvas?.drawText(data[i].label, textPoints[i].x, textPoints[i].y, limitTextPaint)
@@ -176,19 +178,27 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
             barHeights.add(max(length, minBarLength))
         }
 
+        computeDecors()
+
+        pathAnimator?.cancel()
+
+        pathAnimator = barAnimator.getAnimation(this)
+
+        pathAnimator?.start()
+
         return true
     }
 
-    private fun computePath() {
-        if (barHeights.isEmpty()) return
+    override fun computePath(barHeightValues: List<Float>) {
+        if (barHeightValues.isEmpty()) return
 
         barPaths.clear()
 
-        for (i in 0 until barHeights.size) {
+        for (i in barHeightValues.indices) {
             val top = topMargin + limitTextSize + i * (barWidth + barSpaceWidth + 1.5f * limitTextSize)
             val path = Path().apply {
                 moveTo(startMargin, top)
-                addRect(startMargin, top, startMargin + barHeights[i], top + barWidth, Path.Direction.CW)
+                addRect(startMargin, top, startMargin + barHeightValues[i], top + barWidth, Path.Direction.CW)
             }
 
             barPaths.add(path)
@@ -196,6 +206,10 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
             textPoints.add(PointF(startMargin, top - limitTextSize / 2))
         }
 
+        invalidate()
+    }
+
+    private fun computeDecors() {
         val sequenceLength = strokeLength + spaceLength
         val graphHeight = height - (topMargin + bottomMargin)
 
@@ -214,6 +228,13 @@ class BudgetsInfoBarChart @JvmOverloads constructor(context: Context, attrs: Att
 
     private fun formatPercent(num: Int): String {
         return String.format("%d %%", num)
+    }
+
+    override fun setAnimationPath(animationPath: List<Path>) {
+        barPaths.clear()
+        barPaths.addAll(animationPath)
+
+        invalidate()
     }
 
     //endregion
