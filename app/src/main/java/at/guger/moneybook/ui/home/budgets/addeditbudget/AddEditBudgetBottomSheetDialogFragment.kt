@@ -75,9 +75,9 @@ class AddEditBudgetBottomSheetDialogFragment : BaseDataBindingBottomSheetDialogF
     //region Methods
 
     private fun setupEvents() {
-        fragmentViewModel.budgetName.observe(viewLifecycleOwner, { fragmentViewModel.onTextFieldChanged() })
-        fragmentViewModel.budgetBudget.observe(viewLifecycleOwner, { fragmentViewModel.onTextFieldChanged() })
-        fragmentViewModel.isValidForm.observe(viewLifecycleOwner, { binding.btnAddEditBudgetSave.isEnabled = it })
+        fragmentViewModel.budgetName.observe(viewLifecycleOwner) { fragmentViewModel.onTextFieldChanged() }
+        fragmentViewModel.budgetBudget.observe(viewLifecycleOwner) { fragmentViewModel.onTextFieldChanged() }
+        fragmentViewModel.isValidForm.observe(viewLifecycleOwner) { binding.btnAddEditBudgetSave.isEnabled = it }
 
         fragmentViewModel.showColorChooser.observe(viewLifecycleOwner, EventObserver {
             MaterialDialog(requireActivity()).show {

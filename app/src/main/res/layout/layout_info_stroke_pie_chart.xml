@@ -26,13 +26,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:bold="true"
+            app:budgets="@{budgets}"
             app:fontResId="@font/eczar_regular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:budgets="@{budgets}"
             app:textSize="42sp"
             tools:text="$ 1234,56 / $ 567,43" />
 
@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/Information"
             android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

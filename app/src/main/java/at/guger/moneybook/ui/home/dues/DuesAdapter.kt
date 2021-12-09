@@ -59,9 +59,9 @@ class DuesAdapter(private val viewModel: HomeViewModel) : CheckableListAdapter<T
     }
 
     override fun clearChecked() {
-        super.clearChecked()
+        checkedItems.forEach(::notifyItemChanged)
 
-        notifyDataSetChanged()
+        super.clearChecked()
     }
 
     //endregion

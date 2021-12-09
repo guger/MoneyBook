@@ -17,20 +17,14 @@
 package at.guger.moneybook.data.json
 
 import android.graphics.Color
-import android.os.Build
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import at.guger.moneybook.data.base.DatabaseTest
 import at.guger.moneybook.data.model.Account
 import at.guger.moneybook.data.model.Budget
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
-import at.guger.moneybook.data.repository.*
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 import java.time.LocalDate
 
 /**

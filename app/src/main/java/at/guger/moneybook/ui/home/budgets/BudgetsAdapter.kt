@@ -59,9 +59,9 @@ class BudgetsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapte
     }
 
     override fun clearChecked() {
-        super.clearChecked()
+        checkedItems.forEach(::notifyItemChanged)
 
-        notifyDataSetChanged()
+        super.clearChecked()
     }
 
     //endregion

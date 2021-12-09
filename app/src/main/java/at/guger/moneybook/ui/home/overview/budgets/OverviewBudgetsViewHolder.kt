@@ -33,7 +33,7 @@ class OverviewBudgetsViewHolder(binding: ItemOverviewBudgetsBinding) : BindingVi
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, { budgets ->
+        viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!) { budgets ->
             val leftValue: Float = budgets.sumOf { it.budget - it.balance }.toFloat()
 
             val distributions = mutableListOf(*budgets.map { it.balance.toFloat() }.toTypedArray(), leftValue)
@@ -44,14 +44,14 @@ class OverviewBudgetsViewHolder(binding: ItemOverviewBudgetsBinding) : BindingVi
                 distributions = distributions,
                 colors = colors
             )
-        })
+        }
 
         binding.mOverviewBudgetsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewBudgetsListAdapter().apply {
-                viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!, { budgets ->
+                viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!) { budgets ->
                     submitList(budgets.sortedBy { if (it.balance > 0) it.budget - it.balance else Double.MAX_VALUE }.subList(0, min(budgets.size, 3)))
-                })
+                }
             }
         }
     }

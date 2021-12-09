@@ -24,10 +24,10 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 1
-        const val Patch = 3
+        const val Patch = 10
         const val Release = 0
-        const val Beta = 0
-        const val Dev = 1
+        const val Beta = 1
+        const val Dev = 0
 
         fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev()
         fun versionName() = "$Major.$Minor.$Patch"

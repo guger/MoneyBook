@@ -25,13 +25,11 @@ import android.view.View
 fun View.hide() {
     animate()
         .scaleX(0.0f)
-        .scaleY(0.0f)
-        .setDuration(resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
+        .scaleY(0.0f).duration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 }
 
 fun View.show() {
     animate()
         .scaleX(1.0f)
-        .scaleY(1.0f)
-        .setDuration(resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
+        .scaleY(1.0f).duration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 }

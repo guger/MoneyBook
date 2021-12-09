@@ -34,7 +34,7 @@ class OverviewDuesViewHolder(binding: ItemOverviewDuesBinding) : BindingViewHold
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, { transactions ->
+        viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!) { transactions ->
             binding.mOverviewDuesDivider.setDistributions(
                 listOf(
                     transactions.filter { !it.isPaid && it.type == Transaction.TransactionType.CLAIM }.sumOf { it.value }.toFloat(),
@@ -45,15 +45,15 @@ class OverviewDuesViewHolder(binding: ItemOverviewDuesBinding) : BindingViewHold
                     R.color.color_debt
                 )
             )
-        })
+        }
 
         binding.mOverviewDuesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = OverviewDuesListAdapter().apply {
-                viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!, { transactions ->
+                viewModel.claimsAndDebts.observe(binding.lifecycleOwner!!) { transactions ->
                     val unpaidDues = transactions.filterNot { it.isPaid }
                     submitList(unpaidDues.subList(0, min(unpaidDues.size, 3)))
-                })
+                }
             }
         }
     }

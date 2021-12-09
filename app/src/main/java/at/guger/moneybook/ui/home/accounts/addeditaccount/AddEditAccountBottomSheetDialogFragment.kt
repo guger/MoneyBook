@@ -73,9 +73,9 @@ class AddEditAccountBottomSheetDialogFragment : BaseDataBindingBottomSheetDialog
     //region Methods
 
     private fun setupEvents() {
-        fragmentViewModel.accountName.observe(viewLifecycleOwner, {
+        fragmentViewModel.accountName.observe(viewLifecycleOwner) {
             binding.btnAddEditAccountSave.isEnabled = it.isNotBlank()
-        })
+        }
 
         fragmentViewModel.accountStartBalanceError.observe(viewLifecycleOwner, EventObserver {
             binding.tilAddEditAccountStartBalance.error = getString(R.string.InvalidValue)

@@ -59,9 +59,9 @@ class AccountsAdapter(private val viewModel: HomeViewModel) : CheckableListAdapt
     }
 
     override fun clearChecked() {
-        super.clearChecked()
+        checkedItems.forEach(::notifyItemChanged)
 
-        notifyDataSetChanged()
+        super.clearChecked()
     }
 
     //endregion

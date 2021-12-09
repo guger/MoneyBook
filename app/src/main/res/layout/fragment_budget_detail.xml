@@ -82,6 +82,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mBudgetDetailTabs" />
 
+        <TextView
+            android:id="@+id/txvBudgetDetailTransactionsEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/NoTransactions"
+            android:textAppearance="?textAppearanceSubtitle1"
+            android:visibility="@{viewModel.transactions.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/mBudgetDetailViewPager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mBudgetDetailViewPager"
+            tools:visibility="visible" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>

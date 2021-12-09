@@ -59,9 +59,9 @@ class AccountDetailTransactionsListAdapter(private val viewModel: AccountDetailV
     }
 
     override fun clearChecked() {
-        super.clearChecked()
+        checkedItems.forEach(::notifyItemChanged)
 
-        notifyDataSetChanged()
+        super.clearChecked()
     }
 
     //endregion

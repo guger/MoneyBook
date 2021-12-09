@@ -43,8 +43,10 @@ class TransactionsRepository(database: AppDatabase) {
 
     fun getByAccount(accountId: Long): LiveData<List<Transaction>> = transactionsDao.getByAccount(accountId)
 
-    fun getByAccountMonthly(accountId: Long): LiveData<List<LocalDate>> = getByAccount(accountId).map {
-        it.map { transaction -> transaction.date }.groupBy { date -> date.withDayOfMonth(1) }.keys.reversed()
+    fun getByAccountMonthly(accountId: Long): LiveData<List<LocalDate>> = getByAccount(accountId).map { transactions ->
+        transactions.map { transaction -> transaction.date }.groupBy { date -> date.withDayOfMonth(1) }.keys.reversed().takeIf { it.isNotEmpty() } ?: listOf(
+            LocalDate.now().withDayOfMonth(1)
+        )
     }
 
     fun getByAccountMonth(accountId: Long, month: LocalDate): LiveData<List<Transaction>> = getByAccount(accountId).map {

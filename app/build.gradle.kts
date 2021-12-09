@@ -17,7 +17,6 @@
 
 import Dependencies.AndroidX
 import Dependencies.Firebase
-import Dependencies.Plugins
 import Dependencies.Test
 import Dependencies.Kotlin
 import Dependencies.Libs

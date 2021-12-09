@@ -77,7 +77,7 @@ class MigrationHelper(
     suspend fun migrate() {
         checkNotNull(entries) { "Call #getUsedCategories before migration." }
 
-        val legacyReminders: Map<Long, LocalDateTime> = legacyDatabase.reminderDao().getReminders().map { Pair(it.bookEntryId, it.fireDate) }.toMap()
+        val legacyReminders: Map<Long, LocalDateTime> = legacyDatabase.reminderDao().getReminders().associate { Pair(it.bookEntryId, it.fireDate) }
         val account = accountsRepository.getAccounts().first()
         val budgets = mutableMapOf<Long, Budget>()
 

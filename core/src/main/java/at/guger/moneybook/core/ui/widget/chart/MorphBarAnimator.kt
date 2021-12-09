@@ -52,7 +52,7 @@ class MorphBarAnimator : Animator(), ChartAnimator {
             oldHeights.addAll(barHeights)
         }
 
-        return animator;
+        return animator
     }
 
     override fun getStartDelay(): Long = animator.startDelay

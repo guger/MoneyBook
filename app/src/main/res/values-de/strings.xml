@@ -25,7 +25,6 @@
     <string name="Search">Suche</string>
     <string name="Dues">Rechnungen</string>
     <string name="Budgets">Budgets</string>
-    <string name="Add">Hinzufügen</string>
     <string name="AddTransaction">Neue Buchung</string>
     <string name="Checking">Girokonto</string>
     <string name="NewTransaction">Buchung erstellen</string>
@@ -41,7 +40,6 @@
     <string name="Notes">Notizen</string>
     <string name="Date">Datum</string>
     <string name="ChooseDate">Datum auswählen</string>
-    <string name="OpenCalculator">Taschenrechner öffnen</string>
     <string name="EmptyTransactionTitle">Bitte geben Sie einen Titel ein.</string>
     <string name="InvalidTransactionDate">Bitte geben Sie ein Datum ein (Format: %s).</string>
     <string name="InvalidTransactionDueDate">Bitte geben Sie ein Fälligkeitsdatum ein (Format: %s).</string>
@@ -60,7 +58,6 @@
     <string name="Name">Name</string>
     <string name="NewAccount">Konto erstellen</string>
     <string name="EditAccount">Konto bearbeiten</string>
-    <string name="EmptyAccountName">Bitte geben Sie einen Kontonamen ein.</string>
     <string name="DeleteAccount">Konto löschen</string>
     <string name="DeleteAccounts">Konten löschen</string>
     <string name="aldm_DeleteAccount">Möchen Sie das Konto \"%s\" inkl. aller Buchungen wirklich löschen?</string>
@@ -77,8 +74,6 @@
     <string name="Permissions">Berechtigungen</string>
     <string name="prefs_Permissions">Erläuterungen zu den angeforderten Berechtigungen.</string>
     <string name="OK">OK</string>
-    <string name="ContactsPermissionDenied">Kontakte hinzufügen funktioniert aufgrund des verweigerten Kontaktzugriffs nur eingeschränkt.</string>
-    <string name="Retry">Wiederholen</string>
     <string name="Left">übrig</string>
     <string name="ChooseColor">Farbe auswählen</string>
     <string name="EditBudget">Budget bearbeiten</string>
@@ -158,7 +153,6 @@
     <string name="SnoozeDisabled">Schlummern ist aufgrund der fehlenden Berechtigung nicht verfügbar.</string>
     <string name="MarkAsPaidToAccount">In Konto verschieben</string>
     <string name="ChooseAccount">Konto auswählen</string>
-    <string name="OpenDetails">Details öffnen</string>
     <string name="ContactsPermissionPermanentlyDenied">Zugriff auf Kontakte verweigert.</string>
     <string name="ContactsPermissionPermanentlyDeniedMessage">Der Kontaktzugriff wurde verweigert. Um MoneyBook Zugriff auf die Kontakte zu geben, bitte die App-Systemeinstellungen öffnen.</string>
     <string name="TransferToAccount">Auf Konto umbuchen</string>
@@ -167,9 +161,6 @@
     <string name="prefs_ExportImportData">Exportieren oder importieren Sie Ihre Daten verschlüsselt, z.B. für einen Gerätewechsel.</string>
     <string name="Export">Exportieren</string>
     <string name="Import">Importieren</string>
-    <string name="StoragePermission">Zugriff auf Speicher</string>
-    <string name="StoragePermissionNeeded">Speicherzugriff wird zum exportieren oder importieren von Daten benötigt.</string>
-    <string name="StoragePermissionDeniedExportImportNotPossible">Der Export oder Import ist nicht möglich, da der Speicherzugriff verweigert wurde.</string>
     <string name="ExportImportMessage">Bitte wählen Sie eine \'*.MoneyBookBackup\'-Datei aus, um Ihre Daten sicher verschlüsselt zu exportieren oder zu importieren.</string>
     <string name="ImportData">Backup-Daten importieren</string>
     <string name="ImportDataOverwriteAll">Beim Importieren des Backups werden ALLE aktuellen Daten überschrieben. Dieser Schritt kann nicht mehr rückgängig gemacht werden!</string>
@@ -178,7 +169,6 @@
     <string name="OngoingImport">Import läuft …</string>
     <string name="OngoingExport">Export läuft …</string>
     <string name="NoBackupFileLocationSelected">Keine Datei für das Backup ausgewählt.</string>
-    <string name="NoValidBackupFileSelected">Bitte überprüfen Sie die \'*.%s\' Dateiendung.</string>
     <string name="ExportAborted">Export abgebrochen.</string>
     <string name="ImportAborted">Import abgebrochen.</string>
     <string name="EnterPasswordMessage">Geben Sie ein 16 Zeichen langes Passwort ein, welches zum Verschlüsseln und Entschlüsseln Ihres Backups genutzt wird.</string>
