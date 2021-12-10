@@ -29,7 +29,9 @@
             app:entryValues="@array/CurrencyValues" />
     </androidx.preference.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory android:title="@string/Authentication">
+    <androidx.preference.PreferenceCategory
+        android:key="pref_cat_authentication"
+        android:title="@string/Authentication">
 
         <androidx.preference.SwitchPreference
             android:defaultValue="false"

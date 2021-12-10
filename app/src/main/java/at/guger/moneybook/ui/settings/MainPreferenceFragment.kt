@@ -25,6 +25,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreference
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -33,6 +34,7 @@ import at.guger.moneybook.BuildConfig
 import at.guger.moneybook.R
 import at.guger.moneybook.core.preferences.Preferences
 import at.guger.moneybook.core.ui.preference.BasePreferenceFragment
+import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.data.crypto.Crypto
 import at.guger.moneybook.work.ExportImportWorker
 import com.afollestad.materialdialogs.MaterialDialog
@@ -62,6 +64,8 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     private lateinit var prefCurrency: ListPreference
     private lateinit var prefInformation: Preference
 
+    private lateinit var prefAuthentication: PreferenceCategory
+
     private var restartSnackbar: Snackbar? = null
 
     private var password: String? = null
@@ -89,20 +93,16 @@ class MainPreferenceFragment : BasePreferenceFragment() {
 
     //region PreferenceFragment
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_main)
-    }
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         prefCurrency = findPreference(Preferences.CURRENCY)!!
         prefInformation = findPreference(Preferences.EXPORT_IMPORT)!!
         prefInformation = findPreference(Preferences.INFORMATION)!!
+
+        prefAuthentication = findPreference(Preferences.AUTHENTICATION)!!
+
+        prefAuthentication.isVisible = Utils.hasBiometricFeatures(requireContext())
 
         prefCurrency.setOnPreferenceChangeListener { _, _ ->
             requireRestart = true

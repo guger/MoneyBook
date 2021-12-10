@@ -16,8 +16,11 @@
 
 package at.guger.moneybook.core.util
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.*
 import kotlin.math.pow
 
 /**
@@ -33,6 +36,10 @@ object Utils {
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.M)
     fun isMarshmallow() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+    fun hasBiometricFeatures(context: Context): Boolean {
+        return BiometricManager.from(context).canAuthenticate(BIOMETRIC_STRONG or BIOMETRIC_WEAK or DEVICE_CREDENTIAL) == BiometricManager.BIOMETRIC_SUCCESS
+    }
 
     fun getGaussianScale(
         childCenterX: Int,

@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" />
+
     <application
         android:name=".MoneyBook"
         android:allowBackup="false"

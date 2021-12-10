@@ -21,12 +21,13 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import at.guger.moneybook.core.BuildConfig
+import at.guger.moneybook.core.util.Utils
 import java.util.*
 
 /**
  * Preference utility class for managing [SharedPreferences].
  */
-class Preferences(context: Context) {
+class Preferences(private val context: Context) {
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -39,7 +40,7 @@ class Preferences(context: Context) {
         set(value) = preferences.edit { putBoolean(ANALYTICS, value) }
 
     var biometricAuth: Boolean
-        get() = preferences.getBoolean(BIOMETRIC_AUTH, false)
+        get() = preferences.getBoolean(BIOMETRIC_AUTH, false).takeIf { Utils.hasBiometricFeatures(context) } ?: false
         set(value) = preferences.edit { putBoolean(BIOMETRIC_AUTH, value) }
 
     var crashlytics: Boolean
@@ -64,6 +65,7 @@ class Preferences(context: Context) {
         const val FIRST_START = "pref_firstStart"
         const val CURRENCY = "pref_currency"
         const val ANALYTICS = "pref_analytics"
+        const val AUTHENTICATION = "pref_cat_authentication"
         const val BIOMETRIC_AUTH = "pref_biometric_auth"
         const val CRASHLYTICS = "pref_crashlytics"
         const val EXPERIMENTAL = "pref_experimental"
