@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 31
     }
 
-    const val Gradle = "7.1.0-beta04"
+    const val Gradle = "7.1.0-beta05"
 
     const val KOIN = "3.1.3"
 
@@ -71,21 +71,21 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.6.0"
-        const val Coroutines = "1.5.2"
+        const val Common = "1.6.10"
+        const val Coroutines = "1.6.0"
     }
 
     object Firebase {
 
         object Plugins {
             const val GoogleServices = "4.3.10"
-            const val CrashlyticsGradle = "2.8.0"
+            const val CrashlyticsGradle = "2.8.1"
         }
 
-        const val BoM = "29.0.0"
+        const val BoM = "29.0.3"
     }
 
-    const val Compose = "1.1.0-beta04"
+    const val Compose = "1.1.0-rc02"
     const val ComposeConstraintLayout = "1.0.0-rc02"
 
     object AndroidX {
@@ -108,7 +108,7 @@ object Versions {
 
     object Arch {
         const val Lifecycle = "2.4.0"
-        const val Navigation = "2.4.0-beta02"
+        const val Navigation = "2.4.0-rc01"
         const val Room = "2.4.0-rc01"
         const val Work = "2.7.1"
     }
