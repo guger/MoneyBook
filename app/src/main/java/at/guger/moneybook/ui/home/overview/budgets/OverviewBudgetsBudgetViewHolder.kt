@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,13 +20,15 @@ import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.core.ui.recyclerview.viewholder.ModelViewHolder
 import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.databinding.ItemOverviewBudgetBinding
+import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.ViewHolder] for an overview budget item.
  */
-class OverviewBudgetsBudgetViewHolder(binding: ItemOverviewBudgetBinding) : ModelViewHolder<ItemOverviewBudgetBinding, BudgetWithBalance>(binding) {
+class OverviewBudgetsBudgetViewHolder(binding: ItemOverviewBudgetBinding, private val viewModel: HomeViewModel) : ModelViewHolder<ItemOverviewBudgetBinding, BudgetWithBalance>(binding) {
 
     override fun bind(model: BudgetWithBalance) {
+        binding.viewModel = viewModel
         binding.budget = model
         binding.executePendingBindings()
     }

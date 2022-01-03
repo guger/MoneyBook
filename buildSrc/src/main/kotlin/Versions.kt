@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter
 import kotlin.math.pow
 
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ object Versions {
         const val TARGET = 31
     }
 
-    const val Gradle = "7.1.0-beta05"
+    const val Gradle = "7.0.4"
 
     const val KOIN = "3.1.3"
 

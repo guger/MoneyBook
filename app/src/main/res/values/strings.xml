@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2021 Daniel Guger
+  ~ Copyright 2022 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -15,9 +15,10 @@
   -->
 
 <resources>
-    <string name="AccountNumberDots" translatable="false">ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ ꞏ</string>
+    <string name="AccountNumberDots" translatable="false">&#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226;</string>
     <string name="fragment_item_transition_name" translatable="false">fragment_item_transition_name_%d</string>
     <string name="fragment_detail_transition_name" translatable="false">fragment_detail_transition_name</string>
+    <string name="fragment_add_edit_transition_name" translatable="false">fragment_add_edit_transition_name</string>
 
     <string name="app_name">MoneyBook</string>
     <string name="Overview">Overview</string>
@@ -79,7 +80,7 @@
     <string name="OK">OK</string>
     <string name="PermissionDetails">MoneyBook values your privacy and does only request permissions it absolutely needs:\n\n<b>Reading Contacts:</b>\nA key feature of MoneyBook is the reminder. Access to the address book is needed to link claims or debts with contacts, to be able to write a message to them if claims are outstanding.\n\n<b>Internet:</b>\nMoneyBook should provide you an excellent user experience. However, app crashes may occur. In this case, MoneyBook sends detailed error statistics to its developer, to help fixing the problem immediately. Thereby, just application relevant details (logs) are transmitted, no transactions or personal data.\n\nFor more information, feel free to contact the developer.</string>
     <string name="Balance_of_Budget" translatable="false">%1$s / %2$s</string>
-    <string name="Left">Left</string>
+    <string name="Left">left</string>
     <string name="ChooseColor">Choose Color</string>
     <string name="EditBudget">Edit Budget</string>
     <string name="NewBudget">New Budget</string>

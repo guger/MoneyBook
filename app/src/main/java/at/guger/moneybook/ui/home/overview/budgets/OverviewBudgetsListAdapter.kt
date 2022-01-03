@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,16 +24,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import at.guger.moneybook.R
 import at.guger.moneybook.data.model.BudgetWithBalance
+import at.guger.moneybook.ui.home.HomeViewModel
 
 /**
  * [RecyclerView.Adapter] for the overview dues card.
  */
-class OverviewBudgetsListAdapter : ListAdapter<BudgetWithBalance, OverviewBudgetsBudgetViewHolder>(OverviewBudgetsBudgetDiffCallback()) {
+class OverviewBudgetsListAdapter(private val viewModel: HomeViewModel) : ListAdapter<BudgetWithBalance, OverviewBudgetsBudgetViewHolder>(OverviewBudgetsBudgetDiffCallback()) {
 
     //region Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewBudgetsBudgetViewHolder {
-        return OverviewBudgetsBudgetViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_budget, parent, false))
+        return OverviewBudgetsBudgetViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_overview_budget, parent, false), viewModel)
     }
 
     override fun onBindViewHolder(holder: OverviewBudgetsBudgetViewHolder, position: Int) {

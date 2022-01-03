@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -145,7 +145,8 @@ class AccountDetailFragment : BaseDataBindingFragment<FragmentAccountDetailBindi
 
     private fun setupEvents() {
         fragmentViewModel.showAddEditTransactionDialogFragment.observe(viewLifecycleOwner, EventObserver { account ->
-            val extras = FragmentNavigatorExtras(binding.fabAccountDetailAddTransaction to "shared_element_container")
+            val addEditTransitionName = getString(R.string.fragment_add_edit_transition_name)
+            val extras = FragmentNavigatorExtras(binding.fabAccountDetailAddTransaction to addEditTransitionName)
             findNavController().navigate(AddEditTransactionFragmentDirections.actionGlobalAddEditTransactionFragment(account = account), extras)
         })
     }

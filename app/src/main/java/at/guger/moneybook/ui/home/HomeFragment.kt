@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -141,7 +141,8 @@ class HomeFragment : BaseViewBindingFragment<FragmentHomeBinding>() {
         }.attach()
 
         binding.fabHomeAddTransaction.setOnClickListener {
-            val extras = FragmentNavigatorExtras(binding.fabHomeAddTransaction to "shared_element_container")
+            val addEditTransitionName = getString(R.string.fragment_add_edit_transition_name)
+            val extras = FragmentNavigatorExtras(binding.fabHomeAddTransaction to addEditTransitionName)
             findNavController().navigate(R.id.addEditTransactionFragment, null, null, extras)
         }
     }

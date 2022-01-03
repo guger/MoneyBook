@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2021 Daniel Guger
+  ~ Copyright 2022 Daniel Guger
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -112,7 +112,7 @@
             android:focusable="true"
             android:onClick="@{() -> viewModel.showAddEditTransactionDialogFragment()}"
             android:src="@drawable/ic_add"
-            android:transitionName="shared_element_container"
+            android:transitionName="@string/fragment_add_edit_transition_name"
             app:layout_anchor="@+id/mAccountDetailViewPager"
             app:layout_anchorGravity="bottom|end"
             app:layout_behavior="at.guger.moneybook.core.ui.behaviour.ScrollAwareFloatingActionButtonBehaviour"

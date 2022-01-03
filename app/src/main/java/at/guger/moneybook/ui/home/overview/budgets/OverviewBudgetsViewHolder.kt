@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ class OverviewBudgetsViewHolder(binding: ItemOverviewBudgetsBinding) : BindingVi
 
         binding.mOverviewBudgetsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = OverviewBudgetsListAdapter().apply {
+            adapter = OverviewBudgetsListAdapter(viewModel).apply {
                 viewModel.budgetsWithBalance.observe(binding.lifecycleOwner!!) { budgets ->
                     submitList(budgets.sortedBy { if (it.balance > 0) it.budget - it.balance else Double.MAX_VALUE }.subList(0, min(budgets.size, 3)))
                 }

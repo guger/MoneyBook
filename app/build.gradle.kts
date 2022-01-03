@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -75,7 +75,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     lint {
-        abortOnError = false
+        isAbortOnError = false
+        //abortOnError = false
     }
     kotlinOptions {
         jvmTarget = "11"

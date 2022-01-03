@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Daniel Guger
+ * Copyright 2022 Daniel Guger
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,10 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.core.ui.viewmodel.Event
-import at.guger.moneybook.data.model.Account
-import at.guger.moneybook.data.model.AccountWithBalance
-import at.guger.moneybook.data.model.Budget
-import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.data.model.*
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
@@ -77,6 +74,10 @@ class HomeViewModel(
 
     fun showAccount(account: AccountWithBalance) {
         _showAccount.value = Event(account.id)
+    }
+
+    fun showBudget(budget: BudgetWithBalance) {
+        _showBudget.value = Event(budget.id)
     }
 
     fun markAsPaid(vararg transaction: Transaction, moveToAccount: Boolean = false) {
