@@ -22,6 +22,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.AlarmManagerCompat
+import at.guger.moneybook.core.util.ext.makeImmutableFlag
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.data.model.Reminder
 import at.guger.moneybook.data.repository.RemindersRepository
@@ -85,7 +86,12 @@ class ReminderScheduler(private val context: Context, private val repository: Re
                 putExtra(EXTRA_TRANSACTION_ID, transactionId)
             }
 
-            return PendingIntent.getBroadcast(context, transactionId.toInt(), reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            return PendingIntent.getBroadcast(
+                context,
+                transactionId.toInt(),
+                reminderIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT.makeImmutableFlag()
+            )
         }
     }
 }

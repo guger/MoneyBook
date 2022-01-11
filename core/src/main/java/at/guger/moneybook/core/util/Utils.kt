@@ -28,6 +28,9 @@ import kotlin.math.pow
  */
 object Utils {
 
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
+    fun isS() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.P)
     fun isPie() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
 

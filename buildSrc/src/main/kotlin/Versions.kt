@@ -24,12 +24,13 @@ object Versions {
         const val ID = "at.guger.moneybook"
         const val Major = 2
         const val Minor = 1
-        const val Patch = 10
+        const val Patch = 20
         const val Release = 1
         const val Beta = 0
         const val Dev = 0
 
-        fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev()
+        fun versionCode(): Int = 21102000
+        // fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev() TODO
         fun versionName() = "$Major.$Minor.$Patch"
 
         fun isBeta(): Boolean = Beta > 0
@@ -37,7 +38,7 @@ object Versions {
         private fun major() = Major * (10.0.pow(7)).toInt()
         private fun minor() = Minor * (10.0.pow(6)).toInt()
         private fun patch() = Patch * (10.0.pow(4)).toInt()
-        private fun release() = Release * (10.0.pow(3)).toInt()
+        private fun release() = Release * (10.0.pow(2)).toInt()
         private fun beta() = Beta * 10
         private fun dev() = Dev
 

@@ -29,6 +29,7 @@ import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import at.guger.moneybook.R
 import at.guger.moneybook.core.util.Utils
+import at.guger.moneybook.core.util.ext.makeImmutableFlag
 import at.guger.moneybook.core.util.ext.size
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
@@ -166,7 +167,7 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
                 context,
                 transaction.id.toInt(),
                 actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_SNOOZE },
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT.makeImmutableFlag()
             )
             notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_snooze, context.getString(R.string.Snooze), snoozePendingIntent))
         }
@@ -176,7 +177,7 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
                 context,
                 transaction.id.toInt(),
                 actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_SEND_MESSAGE },
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT.makeImmutableFlag()
             )
             notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_message, context.getString(R.string.Message), messagePendingIntent))
         }
@@ -185,7 +186,7 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
             context,
             transaction.id.toInt(),
             actionIntent.apply { action = NotificationReceiver.NOTIFICATION_ACTION_PAID },
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT.makeImmutableFlag()
         )
         notificationBuilder.addAction(NotificationCompat.Action(R.drawable.ic_notification_paid, context.getString(R.string.Paid), paidPendingIntent))
 

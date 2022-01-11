@@ -25,6 +25,7 @@ import android.content.IntentFilter
 import androidx.core.app.AlarmManagerCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import at.guger.moneybook.core.util.ext.makeImmutableFlag
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.data.repository.RemindersRepository
 import org.koin.core.component.KoinComponent
@@ -37,12 +38,19 @@ class ForceStopWorker(
 ) : CoroutineWorker(context, params), KoinComponent {
 
     //region Variables
+
     private val remindersRepository: RemindersRepository by inject()
     private val scheduler: ReminderScheduler by inject()
+
     //endregion
 
     override suspend fun doWork(): Result {
-        remindersRepository.getReminders().forEach { reminder -> scheduler.scheduleReminder(reminder.transactionId, reminder.date) }
+        remindersRepository.getReminders().forEach { reminder ->
+            scheduler.scheduleReminder(
+                reminder.transactionId,
+                reminder.date
+            )
+        }
 
         return Result.success()
     }
@@ -51,13 +59,17 @@ class ForceStopWorker(
 
         // TODO Check if this works
         override fun onReceive(context: Context?, intent: Intent?) {
-            if (context != null && intent?.action == ACTION_FORCE_STOP_RESCHEDULE && isForceStopped(context)) setForceStopAlarm(context)
+            if (context != null && intent?.action == ACTION_FORCE_STOP_RESCHEDULE && isForceStopped(
+                    context
+                )
+            ) setForceStopAlarm(context)
         }
     }
 
     companion object {
         private const val ACTION_FORCE_STOP_RESCHEDULE_ID = 10100
-        private const val ACTION_FORCE_STOP_RESCHEDULE = "at.guger.moneybook.action.FORCE_STOP_RESCHEDULE"
+        private const val ACTION_FORCE_STOP_RESCHEDULE =
+            "at.guger.moneybook.action.FORCE_STOP_RESCHEDULE"
 
         private const val FORCE_STOP_DELAY_YEARS = 10L
 
@@ -66,13 +78,21 @@ class ForceStopWorker(
                 action = ACTION_FORCE_STOP_RESCHEDULE
             }
 
-            return PendingIntent.getBroadcast(context, ACTION_FORCE_STOP_RESCHEDULE_ID, forceStopIntent, flags)
+            return PendingIntent.getBroadcast(
+                context,
+                ACTION_FORCE_STOP_RESCHEDULE_ID,
+                forceStopIntent,
+                flags.makeImmutableFlag()
+            )
         }
 
         fun setForceStopAlarm(context: Context) {
             val fireDate = LocalDateTime.now().plusYears(FORCE_STOP_DELAY_YEARS).toEpochMilli()
 
-            context.registerReceiver(ForceStopReceiver(), IntentFilter(ACTION_FORCE_STOP_RESCHEDULE))
+            context.registerReceiver(
+                ForceStopReceiver(),
+                IntentFilter(ACTION_FORCE_STOP_RESCHEDULE)
+            )
 
             AlarmManagerCompat.setAndAllowWhileIdle(
                 getAlarmManager(context),
@@ -82,7 +102,8 @@ class ForceStopWorker(
             )
         }
 
-        private fun getAlarmManager(context: Context) = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        private fun getAlarmManager(context: Context) =
+            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         fun isForceStopped(context: Context): Boolean {
             return if (makeForceStopPendingIntent(context, PendingIntent.FLAG_NO_CREATE) == null) {
