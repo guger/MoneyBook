@@ -35,4 +35,7 @@ data class BudgetWithBalance(
         this.budget = budget
         this.color = color
     }
+
+    val left: Double
+        get() = budget - balance
 }

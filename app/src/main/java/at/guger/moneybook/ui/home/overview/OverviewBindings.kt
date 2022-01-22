@@ -32,7 +32,7 @@ import kotlin.math.max
 @BindingAdapter("accounts", requireAll = true)
 fun TextView.setAccounts(accounts: List<AccountWithBalance>?) {
     accounts?.let { account ->
-        setCurrency(account.sumOf { it.balance + it.startBalance })
+        setCurrency(account.sumOf { it.balance })
     }
 }
 

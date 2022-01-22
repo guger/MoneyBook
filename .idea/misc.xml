@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/layout/fragment_account_detail.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_add_edit_transaction.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/item_account.xml" value="0.17135416666666667" />
         <entry key="app/src/main/res/layout/item_overview_account.xml" value="0.18115942028985507" />
         <entry key="app/src/main/res/layout/item_overview_budget.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/layout_recycler_view.xml" value="0.22056159420289856" />

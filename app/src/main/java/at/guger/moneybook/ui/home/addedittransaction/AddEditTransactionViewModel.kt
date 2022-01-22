@@ -26,10 +26,7 @@ import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.core.ui.viewmodel.MessageEvent
 import at.guger.moneybook.core.ui.widget.CurrencyTextInputEditText
 import at.guger.moneybook.core.util.Utils
-import at.guger.moneybook.data.model.Account
-import at.guger.moneybook.data.model.Budget
-import at.guger.moneybook.data.model.Contact
-import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.data.model.*
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.AddressBookRepository
 import at.guger.moneybook.data.repository.BudgetsRepository
@@ -107,8 +104,8 @@ class AddEditTransactionViewModel(
     private val _transactionSaved = MutableLiveData<Event<Unit>>()
     val transactionSaved: LiveData<Event<Unit>> = _transactionSaved
 
-    val accounts: LiveData<List<Account>> = accountsRepository.getObservableAccounts()
-    val budgets: LiveData<List<Budget>> = budgetsRepository.getObservableBudgets()
+    val accounts: LiveData<List<AccountWithBalance>> = accountsRepository.getObservableAccountsWithBalance()
+    val budgets: LiveData<List<BudgetWithBalance>> = budgetsRepository.getObservableBudgetsWithBalance()
     val transferAccounts: LiveData<Pair<List<Account>, Account>> = Transformations.map(accounts) { list ->
         Pair(list, accounts.value?.find { it.name == transactionAccount.value }!!)
     }

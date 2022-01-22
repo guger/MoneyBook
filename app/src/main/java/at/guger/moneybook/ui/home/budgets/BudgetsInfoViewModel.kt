@@ -37,7 +37,7 @@ class BudgetsInfoViewModel(
     //region Methods
 
     fun budgetsForTime(start: LocalDate, end: LocalDate): LiveData<List<BudgetWithBalance>> {
-        return budgetsRepository.getBudgetsWithBalanceTimeSpan(
+        return budgetsRepository.getObservableBudgetsWithBalanceInTimeSpan(
             start.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(),
             end.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         )

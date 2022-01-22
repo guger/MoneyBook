@@ -23,7 +23,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -47,8 +46,11 @@ import at.guger.moneybook.core.util.Utils
 import at.guger.moneybook.core.util.ext.toLocalDate
 import at.guger.moneybook.core.util.ext.utcMillis
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.AccountWithBalance
+import at.guger.moneybook.data.model.BudgetWithBalance
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
+import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.util.DateFormatUtils
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -68,13 +70,17 @@ import java.time.LocalDate
 /**
  * Dialog fragment for adding/editing a [transaction][Transaction].
  */
-class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransactionBinding, AddEditTransactionViewModel>(), CalcDialog.CalcDialogCallback {
+class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransactionBinding, AddEditTransactionViewModel>(),
+    CalcDialog.CalcDialogCallback {
 
     //region Variables
 
     private val args by navArgs<AddEditTransactionFragmentArgs>()
 
     override val fragmentViewModel: AddEditTransactionViewModel by viewModel()
+
+    private lateinit var accounts: List<AccountWithBalance>
+    private lateinit var budgets: List<BudgetWithBalance>
 
     private val permissionManager = PermissionManager.from(this)
 
@@ -91,7 +97,11 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         }
     }
 
-    override fun inflateBinding(inflater: LayoutInflater, root: ViewGroup?, attachToParent: Boolean): FragmentAddEditTransactionBinding {
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        root: ViewGroup?,
+        attachToParent: Boolean
+    ): FragmentAddEditTransactionBinding {
         return FragmentAddEditTransactionBinding.inflate(inflater, root, false).apply {
             viewModel = fragmentViewModel
             lifecycleOwner = viewLifecycleOwner
@@ -167,8 +177,20 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         with(binding) {
             TooltipCompat.setTooltipText(fabAddEditTransactionSave, getString(R.string.Save))
 
-            edtAddEditTransactionAccount.inputType = InputType.TYPE_NULL
-            edtAddEditTransactionBudget.inputType = InputType.TYPE_NULL
+            edtAddEditTransactionAccount.setOnItemClickListener { _, _, i, _ ->
+                val account = accounts[i]
+                tilAddEditTransactionAccount.helperText = getString(R.string.x_available, CurrencyFormat.format(account.balance))
+            }
+
+            edtAddEditTransactionBudget.setOnItemClickListener { _, _, i, _ ->
+                if (i > 0) {
+                    val budget = budgets[i - 1]
+                    tilAddEditTransactionBudget.isHelperTextEnabled = true
+                    tilAddEditTransactionBudget.helperText = getString(R.string.x_left, CurrencyFormat.format(budget.left))
+                } else {
+                    tilAddEditTransactionBudget.isHelperTextEnabled = false
+                }
+            }
 
             mAddEditTransactionTypeToggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
                 if (isChecked) fragmentViewModel.onTransactionTypeChanged(checkedId)
@@ -182,13 +204,23 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
                 addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN)
             }
             fragmentViewModel.addressBook.observe(viewLifecycleOwner) { contacts ->
-                edtAddEditTransactionContacts.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, contacts.values.toList()))
+                edtAddEditTransactionContacts.setAdapter(
+                    ArrayAdapter(
+                        requireContext(),
+                        R.layout.dropdown_layout_popup_item,
+                        contacts.values.toList()
+                    )
+                )
                 tilAddEditTransactionContacts.endIconMode = END_ICON_DROPDOWN_MENU
             }
 
             val bottomAppBarBackground: MaterialShapeDrawable = mBottomAppBar.background as MaterialShapeDrawable
             bottomAppBarBackground.shapeAppearanceModel = bottomAppBarBackground.shapeAppearanceModel.toBuilder().setTopEdge(
-                BottomAppBarCutCornersTopEdge(mBottomAppBar.fabCradleMargin, mBottomAppBar.fabCradleRoundedCornerRadius, mBottomAppBar.cradleVerticalOffset)
+                BottomAppBarCutCornersTopEdge(
+                    mBottomAppBar.fabCradleMargin,
+                    mBottomAppBar.fabCradleRoundedCornerRadius,
+                    mBottomAppBar.cradleVerticalOffset
+                )
             ).build()
 
             mBottomAppBar.apply {
@@ -202,7 +234,11 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
                                     MaterialAlertDialogBuilder(requireContext())
                                         .setTitle(R.string.ChooseAccount)
                                         .setItems(targetAccounts.map { it.name }.toTypedArray()) { _, which ->
-                                            fragmentViewModel.transferTransaction(requireContext(), edtAddEditTransactionContacts.chipValues, targetAccounts[which])
+                                            fragmentViewModel.transferTransaction(
+                                                requireContext(),
+                                                edtAddEditTransactionContacts.chipValues,
+                                                targetAccounts[which]
+                                            )
                                         }
                                         .show()
                                 }
@@ -220,12 +256,47 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
     private fun setupEvents() {
         fragmentViewModel.accounts.observe(viewLifecycleOwner) { accounts ->
-            binding.edtAddEditTransactionAccount.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, accounts.map { it.name }))
-            if (args.transaction == null && args.account == null) binding.edtAddEditTransactionAccount.setText(accounts.first().name, false)
+            this.accounts = accounts
+            binding.edtAddEditTransactionAccount.setAdapter(
+                ArrayAdapter(
+                    requireContext(),
+                    R.layout.dropdown_layout_popup_item,
+                    accounts.map { it.name })
+            )
+
+            if (args.transaction == null && args.account == null) {
+                binding.edtAddEditTransactionAccount.setText(accounts.first().name, false)
+            }
+
+            val balance: Double = when {
+                args.transaction != null -> {
+                    accounts.find { it.id == args.transaction!!.account!!.id }!!.balance
+                }
+                args.account != null -> {
+                    accounts.find { it.id == args.account!!.id }!!.balance
+                }
+                else -> {
+                    accounts[0].balance
+                }
+            }
+            binding.tilAddEditTransactionAccount.helperText = getString(R.string.x_available, CurrencyFormat.format(balance))
         }
         fragmentViewModel.budgets.observe(viewLifecycleOwner) { budgets ->
+            this.budgets = budgets
             val budgetEntries = budgets.map { it.name }.toMutableList().apply { add(0, "") }
-            binding.edtAddEditTransactionBudget.setAdapter(ArrayAdapter(requireContext(), R.layout.dropdown_layout_popup_item, budgetEntries))
+            binding.edtAddEditTransactionBudget.setAdapter(
+                ArrayAdapter(
+                    requireContext(),
+                    R.layout.dropdown_layout_popup_item,
+                    budgetEntries
+                )
+            )
+
+            args.transaction?.budget?.let { transactionBudget ->
+                val budget = budgets.find { it.id == transactionBudget.id }!!
+                binding.tilAddEditTransactionBudget.isHelperTextEnabled = true
+                binding.tilAddEditTransactionBudget.helperText = getString(R.string.x_left, CurrencyFormat.format(budget.left))
+            }
         }
 
         fragmentViewModel.transferTransactionVisibility.observe(viewLifecycleOwner) { state ->
@@ -233,7 +304,9 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         }
 
         fragmentViewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDatePicker(selectedDate) })
-        fragmentViewModel.showDueDatePicker.observe(viewLifecycleOwner, EventObserver { selectedDate -> showDueDatePicker(selectedDate) })
+        fragmentViewModel.showDueDatePicker.observe(
+            viewLifecycleOwner,
+            EventObserver { selectedDate -> showDueDatePicker(selectedDate) })
         fragmentViewModel.showCalculator.observe(viewLifecycleOwner, EventObserver { showCalculator() })
 
         fragmentViewModel.showOverlayPermissionDialog.observe(viewLifecycleOwner, EventObserver { chippedContacts ->
@@ -241,9 +314,17 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
                 .setTitle(R.string.OverlayRequired)
                 .setMessage(R.string.OverlayRequiredMessage)
                 .setPositiveButton(R.string.OpenSettings) { _, _ ->
-                    if (Utils.isMarshmallow()) startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK })
+                    if (Utils.isMarshmallow()) startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    })
                 }
-                .setNegativeButton(R.string.Ignore) { _, _ -> fragmentViewModel.saveTransaction(requireContext(), chippedContacts, ignoreOverlayPermission = true) }
+                .setNegativeButton(R.string.Ignore) { _, _ ->
+                    fragmentViewModel.saveTransaction(
+                        requireContext(),
+                        chippedContacts,
+                        ignoreOverlayPermission = true
+                    )
+                }
                 .show()
         })
 
@@ -268,7 +349,13 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
         datePickerDialog.addOnPositiveButtonClickListener {
             fragmentViewModel.transactionDate.value = it.toLocalDate().format(DateFormatUtils.SHORT_DATE_FORMAT)
-            binding.edtAddEditTransactionDate.postDelayed(25) { binding.edtAddEditTransactionDate.apply { setSelection(text?.length ?: 0) } }
+            binding.edtAddEditTransactionDate.postDelayed(25) {
+                binding.edtAddEditTransactionDate.apply {
+                    setSelection(
+                        text?.length ?: 0
+                    )
+                }
+            }
         }
 
         datePickerDialog.show(childFragmentManager, null)
@@ -282,7 +369,13 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
         datePickerDialog.addOnPositiveButtonClickListener {
             fragmentViewModel.transactionDueDate.value = it.toLocalDate().format(DateFormatUtils.SHORT_DATE_FORMAT)
-            binding.edtAddEditTransactionDueDate.postDelayed(25) { binding.edtAddEditTransactionDueDate.apply { setSelection(text?.length ?: 0) } }
+            binding.edtAddEditTransactionDueDate.postDelayed(25) {
+                binding.edtAddEditTransactionDueDate.apply {
+                    setSelection(
+                        text?.length ?: 0
+                    )
+                }
+            }
         }
 
         datePickerDialog.show(childFragmentManager, null)
@@ -308,8 +401,14 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
 
     override fun onValueEntered(requestCode: Int, value: BigDecimal?) {
         fragmentViewModel.transactionValue.value = value?.toDouble()?.let { CurrencyTextInputEditText.CURRENCY_FORMAT.format(it) }
-        binding.edtAddEditTransactionValue.postDelayed(25) { binding.edtAddEditTransactionValue.apply { setSelection(text?.length ?: 0) } }
+        binding.edtAddEditTransactionValue.postDelayed(25) {
+            binding.edtAddEditTransactionValue.apply {
+                setSelection(
+                    text?.length ?: 0
+                )
+            }
+        }
     }
 
-//endregion
+    //endregion
 }

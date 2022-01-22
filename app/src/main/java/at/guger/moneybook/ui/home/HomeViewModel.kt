@@ -44,7 +44,7 @@ class HomeViewModel(
 
     val accounts = accountsRepository.getObservableAccountsWithBalance()
 
-    val budgetsWithBalance = budgetsRepository.getBudgetsWithBalance()
+    val budgetsWithBalance = budgetsRepository.getObservableBudgetsWithBalance()
 
     private val _navigateToPage = MutableLiveData<Event<HomeFragment.Destination>>()
     val navigateToPage: LiveData<Event<HomeFragment.Destination>> = _navigateToPage

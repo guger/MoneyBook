@@ -34,7 +34,7 @@ class OverviewAccountsViewHolder(binding: ItemOverviewAccountsBinding) : Binding
 
         viewModel.accounts.observe(binding.lifecycleOwner!!) { coloredAccounts ->
             binding.mOverviewAccountsDivider.setDistributions(
-                distributions = coloredAccounts.map { (it.balance + it.startBalance).toFloat() },
+                distributions = coloredAccounts.map { it.balance.toFloat() },
                 colors = coloredAccounts.map { it.color }
             )
         }

@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textAppearance="?textAppearanceBody1"
-            app:currency="@{account.balance + account.startBalance}"
+            app:currency="@{account.balance}"
             app:layout_constraintBottom_toBottomOf="@+id/txvOverviewAccountsAccountDescription"
             app:layout_constraintEnd_toStartOf="@+id/btnOverviewAccountsAccountShowAccount"
             app:layout_constraintTop_toTopOf="@+id/mOverviewAccountsAccountName"
