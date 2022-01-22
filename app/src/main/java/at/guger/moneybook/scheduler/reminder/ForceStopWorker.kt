@@ -59,10 +59,9 @@ class ForceStopWorker(
 
         // TODO Check if this works
         override fun onReceive(context: Context?, intent: Intent?) {
-            if (context != null && intent?.action == ACTION_FORCE_STOP_RESCHEDULE && isForceStopped(
-                    context
-                )
-            ) setForceStopAlarm(context)
+            if (context != null && intent?.action == ACTION_FORCE_STOP_RESCHEDULE && isForceStopped(context)) {
+                setForceStopAlarm(context)
+            }
         }
     }
 

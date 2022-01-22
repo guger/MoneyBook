@@ -154,7 +154,6 @@ class MonthlyTrendChart @JvmOverloads constructor(context: Context, attrs: Attri
     //region Methods
 
     fun setDataPoints(dataPoints: List<DateDataPoint>) {
-        // val max = dataPoints.maxByOrNull { it.value }?.value TODO Remove if not necessary
         val min = dataPoints.minByOrNull { it.value }?.value?.takeIf { value -> value < 0 }
 
         val positiveDataPoints: List<DateDataPoint> = if (min != null) {

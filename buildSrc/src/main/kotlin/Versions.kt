@@ -23,13 +23,13 @@ object Versions {
     object App {
         const val ID = "at.guger.moneybook"
         const val Major = 2
-        const val Minor = 1
-        const val Patch = 20
+        const val Minor = 2
+        const val Patch = 0
         const val Release = 1
         const val Beta = 0
         const val Dev = 0
 
-        fun versionCode(): Int = 21102000
+        fun versionCode(): Int = 21103000
         // fun versionCode(): Int = major() + minor() + patch() + release() + beta() + dev() TODO
         fun versionName() = "$Major.$Minor.$Patch"
 
@@ -87,30 +87,30 @@ object Versions {
     }
 
     const val Compose = "1.1.0-rc02"
-    const val ComposeConstraintLayout = "1.0.0-rc02"
+    const val ComposeConstraintLayout = "1.0.0"
 
     object AndroidX {
         const val Core = "1.7.0"
-        const val CoreSplashScreen = "1.0.0-alpha02"
+        const val CoreSplashScreen = "1.0.0-beta01"
         const val AppCompat = "1.3.1"
         const val Annotation = "1.2.0"
         const val Fragment = "1.4.0"
         const val Preference = "1.1.1"
         const val Biometric = "1.2.0-alpha04"
         const val ViewPager2 = "1.1.0-beta01"
-        const val ConstraintLayout = "2.1.2"
+        const val ConstraintLayout = "2.1.3"
         const val RecyclerView = "1.2.1"
         const val CardView = "1.0.0"
     }
 
     object Material {
-        const val Material = "1.4.0"
+        const val Material = "1.5.0"
     }
 
     object Arch {
         const val Lifecycle = "2.4.0"
         const val Navigation = "2.4.0-rc01"
-        const val Room = "2.4.0-rc01"
+        const val Room = "2.4.1"
         const val Work = "2.7.1"
     }
 
