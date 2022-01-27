@@ -50,7 +50,7 @@ object Versions {
         const val TARGET = 31
     }
 
-    const val Gradle = "7.0.4"
+    const val Gradle = "7.1.0"
 
     const val KOIN = "3.1.3"
 
@@ -86,7 +86,7 @@ object Versions {
         const val BoM = "29.0.3"
     }
 
-    const val Compose = "1.1.0-rc02"
+    const val Compose = "1.1.0-rc03"
     const val ComposeConstraintLayout = "1.0.0"
 
     object AndroidX {
@@ -94,8 +94,8 @@ object Versions {
         const val CoreSplashScreen = "1.0.0-beta01"
         const val AppCompat = "1.3.1"
         const val Annotation = "1.2.0"
-        const val Fragment = "1.4.0"
-        const val Preference = "1.1.1"
+        const val Fragment = "1.4.1"
+        const val Preference = "1.2.0"
         const val Biometric = "1.2.0-alpha04"
         const val ViewPager2 = "1.1.0-beta01"
         const val ConstraintLayout = "2.1.3"
@@ -108,8 +108,8 @@ object Versions {
     }
 
     object Arch {
-        const val Lifecycle = "2.4.0"
-        const val Navigation = "2.4.0-rc01"
+        const val Lifecycle = "2.5.0-alpha01"
+        const val Navigation = "2.5.0-alpha01"
         const val Room = "2.4.1"
         const val Work = "2.7.1"
     }
@@ -120,7 +120,7 @@ object Versions {
 
         const val ViewPagerDots = "4.2"
 
-        const val Moshi = "1.12.0"
+        const val Moshi = "1.13.0"
 
         const val CalcDialog = "2.2.1"
         const val IconDialog = "3.3.0"

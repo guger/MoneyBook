@@ -21,8 +21,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
-import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
+import androidx.activity.result.contract.ActivityResultContracts.OpenDocument
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
@@ -69,7 +69,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     private var restartSnackbar: Snackbar? = null
 
     private var password: String? = null
-    private val createDocument = registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+    private val createDocument = registerForActivityResult(CreateDocument("application/moneybook")) { uri ->
         if (uri != null) {
             exportData(uri, password!!)
         } else {
@@ -79,7 +79,7 @@ class MainPreferenceFragment : BasePreferenceFragment() {
         }
     }
 
-    private val openDocument = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+    private val openDocument = registerForActivityResult(OpenDocument()) { uri ->
         if (uri != null) {
             importData(uri, password!!)
         } else {
@@ -178,7 +178,11 @@ class MainPreferenceFragment : BasePreferenceFragment() {
                 }
             }
             negativeButton(res = R.string.Cancel) {
-                Snackbar.make(requireView(), if (operation == ExportImportWorker.EXPORT) R.string.ExportAborted else R.string.ImportAborted, Snackbar.LENGTH_LONG)
+                Snackbar.make(
+                    requireView(),
+                    if (operation == ExportImportWorker.EXPORT) R.string.ExportAborted else R.string.ImportAborted,
+                    Snackbar.LENGTH_LONG
+                )
                     .setAnchorView(R.id.mBottomAppBar)
                     .show()
             }
@@ -236,7 +240,8 @@ class MainPreferenceFragment : BasePreferenceFragment() {
     }
 
     private fun restartApplication() {
-        val restartIntent: Intent? = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
+        val restartIntent: Intent? = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)
+            ?.apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
 
         startActivity(restartIntent)
         exitProcess(0)
@@ -246,8 +251,8 @@ class MainPreferenceFragment : BasePreferenceFragment() {
 
     //region Callback
 
-    override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-        when (preference?.key) {
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        when (preference.key) {
             Preferences.ANALYTICS -> {
                 Firebase.analytics.setAnalyticsCollectionEnabled((preference as SwitchPreference).isChecked)
             }

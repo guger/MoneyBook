@@ -26,6 +26,7 @@ import androidx.core.app.AlarmManagerCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import at.guger.moneybook.core.util.ext.makeImmutableFlag
+import at.guger.moneybook.core.util.ext.makeMutableFlag
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.data.repository.RemindersRepository
 import org.koin.core.component.KoinComponent
@@ -56,8 +57,6 @@ class ForceStopWorker(
     }
 
     class ForceStopReceiver : BroadcastReceiver() {
-
-        // TODO Check if this works
         override fun onReceive(context: Context?, intent: Intent?) {
             if (context != null && intent?.action == ACTION_FORCE_STOP_RESCHEDULE && isForceStopped(context)) {
                 setForceStopAlarm(context)
@@ -81,7 +80,7 @@ class ForceStopWorker(
                 context,
                 ACTION_FORCE_STOP_RESCHEDULE_ID,
                 forceStopIntent,
-                flags.makeImmutableFlag()
+                flags.makeMutableFlag()
             )
         }
 

@@ -102,7 +102,7 @@ class MainActivity : BaseActivity(), Toolbar.OnMenuItemClickListener, NavControl
 
     //region Menu
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         prepareMenu(binding.mBottomAppBar)
 
         return super.onCreateOptionsMenu(menu)

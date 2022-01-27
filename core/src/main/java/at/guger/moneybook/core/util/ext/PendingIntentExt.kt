@@ -19,9 +19,19 @@ package at.guger.moneybook.core.util.ext
 import android.app.PendingIntent
 import at.guger.moneybook.core.util.Utils
 
-fun Int.makeImmutableFlag(): Int {
+@Suppress("NOTHING_TO_INLINE")
+inline fun Int.makeImmutableFlag(): Int {
     return if (Utils.isS()) {
         this or PendingIntent.FLAG_IMMUTABLE
+    } else {
+        this
+    }
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun Int.makeMutableFlag(): Int {
+    return if (Utils.isS()) {
+        this or PendingIntent.FLAG_MUTABLE
     } else {
         this
     }

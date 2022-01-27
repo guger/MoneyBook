@@ -269,7 +269,7 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
             }
 
             val balance: Double = when {
-                args.transaction != null -> {
+                args.transaction?.type == Transaction.TransactionType.EARNING || args.transaction?.type == Transaction.TransactionType.EXPENSE -> {
                     accounts.find { it.id == args.transaction!!.account!!.id }!!.balance
                 }
                 args.account != null -> {
