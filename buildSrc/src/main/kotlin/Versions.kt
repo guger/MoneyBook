@@ -83,7 +83,7 @@ object Versions {
             const val CrashlyticsGradle = "2.8.1"
         }
 
-        const val BoM = "29.0.3"
+        const val BoM = "29.0.4"
     }
 
     const val Compose = "1.1.0-rc03"

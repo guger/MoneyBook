@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
                 android:text="@{viewModel.titleRes}"
-                android:textAppearance="?textAppearanceHeadline1"
+                android:textAppearance="?textAppearanceTitleLarge"
                 tools:text="Add / Edit Account" />
 
             <com.google.android.material.button.MaterialButton

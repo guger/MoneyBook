@@ -41,29 +41,17 @@
                 android:layout_height="match_parent"
                 android:animateLayoutChanges="true">
 
-                <androidx.appcompat.widget.Toolbar
+                <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/mTitleToolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?actionBarSize"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:popupTheme="?android:toolbarStyle"
-                    app:theme="?android:toolbarStyle">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txvAddEditTransactionTitleBar"
-                        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@{viewModel.titleRes}"
-                        android:textAppearance="?textAppearanceHeadline1"
-                        tools:layout_editor_absoluteX="206dp"
-                        tools:layout_editor_absoluteY="14dp"
-                        tools:text="Add / Edit Transaction" />
-                </androidx.appcompat.widget.Toolbar>
+                    app:title="@{viewModel.titleRes}"
+                    app:titleCentered="true"
+                    app:titleTextAppearance="?textAppearanceTitleLarge" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAddEditTransactionTitle"
@@ -148,8 +136,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="4dp"
-                    app:helperTextEnabled="true"
                     android:visibility="@{viewModel.accountsInputVisibility}"
+                    app:helperTextEnabled="true"
                     app:layout_constraintEnd_toStartOf="@+id/tilAddEditTransactionBudget"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mAddEditTransactionTypeToggleButtonGroup"

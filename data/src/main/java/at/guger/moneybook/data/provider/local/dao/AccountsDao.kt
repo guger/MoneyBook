@@ -31,6 +31,18 @@ internal interface AccountsDao {
     @Query("SELECT * FROM accounts WHERE id = :id")
     suspend fun get(id: Long): Account
 
+    @Query(
+        """
+            SELECT accounts.*, 
+            (SELECT SUM(CASE WHEN transactions.type = ${Transaction.TransactionType.EARNING} THEN transactions.value 
+            ELSE -transactions.value END) + accounts.start_balance FROM transactions WHERE transactions.account_id = accounts.id AND strftime('%Y-%m-%d', transactions.date / 1000, 'unixepoch', 'localtime') <= date('now', 'localtime')) AS balance
+            FROM accounts
+            LEFT JOIN transactions ON transactions.account_id = accounts.id
+            WHERE accounts.id = :id
+        """
+    )
+    fun getAccountWithBalance(id: Long): LiveData<AccountWithBalance>
+
     @Query("SELECT * FROM accounts")
     suspend fun getAccounts(): List<Account>
 

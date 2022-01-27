@@ -39,6 +39,10 @@ class AccountsRepository(database: AppDatabase) {
         return accountsDao.get(id)
     }
 
+    fun getAccountWithBalance(id: Long): LiveData<AccountWithBalance> {
+        return accountsDao.getAccountWithBalance(id)
+    }
+
     suspend fun getAccounts(): List<Account> {
         return accountsDao.getAccounts()
     }

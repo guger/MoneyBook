@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.guger.moneybook.core.ui.viewmodel.Event
 import at.guger.moneybook.data.model.Account
+import at.guger.moneybook.data.model.AccountWithBalance
 import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.data.repository.AccountsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
@@ -39,8 +40,7 @@ class AccountDetailViewModel(
 
     //region Variables
 
-    private val _account = MutableLiveData<Account>()
-    val account: LiveData<Account> = _account
+    val account: LiveData<AccountWithBalance> = accountsRepository.getAccountWithBalance(accountId)
 
     val transactions: LiveData<List<Transaction>>
     val transactionMonths: LiveData<List<LocalDate>>
@@ -57,10 +57,6 @@ class AccountDetailViewModel(
     //endregion
 
     init {
-        viewModelScope.launch {
-            _account.value = accountsRepository.get(accountId)
-        }
-
         transactions = transactionsRepository.getByAccount(accountId)
         transactionMonths = transactionsRepository.getByAccountMonthly(accountId)
     }

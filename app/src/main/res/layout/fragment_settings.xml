@@ -22,25 +22,17 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mTitleToolbar"
+        style="@style/Widget.MaterialComponents.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="?android:toolbarStyle"
-        app:theme="?android:toolbarStyle">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/Settings"
-            android:textAppearance="?textAppearanceHeadline1" />
-    </androidx.appcompat.widget.Toolbar>
+        app:title="@string/Settings"
+        app:titleCentered="true"
+        app:titleTextAppearance="?textAppearanceTitleLarge" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/preferenceFragmentContainer"

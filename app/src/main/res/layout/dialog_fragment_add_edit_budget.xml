@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
                 android:text="@{viewModel.titleRes}"
-                android:textAppearance="?textAppearanceHeadline1"
+                android:textAppearance="?textAppearanceTitleLarge"
                 tools:layout_editor_absoluteX="206dp"
                 tools:layout_editor_absoluteY="14dp"
                 tools:text="Add / Edit Budget" />
