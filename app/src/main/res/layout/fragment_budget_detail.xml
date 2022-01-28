@@ -25,7 +25,6 @@
         android:background="@color/colorBackground"
         android:transitionName="@string/fragment_detail_transition_name">
 
-
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/mBudgetDetailTitleToolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Surface"

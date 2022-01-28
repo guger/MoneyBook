@@ -25,7 +25,6 @@ import android.content.IntentFilter
 import androidx.core.app.AlarmManagerCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import at.guger.moneybook.core.util.ext.makeImmutableFlag
 import at.guger.moneybook.core.util.ext.makeMutableFlag
 import at.guger.moneybook.core.util.ext.toEpochMilli
 import at.guger.moneybook.data.repository.RemindersRepository

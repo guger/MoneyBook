@@ -37,8 +37,8 @@ import at.guger.moneybook.data.repository.RemindersRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.ui.main.MainActivity
 import at.guger.moneybook.util.CurrencyFormat
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -55,6 +55,8 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
 
     private val scheduler: ReminderScheduler by inject()
 
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     //endregion
 
     //region Methods
@@ -62,10 +64,10 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context != null && intent?.action != null) {
             when (intent.action) {
-                Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED -> GlobalScope.launch(Dispatchers.IO) {
+                Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED -> ioScope.launch(Dispatchers.IO) {
                     handleSystemEvent(remindersRepository)
                 }
-                ReminderScheduler.ACTION_REMINDER -> GlobalScope.launch(Dispatchers.IO) {
+                ReminderScheduler.ACTION_REMINDER -> ioScope.launch(Dispatchers.IO) {
                     handleReminder(context, transactionsRepository, remindersRepository, intent.getLongExtra(ReminderScheduler.EXTRA_TRANSACTION_ID, -1))
                 }
             }
@@ -107,7 +109,8 @@ class ReminderReceiver : BroadcastReceiver(), KoinComponent {
         )
 
         val contentIntent = Intent(context, MainActivity::class.java)
-        val pendingIntent = TaskStackBuilder.create(context).addNextIntent(contentIntent).getPendingIntent(transaction.id.toInt(), PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = TaskStackBuilder.create(context).addNextIntent(contentIntent)
+            .getPendingIntent(transaction.id.toInt(), PendingIntent.FLAG_UPDATE_CURRENT.makeImmutableFlag())
 
         val title = context.getString(
             when (transaction.type) {

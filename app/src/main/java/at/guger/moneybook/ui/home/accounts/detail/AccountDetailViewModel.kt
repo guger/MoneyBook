@@ -34,7 +34,7 @@ import java.time.LocalDate
  */
 class AccountDetailViewModel(
     private val transactionsRepository: TransactionsRepository,
-    private val accountsRepository: AccountsRepository,
+    accountsRepository: AccountsRepository,
     private val accountId: Long
 ) : ViewModel() {
 
@@ -42,8 +42,8 @@ class AccountDetailViewModel(
 
     val account: LiveData<AccountWithBalance> = accountsRepository.getAccountWithBalance(accountId)
 
-    val transactions: LiveData<List<Transaction>>
-    val transactionMonths: LiveData<List<LocalDate>>
+    val transactions: LiveData<List<Transaction>> = transactionsRepository.getByAccount(accountId)
+    val transactionMonths: LiveData<List<LocalDate>> = transactionsRepository.getByAccountMonthly(accountId)
 
     private val _showAddEditTransactionDialogFragment = MutableLiveData<Event<Account>>()
     val showAddEditTransactionDialogFragment: LiveData<Event<Account>> = _showAddEditTransactionDialogFragment
@@ -55,11 +55,6 @@ class AccountDetailViewModel(
     val onItemLongClick: LiveData<Event<Int>> = _onItemLongClick
 
     //endregion
-
-    init {
-        transactions = transactionsRepository.getByAccount(accountId)
-        transactionMonths = transactionsRepository.getByAccountMonthly(accountId)
-    }
 
     //region Methods
 

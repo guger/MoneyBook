@@ -32,10 +32,7 @@ import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.repository.AddressBookRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.util.CurrencyFormat
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.LocalDateTime
@@ -53,6 +50,8 @@ class NotificationReceiver : BroadcastReceiver(), KoinComponent {
 
     private val scheduler: ReminderScheduler by inject()
 
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     //endregion
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -67,10 +66,10 @@ class NotificationReceiver : BroadcastReceiver(), KoinComponent {
                 }
             }
             NOTIFICATION_ACTION_SEND_MESSAGE -> {
-                GlobalScope.launch { sendMessage(context, transactionId) }
+                ioScope.launch { sendMessage(context, transactionId) }
             }
             NOTIFICATION_ACTION_PAID -> {
-                GlobalScope.launch {
+                ioScope.launch {
                     transactionsRepository.markAsPaid(transactionId)
                     cancelNotification(context, transactionId)
                 }
@@ -90,7 +89,7 @@ class NotificationReceiver : BroadcastReceiver(), KoinComponent {
                 val snoozeDelayText = context.resources.getStringArray(R.array.SnoozeDelays)[selectedIndex]
                 val snoozeDelayTime = context.resources.getStringArray(R.array.SnoozeDelayValues)[selectedIndex].toLong()
 
-                GlobalScope.launch { scheduler.scheduleReminder(transactionId, LocalDateTime.now().plus(snoozeDelayTime, ChronoUnit.MILLIS)) }
+                ioScope.launch { scheduler.scheduleReminder(transactionId, LocalDateTime.now().plus(snoozeDelayTime, ChronoUnit.MILLIS)) }
 
                 cancelNotification(context, transactionId)
 
