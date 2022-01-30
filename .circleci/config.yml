@@ -1,13 +1,14 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@1.0.3
+  android: circleci/android@2.0.0
 
 jobs:
   unit-test:
     executor:
       name: android/android-machine
       resource-class: medium
+      tag: 2021.10.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -37,10 +38,11 @@ jobs:
     parameters:
       system-image:
         type: string
-        default: system-images;android-30;google_apis;x86
+        default: system-images;android-31;google_apis;x86
     executor:
       name: android/android-machine
       resource-class: medium
+      tag: 2022.01.1
     steps:
       - checkout
       - run:
@@ -67,6 +69,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
+      tag: 2022.01.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -93,11 +96,10 @@ workflows:
             alias: android-test-all
             parameters:
               system-image:
+                - system-images;android-31;google_apis;x86
                 - system-images;android-30;google_apis;x86
                 - system-images;android-29;google_apis;x86
                 - system-images;android-28;google_apis;x86
-                - system-images;android-27;google_apis;x86
-                - system-images;android-26;google_apis;x86
           name: android-test-<<matrix.system-image>>
           filters:
             branches:
