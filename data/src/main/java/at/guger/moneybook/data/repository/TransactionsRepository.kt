@@ -20,9 +20,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import at.guger.moneybook.data.model.Contact
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.data.model.TransactionSuggestion
 import at.guger.moneybook.data.provider.local.AppDatabase
 import at.guger.moneybook.data.provider.local.dao.ContactsDao
 import at.guger.moneybook.data.provider.local.dao.TransactionsDao
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transform
 import java.time.LocalDate
 
 /**
@@ -129,6 +132,12 @@ class TransactionsRepository(database: AppDatabase) {
                 )
             }
         )
+    }
+
+    fun findTransactions(query: String, count: Int = 5): Flow<List<TransactionSuggestion>> {
+        return transactionsDao.findTransactions(query).transform { l ->
+            emit(l.distinctBy { it.value }.take(count))
+        }
     }
 
     //endregion

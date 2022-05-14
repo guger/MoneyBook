@@ -50,7 +50,7 @@ object Versions {
         const val TARGET = 31
     }
 
-    const val Gradle = "7.1.0"
+    const val Gradle = "7.2.0"
 
     const val KOIN = "3.1.3"
 
@@ -72,8 +72,8 @@ object Versions {
     }
 
     object Kotlin {
-        const val Common = "1.6.10"
-        const val Coroutines = "1.6.0"
+        const val Common = "1.6.21"
+        const val Coroutines = "1.6.1"
     }
 
     object Firebase {
@@ -83,16 +83,16 @@ object Versions {
             const val CrashlyticsGradle = "2.8.1"
         }
 
-        const val BoM = "29.0.4"
+        const val BoM = "30.0.0"
     }
 
-    const val Compose = "1.1.0-rc03"
+    const val Compose = "1.1.0"
     const val ComposeConstraintLayout = "1.0.0"
 
     object AndroidX {
-        const val Core = "1.7.0"
-        const val CoreSplashScreen = "1.0.0-beta01"
-        const val AppCompat = "1.3.1"
+        const val Core = "1.8.0-rc01"
+        const val CoreSplashScreen = "1.0.0-beta02"
+        const val AppCompat = "1.4.1"
         const val Annotation = "1.2.0"
         const val Fragment = "1.4.1"
         const val Preference = "1.2.0"
@@ -108,8 +108,8 @@ object Versions {
     }
 
     object Arch {
-        const val Lifecycle = "2.5.0-alpha01"
-        const val Navigation = "2.5.0-alpha01"
+        const val Lifecycle = "2.5.0-alpha02"
+        const val Navigation = "2.5.0-alpha03"
         const val Room = "2.4.1"
         const val Work = "2.7.1"
     }

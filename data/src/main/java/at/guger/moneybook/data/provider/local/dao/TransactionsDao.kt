@@ -19,6 +19,8 @@ package at.guger.moneybook.data.provider.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import at.guger.moneybook.data.model.Transaction
+import at.guger.moneybook.data.model.TransactionSuggestion
+import kotlinx.coroutines.flow.Flow
 
 /**
  * [Dao] method for querying [transactions][Transaction].
@@ -76,6 +78,17 @@ internal interface TransactionsDao {
         """
     )
     fun getClaimsAndDebts(): LiveData<List<Transaction>>
+
+    @Query("""
+        SELECT transactions.title, transactions.type, transactions.value,
+        (SELECT accounts.name FROM accounts WHERE accounts.id = transactions.account_id) AS accountName,
+        (SELECT budgets.name FROM budgets WHERE budgets.id = transactions.budget_id) AS budgetName FROM transactions
+        LEFT JOIN accounts ON accounts.id = transactions.account_id
+        LEFT JOIN budgets ON budgets.id = transactions.budget_id
+        WHERE title LIKE '%' || :query || '%'
+        ORDER BY date DESC
+    """)
+    fun findTransactions(query: String): Flow<List<TransactionSuggestion>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(transactionEntity: Transaction.TransactionEntity): Long

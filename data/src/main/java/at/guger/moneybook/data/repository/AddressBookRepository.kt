@@ -51,7 +51,7 @@ class AddressBookRepository(private val contentResolver: ContentResolver) {
                     val id = getLong(idCol)
                     val displayName = getString(nameCol)
 
-                    contacts[id] = displayName
+                    if (displayName != null) contacts[id] = displayName
                 } while (moveToNext())
             }
 
@@ -109,7 +109,6 @@ class AddressBookRepository(private val contentResolver: ContentResolver) {
     }
 
     //endregion
-
 
     companion object {
         const val CONTACT_ID = ContactsContract.Contacts._ID

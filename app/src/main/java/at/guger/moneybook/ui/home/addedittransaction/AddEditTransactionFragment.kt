@@ -32,6 +32,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.postDelayed
+import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import at.guger.moneybook.R
@@ -52,6 +54,7 @@ import at.guger.moneybook.data.model.Transaction
 import at.guger.moneybook.databinding.FragmentAddEditTransactionBinding
 import at.guger.moneybook.util.CurrencyFormat
 import at.guger.moneybook.util.DateFormatUtils
+import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -62,6 +65,8 @@ import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
 import com.maltaisn.calcdialog.CalcDialog
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.math.BigDecimal
 import java.text.DecimalFormat
@@ -122,29 +127,7 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
                     endIconMode = END_ICON_CUSTOM
 
                     setEndIconOnClickListener {
-                        permissionManager.requestPermission(Permission.CONTACTS,
-                            info = RationaleInfo(
-                                titleRes = R.string.ContactsPermission,
-                                messageRes = R.string.ContactsPermissionNeeded
-                            ),
-                            callback = { isAllGranted, permissions ->
-                                if (isAllGranted) {
-                                    fragmentViewModel.loadContacts()
-                                } else if (permissions.any { !it.value && !it.key.requiresRationale(this@AddEditTransactionFragment) }) {
-                                    MaterialAlertDialogBuilder(requireContext())
-                                        .setTitle(R.string.ContactsPermissionPermanentlyDenied)
-                                        .setMessage(R.string.ContactsPermissionPermanentlyDeniedMessage)
-                                        .setPositiveButton(R.string.OpenSettings) { _, _ ->
-                                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                                data = Uri.fromParts("package", requireActivity().packageName, null)
-                                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                            })
-                                        }
-                                        .setNegativeButton(R.string.Close, null)
-                                        .show()
-                                }
-                            }
-                        )
+                        requestPermission()
                     }
                 }
             }
@@ -200,6 +183,8 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
             tilAddEditTransactionValue.setEndIconOnClickListener { fragmentViewModel.showCalculator() }
             tilAddEditTransactionDueDate.setEndIconOnClickListener { fragmentViewModel.showDueDatePicker() }
 
+            setupSuggestions(this)
+
             edtAddEditTransactionContacts.apply {
                 addChipTerminator(',', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN)
             }
@@ -250,6 +235,46 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
                 }
 
                 setNavigationOnClickListener { findNavController().navigateUp() }
+            }
+        }
+    }
+
+    private fun setupSuggestions(binding: FragmentAddEditTransactionBinding) {
+        with(binding) {
+            if (args.transaction == null) {
+                var job: Job? = null
+
+                edtAddEditTransactionTitle.doOnTextChanged { text, _, _, _ ->
+                    if (text != null && text.isNotBlank()) {
+                        job?.cancel()
+
+                        job = lifecycle.coroutineScope.launch {
+                            fragmentViewModel.findTransactions(text.trim().toString()).collect { items ->
+                                binding.chgAddEditTransactionSuggestions.removeAllViews()
+
+                                items.forEach {
+                                    val chip = Chip(requireContext()).apply {
+                                        setText(getString(R.string.SuggestionText, it.title, CurrencyFormat.format(it.value)))
+                                        setOnClickListener { _ ->
+                                            fragmentViewModel.setupSuggestion(it)
+                                        }
+                                        setOnLongClickListener { _ ->
+                                            fragmentViewModel.setupSuggestionWithoutValue(it)
+                                            return@setOnLongClickListener true
+                                        }
+                                    }
+
+                                    binding.mAddEditTransactionHorizontalScrollView.visibility = View.VISIBLE
+                                    binding.chgAddEditTransactionSuggestions.addView(chip)
+                                }
+                            }
+                        }
+                    } else {
+                        job?.cancel()
+                        binding.mAddEditTransactionHorizontalScrollView.visibility = View.GONE
+                        binding.chgAddEditTransactionSuggestions.removeAllViews()
+                    }
+                }
             }
         }
     }
@@ -339,6 +364,32 @@ class AddEditTransactionFragment : BaseDataBindingFragment<FragmentAddEditTransa
         })
 
         fragmentViewModel.transactionSaved.observe(viewLifecycleOwner) { findNavController().navigateUp() }
+    }
+
+    private fun requestPermission() {
+        permissionManager.requestPermission(Permission.CONTACTS,
+            info = RationaleInfo(
+                titleRes = R.string.ContactsPermission,
+                messageRes = R.string.ContactsPermissionNeeded
+            ),
+            callback = { isAllGranted, permissions ->
+                if (isAllGranted) {
+                    fragmentViewModel.loadContacts()
+                } else if (permissions.any { !it.value && !it.key.requiresRationale(this@AddEditTransactionFragment) }) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.ContactsPermissionPermanentlyDenied)
+                        .setMessage(R.string.ContactsPermissionPermanentlyDeniedMessage)
+                        .setPositiveButton(R.string.OpenSettings) { _, _ ->
+                            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                data = Uri.fromParts("package", requireActivity().packageName, null)
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            })
+                        }
+                        .setNegativeButton(R.string.Close, null)
+                        .show()
+                }
+            }
+        )
     }
 
     private fun showDatePicker(selectedDate: LocalDate) {

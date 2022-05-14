@@ -74,6 +74,27 @@
                         android:text="@={viewModel.transactionTitle}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <HorizontalScrollView
+                    android:id="@+id/mAddEditTransactionHorizontalScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionTitle"
+                    app:singleLine="true"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chgAddEditTransactionSuggestions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true" />
+
+                </HorizontalScrollView>
+
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/mAddEditTransactionLayoutCenter"
                     android:layout_width="wrap_content"
@@ -93,7 +114,7 @@
                     android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilAddEditTransactionTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/mAddEditTransactionHorizontalScrollView"
                     app:selectionRequired="true"
                     app:singleSelection="true"
                     app:type="@{viewModel.transactionType}">

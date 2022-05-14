@@ -33,6 +33,8 @@ import at.guger.moneybook.data.repository.BudgetsRepository
 import at.guger.moneybook.data.repository.TransactionsRepository
 import at.guger.moneybook.scheduler.reminder.ReminderScheduler
 import at.guger.moneybook.util.DateFormatUtils.SHORT_DATE_FORMAT
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
@@ -141,8 +143,31 @@ class AddEditTransactionViewModel(
         }
     }
 
+    fun setupSuggestion(suggestion: TransactionSuggestion) {
+        with(suggestion) {
+            transactionTitle.value = title
+            transactionType.value = type
+            transactionAccount.value = accountName
+            transactionBudget.value = budgetName ?: ""
+            transactionValue.value = CurrencyTextInputEditText.CURRENCY_FORMAT.format(value)
+        }
+    }
+
+    fun setupSuggestionWithoutValue(suggestion: TransactionSuggestion) {
+        with(suggestion) {
+            transactionTitle.value = title
+            transactionType.value = type
+            transactionAccount.value = accountName
+            transactionBudget.value = budgetName ?: ""
+        }
+    }
+
     fun setupAccount(account: Account) {
         transactionAccount.value = account.name
+    }
+
+    fun findTransactions(query: String): Flow<List<TransactionSuggestion>> {
+        return transactionsRepository.findTransactions(query).distinctUntilChanged()
     }
 
     fun onTransactionTypeChanged(@IdRes viewId: Int) {

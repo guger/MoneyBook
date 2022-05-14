@@ -192,4 +192,5 @@
     <string name="prefs_BiometricAuth">Enable biometric authentication to securely log in to MoneyBook.</string>
     <string name="x_available" translatable="false">%s available</string>
     <string name="x_left" translatable="false">%s left</string>
+    <string name="SuggestionText">%s, %s</string>
 </resources>
