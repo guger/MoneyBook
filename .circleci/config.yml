@@ -93,7 +93,7 @@ workflows:
             alias: android-test-all
             parameters:
               system-image:
-                - system-images;android-31;google_apis;x86
+#                - system-images;android-31;google_apis;x86
                 - system-images;android-30;google_apis;x86
                 - system-images;android-29;google_apis;x86
                 - system-images;android-28;google_apis;x86
