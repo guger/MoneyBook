@@ -92,9 +92,9 @@ object Versions {
     object AndroidX {
         const val Core = "1.8.0-rc01"
         const val CoreSplashScreen = "1.0.0-beta02"
-        const val AppCompat = "1.4.1"
+        const val AppCompat = "1.6.0-alpha03"
         const val Annotation = "1.2.0"
-        const val Fragment = "1.4.1"
+        const val Fragment = "1.5.0-rc01"
         const val Preference = "1.2.0"
         const val Biometric = "1.2.0-alpha04"
         const val ViewPager2 = "1.1.0-beta01"
@@ -108,9 +108,9 @@ object Versions {
     }
 
     object Arch {
-        const val Lifecycle = "2.5.0-alpha02"
-        const val Navigation = "2.5.0-alpha03"
-        const val Room = "2.4.1"
+        const val Lifecycle = "2.5.0-rc01"
+        const val Navigation = "2.5.0-rc01"
+        const val Room = "2.4.2"
         const val Work = "2.7.1"
     }
 
