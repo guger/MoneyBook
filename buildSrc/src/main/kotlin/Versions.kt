@@ -86,14 +86,14 @@ object Versions {
         const val BoM = "30.0.0"
     }
 
-    const val Compose = "1.1.0"
+    const val Compose = "1.2.0-beta02"
     const val ComposeConstraintLayout = "1.0.0"
 
     object AndroidX {
-        const val Core = "1.8.0-rc01"
-        const val CoreSplashScreen = "1.0.0-beta02"
+        const val Core = "1.8.0-rc02"
+        const val CoreSplashScreen = "1.0.0-rc01"
         const val AppCompat = "1.6.0-alpha03"
-        const val Annotation = "1.2.0"
+        const val Annotation = "1.4.0-beta01"
         const val Fragment = "1.5.0-rc01"
         const val Preference = "1.2.0"
         const val Biometric = "1.2.0-alpha04"
@@ -104,7 +104,7 @@ object Versions {
     }
 
     object Material {
-        const val Material = "1.5.0"
+        const val Material = "1.6.0"
     }
 
     object Arch {
